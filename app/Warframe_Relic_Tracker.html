@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Void Relic Vault</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        body { padding-top: 154.6px !important; }
+        .relic-dashboard {
+            max-width: 1750px;
+            margin: 0 auto 100px auto;
+            /* Canonical back panel (matches reference Warframe_Mods_Database). */
+            background: linear-gradient(180deg, rgba(12, 16, 28, 0.94), rgba(9, 12, 22, 0.98));
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border: 1.5px solid rgba(255, 255, 255, 0.10);
+            padding: 2.5rem 2.5rem 1.75rem;
+            border-radius: 20px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.7);
+            box-sizing: border-box;
+        }
+        .search-container {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .relic-search {
+            width: 80%;
+            max-width: 600px;
+            padding: 15px 20px;
+            border-radius: 30px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0, 232, 252, 0.3);
+            color: #fff;
+            font-size: 18px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .relic-search:focus {
+            box-shadow: 0 0 15px rgba(0, 232, 252, 0.4);
+            border-color: #00e8fc;
+        }
+        
+        .relic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .relic-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .relic-card:hover {
+            border-color: rgba(0, 232, 252, 0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .relic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .relic-name {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .vaulted-badge {
+            background: rgba(255, 51, 102, 0.2);
+            color: #ff3366;
+            border: 1px solid #ff3366;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .active-badge {
+            background: rgba(0, 232, 252, 0.2);
+            color: #00e8fc;
+            border: 1px solid #00e8fc;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .part-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .part-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+            border-left: 3px solid transparent;
+        }
+        .rarity-common { border-left-color: #cd7f32; } /* Bronze */
+        .rarity-uncommon { border-left-color: #c0c0c0; } /* Silver */
+        .rarity-rare { border-left-color: #ffd700; } /* Gold */
+        
+        .part-name { font-family: 'Inter', sans-serif; font-size: 14px; color: #e2e8f0; flex-grow: 1; }
+        .part-relic { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 13px; color: #94a3b8; font-weight: bold; margin-right: 10px; }
+        
+        /* Custom Checkbox */
+        .cyber-checkbox {
+            appearance: none; width: 20px; height: 20px;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px; cursor: pointer; position: relative;
+            transition: all 0.2s;
+        }
+        .cyber-checkbox:checked {
+            background: #00e8fc; border-color: #00e8fc;
+            box-shadow: 0 0 10px rgba(0,232,252,0.5);
+        }
+        .cyber-checkbox:checked::after {
+            content: '?'; position: absolute; color: #000; font-size: 14px;
+            font-weight: bold; top: 0px; left: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Global Top Navigation -->
+    <div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+        <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+        <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    
+    </div>
+<div class="container" style="max-width:1750px; margin-bottom:100px;">
+        <header>
+            <h1>&#128302; Void Relic Vault</h1>
+            <p class="subtitle">Search for any Prime Warframe or Weapon to instantly view required relics and track owned parts</p>
+        </header>
+        <div class="search-container">
+            <input type="text" class="relic-search" id="relicSearch" placeholder="Type a name (e.g. 'Glaive Prime', 'Ash Prime')...">
+        </div>
+
+        <div class="relic-grid" id="relicGrid">
+            <!-- Dynamically populated by JS -->
+        </div>
+    </div>
+
+    <!-- Floating Navigation Capsule -->
+    
+
+    <script>
+        // Sample Relic Database (can be expanded easily)
+        const relicData = [
+            {
+                name: "Glaive Prime",
+                isVaulted: true,
+                parts: [
+                    { name: "Blueprint", rarity: "rare", relics: "Lith G1, Lith G2" },
+                    { name: "Blade", rarity: "uncommon", relics: "Meso F3, Neo G1" },
+                    { name: "Disc", rarity: "common", relics: "Axi E1" }
+                ]
+            },
+            {
+                name: "Ash Prime",
+                isVaulted: true,
+                parts: [
+                    { name: "Blueprint", rarity: "rare", relics: "Lith S6" },
+                    { name: "Neuroptics", rarity: "uncommon", relics: "Meso V2, Neo N3" },
+                    { name: "Chassis", rarity: "common", relics: "Axi V8" },
+                    { name: "Systems", rarity: "rare", relics: "Neo A1" }
+                ]
+            },
+            {
+                name: "Volt Prime",
+                isVaulted: false,
+                parts: [
+                    { name: "Blueprint", rarity: "rare", relics: "Lith O2" },
+                    { name: "Neuroptics", rarity: "common", relics: "Meso V3" },
+                    { name: "Chassis", rarity: "uncommon", relics: "Neo V8" },
+                    { name: "Systems", rarity: "rare", relics: "Axi V8" }
+                ]
+            },
+            {
+                name: "Wisp Prime",
+                isVaulted: false,
+                parts: [
+                    { name: "Blueprint", rarity: "rare", relics: "Axi W3" },
+                    { name: "Neuroptics", rarity: "uncommon", relics: "Lith W3" },
+                    { name: "Chassis", rarity: "rare", relics: "Meso K6" },
+                    { name: "Systems", rarity: "common", relics: "Neo D7" }
+                ]
+            }
+        ];
+
+        const grid = document.getElementById('relicGrid');
+        const searchInput = document.getElementById('relicSearch');
+
+        function renderRelics(filter = "") {
+            grid.innerHTML = "";
+            const term = filter.toLowerCase();
+
+            relicData.forEach(item => {
+                if (term && !item.name.toLowerCase().includes(term)) return;
+
+                const card = document.createElement('div');
+                card.className = 'relic-card';
+
+                const badge = item.isVaulted ? `<span class="vaulted-badge">Vaulted</span>` : `<span class="active-badge">Active</span>`;
+
+                let partsHtml = '';
+                item.parts.forEach(part => {
+                    const storageKey = `relic_${item.name}_${part.name}`.replace(/\s+/g, '_');
+                    const isChecked = safeStorage.getItem(storageKey) === 'true' ? 'checked' : '';
+                    
+                    partsHtml += `
+                        <div class="part-item rarity-${part.rarity}">
+                            <span class="part-name">${part.name}</span>
+                            <span class="part-relic">${part.relics}</span>
+                            <input type="checkbox" class="cyber-checkbox" data-key="${storageKey}" ${isChecked}>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="relic-header">
+                        <span class="relic-name">${item.name}</span>
+                        ${badge}
+                    </div>
+                    <div class="part-list">
+                        ${partsHtml}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Add event listeners to new checkboxes
+            document.querySelectorAll('.cyber-checkbox').forEach(box => {
+                box.addEventListener('change', (e) => {
+                    safeStorage.setItem(e.target.dataset.key, e.target.checked);
+                });
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => renderRelics(e.target.value));
+
+        // Initial render
+        renderRelics();
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+

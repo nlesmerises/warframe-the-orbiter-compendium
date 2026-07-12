@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; New to Warframe? Start Here</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.container a:not(.home-emoji-btn):not(.settings-emoji-btn):not(.nav-btn-top) {
+    color: #c49410;
+    text-decoration: none;
+}
+.container a:not(.home-emoji-btn):not(.settings-emoji-btn):not(.nav-btn-top):hover {
+    color: #d9aa28;
+    text-decoration: underline;
+}
+.welcome-banner {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(180,140,20,0.07) 0%, rgba(180,140,20,0.02) 100%);
+    border: 1px solid rgba(180,140,20,0.2);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 8px;
+}
+.welcome-banner p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin: 0;
+}
+.path-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: rgba(180,140,20,0.06);
+    border: 1px solid rgba(180,140,20,0.22);
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.path-card:hover {
+    background: rgba(180,140,20,0.12);
+    border-color: rgba(180,140,20,0.5);
+    text-decoration: none !important;
+}
+.path-card-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #b8960e;
+    font-family: 'Outfit', sans-serif;
+}
+.path-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+}
+.path-card-desc {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.65);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    margin-top: 4px;
+}
+.qi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 24px 0 32px;
+}
+.qi-tile-full {
+    grid-column: 1 / -1;
+}
+.qi-tile {
+    display: flex !important; flex-direction: column; align-items: flex-start; text-align: left;
+    min-height: 110px; padding: 20px 22px !important; border-radius: 14px;
+    text-decoration: none !important; color: inherit;
+    background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease;
+}
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover {
+    transform: translateY(-3px);
+    border-left-color: #ffd740;
+    background: rgba(23,33,62,0.75);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.qi-fade-in {
+    animation: qiFadeIn 0.35s ease both;
+}
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#127775; New to Warframe? Start Here.</h1>
+        <p class="subtitle">Welcome to the Orbiter Compendium &mdash; your personal field guide to everything in the Origin System</p>
+    </header>
+
+    <!-- QUICK INDEX / SECTION PICKER -->
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="what-is-warframe"><div class="qi-tile-icon">&#127760;</div><h2 class="qi-tile-title">What Is Warframe?</h2><p class="qi-tile-desc">Warframe is a free-to-play, third-person action game developed by Digital Extremes. You play as a Tenno — an ancient warrior awakened from centuries of cryosleep — who pilots po...</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="what-is-this"><div class="qi-tile-icon">&#128218;</div><h2 class="qi-tile-title">What Is This Compendium?</h2><p class="qi-tile-desc">The Warframe: The Orbiter Compendium by Zylxyz is a personal reference library built to answer the questions that the game itself fails to explain. It is not a wiki. It is not a...</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="how-it-works"><div class="qi-tile-icon">&#9881;&#65039;</div><h2 class="qi-tile-title">How the Game Works</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="first-hours"><div class="qi-tile-icon">&#128640;</div><h2 class="qi-tile-title">Your First Hours</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="the-factions"><div class="qi-tile-icon">&#128481;&#65039;</div><h2 class="qi-tile-title">The Factions</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="the-loop"><div class="qi-tile-icon">&#128257;</div><h2 class="qi-tile-title">The Game Loop</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="where-to-start"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">Where to Start</h2><p class="qi-tile-desc">Everything above is background knowledge. Now it is time to actually play. The Tenno Path is your step-by-step routing guide through the entire game from MR 1 to MR 30. It tells...</p></a>
+        </div>
+    </div>
+
+    <!-- SECTION 1: WHAT IS WARFRAME -->
+    <section class="category-section" id="what-is-warframe">
+        <h2>&#127760; 1. What Is Warframe?</h2>
+        <div class="dashboard-grid">
+            <div class="welcome-banner" style="grid-column: 1 / -1;">
+                <p>Warframe is a free-to-play, third-person action game developed by Digital Extremes. You play as a <strong>Tenno</strong> &mdash; an ancient warrior awakened from centuries of cryosleep &mdash; who pilots powerful exo-suits called <strong>Warframes</strong>. You will fight across planets, moons, asteroid belts, open oceans, and into the void itself, battling four major enemy factions in a solar system that is constantly at war. The game is massive. It has been in active development since 2013 and receives major updates multiple times a year. Warframe is deep, rewarding, and unlike almost any other game you have played &mdash; but it is also notoriously difficult to understand at the beginning. This Compendium exists specifically to fix that.</p>
+            </div>
+            <div class="card" style="border-left: 6px solid #ffab00;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">The Core Fantasy</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2); color:#ffab00; border:1px solid rgba(255,171,0,0.4);">Overview</span>
+                </div>
+                <ul class="list">
+                    <li>You are a space ninja. You run on walls, leap across chasms, slide through entire squads of enemies, and unleash devastation with a combination of guns, melee weapons, and Warframe abilities that can level entire rooms in seconds</li>
+                    <li>Each Warframe has a unique set of four abilities, its own playstyle, and its own strengths. Rhino charges through walls and shrugs off bullets. Octavia makes enemies dance themselves to death. Mesa dual-wields pistols that can mow down a hundred enemies in under ten seconds. There are over 50 Warframes and you can own all of them</li>
+                    <li>The game rewards mastery. A player at 2,000 hours still finds new things to learn, new builds to optimize, and new content to explore. The ceiling is extraordinarily high</li>
+                    <li>It is entirely free to play. Every Warframe, every weapon, and nearly every piece of content can be earned in-game through farming and crafting. Real money is used for cosmetics, convenience, and speeding up wait timers &mdash; never for power that cannot be earned otherwise</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #34d399;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Is This Game for Me?</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18); color:#34d399; border:1px solid rgba(52,211,153,0.45);">New Player</span>
+                </div>
+                <ul class="list">
+                    <li><strong>You will love Warframe if</strong> you enjoy: deep build-crafting systems, fast fluid movement, cooperative play with up to 4 players, a rich science-fiction lore, farming for gear, and games that keep evolving over years</li>
+                    <li><strong>The first 10 hours are the hardest.</strong> The game does not explain itself well. The menus are overwhelming. The mod system looks incomprehensible. Stick with it &mdash; after the first major quest milestone the game opens up completely and suddenly everything starts making sense</li>
+                    <li><strong>This is not a PvP game at its core.</strong> There is optional PvP content (Conclave), but the heart of Warframe is co-op PvE missions &mdash; fighting enemies, farming resources, and building your arsenal</li>
+                    <li><strong>The community is exceptionally helpful.</strong> Veteran players regularly help new players through difficult missions, gift starter Platinum, and offer free trading advice. The Warframe player base has a strong reputation for being welcoming to newcomers</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #60a5fa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Key Facts Before You Start</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18); color:#60a5fa; border:1px solid rgba(96,165,250,0.45);">Quick Ref</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Platform:</strong> PC (Steam / Epic / Standalone), PlayStation 4/5, Xbox One/Series, Nintendo Switch. Full cross-save between all platforms was added in 2024</li>
+                    <li><strong>Cost:</strong> Free. Download and play with no purchase required, ever</li>
+                    <li><strong>Download size:</strong> Approximately 35&ndash;50 GB depending on platform</li>
+                    <li><strong>Internet required:</strong> Yes &mdash; Warframe is always online. Missions can be played solo, but an active internet connection is required at all times</li>
+                    <li><strong>Progression:</strong> Measured by Mastery Rank (MR 1&ndash;30+). MR is earned by leveling weapons and Warframes and determines what gear you can equip. See <a href="Warframe_Mastery_Rank_Guide.html">Mastery Rank Guide</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: WHAT IS THIS COMPENDIUM -->
+    <section class="category-section" id="what-is-this">
+        <h2>&#128218; 2. What Is This Compendium?</h2>
+        <div class="dashboard-grid">
+            <div class="welcome-banner" style="grid-column: 1 / -1;">
+                <p>The <strong>Warframe: The Orbiter Compendium by Zylxyz</strong> is a personal reference library built to answer the questions that the game itself fails to explain. It is not a wiki. It is not a general database. It is a curated, hand-written guide built from direct experience &mdash; built to be read by a real player who is sitting in the game right now and needs a clear, fast, trustworthy answer. Every page in this Compendium was written with the goal of being the page you wish had existed when you first encountered that topic.</p>
+            </div>
+            <div class="card" style="border-left: 6px solid #ffab00;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">What It Covers</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2); color:#ffab00; border:1px solid rgba(255,171,0,0.4);">Content Map</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Progression:</strong> Step-by-step routing from MR 1 through MR 30, with mission recommendations, quest order, and gear milestones at every stage</li>
+                    <li><strong>Builds:</strong> Warframe builds, weapon tier lists, mod priority guides, and damage type matchups against each enemy faction</li>
+                    <li><strong>Systems:</strong> How the mod system works, how Focus schools and Operator abilities develop, how Railjack operates, how Kuva Liches and Sisters of Parvos are hunted down</li>
+                    <li><strong>Economy:</strong> How to earn Platinum, how trading works, what Syndicate Standing is worth, and how to farm efficiently without burning out</li>
+                    <li><strong>Endgame:</strong> Steel Path, Archon Shards, Incarnon Genesis weapons, Archon Hunts, Rift Cascade and Circuit runs, and the meta at MR 30</li>
+                    <li><strong>Daily and Weekly resets:</strong> Rotating content, Baro Ki&rsquo;Teer visits, Sortie rewards, Nightwave challenges, and how to track them efficiently</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #f87171;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">What It Is Not</h3>
+                    <span class="type-tag" style="background:rgba(248,113,113,0.18); color:#f87171; border:1px solid rgba(248,113,113,0.45);">Heads Up</span>
+                </div>
+                <ul class="list">
+                    <li>This is not the official Warframe wiki. For raw item stats, lore transcripts, and patch notes, visit the <strong>Warframe Wiki</strong> (wiki.warframe.com). The Compendium and the wiki are complementary &mdash; the wiki answers "what does X do?", the Compendium answers "what do I do with X and when?"</li>
+                    <li>This is not a spoiler-free guide. Some content in the Compendium references major story developments, quest rewards, and mechanics that are unlocked deep in the game. If you are a true newcomer and want to experience the story blind, stick to the MR 1&ndash;10 Foundation guide first and return to other sections as you unlock them</li>
+                    <li>This is not exhaustive by design. Every entry is written to be <em>useful</em>, not merely <em>complete</em>. Information you do not need right now is not included just to fill space</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #60a5fa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">How to Use the Compendium</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18); color:#60a5fa; border:1px solid rgba(96,165,250,0.45);">Quick Start</span>
+                </div>
+                <ul class="list">
+                    <li>Start with the <a href="Warframe_Tenno_Path.html">Tenno Path MR 1&ndash;10 Foundation</a> if you are new or returning after a long break. It will tell you exactly what to do in the correct order</li>
+                    <li>Use the <strong>Home button</strong> (&#127968; top left) at any time to return to the Master Dashboard, where all six hub sections are one click away</li>
+                    <li>Use the <strong>Search bar</strong> (top right of the Dashboard) to find any page by name if you know roughly what you are looking for</li>
+                    <li>Use the <strong>Back / Forward</strong> buttons in the top-right of every page to move through your browsing history within the Compendium</li>
+                    <li>Use the <strong>Quick Index</strong> bar near the top of every content page to jump to a specific section without scrolling</li>
+                    <li>The <a href="Warframe_Site_Map.html">Site Map</a> lists every page in the Compendium organized by category &mdash; useful when you want to browse what exists</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: HOW THE GAME WORKS -->
+    <section class="category-section" id="how-it-works">
+        <h2>&#9881;&#65039; 3. How the Game Works</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left: 6px solid #ffab00;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">The Warframe &mdash; Your Exo-Suit</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2); color:#ffab00; border:1px solid rgba(255,171,0,0.4);">Core Gear</span>
+                </div>
+                <ul class="list">
+                    <li>A Warframe is a powered exo-suit with four unique abilities. Each Warframe defines how you engage with enemies: some are tanks that absorb punishment, some are crowd controllers that stop enemies in their tracks, some are stealth operatives, and some are pure damage dealers that delete entire squads in a single cast</li>
+                    <li>You start with one of three starter Warframes: <strong>Volt</strong> (electric speed and power), <strong>Excalibur</strong> (balanced melee and sword-beam specialist), or <strong>Mag</strong> (magnetic crowd control and bullet pulling). All three are excellent starters. None of them are weak. Your first choice is not permanent &mdash; all three can be built again through crafting</li>
+                    <li>You craft new Warframes using blueprints dropped by boss enemies, which require materials and 72 hours of construction time in your Foundry. There is no shortcut required &mdash; all Warframes are farmable this way</li>
+                    <li>Warframes are modded like weapons: mod cards are slotted into a build to amplify your abilities, survivability, energy efficiency, and range. A modded Warframe is dramatically more powerful than an unmodded one at the same rank</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #a78bfa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">The Mod System</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18); color:#a78bfa; border:1px solid rgba(167,139,250,0.45);">Progression</span>
+                </div>
+                <ul class="list">
+                    <li>Mods are the primary progression system in Warframe. They are cards that drop from enemies, containers, missions, and vendors. Every weapon and Warframe has a limited number of mod slots, and what you put in those slots determines how powerful that piece of gear is</li>
+                    <li>Mods are upgraded with <strong>Endo</strong> &mdash; a resource dropped by enemies and earned from missions. Upgrading a mod increases its effect at the cost of more <strong>Mod Capacity</strong>, which is the budget each piece of gear has for mods. A rank-30 weapon has 30 capacity by default; installing an Orokin Catalyst doubles it to 60</li>
+                    <li>Some mods are common and drop constantly. Others are rare and may require dedicated farming or trading with other players. The rarest mods can be worth thousands of Platinum on the open market</li>
+                    <li>Mods can be fused together, transmuted into new mods, or sold for Endo and Credits. Never sell a mod you only have one copy of until you understand what it does &mdash; some mods that look useless early become essential later</li>
+                    <li>See the <a href="Warframe_Mods_Database.html">Mods Database</a> for a full reference on what mods do and where to get them</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #60a5fa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">The Arsenal</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18); color:#60a5fa; border:1px solid rgba(96,165,250,0.45);">Weapons</span>
+                </div>
+                <ul class="list">
+                    <li>Each loadout has three weapon slots: <strong>Primary</strong> (rifles, bows, shotguns, snipers, beam weapons), <strong>Secondary</strong> (pistols, akimbo dual pistols, thrown weapons, hand cannons), and <strong>Melee</strong> (swords, hammers, polearms, whips, claws, dual blades, and more)</li>
+                    <li>Weapons have their own unique stats, crit profiles, status chance, fire rate, and reload behavior. The right weapon for a mission depends on the enemy faction, the mission type, and your Warframe build</li>
+                    <li>You unlock more powerful weapons by earning <strong>Mastery Rank</strong>. Higher MR unlocks higher-tier weapons. MR is earned by leveling weapons and frames to rank 30 for the first time</li>
+                    <li>You also carry a <strong>Companion</strong> &mdash; either a Kubrow (dog-like creature), a Kavat (cat-like creature), a Moa (robotic companion), or a Sentinel (floating drone). Each companion has its own mods, abilities, and behaviors that supplement your loadout in different ways</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #34d399;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">The Operator</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18); color:#34d399; border:1px solid rgba(52,211,153,0.45);">Unlockable</span>
+                </div>
+                <ul class="list">
+                    <li>After completing <strong>The Second Dream</strong> quest (recommended around MR 5), you unlock the Operator &mdash; the human child behind the Warframe. The Operator can step out of the Warframe at any time during combat</li>
+                    <li>The Operator has access to <strong>Void Mode</strong> (brief invulnerability and enemy confuse), <strong>Void Blast</strong> (close-range Void energy pulse), <strong>Void Sling</strong> (fast directional teleport), and a customizable Amp weapon that fires concentrated Void energy</li>
+                    <li>After <strong>The War Within</strong> quest, the Operator can fully invest in one of five <strong>Focus Schools</strong> &mdash; each with a unique passive and active power tree. Focus School abilities significantly augment both Operator and Warframe capabilities</li>
+                    <li>In the endgame, the Operator becomes the <strong>Drifter</strong> &mdash; an older version of the same character &mdash; with additional combat capabilities unlocked through the New War and subsequent content</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: YOUR FIRST HOURS -->
+    <section class="category-section" id="first-hours">
+        <h2>&#9312; 4. Your First Hours &mdash; What to Expect</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left: 6px solid #ffab00;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">The Tutorial: Vor&rsquo;s Prize</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2); color:#ffab00; border:1px solid rgba(255,171,0,0.4);">Start Here</span>
+                </div>
+                <ul class="list">
+                    <li>Warframe&rsquo;s tutorial quest is called <strong>Vor&rsquo;s Prize</strong> and it launches automatically when you first create a character. It will take you through the basics of movement, combat, and the Star Chart over the course of several missions</li>
+                    <li>The tutorial will give you your first set of core mods, your first Orokin Reactor (which doubles your Warframe&rsquo;s mod capacity &mdash; install it immediately), a few resources, and an introduction to Vor, who serves as a recurring antagonist in the early game</li>
+                    <li>Vor&rsquo;s Prize ends on Earth. After it completes, the full Star Chart is open to you, and you are officially on your own. This is where the game truly begins &mdash; and also where most new players feel lost for the first time. The Tenno Path guide picks up exactly here</li>
+                    <li>Vor&rsquo;s Prize can be completed in approximately 1&ndash;2 hours depending on your familiarity with the controls</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #60a5fa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">The Star Chart</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18); color:#60a5fa; border:1px solid rgba(96,165,250,0.45);">Navigation</span>
+                </div>
+                <ul class="list">
+                    <li>The Star Chart is your mission map &mdash; a network of planets, moons, and stations spread across the Origin System. Each celestial body has a series of nodes (individual missions) that must be unlocked by clearing the previous node in the chain</li>
+                    <li>Planets are connected by <strong>Junctions</strong>. To unlock a new planet you must complete specific challenges listed on the junction screen: clearing a certain number of missions, finding certain mods, defeating certain enemies, or completing certain quests. Junctions are essentially the game&rsquo;s soft gatekeeping system to ensure you are not heading into content you are not yet prepared for</li>
+                    <li>There are 19 primary destinations in the Star Chart: Earth, Venus, Mercury, Mars, Phobos, Ceres, Jupiter, Europa, Saturn, Uranus, Neptune, Pluto, Sedna, Eris, Lua, Kuva Fortress, Deimos, Zariman, and the Void. Each has different enemy factions, resource drops, and difficulty levels</li>
+                    <li>Clearing every node on every planet unlocks <strong>Steel Path</strong> &mdash; a hard mode version of the entire Star Chart with dramatically tougher enemies and better rewards. Steel Path is endgame content, not something a new player should attempt</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #a78bfa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Mission Types</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18); color:#a78bfa; border:1px solid rgba(167,139,250,0.45);">Reference</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Exterminate</strong> &mdash; kill a target number of enemies and extract. Simple, fast, good for leveling and resource farming</li>
+                    <li><strong>Defense</strong> &mdash; protect a target through waves of enemies. Excellent for Affinity (XP) farming, especially at Hydron on Sedna</li>
+                    <li><strong>Survival</strong> &mdash; stay alive as long as possible while maintaining life support. Rewards scale with time survived &mdash; great for farming rare mods and Prime parts</li>
+                    <li><strong>Interception</strong> &mdash; hold control points against enemy capture. Requires coordination but offers good rewards</li>
+                    <li><strong>Capture</strong> &mdash; find and neutralize a high-value target before they escape. Fast missions, often under 3 minutes</li>
+                    <li><strong>Excavation</strong> &mdash; power and protect excavators that dig up Cryotic. Good for specific resources and Void Relics</li>
+                    <li><strong>Spy</strong> &mdash; infiltrate vaults and extract data without triggering alarms. Requires stealth and precision; rewards high-value mods and Warframe blueprints</li>
+                    <li><strong>Disruption</strong> &mdash; defend conduits against demolishing enemies. Mid-to-endgame content with excellent reward tables</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #34d399;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">The Foundry &amp; Crafting</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18); color:#34d399; border:1px solid rgba(52,211,153,0.45);">Crafting</span>
+                </div>
+                <ul class="list">
+                    <li>The <strong>Foundry</strong> is your crafting station, accessible from your Orbiter ship. Nearly every Warframe and weapon in the game is constructed here from blueprints and raw materials</li>
+                    <li>Blueprints are acquired from: boss mission drops, the in-game Market (some free, some for Credits or Platinum), quest rewards, Syndicate vendors, and Nightwave stores</li>
+                    <li>Crafting takes real time &mdash; weapons take 12&ndash;24 hours, Warframe components take 12 hours each, and complete Warframes take an additional 72 hours after all three components are built. You can rush a build with Platinum, but this is generally not worth it unless you are in a hurry</li>
+                    <li>You can queue multiple builds simultaneously. Get in the habit of always having something in the Foundry. If your queue sits empty for days, you are leaving progression on the table</li>
+                    <li>Resources are collected from enemies and breakable containers during missions. Many crafting recipes require large quantities. Check the Foundry recipe before beginning a new farm so you know exactly what to collect</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: THE FACTIONS -->
+    <section class="category-section" id="the-factions">
+        <h2>&#9876;&#65039; 5. The Enemy Factions</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left: 6px solid #f87171;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Grineer</h3>
+                    <span class="type-tag" style="background:rgba(248,113,113,0.18); color:#f87171; border:1px solid rgba(248,113,113,0.45);">Faction</span>
+                </div>
+                <ul class="list">
+                    <li>The dominant military force in the Origin System. The Grineer are a race of cloned soldiers, endlessly reproduced from a degrading genetic template &mdash; which is why they look battered and worn despite being mass-produced. They are ruled by the Twin Queens and driven by a simple ideology: conquer, enslave, expand</li>
+                    <li>Grineer troops are heavily armored and wear physical armor plating that reduces incoming damage significantly. They are most vulnerable to <strong>Corrosive</strong> and <strong>Viral</strong> damage types, which strip or exploit their armor. Slash damage also applies a powerful bleed that bypasses armor entirely</li>
+                    <li>You will fight Grineer on Earth, Mercury, Mars, Phobos, Ceres, Sedna, and several other locations. They field infantry, heavy units, troopers, commanders, elite lancers, napalm gunners, and massive Nox units as you progress deeper into their territory</li>
+                    <li>Notable bosses: <strong>Vor</strong> (Mercury), <strong>The Sergeant</strong> (Phobos), <strong>Kela De Thaym</strong> (Sedna), <strong>The Jordas Golem</strong> (Eris)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #60a5fa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Corpus</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18); color:#60a5fa; border:1px solid rgba(96,165,250,0.45);">Faction</span>
+                </div>
+                <ul class="list">
+                    <li>A corporate megaconglomerate that controls much of the system&rsquo;s trade, manufacturing, and technology. The Corpus worship profit as a quasi-religion and use Tenno-derived Orokin technology to produce advanced robotics, energy weapons, and proxy soldiers. Their human troops wear personal energy shields; their robots are deployed in enormous numbers</li>
+                    <li>Corpus units rely on <strong>Shield</strong> as their primary defense layer. Shields are most efficiently stripped by <strong>Magnetic</strong> damage. Once shields are down, the soft flesh underneath is vulnerable to <strong>Toxin</strong> damage, which bypasses shields entirely and hits health directly</li>
+                    <li>You encounter the Corpus on Venus, Neptune, Europa, Pluto, and aboard their deep-space freighters during Railjack missions. They field crewmen, technicians, Osprey drones, MOA units, Hyena proxies, and Jackal bosses</li>
+                    <li>Notable bosses: <strong>The Jackal</strong> (Venus), <strong>Raptor</strong> (Europa), <strong>Ambulas</strong> (Pluto), <strong>Alad V</strong> (Jupiter, multiple appearances)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #34d399;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Infested</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18); color:#34d399; border:1px solid rgba(52,211,153,0.45);">Faction</span>
+                </div>
+                <ul class="list">
+                    <li>A biological plague that was once the Orokin Empire&rsquo;s greatest weapon &mdash; a self-replicating techno-organic infestation called the Helminth strain. The Infested have no faction goals. They exist to spread. They consume everything they touch &mdash; flesh, metal, and architecture &mdash; and absorb it into a grotesque hive mass</li>
+                    <li>Infested units have no shields and minimal armor. They are most efficiently killed with <strong>Heat</strong> damage (applies a burn damage-over-time proc) and <strong>Gas</strong> damage (area cloud that poisons nearby enemies). Slash also performs very well against them</li>
+                    <li>You fight the Infested on Eris, Deimos, and in Invasions that can appear on any planet. They field fast melee attackers, spitting Crawlers, Chargers, Ancients (towering support units that grant their nearby allies damage resistance and magnetic pulses), and enormous Juggernauts</li>
+                    <li>Notable bosses: <strong>Lephantis</strong> (Orokin Derelict), <strong>Jordas Golem</strong> (Eris), <strong>Nidus</strong> (Infested Ship, blueprint reward)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #a78bfa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Corrupted &amp; Sentients</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18); color:#a78bfa; border:1px solid rgba(167,139,250,0.45);">Faction</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Corrupted</strong> are Orokin-controlled versions of Grineer and Corpus units found inside the Void. They are mind-controlled by Orokin towers and fight with unusual discipline for their faction. They drop important corrupted mods and are the only source of certain rare resources</li>
+                    <li><strong>Sentients</strong> are a category of enemy encountered in specific story missions, Eidolon hunts on the Plains of Eidolon at night, and late-game content. They were originally built by the Orokin to terraform a distant star system &mdash; and turned on their creators. Sentients adapt to damage types used against them, requiring players to switch elements frequently during combat</li>
+                    <li>Eidolons are massive Sentient entities that emerge from Cetus Lake on the Plains of Eidolon after dark. Hunting them is a dedicated endgame activity that requires proper Amp builds, Void Mode, and coordinated team play. See the <a href="Warframe_Open_Worlds_Guide.html">Open Worlds Guide</a> for Eidolon hunt strategy</li>
+                    <li>See the <a href="Warframe_Damage_Guide.html">Damage Guide</a> for full faction-by-faction elemental matchups</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: THE GAME LOOP -->
+    <section class="category-section" id="the-loop">
+        <h2>&#128260; 6. The Core Game Loop</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left: 6px solid #ffab00;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Farm &rarr; Build &rarr; Level &rarr; Mod &rarr; Repeat</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2); color:#ffab00; border:1px solid rgba(255,171,0,0.4);">The Loop</span>
+                </div>
+                <ul class="list">
+                    <li>The fundamental Warframe loop is: run missions to collect resources and blueprints, build new gear in the Foundry, level that gear to rank 30 through missions, mod it to maximize its effectiveness, and use that improved loadout to tackle more difficult content that drops better rewards</li>
+                    <li>This loop never stops. It deepens with each new system you unlock. At MR 5 you are farming basic weapons. At MR 20 you are farming Kuva Liches for lich-specific weapons. At MR 30 you are running Rift Cascades for Incarnon Genesis adapters and Archon Shards. The loop is the same &mdash; the stakes and the rewards keep climbing</li>
+                    <li>The loop is designed to be sustainable over hundreds of hours. No single session should feel mandatory. The game is built for players who come and go over years, and returning players are welcomed back rather than punished for time away</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #ffd54f;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">The Economy: Credits, Platinum &amp; Standing</h3>
+                    <span class="type-tag" style="background:rgba(255,213,79,0.18); color:#ffd54f; border:1px solid rgba(255,213,79,0.45);">Economy</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Credits</strong> are the in-game currency earned from every mission. They are used to purchase blueprints from the Market, craft items in the Foundry, pay Syndicate costs, and upgrade mods. Credits are abundant &mdash; you will rarely be short of them once you have a few planets cleared</li>
+                    <li><strong>Platinum</strong> is the premium currency, purchased with real money or earned by trading with other players. The most important uses: Warframe slots (you start with 2), weapon slots (you start with 2), and Orokin Reactors and Catalysts for gear you plan to keep. Do not spend Platinum on Warframes or weapons &mdash; these are farmable</li>
+                    <li><strong>Standing</strong> is earned with specific organizations (Syndicates, Open World factions, Cephalon Simaris) and is spent on their exclusive rewards. Standing is capped per day based on your Mastery Rank, so the sooner you join factions and start earning Standing, the more you will accumulate over time</li>
+                    <li>See <a href="Warframe_Currency_Farming_Codex.html">Economy Guide</a> and <a href="Warframe_Systems_Dashboard.html">Systems &amp; Progress</a> for detailed breakdowns</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #60a5fa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Co-op vs. Solo</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18); color:#60a5fa; border:1px solid rgba(96,165,250,0.45);">Multiplayer</span>
+                </div>
+                <ul class="list">
+                    <li>Warframe supports squads of 1&ndash;4 players. Most missions can be played either way. Enemy scaling adjusts based on squad size, so a solo run is not simply a harder version of the same mission &mdash; enemies are tuned to your squad count</li>
+                    <li>Playing with a squad dramatically increases the speed of leveling. In Defense and Survival missions, affinity (XP) is shared across the squad for any kill made within range. A squad of four players can level a piece of gear significantly faster than soloing the same mission</li>
+                    <li>You can matchmake automatically with strangers by leaving the &ldquo;Public&rdquo; setting active in the top-left of your navigation screen. You can also play in premade squads with friends, or set missions to Solo to play entirely alone</li>
+                    <li>Certain content is almost impossible to complete without a coordinated squad: Eidolon Teralyst Hunts (or Tridolons), Profit-Taker Orb fights, Archon Hunts, and some Assassination targets in the late game</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left: 6px solid #34d399;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Open Worlds</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18); color:#34d399; border:1px solid rgba(52,211,153,0.45);">Exploration</span>
+                </div>
+                <ul class="list">
+                    <li>Warframe has three large open-world zones, each with their own faction, economy, bounty system, and exclusive rewards. They are optional but contain some of the best content and gear in the game</li>
+                    <li><strong>Plains of Eidolon</strong> (Earth &mdash; Cetus hub) &mdash; the first open world, available early. Ostron Standing is used to build Amp parts for your Operator. Eidolon hunts take place here at night</li>
+                    <li><strong>Orb Vallis</strong> (Venus &mdash; Fortuna hub) &mdash; Solaris United Standing, K-Drive hoverboarding, Profit-Taker Orb fight (endgame), Vox Solaris Standing for advanced Operator gear</li>
+                    <li><strong>Cambion Drift</strong> (Deimos &mdash; Necralisk hub) &mdash; Entrati Standing, Helminth unlocking (ability subsume system), Orokin Vault runs for Corrupted mods</li>
+                    <li>See <a href="Warframe_Open_Worlds_Guide.html">Open Worlds Guide</a> for complete coverage of all three zones</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: WHERE TO START -->
+    <section class="category-section" id="where-to-start">
+        <h2>&#128640; 7. Where to Start &mdash; The Tenno Path</h2>
+        <div class="dashboard-grid">
+            <div class="welcome-banner" style="grid-column: 1 / -1;">
+                <p>Everything above is background knowledge. Now it is time to actually play. The <strong>Tenno Path</strong> is your step-by-step routing guide through the entire game from MR 1 to MR 30. It tells you exactly where to go, what missions to run, which quests to prioritize, what gear to build, and what systems to ignore until you are ready for them. Each chapter below covers a complete phase of progression. Start with Chapter 1 if you are new or returning after a long break. Each chapter links forward to the next when you are ready.</p>
+            </div>
+
+            <a href="Warframe_Tenno_Path.html" class="path-card" style="border-left: 6px solid #ffab00;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span class="path-card-label">Chapter 1 &mdash; MR 1 through 10</span>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2); color:#ffab00; border:1px solid rgba(255,171,0,0.4);">Foundation</span>
+                </div>
+                <span class="path-card-title">&#9876;&#65039; Foundation &mdash; Getting Off the Ground</span>
+                <span class="path-card-desc">The Vor&rsquo;s Prize tutorial, clearing the early Star Chart, farming your first real Warframe (Rhino), the mod system, your first leveling station, Hydron runs, priority mods like Serration and Vitality, and the quests you must complete before anything else unlocks. The Second Dream quest is in here &mdash; do not skip it. This chapter will take most new players 20&ndash;40 hours of play time to work through completely.</span>
+            </a>
+
+            <a href="Warframe_Tenno_Path_Expansion.html" class="path-card" style="border-left: 6px solid #60a5fa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span class="path-card-label">Chapter 2 &mdash; MR 11 through 20</span>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18); color:#60a5fa; border:1px solid rgba(96,165,250,0.45);">Expansion</span>
+                </div>
+                <span class="path-card-title">&#127756; Expansion &mdash; Opening the System</span>
+                <span class="path-card-desc">Your first open world on the Plains of Eidolon, Fortuna and Orb Vallis, Railjack space combat, Kuva Liches and the Kuva weapons they drop, Disruption missions, Arbitrations, The New War quest, Operator Focus school investment, and building your first endgame-quality loadout. This is where Warframe&rsquo;s full depth begins to reveal itself. Expect 40&ndash;100 hours here depending on how deep you go into each system.</span>
+            </a>
+
+            <a href="Warframe_Tenno_Path_Endgame.html" class="path-card" style="border-left: 6px solid #f87171;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span class="path-card-label">Chapter 3 &mdash; MR 21 through 30</span>
+                    <span class="type-tag" style="background:rgba(248,113,113,0.18); color:#f87171; border:1px solid rgba(248,113,113,0.45);">Endgame</span>
+                </div>
+                <span class="path-card-title">&#128293; Endgame &mdash; The Ceiling</span>
+                <span class="path-card-desc">Steel Path and its exclusive rewards, Archon Hunts and Archon Shards, Incarnon Genesis adapters and the weapons they transform, the Rift Cascade circuit runs, Duviri Paradox, Drifter combat, full Helminth builds, and what it actually means to be &ldquo;done&rdquo; with Warframe &mdash; which is to say, not much. The endgame is wide, not tall. There is always something left to optimize. This chapter is for players who have finished everything and want to know what comes next.</span>
+            </a>
+
+            <div class="card" style="border-left: 6px solid #a78bfa;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h3 style="margin:0;">Other Useful Starting Points</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18); color:#a78bfa; border:1px solid rgba(167,139,250,0.45);">Quick Links</span>
+                </div>
+                <ul class="list">
+                    <li><a href="Warframe_Mastery_Rank_Guide.html">Mastery Rank Guide</a> &mdash; full XP requirements, test breakdowns, and a practice guide for every MR test from 1 to 30</li>
+                    <li><a href="Warframe_Progression_Guide.html">Progression Guide</a> &mdash; broader roadmap for how to approach content unlock order</li>
+                    <li><a href="Warframe_Mods_Database.html">Mods Database</a> &mdash; full reference for what every important mod does and where to find it</li>
+                    <li><a href="Warframe_Meta_Weapons_Codex.html">Meta Weapons Codex</a> &mdash; weapon tier lists by category so you know what to build first</li>
+                    <li><a href="Warframe_Damage_Guide.html">Damage Guide</a> &mdash; damage types, elemental combinations, and which elements to use against each faction</li>
+                    <li><a href="Warframe_Currency_Farming_Codex.html">Economy Guide</a> &mdash; how to earn Platinum, how to trade, and how not to waste your premium currency</li>
+                    <li><a href="Warframe_Site_Map.html">Full Site Map</a> &mdash; every page in the Compendium listed by category; use this to browse what exists</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) {
+            target.style.display = 'block';
+            requestAnimationFrame(() => target.classList.add('qi-fade-in'));
+        }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+        showSection(hash, false);
+    }
+
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) {
+                showMenu();
+                history.pushState({ section: null }, '', location.pathname + location.search);
+            } else {
+                showSection(targetId, true);
+            }
+        });
+    });
+
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) {
+            showSection(e.state.section, false);
+        } else {
+            showMenu();
+        }
+    });
+});
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,2211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <title>Warframe: The Orbiter Compendium &mdash; Foundry Operations Center</title>
+    
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <link rel="stylesheet" href="assets/css/foundry_dashboard.css?v=6">
+    <style>
+        /* Bio-Lab panel design tokens. These were referenced throughout the
+           Necralisk Bio-Lab CSS below (--bg-card, --color-primary, etc.) but
+           never actually defined anywhere in this file or codex_glass_theme.css,
+           so every genus tab / breed selector / mutagen button rendered with no
+           background, no border color, and no transition -- just bare text on
+           a near-invisible 1px border. This block restores real values, tuned
+           to the Deimos amber/orange palette the rest of the panel already
+           hardcodes in its rgba() shadows, and adds actual glass (blur) so the
+           buttons match the frosted look used elsewhere on the site. */
+        :root {
+            --bg-dark: rgba(10, 14, 24, 0.55);
+            --bg-darker: rgba(6, 9, 16, 0.7);
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --bg-card-hover: rgba(255, 255, 255, 0.09);
+            --color-primary: #d35400;
+            --color-accent: #f39c12;
+            --color-green: #2ecc71;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --accent: #ffab00;
+            --violet-color: #a78bfa;
+        }
+        .genus-tab, .option-card, .hud-panel, .material-item, .selector-group {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .option-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        }
+        .option-card.active {
+            background: linear-gradient(180deg, rgba(243,156,18,0.16), rgba(243,156,18,0.05));
+            box-shadow: 0 0 0 1px rgba(243,156,18,0.25), 0 8px 20px rgba(243,156,18,0.15);
+        }
+        .genus-tab.active {
+            background: linear-gradient(135deg, var(--color-primary), #e67e22);
+        }
+
+        /* Division checklist UI (.task-list/.task-item/.task-title/.task-desc)
+           is used 79 times across all 11 divisions but had zero CSS defined
+           anywhere -- every checklist item on the whole page was rendering as
+           a bare checkbox next to plain text. Same for .view-guide-btn,
+           .progress-bar/.progress-container, and .card-necramech. */
+        ul.task-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, rgba(255,171,0,0.07), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,171,0,0.18);
+            border-left: 3px solid rgba(255,171,0,0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+            transition: var(--transition-smooth);
+        }
+        .task-item:hover {
+            background: linear-gradient(180deg, rgba(255,171,0,0.14), rgba(255,255,255,0.04));
+            border-color: rgba(255,171,0,0.4);
+            border-left-color: #ffab00;
+            box-shadow: 0 6px 20px rgba(255,171,0,0.15);
+            transform: translateY(-1px);
+        }
+        .task-item.completed {
+            border-color: rgba(46,204,113,0.35);
+            border-left-color: #2ecc71;
+            background: linear-gradient(180deg, rgba(46,204,113,0.12), rgba(46,204,113,0.03));
+            box-shadow: 0 4px 14px rgba(46,204,113,0.1);
+        }
+        .task-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: var(--color-accent);
+            flex-shrink: 0;
+        }
+        .task-content { display: flex; flex-direction: column; gap: 2px; }
+        .task-title { font-weight: 700; color: var(--text-primary); font-size: 0.92rem; }
+        .task-desc { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.4; }
+        .task-list h4 {
+            margin: 4px 0 10px;
+            color: var(--color-accent);
+            font-size: 0.95rem;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            padding-bottom: 6px;
+        }
+
+        /* Plain build-note bullet lists (47 <li> across Weapons, Amps, Gear,
+           K-Drive, Mining, Misc) had zero CSS -- same bug class as .task-item,
+           just without the class name at all. Rendered as bare browser
+           bullets with no glass treatment. Scoped to :not(.task-list) so
+           checklist items are untouched. */
+        .card ul:not(.task-list),
+        .box ul:not(.task-list) {
+            list-style: none;
+            padding-left: 0;
+            margin: 8px 0 0;
+        }
+        .card ul:not(.task-list) li,
+        .box ul:not(.task-list) li {
+            padding: 9px 12px;
+            margin-bottom: 6px;
+            border-radius: 8px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+            border: 1px solid rgba(255,255,255,0.08);
+            border-left: 3px solid rgba(255,171,0,0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+        .card ul:not(.task-list) li:last-child,
+        .box ul:not(.task-list) li:last-child {
+            margin-bottom: 0;
+        }
+
+        .view-guide-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: var(--transition-smooth);
+        }
+        .view-guide-btn:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-1px);
+        }
+
+        .card-necramech {
+            background: linear-gradient(180deg, rgba(167,139,250,0.08), rgba(255,255,255,0.02));
+            border: 1px solid rgba(167,139,250,0.25);
+            border-radius: 14px;
+            padding: 20px;
+        }
+        .card-necramech .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .progress-container {
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.08);
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--violet-color), #ffab00);
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        /* Card-layout normalization (scoped to this page) to match the standard:
+           auto-fit so 2-card sections fill the panel width instead of leaving
+           phantom empty columns; top-align card content so short cards don't
+           spread their contents vertically. */
+        .dashboard-grid { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)) !important; }
+        .dashboard-grid .card { justify-content: flex-start !important; }
+
+        /* Divisions now live INSIDE the single .container panel, so they carry
+           no box of their own — just spacing to separate from the header. */
+        .category-section { margin-top: 0.5rem; display: none; }
+        .category-section > h2:first-of-type {
+            margin-top: 0.5rem;
+            display: flex; flex-wrap: wrap; align-items: center;
+            justify-content: space-between; gap: 12px;
+        }
+        @keyframes foundryFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .category-section.foundry-fade-in { animation: foundryFadeIn 0.35s ease both; }
+        .future-use-card {
+            border-left: 4px solid #60a5fa !important;
+            opacity: 0.8;
+        }
+        .future-use-tag {
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+    /* ==========================================================================
+       NECRALISK BIO-LAB COMPANION HUB SECTION
+       ========================================================================== */
+    .biolab-panel {
+      background: linear-gradient(180deg, #18110b 0%, var(--bg-card) 100%);
+      border: 1px solid var(--color-primary);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(211, 84, 0, 0.1);
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .biolab-panel::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 20px;
+      right: 20px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    }
+
+    .biolab-title {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.8rem;
+      color: var(--text-primary);
+    }
+
+    .biolab-title span {
+      font-size: 2.2rem;
+      filter: drop-shadow(0 0 8px var(--color-primary));
+    }
+
+    /* Subspecies Tab Selection */
+    .genus-tabs {
+      display: flex;
+      gap: 10px;
+      background: var(--bg-darker);
+      padding: 5px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .genus-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      font-size: 0.9rem;
+    }
+
+    .genus-tab.active {
+      background: var(--color-primary);
+      color: var(--text-primary);
+      box-shadow: 0 4px 12px rgba(211, 84, 0, 0.35);
+    }
+
+    /* Main Configurator Layout */
+    .biolab-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    @media (min-width: 992px) {
+      .biolab-grid {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+    }
+
+    /* Left side selectors */
+    .biolab-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .selector-group {
+      background: var(--bg-dark);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      padding: 20px;
+      transition: var(--transition-smooth);
+    }
+
+    .selector-group:hover {
+      border-color: rgba(211, 84, 0, 0.2);
+    }
+
+    .selector-label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .option-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 6px;
+      padding: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: var(--transition-smooth);
+    }
+
+    .option-card:hover {
+      border-color: var(--color-primary);
+      background: var(--bg-card-hover);
+    }
+
+    .option-card.active {
+      border-color: var(--color-accent);
+      background: rgba(243, 156, 18, 0.08);
+      box-shadow: inset 0 0 8px rgba(243, 156, 18, 0.1);
+    }
+
+    .option-name {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .option-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Right side HUD & Shopping list */
+    .biolab-hud {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .hud-panel {
+      background: var(--bg-dark);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: inset 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .hud-title {
+      font-size: 0.9rem;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 0;
+      margin-bottom: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+    }
+
+    .stat-lbl {
+      color: var(--text-secondary);
+    }
+
+    .stat-val {
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+
+    .stat-val.highlight-gold {
+      color: var(--color-accent);
+    }
+
+    .stat-val.highlight-green {
+      color: var(--color-green);
+    }
+
+    /* Shopping List items */
+    .material-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: var(--bg-card);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255,255,255,0.02);
+      transition: var(--transition-smooth);
+    }
+
+    .material-item:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(243, 156, 18, 0.15);
+    }
+
+    .mat-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mat-source {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .mat-qty {
+      font-weight: bold;
+      background: rgba(255,255,255,0.05);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    /* Build Sequence simulation styling */
+    .biolab-forge-action {
+      margin-top: 15px;
+    }
+
+    .btn-forge-companion {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, #e67e22 100%);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(211, 84, 0, 0.35);
+      transition: var(--transition-smooth);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-forge-companion:hover:not(:disabled) {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(211, 84, 0, 0.5);
+    }
+
+    .btn-forge-companion:disabled {
+      background: #2c3e50;
+      color: var(--text-secondary);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Craft Timer / Progress Bar */
+    .crafting-progress-container {
+      display: none;
+      margin-top: 15px;
+      background: var(--bg-darker);
+      border: 1px solid rgba(211, 84, 0, 0.2);
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .crafting-progress-bar {
+      height: 6px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .crafting-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      border-radius: 3px;
+      transition: width 0.1s linear;
+    }
+
+    .spin-deimos {
+      display: inline-block;
+      animation: deimos-spin 2s linear infinite;
+    }
+
+    @keyframes deimos-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Custom Checkbox overlay styling for quick tracking */
+    .card-tracker-cb {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .card-tracker-cb input {
+      cursor: pointer;
+      width: 14px;
+      height: 14px;
+      margin: 0;
+    }
+
+    .card-tracker-cb.checked-state {
+      border-color: var(--color-green);
+      color: var(--color-green);
+      background: rgba(46, 204, 113, 0.1);
+    }
+
+    .completed-overlay-banner {
+      background: rgba(46, 204, 113, 0.1);
+      border: 1px solid var(--color-green);
+      padding: 10px;
+      border-radius: 6px;
+      color: var(--color-green);
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    @media print {
+      .back-btn-container, .genus-tabs, .biolab-forge-action, .card-tracker-cb, .print-btn {
+        display: none !important;
+      }
+    }
+
+.container {
+  /* Single back-box panel wrapping the whole page — title, command center, and
+     all 11 divisions now live inside one panel (matches Warframe_Mods_Database). */
+  max-width: 1750px; width: 100%; margin-left: auto; margin-right: auto; box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(12, 16, 28, 0.94), rgba(9, 12, 22, 0.98));
+  border: 1.5px solid #1f2a3e;
+  border-radius: 20px;
+  padding: 3rem 2.5rem 1.5rem;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.7);
+}
+
+.foundry-page-header {
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.foundry-page-header .subtitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+
+/* Division strategy-note panel — matches Warframe_Mods_Database.html's
+   contained info-panel pattern (accent-bordered, labeled rows) so each
+   Foundry division opens into the same "everything contained" look. */
+.strategy-note {
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-left: 4px solid var(--note-accent, var(--accent-gold));
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 28px;
+}
+.strategy-note-full { grid-column: 1 / -1; }
+.strategy-note-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--note-accent, var(--accent-gold));
+    margin-bottom: 4px;
+}
+.strategy-note-value {
+    font-size: 0.82rem;
+    color: #b0c4d8;
+    line-height: 1.55;
+}
+.strategy-note-value strong { color: #e2e8f0; }
+.strategy-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin: 2px 3px 2px 0;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #e2e8f0;
+}
+
+/* Per-division progress bar — mirrors the site-wide "Tracked Steps
+   Complete" bar so each division shows its own contained progress,
+   the same way Warframe_Active_Projects_Farming_Hub.html does per project. */
+.division-progress { margin-bottom: 18px; }
+.division-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #94a3b8;
+}
+.division-progress-header .division-progress-count { color: var(--note-accent, #ffab00); }
+.division-progress-track {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.division-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--note-accent, #ffab00), rgba(255,255,255,0.6));
+    border-radius: 3px;
+    transition: width 0.2s ease;
+}
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Tenno_Foundry.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a id="nav-next-top" href="Warframe_Relics_Database.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+    <div class="container">
+    <header class="foundry-page-header">
+        <h1>&#128296; Foundry Operations Center</h1>
+        <p class="subtitle"><span aria-hidden="true">&#9881;</span> Orbiter Manufacturing Network</p>
+        <p style="font-family:'Inter',sans-serif; font-size:1rem; color:#94a3b8; margin:0; line-height:1.6;">Select a production division to review its existing projects, resource routes, and construction checklists. This command center is the visual foundation for the full eleven-division Foundry expansion.</p>
+    </header>
+    
+      <section class="foundry-command-center">
+        <!-- Horizontal stats bar -->
+        <div style="display:flex; gap:32px; align-items:center; padding-bottom:1.2rem; margin-bottom:1.2rem; border-bottom:1px solid rgba(255,255,255,0.08); flex-wrap:wrap;">
+            <div><span style="display:block; color:#94a3b8; font-size:0.72rem; font-weight:800; letter-spacing:0.13em; text-transform:uppercase; margin-bottom:3px;">Divisions Online</span><strong style="color:#fff7dc; font-size:1.5rem;">11 / 11</strong></div>
+            <div><span style="display:block; color:#94a3b8; font-size:0.72rem; font-weight:800; letter-spacing:0.13em; text-transform:uppercase; margin-bottom:3px;">Tracked Steps Complete</span><strong id="foundry-overall-progress" style="color:#fff7dc; font-size:1.5rem;">0%</strong><div class="foundry-progress-track" aria-hidden="true"><div class="foundry-progress-fill" id="foundry-overall-progress-fill"></div></div></div>
+            <div><span style="display:block; color:#94a3b8; font-size:0.72rem; font-weight:800; letter-spacing:0.13em; text-transform:uppercase; margin-bottom:3px;">Divisions With Checklists</span><strong id="foundry-ready-count" style="color:#fff7dc; font-size:1.5rem;">0</strong></div>
+        </div>
+
+        <div class="foundry-tools">
+          <label class="foundry-search-wrap" for="foundry-category-search">
+            <span aria-hidden="true">&#8981;</span>
+            <input id="foundry-category-search" type="search" placeholder="Search weapons, vehicles, companions, keys, mining..." autocomplete="off">
+          </label>
+          <button class="foundry-reset-btn" id="foundry-clear-search" type="button">Clear Search</button>
+        </div>
+
+        <div class="foundry-category-grid" id="foundry-category-grid">
+          <a href="#cat-weapons" class="foundry-category-card menu-tile" data-category="weapons" data-tone="orange" data-search="weapons primary secondary melee blueprints ingredients pennant"><span class="foundry-category-number">01</span><span><span class="foundry-category-icon">&#9876;</span><span class="menu-tile-title">Weapons</span><span class="menu-tile-desc">Blueprint dependencies, base-weapon ingredients, and arsenal construction projects.</span><span class="foundry-card-footer"><span>Arsenal Division</span><span class="foundry-card-status">Review</span></span></span></a>
+          <a href="#cat-archwing" class="foundry-category-card menu-tile" data-category="archwing" data-tone="blue" data-search="archwing vehicles necramech voidrig amesha railjack"><span class="foundry-category-number">02</span><span><span class="foundry-category-icon">&#128640;</span><span class="menu-tile-title">Archwing &amp; Vehicles</span><span class="menu-tile-desc">Space-combat frames, Necramechs, launch systems, and vehicle assembly.</span><span class="foundry-card-footer"><span>Mobility Division</span><span class="foundry-card-status">Tracked</span></span></span></a>
+          <a href="#cat-companions" class="foundry-category-card menu-tile" data-category="companions" data-tone="green" data-search="companions sentinels vulpaphyla predasite helios pets"><span class="foundry-category-number">03</span><span><span class="foundry-category-icon">&#128062;</span><span class="menu-tile-title">Companions</span><span class="menu-tile-desc">Sentinels, biological companions, modular breeds, and incubation planning.</span><span class="foundry-card-footer"><span>Bio-Lab Division</span><span class="foundry-card-status">Interactive</span></span></span></a>
+          <a href="#cat-landing" class="foundry-category-card menu-tile" data-category="landing" data-tone="cyan" data-search="landing craft liset mantis scimitar xiphos parallax air support"><span class="foundry-category-number">04</span><span><span class="foundry-category-icon">&#128640;</span><span class="menu-tile-title">Landing Craft</span><span class="menu-tile-desc">Craft components, rare drop sources, and Air Support configurations.</span><span class="foundry-card-footer"><span>Flight Division</span><span class="foundry-card-status">Reference</span></span></span></a>
+          <a href="#cat-kdrive" class="foundry-category-card menu-tile" data-category="kdrive" data-tone="violet" data-search="k-drive ventkids roky fortuna board reactor nose jet race standing yareli"><span class="foundry-category-number">05</span><span><span class="foundry-category-icon">&#128757;</span><span class="menu-tile-title">K-Drive</span><span class="menu-tile-desc">Ventkids standing, modular board parts, races, crafting, and final assembly.</span><span class="foundry-card-footer"><span>Ventkids Division</span><span class="foundry-card-status">Expanded</span></span></span></a>
+          <a href="#cat-amps" class="foundry-category-card menu-tile" data-category="amps" data-tone="cyan" data-search="amps operator quills vox solaris prism scaffold brace eidolon toroid"><span class="foundry-category-number">06</span><span><span class="foundry-category-icon">&#9889;</span><span class="menu-tile-title">Amps</span><span class="menu-tile-desc">Operator weapon components, standing ladders, toroid farming, and modular assembly paths.</span><span class="foundry-card-footer"><span>Operator Division</span><span class="foundry-card-status">Expanded</span></span></span></a>
+          <a href="#cat-appearances" class="foundry-category-card menu-tile" data-category="appearances" data-tone="rose" data-search="appearances cosmetics ephemera syandana armor lich sister kavat kubrow"><span class="foundry-category-number">07</span><span><span class="foundry-category-icon">✦</span><span class="menu-tile-title">Appearances</span><span class="menu-tile-desc">Gameplay-earned cosmetics, Ephemeras, collars, and special appearance blueprints.</span><span class="foundry-card-footer"><span>Cosmetics Division</span><span class="foundry-card-status">Expanded</span></span></span></a>
+          <a href="#cat-gear" class="foundry-category-card menu-tile" data-category="gear" data-tone="green" data-search="gear ciphers restores energy pads consumables specters apothics forma drone"><span class="foundry-category-number">08</span><span><span class="foundry-category-icon">&#129514;</span><span class="menu-tile-title">Gear</span><span class="menu-tile-desc">Bulk consumables, restores, ciphers, scanners, specters, and mission equipment.</span><span class="foundry-card-footer"><span>Support Division</span><span class="foundry-card-status">Expanded</span></span></span></a>
+          <a href="#cat-keys" class="foundry-category-card menu-tile" data-category="keys" data-tone="violet" data-search="keys dragon keys vault corrupted mods assassination mission access nav coordinate"><span class="foundry-category-number">09</span><span><span class="foundry-category-icon">&#128477;&#65039;</span><span class="menu-tile-title">Keys</span><span class="menu-tile-desc">Mission access devices, Dragon Keys, boss entry items, and repeatable blueprints.</span><span class="foundry-card-footer"><span>Access Division</span><span class="foundry-card-status">Expanded</span></span></span></a>
+          <a href="#cat-mining" class="foundry-category-card menu-tile" data-category="mining" data-tone="blue" data-search="mining gems ores alloys refinement cetus fortuna deimos thaumica necrathene"><span class="foundry-category-number">10</span><span><span class="foundry-category-icon">&#128142;</span><span class="menu-tile-title">Mining</span><span class="menu-tile-desc">Open-world extraction, refined gems, alloys, processed ore, and vendor blueprints.</span><span class="foundry-card-footer"><span>Materials Division</span><span class="foundry-card-status">Expanded</span></span></span></a>
+          <a href="#cat-misc" class="foundry-category-card menu-tile" data-category="misc" data-tone="orange" data-search="miscellaneous quest beacons disruptors ciphers event items oddities injector fomorian razorback"><span class="foundry-category-number">11</span><span><span class="foundry-category-icon">&#9881;</span><span class="menu-tile-title">Miscellaneous</span><span class="menu-tile-desc">Quest devices, event constructs, invasion injectors, and specialized Foundry items.</span><span class="foundry-card-footer"><span>Special Projects</span><span class="foundry-card-status">Expanded</span></span></span></a>
+          <div class="foundry-no-results" id="foundry-no-results">No Foundry division matches that search.</div>
+        </div>
+      </section>
+<div class="category-section" id="section-cat-weapons">
+<h2 id="cat-weapons" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x2694;&#xFE0F; 1. Weapons</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Blueprints and component farming checklists for primary, secondary, and melee arsenals.</p>
+    <div class="division-progress" style="--note-accent: #ffab00;">
+        <div class="division-progress-header"><span>Division Progress</span><span class="division-progress-count">0/22 Steps</span></div>
+        <div class="division-progress-track"><div class="division-progress-fill"></div></div>
+    </div>
+    <div class="strategy-note" style="--note-accent: #ffab00;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">Most weapon blueprints need a mix of <strong>credits, resources, and a build timer</strong> (typically 12 hours to 3 days). A handful of upgrade weapons also consume a fully-built base weapon as a crafting ingredient — build the base first, then the upgrade.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Keep-Until-Used Ingredients</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Miter</span><span class="strategy-tag">Grakata</span><span class="strategy-tag">Mutalist Cernos</span><span class="strategy-tag">Dual Skana</span><span class="strategy-tag">Kama</span><span class="strategy-tag">Kogake</span> — do not sell or dissolve these until their upgrade is built.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">Queue your <strong>highest-priority blueprint first</strong> — the Foundry only builds one item at a time per slot. Check ingredient requirements before queuing so you are not stalled mid-build waiting on a farm.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <!-- PENNANT BUILDS -->
+        <div class="card" style="margin-bottom: 24px;">
+            <h2>
+                <span>Critical Crafting Ingredients (Keep Until Used)</span>
+            </h2>
+            <p class="desc-text">
+                These weapons are <strong>not dead-ends</strong>. They serve as physical ingredients required in the Foundry to craft upgraded, twin, or entirely new weapons. Keep these base weapons in your inventory (or waiting in your Foundry) until you have fully consumed them to build their upgrades!
+            </p>
+
+            <div class="grid-2col">
+                <!-- PRIMARIES & MELEES -->
+                <div class="box">
+                    <h4 style="color: #ffab00; font-size: 1.15rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;"> Primary Recipe Roles</h4>
+                    <ul class="task-list" style="margin-bottom: 20px;">
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-miter" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Miter</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Panthera</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-grakata" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Grakata</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Twin Grakatas</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-mutalist-cernos" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Mutalist Cernos</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Proboscis Cernos</div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <h4 style="color: #ffab00; font-size: 1.15rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">Melee Recipe Roles</h4>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-dual-skana" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Dual Skana</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Redeemer</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-kama" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Kama</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Dual Kamas</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-kogake" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Kogake</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Hirudo</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-ankyros" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Ankyros</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Tekko</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-amphis" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Amphis</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Sydon</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- SECONDARIES -->
+                <div class="box">
+                    <h4 style="color: #ffab00; font-size: 1.15rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;"> Secondary Recipe Roles</h4>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-furis" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Furis</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Afuris</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-kunai" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Kunai</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Tysis</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-lato" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Lato</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Bolto & Aklato</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-bolto" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Bolto</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Akbolto</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-akbolto" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Akbolto</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Akjagara</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-kraken" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Kraken</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Kulstar</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-viper" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Viper</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Twin Vipers</div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <input type="checkbox" id="weap-ing-gammacor" style="margin-top: 3px; cursor: pointer;">
+                            <div class="task-content">
+                                <div class="task-title" style="font-weight: bold; color: var(--text-primary);">Gammacor</div>
+                                <div class="task-desc" style="font-size: 0.8rem; color: var(--text-secondary);">Required for: Synoid Gammacor</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="grid-column: 1 / -1;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">Pennant: Acquisition & Crafting</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Checklist</span>
+            </div>
+            <p style="color: #aaa;">Requirements to farm and craft the Pennant Two-Handed Nikana.</p>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="pennant-blueprint"><div class="task-content"><div class="task-title">Pennant Blueprint</div><div class="task-desc">Farm Grineer Commanders/Captains in Veil Proxima Railjack missions (e.g., Flexa, Gian Point) or buy from players.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="pennant-credits"><div class="task-content"><div class="task-title">15,000 Credits</div><div class="task-desc">Standard manufacturing fee.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="pennant-ticor"><div class="task-content"><div class="task-title">6x Ticor Plate</div><div class="task-desc">Common alloy farmed from Railjack missions (specifically Earth/Saturn/Veil Proxima).</div></div></li>
+                <li class="task-item"><input type="checkbox" id="pennant-gallium"><div class="task-content"><div class="task-title">15x Gallium</div><div class="task-desc">Rare resource farmed on Mars or Uranus.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="pennant-carbides"><div class="task-content"><div class="task-title">2,500x Carbides</div><div class="task-desc">Farmed from Grineer enemies in Railjack missions (specifically Earth/Saturn Proxima).</div></div></li>
+                <li class="task-item"><input type="checkbox" id="pennant-alloy"><div class="task-content"><div class="task-title">3,000x Alloy Plate</div><div class="task-desc">Common resource farmed on Venus, Ceres, Jupiter, Phobos, Pluto, and Sedna.</div></div></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F528; Pennant: Heavy Slammer Build</h3>
+                <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Core Meta</span>
+            </div>
+            
+            <div class="intro" style="margin-bottom: 15px; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 6px; border-left: 3px solid var(--accent);">
+                The <strong>Pennant</strong> Two-Handed Nikana grants a <strong>+100% Melee Attack Speed buff on Heavy Kill</strong>. Heavy attacks with Two-Handed Nikanas have <strong>guaranteed Slash procs</strong> (bypassing armor).
+            </div>
+
+            <p>Using Initial Combo locks you at 2x Combo so every heavy attack deals double damage instantly:</p>
+            <ul>
+                <li><strong>Stance:</strong> Wise Razor <em>(Mandatory stance)</em></li>
+                <li><strong>Initial Combo:</strong> Corrupt Charge <em>(+30 Initial Combo)</em></li>
+                <li><strong>Critical Setup:</strong> Sacrificial Steel <em>(+440% CC on heavy attacks)</em></li>
+                <li><strong>Base Damage:</strong> Sacrificial Pressure</li>
+                <li><strong>Critical Damage:</strong> Amalgam Organ Shatter <em>(+85% CD, +60% Wind-up Speed)</em></li>
+                <li><strong>Heavy Wind-up Speed:</strong> Killing Blow <em>(+120% Damage, +60% Wind-up Speed)</em></li>
+                <li><strong>Elemental (Viral):</strong> Primed Fever Strike + North Wind</li>
+                <li><strong>Range:</strong> Primed Reach</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x2694;&#xFE0F; Pennant: Hybrid Tennokai Build</h3>
+                <span class="type-tag" style="background: rgba(0, 229, 255, 0.1); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.3);">Endgame</span>
+            </div>
+            <p>If you have access to the Melee Exilus slot and Tennokai mods, use this 12x combo scaling configuration:</p>
+            <ul>
+                <li><strong>Exilus/Tennokai:</strong> Dreamer's Wrath or Discipline's Merit <em>(Free full-damage heavy attacks)</em></li>
+                <li><strong>Combo Modding:</strong> Blood Rush <em>(Up to +440% CC at 12x)</em>, Weeping Wounds <em>(Up to +440% SC)</em></li>
+                <li><strong>Base Damage Scaling:</strong> Condition Overload <em>(+80% Melee Damage per status)</em></li>
+                <li><strong>Primer Strategy:</strong> Shoot groups with a Kuva Nukor or Epitaph before hitting Tennokai to deal millions of damage.</li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+<div class="category-section" id="section-cat-archwing">
+<h2 id="cat-archwing" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x1F680; 2. Archwing & Vehicles</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Blueprints and parts checklists for constructing space combat frames.</p>
+    <div class="division-progress" style="--note-accent: #3b82f6;">
+        <div class="division-progress-header"><span>Division Progress</span><span class="division-progress-count">0/14 Steps</span></div>
+        <div class="division-progress-track"><div class="division-progress-fill"></div></div>
+    </div>
+    <div class="strategy-note" style="--note-accent: #3b82f6;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">This division splits in two: the <strong>Voidrig Necramech</strong> is a progression-gate build required for the New War questline, while the <strong>Amesha Archwing</strong> is an optional but powerful support build. Prioritize Voidrig if you have not cleared New War yet.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Priority Path</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Voidrig Blueprint</span><span class="strategy-tag">Casing</span><span class="strategy-tag">Engine</span><span class="strategy-tag">Capsule</span><span class="strategy-tag">Weapon Pod</span> — required. Amesha's 4 phases are optional.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">Voidrig's rare Deimos components (<strong>Cabochon Xenorhast, Trapezium Xenorhast</strong>) come from Isolation Vault bounties — farm those before queuing the build so the 72-hour timer isn't wasted waiting on parts.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <!-- AMESHA FARMING PLAN -->
+        <!-- PROJECT 3: VOIDRIG NECRAMECH -->
+        <div class="card card-necramech" id="project-necramech">
+            <div class="card-header">
+                <h2 class="card-title"> Voidrig Necramech (Progression Gate)</h2>
+                <a href="Warframe_Endgame_Systems_Codex.html" class="view-guide-btn" style="border-color: var(--violet-color); color: #fff;"> View Endgame Systems Codex</a>
+            </div>
+
+            <div style="position: relative; margin-bottom: 15px;">
+                <div class="progress-text" id="progress-text-necramech">0% Completed (0/5 Steps)</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar-necramech"></div>
+                </div>
+            </div>
+            
+            <p style="color: #aaa; margin-top: 15px;">Farming and assembly checklists for Voidrig, the essential Necramech needed for the New War quest.</p>
+            <ul class="task-list" id="necramech-steps">
+                <li class="task-item"><input type="checkbox" id="necramech-blueprint"><div class="task-content"><div class="task-title">Voidrig Blueprint</div><div class="task-desc">Purchase from Loid in Necralisk for 5,000 Standing (requires Rank 1 clearance with Necraloid).</div></div></li>
+                <li class="task-item"><input type="checkbox" id="necramech-casing"><div class="task-content"><div class="task-title">Voidrig Casing</div><div class="task-desc">Craft with: Damaged Necramech Casing, 120x Adramal Alloy, 16x Stellated Necrathene, 40x Spinal Core Section.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="necramech-engine"><div class="task-content"><div class="task-title">Voidrig Engine</div><div class="task-desc">Craft with: Damaged Necramech Engine, 100x Tempered Bapholite, 2x Cabochon Embolos, 15x Biotic Filter.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="necramech-capsule"><div class="task-content"><div class="task-title">Voidrig Capsule</div><div class="task-desc">Craft with: Damaged Necramech Capsule, 120x Venerdo Alloy, 2x Cabochon Xenorhast, 4x Scintillant.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="necramech-weapon"><div class="task-content"><div class="task-title">Voidrig Weapon Pod</div><div class="task-desc">Craft with: Damaged Necramech Weapon Pod, 80x Namalon, 1x Trapezium Xenorhast, 6x Cranial Foremount.</div></div></li>
+            </ul>
+        </div>
+        <div class="card" style="grid-column: 1 / -1;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F680; Amesha Support Archwing</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Checklist</span>
+            </div>
+            
+            <p style="color: #aaa;">Interactive checklist for acquiring the best support Archwing in Warframe.</p>
+
+            <ul class="task-list" id="amesha-phase1" style="margin-bottom: 20px;">
+                <h4>&#128203; Phase 1: Blueprint Acquisition</h4>
+                <li class="task-item"><input type="checkbox" id="amesha-clan"><div class="task-content"><div class="task-title">Join a Clan</div><div class="task-desc">Ensure you are in a Clan that has the Amesha researched in their Tenno Lab.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="amesha-buy"><div class="task-content"><div class="task-title">Purchase Blueprints</div><div class="task-desc">Buy the Main, Harness, Systems, and Wings blueprints (~60k Credits).</div></div></li>
+            </ul>
+
+            <ul class="task-list" id="amesha-phase2" style="margin-bottom: 20px;">
+                <h4>&#11088; Phase 2: Rare &amp; Time-Gated Resources</h4>
+                <li class="task-item"><input type="checkbox" id="amesha-nitain"><div class="task-content"><div class="task-title">Acquire 4x Nitain Extract</div><div class="task-desc">Purchase from the Nightwave Cred Offerings store.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="amesha-invasion"><div class="task-content"><div class="task-title">Acquire Invasion Resources</div><div class="task-desc">Obtain 1x Detonite Injector, 1x Mutagen Mass, and 1x Fieldron.</div></div></li>
+            </ul>
+
+            <ul class="task-list" id="amesha-phase3" style="margin-bottom: 20px;">
+                <h4>&#9935;&#xFE0F; Phase 3: Bulk Resource Farming</h4>
+                <li class="task-item"><input type="checkbox" id="amesha-ophelia"><div class="task-content"><div class="task-title">Uranus (Ophelia) Mega-Farm</div><div class="task-desc">Farm 3x Tellurium, 5,650x Polymer Bundle, and 1,350x Plastids.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="amesha-io"><div class="task-content"><div class="task-title">Jupiter (Io) Oxium Grind</div><div class="task-desc">Farm 2,200x Oxium by destroying Oxium Ospreys.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="amesha-excav"><div class="task-content"><div class="task-title">Earth (Everest) Cryotic Dig</div><div class="task-desc">Farm 1,250x Cryotic (13 complete Excavators).</div></div></li>
+            </ul>
+
+            <ul class="task-list" id="amesha-phase4">
+                <h4>&#128296; Phase 4: Crafting</h4>
+                <li class="task-item"><input type="checkbox" id="amesha-craft-parts"><div class="task-content"><div class="task-title">Craft Components</div><div class="task-desc">Start crafting the Harness, Systems, and Wings (72 hours).</div></div></li>
+                <li class="task-item"><input type="checkbox" id="amesha-craft-main"><div class="task-content"><div class="task-title">Craft Amesha Main</div><div class="task-desc">Claim components and start the final build (12 hours).</div></div></li>
+            </ul>
+        </div>
+    </div>
+    </div>
+
+<div class="category-section" id="section-cat-companions">
+<h2 id="cat-companions" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x1F43E; 3. Companions</h2>
+    <div class="division-progress" style="--note-accent: #22c55e;">
+        <div class="division-progress-header"><span>Division Progress</span><span class="division-progress-count">0/5 Steps</span></div>
+        <div class="division-progress-track"><div class="division-progress-fill"></div></div>
+    </div>
+    <div class="strategy-note" style="--note-accent: #22c55e;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">Two build paths: the <strong>Necralisk Bio-Lab</strong> below lets you pick a subspecies, mutagen, and antigen to attune and incubate a custom modular companion; or craft the standard <strong>Helios Prime</strong> Sentinel from relic parts.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Bio-Lab Picks</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Subspecies Breed</span><span class="strategy-tag">Mutagen</span><span class="strategy-tag">Antigen</span> — selection drives the visual mutation, resistance, and starting polarity shown in Attuned Specs.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value"><strong>Argon Crystal decays over time</strong> — farm it in the Void (Mot or Ani) immediately before crafting Helios Prime's Cerebrum and Systems, not in advance.</div>
+        </div>
+    </div>
+<!-- ==========================================
+         NECRALISK BIO-LAB INTERACTIVE SECTION
+         ========================================== -->
+    <div class="biolab-panel">
+      <div class="biolab-header">
+        <div class="biolab-title">
+          <span></span>
+          <div>
+            <h3 style="margin:0; font-size:1.4rem;">&#x1F9EC; Necralisk Bio-Lab</h3>
+            <p style="margin:3px 0 0 0; font-size:0.8rem; color:var(--text-secondary); font-weight:normal;">Deimos Mutagen & Antigen Incubation Chamber</p>
+          </div>
+        </div>
+
+        <div class="genus-tabs">
+          <button class="genus-tab active" onclick="switchGenus('vulpaphyla')">Vulpaphyla Genus</button>
+          <button class="genus-tab" onclick="switchGenus('predasite')">Predasite Genus</button>
+        </div>
+      </div>
+
+      <div class="biolab-grid">
+        <!-- Left Side: Configurator -->
+        <div class="biolab-controls">
+          
+          <!-- Subspecies Select -->
+          <div class="selector-group">
+            <span class="selector-label">Select Subspecies Breed</span>
+            <div class="options-grid" id="subspecies-options">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+
+          <!-- Mutagen Select -->
+          <div class="selector-group">
+            <span class="selector-label">Select Mutagen (Tail Mutation & Resistance)</span>
+            <div class="options-grid" id="mutagen-options">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+
+          <!-- Antigen Select -->
+          <div class="selector-group">
+            <span class="selector-label">Select Antigen (Forehead Crest & Mod Polarity)</span>
+            <div class="options-grid" id="antigen-options">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Side: Realtime HUD / Specs / Materials -->
+        <div class="biolab-hud">
+          
+          <!-- Holographic Blueprint Summary -->
+          <div class="hud-panel" style="border-left: 3px solid var(--color-accent);">
+            <h4 class="hud-title"><span>Attuned Specs</span> <span id="hud-breed-badge" class="type-tag" style="font-size:0.6rem;">Panzer</span></h4>
+            
+            <div class="stat-row">
+              <span class="stat-lbl">Active Breed:</span>
+              <span class="stat-val" id="spec-breed">Panzer Vulpaphyla</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-lbl">Visual Mutation (Tail):</span>
+              <span class="stat-val highlight-gold" id="spec-tail">Spiked Quill Fins</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-lbl">Visual Mutation (Head):</span>
+              <span class="stat-val highlight-gold" id="spec-head">Spiked Horn Crest</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-lbl">Attuned Resistance:</span>
+              <span class="stat-val highlight-gold" id="spec-resist">Alloy Armor (+Rad Resist)</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-lbl">Initial Polarities:</span>
+              <span class="stat-val highlight-green" id="spec-polarity">Madurai (V)</span>
+            </div>
+            <div class="stat-row" style="margin-top: 12px; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+              <span class="stat-lbl">Description:</span>
+              <span class="stat-val" id="spec-desc" style="font-weight:normal; text-align:right; color:var(--text-secondary); max-width:65%;">Spreads Viral spores via Viral Quills and has self-revive Panzer Devolution.</span>
+            </div>
+          </div>
+
+          <!-- Shopping List -->
+          <div class="hud-panel">
+            <h4 class="hud-title">Materials Shopping List</h4>
+            <div id="shopping-list">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+
+          <!-- Build triggers -->
+          <div class="biolab-forge-action">
+            <button class="btn-forge-companion" id="btn-forge" onclick="startBioLabIncubation()">
+              <span></span> Attune & Incubate Breed
+            </button>
+
+            <!-- Crafting sequence UI -->
+            <div class="crafting-progress-container" id="craft-progress-box">
+              <div class="crafting-progress-header">
+                <span style="color: var(--color-accent); font-weight:bold;"><span class="spin-deimos">&#128308;</span> Attuning Mutagenic Matrix...</span>
+                <span id="craft-timer" style="color:var(--text-secondary);">30s remaining</span>
+              </div>
+              <div class="crafting-progress-bar">
+                <div class="crafting-progress-fill" id="craft-progress-fill"></div>
+              </div>
+            </div>
+
+            <!-- Obtained banner if owned -->
+            <div class="completed-overlay-banner" id="lab-acquired-banner" style="display:none;">
+               Matrix Completed & Attuned Breed Acquired!
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+            
+        <div class="card" style="margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F916; Helios Prime (Sentinel)</h3>
+                <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Prime Crafting</span>
+            </div>
+            <p>Helios Prime automatically scans enemies and objects to fill your Codex and pairs perfectly with the Deconstructor Prime melee weapon.</p>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="chk-helios-bp"><div class="task-content"><div class="task-title">Helios Prime Blueprint</div><div class="task-desc">Lith H2 (Rare), Meso H1 (Rare)</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-helios-cerebrum"><div class="task-content"><div class="task-title">Helios Prime Cerebrum</div><div class="task-desc">Axi H1 (Uncommon), Neo N11 (Common)</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-helios-carapace"><div class="task-content"><div class="task-title">Helios Prime Carapace</div><div class="task-desc">Lith V8 (Common), Neo V8 (Common)</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-helios-systems"><div class="task-content"><div class="task-title">Helios Prime Systems</div><div class="task-desc">Axi C7 (Uncommon), Meso C1 (Common)</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-helios-argon"><div class="task-content"><div class="task-title">Argon Crystal (1x)</div><div class="task-desc">Farm in the Void (Mot or Ani) right before crafting, as Argon decays.</div></div></li>
+            </ul>
+        </div>
+    </div>
+
+<div class="category-section" id="section-cat-landing">
+<h2 id="cat-landing" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x1F6F8; 4. Landing Craft</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Blueprints and parts checklists for constructing custom Landing Craft support ships.</p>
+    <div class="division-progress" style="--note-accent: #06b6d4;">
+        <div class="division-progress-header"><span>Division Progress</span><span class="division-progress-count">0/16 Steps</span></div>
+        <div class="division-progress-track"><div class="division-progress-fill"></div></div>
+    </div>
+    <div class="strategy-note" style="--note-accent: #06b6d4;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">Each of the four ships (Mantis, Scimitar, Xiphos, Parallax) needs its <strong>Main Blueprint bought from the Market</strong> plus three passively-farmed parts (Avionics, Fuselage, Engines) from a different rare drop source per ship.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Air Support by Ship</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Mantis: Med Tower</span><span class="strategy-tag">Scimitar: Carpet Bomb</span><span class="strategy-tag">Xiphos: Sentry Turret</span><span class="strategy-tag">Parallax: Orokin Eye</span></div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">Buy all four <strong>Main Blueprints</strong> (15,000 Credits each) up front — they never drop, so getting them off your checklist early lets you focus purely on farming parts.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <div class="card" style="grid-column: 1 / -1;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F6F8; Landing Craft Drop Sources</h3>
+                <span class="type-tag" style="background: rgba(0, 229, 255, 0.1); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.3);">Passive Farm</span>
+            </div>
+            <p>Landing Craft components drop from specific rare containers, open-world activities, or bosses. Collect all three parts (Avionics, Fuselage, Engines) and purchase the Main Blueprint from the Market to craft.</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left;">
+                    <th style="padding: 8px;">Ship</th>
+                    <th style="padding: 8px;">Drop Source (Avionics, Fuselage, Engines)</th>
+                    <th style="padding: 8px;">Air Support Ability</th>
+                </tr>
+                <tr style="border-bottom: 1px dashed rgba(255,255,255,0.05);">
+                    <td style="padding: 8px; color: #ffab00; font-weight: bold;">Mantis</td>
+                    <td style="padding: 8px;">Rare Containers (Grineer, Corpus, Orokin)</td>
+                    <td style="padding: 8px;">Med Tower (Spawns health healing pod)</td>
+                </tr>
+                <tr style="border-bottom: 1px dashed rgba(255,255,255,0.05);">
+                    <td style="padding: 8px; color: #ffab00; font-weight: bold;">Scimitar</td>
+                    <td style="padding: 8px;">Assassins (Stalker: Avionics, Zanuka: Fuselage, Grustrag Three: Engines)</td>
+                    <td style="padding: 8px;">Carpet Bomb (Launches airstrike coordinates)</td>
+                </tr>
+                <tr style="border-bottom: 1px dashed rgba(255,255,255,0.05);">
+                    <td style="padding: 8px; color: #ffab00; font-weight: bold;">Xiphos</td>
+                    <td style="padding: 8px;">Reactor Sabotage Caches (Clear all 3 resource caches)</td>
+                    <td style="padding: 8px;">Sentry Turret (Deploys auto-firing turret)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; color: #ffab00; font-weight: bold;">Parallax</td>
+                    <td style="padding: 8px;">Zariman Ten Zero (Rare reinforcement containers)</td>
+                    <td style="padding: 8px;">Orokin Eye (Scans for rare medallions & sculptures)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F527; Mantis Construction</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Checklist</span>
+            </div>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="chk-mantis-bp"><div class="task-content"><div class="task-title">Mantis Blueprint</div><div class="task-desc">Buy from the Market for 15,000 Credits.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-mantis-avionics"><div class="task-content"><div class="task-title">Mantis Avionics</div><div class="task-desc">Farmed from Rare Orokin Containers.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-mantis-fuselage"><div class="task-content"><div class="task-title">Mantis Fuselage</div><div class="task-desc">Farmed from Rare Grineer Containers.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-mantis-engines"><div class="task-content"><div class="task-title">Mantis Engines</div><div class="task-desc">Farmed from Rare Corpus Containers.</div></div></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F527; Scimitar Construction</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Checklist</span>
+            </div>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="chk-scimitar-bp"><div class="task-content"><div class="task-title">Scimitar Blueprint</div><div class="task-desc">Buy from the Market for 15,000 Credits.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-scimitar-avionics"><div class="task-content"><div class="task-title">Scimitar Avionics</div><div class="task-desc">Dropped by the Shadow Stalker / Stalker.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-scimitar-fuselage"><div class="task-content"><div class="task-title">Scimitar Fuselage</div><div class="task-desc">Dropped by the Zanuka Hunter.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-scimitar-engines"><div class="task-content"><div class="task-title">Scimitar Engines</div><div class="task-desc">Dropped by the Grustrag Three.</div></div></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F527; Xiphos Construction</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Checklist</span>
+            </div>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="chk-xiphos-bp"><div class="task-content"><div class="task-title">Xiphos Blueprint</div><div class="task-desc">Buy from the Market for 15,000 Credits.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-xiphos-avionics"><div class="task-content"><div class="task-title">Xiphos Avionics</div><div class="task-desc">Reactor Sabotage cache reward (Infested/Corpus).</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-xiphos-fuselage"><div class="task-content"><div class="task-title">Xiphos Fuselage</div><div class="task-desc">Reactor Sabotage cache reward (Grineer).</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-xiphos-engines"><div class="task-content"><div class="task-title">Xiphos Engines</div><div class="task-desc">Reactor Sabotage cache reward (Lua/Jupiter).</div></div></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F527; Parallax Construction</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Checklist</span>
+            </div>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="chk-parallax-bp"><div class="task-content"><div class="task-title">Parallax Blueprint</div><div class="task-desc">Buy from the Market for 15,000 Credits.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-parallax-avionics"><div class="task-content"><div class="task-title">Parallax Avionics</div><div class="task-desc">Farmed from Zariman Meltdown/Reinforcement Containers.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-parallax-fuselage"><div class="task-content"><div class="task-title">Parallax Fuselage</div><div class="task-desc">Farmed from Zariman Meltdown/Reinforcement Containers.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-parallax-engines"><div class="task-content"><div class="task-title">Parallax Engines</div><div class="task-desc">Farmed from Zariman Meltdown/Reinforcement Containers.</div></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="category-section" id="section-cat-kdrive">
+<h2 id="cat-kdrive" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x1F6F9; 5. K-Drive</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Ventkids standing, board parts, and assembly requirements in Fortuna.</p>
+    <div class="division-progress" style="--note-accent: #8b5cf6;">
+        <div class="division-progress-header"><span>Division Progress</span><span class="division-progress-count">0/4 Steps</span></div>
+        <div class="division-progress-track"><div class="division-progress-fill"></div></div>
+    </div>
+    <div class="strategy-note" style="--note-accent: #8b5cf6;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">Buy all 4 parts from <strong>Roky in Fortuna</strong> with Ventkids Standing (5,000 each), craft them in the Foundry, then return to Roky to assemble the finished board.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Custom Board Parts</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Needlenose Board</span><span class="strategy-tag">Scrubber Reactor</span><span class="strategy-tag">Hothead Nose</span><span class="strategy-tag">Steinkröt Jet</span></div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">Equip <strong>any</strong> custom K-Drive as soon as it's assembled — it unlocks K-Drive mod usage and Yareli progression immediately, even before you max Ventkids standing.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F6F9; Custom Meta K-Drive</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Checklist</span>
+            </div>
+            <p>Purchase these blueprints from Roky in Fortuna using Ventkids Standing. Building any custom K-Drive allows you to equip K-Drive mods.</p>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="kdrive-board"><div class="task-content"><div class="task-title">Board: Needlenose</div><div class="task-desc">Cost: 5,000 Standing. High trick multiplier.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="kdrive-reactor"><div class="task-content"><div class="task-title">Reactor: Scrubber</div><div class="task-desc">Cost: 5,000 Standing.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="kdrive-nose"><div class="task-content"><div class="task-title">Nose: Hothead</div><div class="task-desc">Cost: 5,000 Standing.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="kdrive-jet"><div class="task-content"><div class="task-title">Jet: Steinkr&ouml;t</div><div class="task-desc">Cost: 5,000 Standing.</div></div></li>
+            </ul>
+            <p style="margin-top: 10px; font-size: 0.85rem; color: #aaa;"><strong>Assembly:</strong> Craft all 4 parts in your Foundry, then return to Roky in Fortuna to assemble them into a usable K-Drive.</p>
+        </div>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F4C8; Ventkids Standing Route</h3>
+                <span class="type-tag" style="background: rgba(0, 229, 255, 0.1); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.3);">Progression</span>
+            </div>
+            <p>Standing is the real gate on K-Drive progression. Build one board early, then chain races and tricks in Orb Vallis until you unlock the full modular catalog.</p>
+            <ul>
+                <li><strong>Starter standing:</strong> complete nearby Orb Vallis races from Fortuna elevator launch points.</li>
+                <li><strong>Fast fallback:</strong> trick-combo on coolant towers, pipes, and Fortuna rooftops between race resets.</li>
+                <li><strong>Why craft one early:</strong> equipping any custom K-Drive unlocks K-Drive mod usage and Yareli progression steps.</li>
+                <li><strong>Rank gates:</strong> higher Ventkids ranks open the better board parts and cosmetics, not just style variants.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="category-section" id="section-cat-amps">
+<h2 id="cat-amps" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x26A1; 6. Amps</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Quills and Vox Solaris standing, prisms, scaffolds, and braces for Operator combat.</p>
+    <div class="division-progress" style="--note-accent: #06b6d4;">
+        <div class="division-progress-header"><span>Division Progress</span><span class="division-progress-count">0/5 Steps</span></div>
+        <div class="division-progress-track"><div class="division-progress-fill"></div></div>
+    </div>
+    <div class="strategy-note" style="--note-accent: #06b6d4;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">Endgame Amps require maxing <strong>Vox Solaris</strong> standing in Fortuna (farmed via Toroids) to unlock the top-tier Prism, Scaffold, and Brace parts used in the meta builds below.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Meta Builds</div>
+            <div class="strategy-note-value"><span class="strategy-tag">1-7-7 Sniper Focus</span><span class="strategy-tag">7-7-7 Beam Focus</span> — both use Propa Scaffold + Certus Brace, differing only in the Prism.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">Any <strong>Quills-built Amp</strong> beats the starter Mote Amp — build your first real Amp as soon as Quills unlocks rather than waiting to max Vox Solaris standing first.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">Eidolon Meta Amps (1-7-7 & 7-7-7)</h3>
+                <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Vox Solaris</span>
+            </div>
+            <p>To craft the best endgame Amps, you must max your standing with Vox Solaris in Fortuna by farming Toroids. The numbers refer to the tier of the part.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4 style="margin-top: 0; color: #00e5ff;">&#x1F3AF; 1-7-7 (Sniper Focus)</h4>
+                    <ul>
+                        <li><strong>1. Raplak Prism:</strong> Long-range semi-auto (Quills T1).</li>
+                        <li><strong>7. Propa Scaffold:</strong> Timed explosive for massive Eidolon shield damage (Vox Solaris T4).</li>
+                        <li><strong>7. Certus Brace:</strong> +20% Critical Chance (Vox Solaris T4).</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4 style="margin-top: 0; color: #00e5ff;">&#x26A1; 7-7-7 (Beam Focus)</h4>
+                    <ul>
+                        <li><strong>7. Klamora Prism:</strong> Massive, wide short-range void beam (Vox Solaris T4).</li>
+                        <li><strong>7. Propa Scaffold:</strong> Timed explosive (Vox Solaris T4).</li>
+                        <li><strong>7. Certus Brace:</strong> +20% Critical Chance (Vox Solaris T4).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F4CA; Amp Unlock Ladder</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Checklist</span>
+            </div>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="amp-war-within"><div class="task-content"><div class="task-title">Complete The War Within</div><div class="task-desc">Required to unlock full Operator access and begin meaningful Amp progression.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="amp-saya"><div class="task-content"><div class="task-title">Unlock the Quills in Cetus</div><div class="task-desc">Finish Saya's Vigil and meet Onkko to buy the first modular Amp parts.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="amp-solaris"><div class="task-content"><div class="task-title">Reach Vox Solaris access</div><div class="task-desc">Advance Fortuna and Profit-Taker progression enough to begin Vox Solaris standing.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="amp-toroids"><div class="task-content"><div class="task-title">Farm Toroids</div><div class="task-desc">Temple, Enrichment, and Spaceport Toroids are the consistent standing fuel for Vox Solaris.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="amp-build"><div class="task-content"><div class="task-title">Craft a first practical Amp</div><div class="task-desc">Any Quills-built Amp is better than the Mote Amp and unlocks the real Operator power curve.</div></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="category-section" id="section-cat-appearances">
+<h2 id="cat-appearances" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x1F457; 7. Appearances</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Ephemeras, syndanas, and cosmetic blueprints farmed from gameplay (e.g., Lich/Sister hunts).</p>
+    <div class="division-progress" style="--note-accent: #f43f5e;">
+        <div class="division-progress-header"><span>Division Progress</span><span class="division-progress-count">0/6 Steps</span></div>
+        <div class="division-progress-track"><div class="division-progress-fill"></div></div>
+    </div>
+    <div class="strategy-note" style="--note-accent: #f43f5e;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">Cosmetic unlocks here are tied to specific kill or scan gates — the <strong>Smoking Body Ephemera</strong> drops only from the Stalker, and the <strong>Kavat Incubator Segment</strong> drops only from Hyekka Masters — not standard Foundry blueprints.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Priority Path</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Smoking Body Ephemera</span> (Stalker, 5% drop) <span class="strategy-tag">Kavat Incubator Segment</span> (Hyekka Masters)</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">The Ephemera build <strong>consumes a full Ash Systems component</strong> as a sacrifice — do not sell or dissolve Ash parts if you're farming this Ephemera.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x2728; Smoking Body Ephemera</h3>
+                <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Assassin Drop</span>
+            </div>
+            <p>The Smoking Body Ephemera drops from the Stalker. Crafting it requires a rare Warframe component as a sacrifice.</p>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="chk-ephemera-bp"><div class="task-content"><div class="task-title">Ephemera Blueprint</div><div class="task-desc">5% Drop chance from Shadow Stalker.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-ephemera-ash"><div class="task-content"><div class="task-title">Ash Systems</div><div class="task-desc">Farm Venus Proxima (Railjack) Defense missions (Rotation C). Very tedious!</div></div></li>
+                <li class="task-item"><input type="checkbox" id="chk-ephemera-credits"><div class="task-content"><div class="task-title">1,000,000 Credits</div><div class="task-desc">Farm The Index (Neptune) for fast credits.</div></div></li>
+            </ul>
+        </div>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F431; Kavat Incubator Segment Upgrade</h3>
+                <span class="type-tag" style="background: rgba(0, 229, 255, 0.1); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.3);">Companion Cosmetic Path</span>
+            </div>
+            <p>This Foundry segment unlocks Kavats and all of the visual payoff that comes with breeding and appearance customization.</p>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="kavat-segment-bp"><div class="task-content"><div class="task-title">Kavat Incubator Segment Blueprint</div><div class="task-desc">Dropped from Hyekka Masters on Grineer tilesets, especially on higher enemy-density missions.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="kavat-codes"><div class="task-content"><div class="task-title">10 Kavat Genetic Codes</div><div class="task-desc">Scan wild Kavats in Deimos Derelict-style missions or Sands of Inaros runs.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="kavat-alloys"><div class="task-content"><div class="task-title">Open-world alloy and common resources</div><div class="task-desc">Keep a buffer of alloy plate, circuits, and cryotic before starting the upgrade.</div></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="category-section" id="section-cat-gear">
+<h2 id="cat-gear" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x1F392; 8. Gear</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Consumables, ciphers, energy pads, apothics, and specter regimens.</p>
+    <div class="strategy-note" style="--note-accent: #22c55e;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">Bulk consumables should be queued in the background continuously — buy the <strong>100x blueprints once from the Clan Dojo</strong>, then just keep resources stocked to re-queue whenever a batch is claimed.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Always-Stock List</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Ciphers</span><span class="strategy-tag">Energy Restores</span><span class="strategy-tag">Air Support Charges</span><span class="strategy-tag">Specters</span><span class="strategy-tag">Apothics</span></div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">Batch-craft <strong>100x at a time</strong> — the Dojo's discounted bulk blueprints exist so you never waste a Foundry slot building a single-use consumable.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x2699;&#xFE0F; 100x Bulk Gear Crafting</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Consumables</span>
+            </div>
+            <p>You should always be crafting Ciphers and Energy Restores in the background. Buy the 100x Blueprints from the Dojo.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4 style="margin-top: 0;">&#x1F510; 100x Ciphers (1 min)</h4>
+                    <ul>
+                        <li><strong>9,000x Ferrite:</strong> Farm Earth, Mercury, or Void.</li>
+                        <li><strong>9,000x Salvage:</strong> Farm Mars or Jupiter.</li>
+                        <li><strong>250,000 Credits</strong></li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4 style="margin-top: 0;">&#x26A1; 100x Squad Energy Restore (1 min)</h4>
+                    <ul>
+                        <li><strong>5,000x Polymer Bundle:</strong> Farm Uranus (Ophelia).</li>
+                        <li><strong>5,000x Nano Spores:</strong> Farm Deimos or Eris.</li>
+                        <li><strong>250,000 Credits</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F392; Always-Stock Utility Gear</h3>
+                <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Loadout Staples</span>
+            </div>
+            <ul>
+                <li><strong>Ciphers:</strong> mandatory quality-of-life for sorties, fissures, and bounty rotations.</li>
+                <li><strong>Squad Energy Restore:</strong> still useful even when your build is endgame-ready.</li>
+                <li><strong>Air Support Charges:</strong> keep charges for your preferred landing craft ability.</li>
+                <li><strong>Specters:</strong> cheap insurance for solo Steel Path or defense waves.</li>
+                <li><strong>Apothics:</strong> keep one of each Silver Grove apothic type if you still need aura mods.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="category-section" id="section-cat-keys">
+<h2 id="cat-keys" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x1F511; 9. Keys</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Dragon keys, Derelict coordinates, and special boss assassination keys (e.g., Mutalist Alad V).</p>
+    <div class="division-progress" style="--note-accent: #8b5cf6;">
+        <div class="division-progress-header"><span>Division Progress</span><span class="division-progress-count">0/3 Steps</span></div>
+        <div class="division-progress-track"><div class="division-progress-fill"></div></div>
+    </div>
+    <div class="strategy-note" style="--note-accent: #8b5cf6;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value"><strong>Dragon Keys</strong> are reusable debuff blueprints crafted for Deimos Orokin Vault runs. <strong>Mutalist Alad V Coordinates</strong> are a consumable boss-access item tied to Mesa component farming — build several at once.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Priority Path</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Bleeding</span><span class="strategy-tag">Decaying</span><span class="strategy-tag">Extinguished</span><span class="strategy-tag">Hobbled</span> Dragon Keys, plus Alad V Coordinates.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">The <strong>Decaying Dragon Key</strong> (-75% Shields) is the standout pick for Shield Gating builds — craft it first if you only need one key type right now.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F5DD;&#xFE0F; Orokin Dragon Keys</h3>
+                <span class="type-tag" style="background: rgba(0, 229, 255, 0.1); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.3);">Corrupted Mods</span>
+            </div>
+            <p>Dragon Keys are required to open Orokin Vaults on Deimos to farm Corrupted Mods (e.g., Blind Rage, Overextended). Reusable blueprints are purchased from the Clan Dojo (Orokin Lab).</p>
+            <ul class="task-list">
+                <li class="task-item"><div class="task-content"><div class="task-title">Bleeding Dragon Key (-75% Health)</div><div class="task-desc">Costs 10x Void Traces & 250x Ferrite.</div></div></li>
+                <li class="task-item"><div class="task-content"><div class="task-title">Decaying Dragon Key (-75% Shields)</div><div class="task-desc">Costs 10x Void Traces & 250x Ferrite. Excellent for Shield Gating setups!</div></div></li>
+                <li class="task-item"><div class="task-content"><div class="task-title">Extinguished Dragon Key (-75% Damage)</div><div class="task-desc">Costs 10x Void Traces & 250x Ferrite.</div></div></li>
+                <li class="task-item"><div class="task-content"><div class="task-title">Hobbled Dragon Key (-50% Speed)</div><div class="task-desc">Costs 10x Void Traces & 250x Ferrite.</div></div></li>
+            </ul>
+        </div>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F9A0; Mutalist Alad V Coordinates</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Boss Access</span>
+            </div>
+            <p>Mutalist Alad V Coordinates are the Foundry-crafted access item for Eris assassination runs tied to Mesa component farming.</p>
+            <ul class="task-list">
+                <li class="task-item"><input type="checkbox" id="aladv-nav"><div class="task-content"><div class="task-title">Acquire the reusable blueprint</div><div class="task-desc">Buy the blueprint from the Market if it is not already in your Foundry catalog.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="aladv-samples"><div class="task-content"><div class="task-title">Farm Mutagen Samples and nav resources</div><div class="task-desc">Deimos and Eris remain the main fallback if clan stock is low.</div></div></li>
+                <li class="task-item"><input type="checkbox" id="aladv-craft"><div class="task-content"><div class="task-title">Craft enough runs for Mesa farm sessions</div><div class="task-desc">Build multiple coordinates at once so repeated boss attempts are not blocked by Foundry downtime.</div></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="category-section" id="section-cat-mining">
+<h2 id="cat-mining" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x26CF;&#xFE0F; 10. Mining</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Gem refinement, alloy smelting, and open-world resource processing.</p>
+    <div class="strategy-note" style="--note-accent: #3b82f6;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">Raw gems and ores mined in open worlds must be <strong>refined in the Foundry</strong> before they're usable — purchase the refinement blueprints from each region's mining vendor first, then refine as you mine.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Refinement Priorities</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Heart Nyth / Radiant Sentirum</span> Arcanes <span class="strategy-tag">Marquise Thyst / Radiant Zodian</span> Kitguns <span class="strategy-tag">Tempered Bapholite / Adramal Alloy</span> Necramech</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">Refine <strong>Deimos resources proactively</strong> — Tempered Bapholite and Adramal Alloy get consumed repeatedly in Necramech recipes, so a shortfall stalls the Voidrig build.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F48E; Rare Gem Refinement</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Open World</span>
+            </div>
+            <p>Raw gems mined in open worlds must be refined in the Foundry. You must purchase the refinement blueprints from the mining vendors first.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4 style="margin-top: 0;">&#x1F305; Plains of Eidolon (Old Man Suumbaat)</h4>
+                    <ul>
+                        <li><strong>Heart Nyth:</strong> Requires 3x Nyth. Used for Arcanes.</li>
+                        <li><strong>Radiant Sentirum:</strong> Requires 3x Sentirum. Used for Arcanes.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4 style="margin-top: 0;">&#x2744;&#xFE0F; Orb Vallis (Smokefinger)</h4>
+                    <ul>
+                        <li><strong>Marquise Thyst:</strong> Requires 3x Thyst. Used for Kitguns.</li>
+                        <li><strong>Radiant Zodian:</strong> Requires 3x Zodian. Used for Kitguns.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F48E; Deimos Refinement Priorities</h3>
+                <span class="type-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Open World</span>
+            </div>
+            <p>Deimos resources gate Necramechs, Predasites/Vulpaphylas, and other late systems. Refine before you are desperate for them.</p>
+            <ul>
+                <li><strong>Tempered Bapholite:</strong> used repeatedly in Necramech and Deimos progression recipes.</li>
+                <li><strong>Adramal Alloy:</strong> core alloy for Voidrig-related part crafting.</li>
+                <li><strong>Thaumic Distillate and cabochon gems:</strong> keep stock for modular Deimos systems instead of farming one run at a time.</li>
+                <li><strong>Namalon:</strong> keep a standing buffer because it gets consumed in both weapon and mech-adjacent recipes.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="category-section" id="section-cat-misc">
+<h2 id="cat-misc" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">&#x1F4E6; 11. Miscellaneous</h2>
+    <p style="color: #aaa; margin-bottom: 20px;">Quest beacons, event-specific items, and unique miscellaneous foundry blueprints.</p>
+    <div class="strategy-note" style="--note-accent: #ffab00;">
+        <div class="strategy-note-full">
+            <div class="strategy-note-label">How It Works</div>
+            <div class="strategy-note-value">These are <strong>event-only blueprints</strong> (Fomorian Disruptor, Razorback Cipher) tied to Balor Fomorian / Razorback Armada events — easy to forget since they only matter during specific event windows.</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Event Keys</div>
+            <div class="strategy-note-value"><span class="strategy-tag">Fomorian Disruptor</span> Sabotage mission entry <span class="strategy-tag">Razorback Cipher</span> mission entry, consumed per run</div>
+        </div>
+        <div>
+            <div class="strategy-note-label">Build Tip</div>
+            <div class="strategy-note-value">Batch-craft <strong>Razorback Ciphers ahead of the event</strong> — each run consumes one, and a last-minute Foundry queue can cost you a full event cycle.</div>
+        </div>
+    </div>
+    <div class="dashboard-grid">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F4A3; Fomorian Disruptor</h3>
+                <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Event Craft</span>
+            </div>
+            <p style="color: #94a3b8;">The Fomorian Disruptor is crafted during Balor Fomorian events to allow the Archwing sabotage mission. Keep this here because it is easy to forget the event-only prerequisite.</p>
+            <ul>
+                <li><strong>Blueprint source:</strong> event inbox / event state when the Balor Fomorian returns.</li>
+                <li><strong>Main requirement:</strong> event-only resources collected from Invasion-style or event nodes.</li>
+                <li><strong>Use case:</strong> needed to enter the sabotage mission and claim event rewards before the window closes.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F510; Razorback Cipher</h3>
+                <span class="type-tag" style="background: rgba(0, 229, 255, 0.1); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.3);">Event Craft</span>
+            </div>
+            <p style="color: #94a3b8;">Razorback events use a crafted cipher as the mission-entry key. Build them in batches so the event timer does not force a last-minute resource scramble.</p>
+            <ul>
+                <li><strong>Blueprint source:</strong> market/event activation when Razorback Armada appears.</li>
+                <li><strong>Why it matters:</strong> the key is consumed on entry, so multiple runs require multiple ciphers.</li>
+                <li><strong>Prep note:</strong> keep common crafting resources available because the event cadence is irregular.</li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+
+</div>
+</div>
+<!-- BIO-LAB DATA & EVENT SCRIPT -->
+<script>
+    // Configuration options
+    const BIOLAB_DATA = {
+      vulpaphyla: {
+        subspecies: {
+          panzer: { name: "Panzer Vulpaphyla", desc: "Spreads Viral spores via Viral Quills and has self-revive Panzer Devolution.", baseStat: "Immortal Viral Spreader" },
+          sly: { name: "Sly Vulpaphyla", desc: "Increases Warframe evasion via Survival Instinct and has Sly Devolution.", baseStat: "Evasion Buffer" },
+          crescent: { name: "Crescent Vulpaphyla", desc: "Lifts and charges enemies via Crescent Charge and has Crescent Devolution.", baseStat: "CC Charger" }
+        },
+        mutagens: {
+          phara: { name: "Phara Mutagen", cost: "Alloy Armor / Rad Resist", desc: "Grants spiked tail mutation and Alloy Armor resistance." },
+          elsa: { name: "Elsa Mutagen", cost: "Robotic / Cold Resist", desc: "Grants feather-like quill tail mutation and Robotic resistance." },
+          vulpa: { name: "Vulpa Mutagen", cost: "Proto Shield / Mag Resist", desc: "Grants fan-like fin tail mutation and Proto Shield resistance." },
+          vizier: { name: "Vizier Mutagen", cost: "Cloned Flesh / Toxin Resist", desc: "Grants webbed tail mutation and Cloned Flesh resistance." }
+        },
+        antigens: {
+          plagict: { name: "Plagict Antigen", polarity: "Madurai (V)", desc: "Adds spiked horn crest and Madurai polarity." },
+          desmon: { name: "Desmon Antigen", polarity: "Naramon (Dash)", desc: "Adds wing-like crest and Naramon polarity." },
+          penjaga: { name: "Penjaga Antigen", polarity: "Vazarin (D)", desc: "Adds plating crest and Vazarin polarity." },
+          adari: { name: "Adari Antigen", polarity: "Zenurik (Scratch)", desc: "Adds antenna crest and Zenurik polarity." }
+        }
+      },
+      predasite: {
+        subspecies: {
+          pharaoh: { name: "Pharaoh Predasite", desc: "Spreads acidic spores and buffs melee damage via Anabolic Pollination.", baseStat: "Damage Buff Support" },
+          medjay: { name: "Medjay Predasite", desc: "Inflicts bleed status and stuns targets via Infectious Bite.", baseStat: "Slash & Crowd Control" },
+          vizier: { name: "Vizier Predasite", desc: "Heals nearby allies and spits corrosive spit via Acidic Spittle.", baseStat: "Healer & Armor Shred" }
+        },
+        mutagens: {
+          phara: { name: "Phara Mutagen", cost: "Alloy Armor / Rad Resist", desc: "Grants heavy armored tail plate and Alloy Armor resistance." },
+          elsa: { name: "Elsa Mutagen", cost: "Robotic / Cold Resist", desc: "Grants spine-tipped tail and Robotic resistance." },
+          vulpa: { name: "Vulpa Mutagen", cost: "Proto Shield / Mag Resist", desc: "Grants flanged tail fins and Proto Shield resistance." },
+          vizier: { name: "Vizier Mutagen", cost: "Cloned Flesh / Toxin Resist", desc: "Grants barbed tail cluster and Cloned Flesh resistance." }
+        },
+        antigens: {
+          plagict: { name: "Plagict Antigen", polarity: "Madurai (V)", desc: "Adds spiked shoulder plates and Madurai polarity." },
+          desmon: { name: "Desmon Antigen", polarity: "Naramon (Dash)", desc: "Adds curved back horns and Naramon polarity." },
+          penjaga: { name: "Penjaga Antigen", polarity: "Vazarin (D)", desc: "Adds armored forehead plate and Vazarin polarity." },
+          adari: { name: "Adari Antigen", polarity: "Zenurik (Scratch)", desc: "Adds sensory head feelers and Zenurik polarity." }
+        }
+      }
+    };
+
+    let activeGenus = 'vulpaphyla';
+    let activeBreed = '';
+    let activeMutagen = 'phara';
+    let activeAntigen = 'plagict';
+    let craftInterval = null;
+
+    // Load initial states and setup UI
+    document.addEventListener("DOMContentLoaded", () => {
+      // Set initial breed based on activeGenus
+      activeBreed = Object.keys(BIOLAB_DATA[activeGenus].subspecies)[0];
+      
+      initBiolabSelectors();
+      updateSpecsHUD();
+      loadSavedStates();
+    });
+
+    function switchGenus(genus) {
+      if (craftInterval) return; // disable during active crafting
+
+      activeGenus = genus;
+      activeBreed = Object.keys(BIOLAB_DATA[activeGenus].subspecies)[0];
+
+      // Update Tab classes
+      const tabs = document.querySelectorAll('.genus-tab');
+      tabs[0].classList.toggle('active', genus === 'vulpaphyla');
+      tabs[1].classList.toggle('active', genus === 'predasite');
+
+      initBiolabSelectors();
+      updateSpecsHUD();
+    }
+
+    function initBiolabSelectors() {
+      const data = BIOLAB_DATA[activeGenus];
+
+      // 1. Build Subspecies Options
+      const subContainer = document.getElementById("subspecies-options");
+      subContainer.innerHTML = Object.entries(data.subspecies).map(([key, val]) => `
+        <div class="option-card ${key === activeBreed ? 'active' : ''}" onclick="selectBreed('${key}')" id="opt-breed-${key}">
+          <div class="option-name">${val.name.split(' ')[0]}</div>
+          <div class="option-desc">${val.baseStat}</div>
+        </div>
+      `).join('');
+
+      // 2. Build Mutagen Options
+      const mutContainer = document.getElementById("mutagen-options");
+      mutContainer.innerHTML = Object.entries(data.mutagens).map(([key, val]) => `
+        <div class="option-card ${key === activeMutagen ? 'active' : ''}" onclick="selectMutagen('${key}')" id="opt-mutagen-${key}">
+          <div class="option-name">${val.name.split(' ')[0]}</div>
+          <div class="option-desc" style="font-size:0.65rem;">${val.cost.split(' / ')[0]}</div>
+        </div>
+      `).join('');
+
+      // 3. Build Antigen Options
+      const antContainer = document.getElementById("antigen-options");
+      antContainer.innerHTML = Object.entries(data.antigens).map(([key, val]) => `
+        <div class="option-card ${key === activeAntigen ? 'active' : ''}" onclick="selectAntigen('${key}')" id="opt-antigen-${key}">
+          <div class="option-name">${val.name.split(' ')[0]}</div>
+          <div class="option-desc">${val.polarity.split(' ')[0]}</div>
+        </div>
+      `).join('');
+    }
+
+    function selectBreed(breed) {
+      if (craftInterval) return;
+      activeBreed = breed;
+      document.querySelectorAll('#subspecies-options .option-card').forEach(c => c.classList.remove('active'));
+      document.getElementById(`opt-breed-${breed}`).classList.add('active');
+      updateSpecsHUD();
+    }
+
+    function selectMutagen(mutagen) {
+      if (craftInterval) return;
+      activeMutagen = mutagen;
+      document.querySelectorAll('#mutagen-options .option-card').forEach(c => c.classList.remove('active'));
+      document.getElementById(`opt-mutagen-${mutagen}`).classList.add('active');
+      updateSpecsHUD();
+    }
+
+    function selectAntigen(antigen) {
+      if (craftInterval) return;
+      activeAntigen = antigen;
+      document.querySelectorAll('#antigen-options .option-card').forEach(c => c.classList.remove('active'));
+      document.getElementById(`opt-antigen-${antigen}`).classList.add('active');
+      updateSpecsHUD();
+    }
+
+    function updateSpecsHUD() {
+      const data = BIOLAB_DATA[activeGenus];
+      const breedInfo = data.subspecies[activeBreed];
+      const mutInfo = data.mutagens[activeMutagen];
+      const antInfo = data.antigens[activeAntigen];
+
+      // Update text fields
+      document.getElementById("hud-breed-badge").textContent = breedInfo.name.split(' ')[0];
+      document.getElementById("spec-breed").textContent = breedInfo.name;
+      document.getElementById("spec-tail").textContent = mutInfo.desc.split(' mutation')[0];
+      document.getElementById("spec-head").textContent = antInfo.desc.split(' and adds')[0];
+      document.getElementById("spec-resist").textContent = mutInfo.cost;
+      document.getElementById("spec-polarity").textContent = antInfo.polarity;
+      document.getElementById("spec-desc").textContent = breedInfo.desc;
+
+      // Update materials based on subspecies, mutagen, and antigen selections
+      updateShoppingList();
+
+      // Check if this breed (e.g. Panzer) is already marked completed
+      checkOwnedState();
+    }
+
+    function updateShoppingList() {
+      // Deimos extraction mappings:
+      // Panzer / Vulpaphyla uses Deimos fish materials like Fass/Vome Residue
+      const materials = [
+        { name: "Deimos Son Token", qty: 5, source: "Son: Trade local Cambion Drift wildlife captures" },
+        { name: "Credits", qty: 15000, source: "Planetary Mission runs" },
+        { name: "Pustulite", qty: 25, source: "Break Pustulite Nodules in Cambion Drift" },
+      ];
+
+      if (activeGenus === 'vulpaphyla') {
+        materials.push({ name: "Fass Residue", qty: 10, source: "Fass craters or catch Deimos Duvalia fish" });
+      } else {
+        materials.push({ name: "Vome Residue", qty: 10, source: "Vome craters or catch Deimos Adramax fish" });
+      }
+
+      if (activeMutagen === 'phara' || activeMutagen === 'vizier') {
+        materials.push({ name: "Ganglion", qty: 35, source: "Extract from Horeas sacks in Cambion Drift" });
+      } else {
+        materials.push({ name: "Lucent Teroglobe", qty: 15, source: "Break infested containers in Deimos runs" });
+      }
+
+      const listContainer = document.getElementById("shopping-list");
+      listContainer.innerHTML = materials.map(m => `
+        <div class="material-item">
+          <div class="mat-info">
+            <span style="font-weight:bold; color:var(--text-primary);">${m.name}</span>
+            <span class="mat-source">${m.source}</span>
+          </div>
+          <span class="mat-qty">${m.qty}</span>
+        </div>
+      `).join('');
+    }
+
+    function checkOwnedState() {
+      const storageKey = `biolab_owned_${activeGenus}_${activeBreed}`;
+      const isOwned = safeStorage.getItem(storageKey) === 'true';
+
+      const btnForge = document.getElementById("btn-forge");
+      const banner = document.getElementById("lab-acquired-banner");
+
+      if (isOwned) {
+        btnForge.style.display = 'none';
+        banner.style.display = 'block';
+        banner.textContent = ` Owned: Custom Attuned ${BIOLAB_DATA[activeGenus].subspecies[activeBreed].name}`;
+      } else {
+        btnForge.style.display = 'flex';
+        btnForge.disabled = false;
+        banner.style.display = 'none';
+      }
+    }
+
+    function startBioLabIncubation() {
+      const btnForge = document.getElementById("btn-forge");
+      const progressBox = document.getElementById("craft-progress-box");
+      const progressFill = document.getElementById("craft-progress-fill");
+      const timerDisplay = document.getElementById("craft-timer");
+
+      btnForge.disabled = true;
+      progressBox.style.display = 'block';
+      
+      let duration = 30; // 30 seconds simulation
+      let elapsed = 0;
+
+      progressFill.style.width = '0%';
+      timerDisplay.textContent = `${duration}s remaining`;
+
+      clearInterval(craftInterval);
+      craftInterval = setInterval(() => {
+        elapsed += 0.25;
+        const percent = (elapsed / duration) * 100;
+        progressFill.style.width = `${percent}%`;
+        
+        const remaining = Math.max(0, Math.ceil(duration - elapsed));
+        timerDisplay.textContent = `${remaining}s remaining`;
+
+        if (elapsed >= duration) {
+          clearInterval(craftInterval);
+          craftInterval = null;
+          progressBox.style.display = 'none';
+          
+          // Complete build and store state
+          const storageKey = `biolab_owned_${activeGenus}_${activeBreed}`;
+          safeStorage.setItem(storageKey, 'true');
+
+          // Sync the main codex card too
+          if (activeGenus === 'vulpaphyla' && activeBreed === 'panzer') {
+            safeStorage.setItem('tracker_companions_panzer', 'true');
+            const chkPanzer = document.getElementById("chk-panzer");
+            if (chkPanzer) chkPanzer.checked = true;
+            const card = document.getElementById("card-panzer");
+            if (card) card.classList.add("completed-card");
+            const lbl = document.getElementById("lbl-panzer");
+            if (lbl) lbl.classList.add("checked-state");
+          }
+
+          updateSpecsHUD();
+        }
+      }, 250);
+    }
+
+    // ==========================================
+    // STANDARD CODEX CARDS TRACKING CODE
+    // ==========================================
+    function toggleCardAcquired(cardId) {
+      const chk = document.getElementById(`chk-${cardId}`);
+      const card = document.getElementById(`card-${cardId}`);
+      const label = document.getElementById(`lbl-${cardId}`);
+      const key = `tracker_companions_${cardId}`;
+
+      const state = chk.checked;
+      safeStorage.setItem(key, state ? 'true' : 'false');
+      
+      if (card) card.classList.toggle('completed-card', state);
+      if (label) label.classList.toggle('checked-state', state);
+
+      // If we synced Panzer, check the Bio-Lab owned state too
+      if (cardId === 'panzer') {
+        safeStorage.setItem('biolab_owned_vulpaphyla_panzer', state ? 'true' : 'false');
+        if (activeGenus === 'vulpaphyla' && activeBreed === 'panzer') {
+          updateSpecsHUD();
+        }
+      }
+    }
+
+    function updateNecramechProgress() {
+      const steps = ['necramech-blueprint', 'necramech-casing', 'necramech-engine', 'necramech-capsule', 'necramech-weapon'];
+      const completed = steps.filter(id => {
+        const cb = document.getElementById(id);
+        return cb && cb.checked;
+      }).length;
+      
+      const percentage = Math.round((completed / steps.length) * 100);
+      
+      const textEl = document.getElementById('progress-text-necramech');
+      const barEl = document.getElementById('progress-bar-necramech');
+      
+      if (textEl) {
+        textEl.textContent = `${percentage}% Completed (${completed}/${steps.length} Steps)`;
+      }
+      if (barEl) {
+        barEl.style.width = `${percentage}%`;
+      }
+    }
+
+    function loadSavedStates() {
+      const cards = ['panzer', 'smeeta', 'carrier', 'voidrig', 'amesha'];
+      cards.forEach(cardId => {
+        const key = `tracker_companions_${cardId}`;
+        const isCompleted = safeStorage.getItem(key) === 'true';
+
+        const chk = document.getElementById(`chk-${cardId}`);
+        const card = document.getElementById(`card-${cardId}`);
+        const label = document.getElementById(`lbl-${cardId}`);
+
+        if (chk) chk.checked = isCompleted;
+        if (card) card.classList.toggle('completed-card', isCompleted);
+        if (label) label.classList.toggle('checked-state', isCompleted);
+      });
+      
+      // Update custom Necramech progress display
+      updateNecramechProgress();
+    }
+
+    // Storage Event Listener for Cross-Tab Sync
+    window.addEventListener('storage', (e) => {
+      if (e.key && e.key.startsWith('tracker_companions_')) {
+        loadSavedStates();
+        if (activeGenus === 'vulpaphyla' && activeBreed === 'panzer') {
+          updateSpecsHUD();
+        }
+      }
+      if (e.key && e.key.startsWith('biolab_owned_')) {
+        updateSpecsHUD();
+      }
+    });
+  </script>
+
+  
+<!-- Interactive Checkbox Logic -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
+    
+    checkboxes.forEach((cb) => {
+        // Unique ID is required for saving to local storage
+        if (!cb.id) return;
+        
+        const container = cb.closest('.task-item');
+        
+        // Restore state
+        if(safeStorage.getItem(cb.id) === 'true') {
+            cb.checked = true;
+            container.classList.add('completed');
+            container.style.opacity = '0.5';
+        }
+        
+        // Listen for changes
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(cb.id, e.target.checked);
+            if(e.target.checked) {
+                container.classList.add('completed');
+                container.style.opacity = '0.5';
+            } else {
+                container.classList.remove('completed');
+                container.style.opacity = '1.0';
+            }
+        });
+    });
+});
+</script>
+
+
+
+
+
+<script>
+function filterFoundryCategories() {
+    const searchInput = document.getElementById('foundry-category-search');
+    const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    const cards = document.querySelectorAll('.foundry-category-card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        const searchableText = `${card.dataset.search || ''} ${card.textContent || ''}`.toLowerCase();
+        const shouldShow = !query || searchableText.includes(query);
+        card.hidden = !shouldShow;
+        if (shouldShow) visibleCount += 1;
+    });
+
+    const noResults = document.getElementById('foundry-no-results');
+    if (noResults) noResults.style.display = visibleCount ? 'none' : 'block';
+}
+
+function updateFoundryDashboard() {
+    const sections = [...document.querySelectorAll('.category-section')];
+    let totalSteps = 0;
+    let completedSteps = 0;
+    let divisionsWithChecklists = 0;
+
+    sections.forEach(section => {
+        const checkboxes = [...section.querySelectorAll('input[type="checkbox"]')];
+        if (checkboxes.length) divisionsWithChecklists += 1;
+        totalSteps += checkboxes.length;
+        completedSteps += checkboxes.filter(checkbox => checkbox.checked).length;
+
+        const categoryName = section.id.replace('section-cat-', '');
+        const card = document.querySelector(`.foundry-category-card[data-category="${categoryName}"]`);
+        if (card && checkboxes.length) {
+            const status = card.querySelector('.foundry-card-status');
+            if (status) status.textContent = `${completedStepsFor(checkboxes)}/${checkboxes.length} Done`;
+        }
+
+        const divisionFill = section.querySelector('.division-progress-fill');
+        const divisionCount = section.querySelector('.division-progress-count');
+        if (checkboxes.length) {
+            const done = completedStepsFor(checkboxes);
+            const pct = Math.round((done / checkboxes.length) * 100);
+            if (divisionFill) divisionFill.style.width = `${pct}%`;
+            if (divisionCount) divisionCount.textContent = `${done}/${checkboxes.length} Steps`;
+        }
+    });
+
+    const percentage = totalSteps ? Math.round((completedSteps / totalSteps) * 100) : 0;
+    const progressText = document.getElementById('foundry-overall-progress');
+    const progressFill = document.getElementById('foundry-overall-progress-fill');
+    const readyCount = document.getElementById('foundry-ready-count');
+
+    if (progressText) progressText.textContent = `${percentage}%`;
+    if (progressFill) progressFill.style.width = `${percentage}%`;
+    if (readyCount) readyCount.textContent = String(divisionsWithChecklists);
+}
+
+function completedStepsFor(checkboxes) {
+    return checkboxes.filter(checkbox => checkbox.checked).length;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const categorySearch = document.getElementById('foundry-category-search');
+    const clearSearch = document.getElementById('foundry-clear-search');
+
+    if (categorySearch) categorySearch.addEventListener('input', filterFoundryCategories);
+    if (clearSearch) {
+        clearSearch.addEventListener('click', () => {
+            if (categorySearch) {
+                categorySearch.value = '';
+                categorySearch.focus();
+            }
+            filterFoundryCategories();
+        });
+    }
+
+    document.addEventListener('change', event => {
+        if (event.target.matches('input[type="checkbox"]')) {
+            setTimeout(updateFoundryDashboard, 0);
+            if (event.target.id && event.target.id.startsWith('necramech-')) {
+                updateNecramechProgress();
+            }
+        }
+    });
+
+    updateFoundryDashboard();
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const hub = document.querySelector('.foundry-command-center');
+    const sections = document.querySelectorAll('.category-section');
+
+    function showHub(pushHistory) {
+        sections.forEach(s => { s.style.display = 'none'; s.classList.remove('foundry-fade-in'); });
+        if (hub) hub.style.display = '';
+        if (pushHistory) history.pushState({ section: null }, '', location.pathname + location.search);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showSection(id, pushHistory) {
+        const target = document.getElementById('section-' + id);
+        if (!target) return false;
+        sections.forEach(s => { s.style.display = 'none'; s.classList.remove('foundry-fade-in'); });
+        target.style.display = 'block';
+        requestAnimationFrame(() => target.classList.add('foundry-fade-in'));
+        if (hub) hub.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return true;
+    }
+
+    document.querySelectorAll('.foundry-category-card[data-category]').forEach(card => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSection('cat-' + card.dataset.category, true);
+        });
+    });
+
+    const hash = location.hash.replace('#', '');
+    if (hash && showSection(hash, false)) {
+        history.replaceState({ section: hash }, '', location.pathname + location.search + '#' + hash);
+    } else {
+        history.replaceState({ section: null }, '', location.pathname + location.search);
+    }
+
+    window.addEventListener('popstate', e => {
+        if (e.state && e.state.section) showSection(e.state.section, false);
+        else showHub(false);
+    });
+
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</div><!-- container -->
+</body>
+</html>
+
+
+
+
+
+
+

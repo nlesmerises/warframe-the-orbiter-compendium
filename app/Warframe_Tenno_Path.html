@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; The Tenno Path: MR 1&ndash;10 Foundation</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.container a:not(.home-emoji-btn):not(.settings-emoji-btn):not(.nav-btn-top) {
+    color: #ffab00;
+    text-decoration: none;
+}
+.container a:not(.home-emoji-btn):not(.settings-emoji-btn):not(.nav-btn-top):hover {
+    color: #ffd166;
+    text-decoration: underline;
+}
+.qi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 24px 0 32px;
+}
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile {
+    display: flex !important; flex-direction: column; align-items: flex-start; text-align: left;
+    min-height: 110px; padding: 20px 22px !important; border-radius: 14px;
+    text-decoration: none !important; color: inherit;
+    background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease;
+}
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#9876;&#65039; The Tenno Path: MR 1&ndash;10</h1>
+        <p class="subtitle">Foundation &mdash; Getting Off the Ground</p>
+    </header>
+
+    <!-- QUICK INDEX TILES -->
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="overview"><div class="qi-tile-icon">&#128214;</div><h2 class="qi-tile-title">Overview</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="mr1-4"><div class="qi-tile-icon">&#9312;</div><h2 class="qi-tile-title">MR 1&ndash;4 First Steps</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="mr5-7"><div class="qi-tile-icon">&#9313;</div><h2 class="qi-tile-title">MR 5&ndash;7 Building Out</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="mr8-10"><div class="qi-tile-icon">&#9314;</div><h2 class="qi-tile-title">MR 8&ndash;10 First Arsenal</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="priority-mods"><div class="qi-tile-icon">&#128295;</div><h2 class="qi-tile-title">Priority Mods</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="what-to-avoid"><div class="qi-tile-icon">&#9888;&#65039;</div><h2 class="qi-tile-title">What to Avoid</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="next"><div class="qi-tile-icon">&#127775;</div><h2 class="qi-tile-title">What&rsquo;s Next</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- SECTION 1: OVERVIEW -->
+    <section class="category-section" id="overview">
+        <h2>&#128214; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">What This Chapter Covers</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Overview</span>
+                </div>
+                <ul class="list">
+                    <li>Mastery Rank 1 through 10 &mdash; the entire new player foundation phase</li>
+                    <li>How to level gear efficiently and earn Mastery XP as fast as possible</li>
+                    <li>Which quests to prioritize and why</li>
+                    <li>Your first real mods, weapons, and Warframes worth building</li>
+                    <li>The habits that separate players who progress from players who stall</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">How MR Works</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Mastery</span>
+                </div>
+                <ul class="list">
+                    <li>Every weapon, Warframe, companion, and Archwing earns Mastery XP when leveled to rank 30 &mdash; but only the <strong>first time</strong></li>
+                    <li>Max rank a piece of gear, then sell or keep it &mdash; the XP is banked regardless</li>
+                    <li>MR gates access to weapons, trading, and certain missions &mdash; higher MR opens more of the game</li>
+                    <li>Run the MR test when ready &mdash; you can only attempt it once per day, so practice in Kiosks first</li>
+                    <li>See the <a href="Warframe_Mastery_Rank_Guide.html">Mastery Rank Guide</a> for full test breakdowns and XP requirements</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">The Golden Rule</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Key Habit</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Always be leveling something new.</strong> If everything in your loadout is already rank 30, you are not gaining MR XP</li>
+                    <li>Keep a queue of unleveled gear in your Arsenal at all times</li>
+                    <li>Use Hydron (Sedna) or Helene (Saturn) as your leveling ground once you can survive there</li>
+                    <li>Bring a strong primary weapon at rank 30 to carry your unranked gear through missions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: MR 1-4 -->
+    <section class="category-section" id="mr1-4">
+        <h2>&#9312; 2. MR 1&ndash;4 &mdash; First Steps</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Quests to Complete</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Quests</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Vor's Prize</strong> (auto-starts) &mdash; completes your tutorial, unlocks the Star Chart, gives you your first mod set and Orokin Reactor</li>
+                    <li><strong>Awakening</strong> &mdash; brief intro mission, unlocks basic navigation</li>
+                    <li><strong>Archwing</strong> &mdash; unlocks space combat; required for several planets and quests later</li>
+                    <li><strong>Once Awake</strong> &mdash; short quest, unlocks Alad V boss fight and key crafting materials</li>
+                    <li>Check your Codex &rarr; Quests for available missions &mdash; do them as they unlock</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Star Chart Priority</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Navigation</span>
+                </div>
+                <ul class="list">
+                    <li>Clear Earth &rarr; Venus &rarr; Mercury &rarr; Mars in order to open planet junctions</li>
+                    <li>Each junction requires specific tasks (kill count, mod collection, etc.) &mdash; check the Junction screen</li>
+                    <li>Do not skip planets &mdash; early planets drop essential mods and resources</li>
+                    <li>Run <strong>Defense</strong> and <strong>Survival</strong> mission types for best early drop tables</li>
+                    <li>Every node cleared counts toward your Star Chart completion (needed for Steel Path later)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Gear to Build First</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Loadout</span>
+                </div>
+                <ul class="list">
+                    <li>Craft <strong>Mk1-Braton</strong> or <strong>Braton</strong> (rifle) from the Market as your first primary if you want range</li>
+                    <li>Farm the <strong>Rhino</strong> Warframe blueprint from the Jackal boss on Venus &mdash; Rhino is one of the strongest early frames and will carry you for dozens of hours</li>
+                    <li>Build any weapons you can afford from the Market blueprints to stack MR XP fast</li>
+                    <li>Level each piece to 30, then replace with the next tier</li>
+                    <li>See the <a href="Warframe_Meta_Weapons_Codex.html">Meta Weapons Codex</a> for tier lists by category</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Resources to Gather</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Farming</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Ferrite</strong> (Earth) &mdash; used in almost every early craft</li>
+                    <li><strong>Polymer Bundle</strong> (Venus/Mercury) &mdash; needed for energy components</li>
+                    <li><strong>Circuits</strong> (Venus/Ceres) &mdash; used in nearly every Warframe component</li>
+                    <li><strong>Salvage</strong> (Mars/Jupiter) &mdash; large quantities needed for mid-game crafts</li>
+                    <li>Run resource missions with a <strong>Resource Booster</strong> active if you have one from login rewards</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: MR 5-7 -->
+    <section class="category-section" id="mr5-7">
+        <h2>&#9313; 3. MR 5&ndash;7 &mdash; Building Out</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Quests to Complete</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Quests</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Stolen Dreams</strong> &mdash; unlocks Archwing mods and Void access</li>
+                    <li><strong>The New Strange</strong> &mdash; unlocks Chroma and Synthesis Scanner missions</li>
+                    <li><strong>Natah</strong> &mdash; major story quest, must be completed before The Second Dream</li>
+                    <li><strong>The Second Dream</strong> (MR 5 recommended) &mdash; the first major turning point of the game; unlocks Operator mode, Void Mode, and Focus schools. Do not skip this</li>
+                    <li>Complete Sortie prerequisite: finish all main story quests up to this point</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Leveling Station: Hydron</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">XP Farm</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Hydron</strong> (Sedna, Defense) is the fastest affinity farm in the game for new players</li>
+                    <li>Bring one rank-30 weapon to contribute damage, and fill the rest of your loadout with unranked gear</li>
+                    <li>Squad up &mdash; affinity sharing means everyone benefits from kills even if you're not the one doing damage</li>
+                    <li>10 waves nets significant XP; 20 waves is the sweet spot before diminishing returns</li>
+                    <li>Alternatively use <strong>Helene</strong> (Saturn) if Hydron is too difficult early on</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Mods: What to Prioritize</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Mods</span>
+                </div>
+                <ul class="list">
+                    <li>At this stage mods are your biggest power lever &mdash; a well-modded Mk1 beats a poorly modded Soma Prime</li>
+                    <li><strong>Serration</strong> (rifle damage +165% at max) &mdash; your single most important mod; start upgrading immediately</li>
+                    <li><strong>Hornet Strike</strong> (pistol damage) and <strong>Point Blank</strong> (shotgun damage) &mdash; same priority as Serration for their weapon types</li>
+                    <li><strong>Vitality</strong> (health) and <strong>Steel Fiber</strong> (armor) &mdash; survivability on your Warframe</li>
+                    <li>See the <a href="Warframe_Mods_Database.html">Mods Database</a> for full mod tier lists</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Syndicates: Join One Now</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Factions</span>
+                </div>
+                <ul class="list">
+                    <li>Syndicates give powerful mods, weapons, and augments in exchange for Standing earned from missions</li>
+                    <li>Pick one or two aligned syndicates from: Steel Meridian, Arbiters of Hexis, Cephalon Suda, The Perrin Sequence, Red Veil, New Loka</li>
+                    <li>Equip their Sigil on your Warframe to earn standing during any mission</li>
+                    <li>Daily standing cap scales with your MR &mdash; the sooner you start, the more you accumulate</li>
+                    <li>See <a href="Warframe_Systems_Dashboard.html">Systems &amp; Progress</a> for syndicate strategy</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: MR 8-10 -->
+    <section class="category-section" id="mr8-10">
+        <h2>&#9314; 4. MR 8&ndash;10 &mdash; First Real Arsenal</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Quests to Complete</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Quests</span>
+                </div>
+                <ul class="list">
+                    <li><strong>The War Within</strong> (MR 8 recommended) &mdash; unlocks full Operator combat, Void Mode, transference strikes, and Focus school upgrades. Required to access Kuva Fortress and much of the mid-game</li>
+                    <li><strong>Chains of Harrow</strong> &mdash; good story content, unlocks Harrow Warframe</li>
+                    <li><strong>Sands of Inaros</strong> &mdash; purchasable quest, rewards the extremely durable Inaros frame</li>
+                    <li><strong>Octavia's Anthem</strong> &mdash; unlocks Octavia, one of the strongest support frames in the game</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">First Open World: Plains of Eidolon</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Open World</span>
+                </div>
+                <ul class="list">
+                    <li>Access via Cetus on Earth &mdash; talk to Konzu for bounties</li>
+                    <li>Bounties give Standing for the <strong>Ostron</strong> syndicate &mdash; used to buy Amp parts and unique mods</li>
+                    <li>Complete the <strong>Saya's Vigil</strong> and <strong>Vox Solaris</strong> introductory quests to unlock full access</li>
+                    <li>Do not worry about Eidolon hunts yet &mdash; these require a proper Amp build which comes in MR 11+</li>
+                    <li>See the <a href="Warframe_Open_Worlds_Guide.html">Open Worlds Guide</a> for full Plains coverage</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Corrupted Mods: Orokin Vaults</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Mods</span>
+                </div>
+                <ul class="list">
+                    <li>Corrupted mods are powerful double-edged mods that supercharge specific stats at the cost of another</li>
+                    <li>Examples: <strong>Blind Rage</strong> (+ability strength, &minus;efficiency), <strong>Fleeting Expertise</strong> (+efficiency, &minus;duration)</li>
+                    <li>Farm them by opening <strong>Orokin Vaults</strong> on Cambion Drift (Deimos) &mdash; each vault requires one of four Dragon Keys equipped</li>
+                    <li>Bring a squad with all 4 key types to open all vaults in one run</li>
+                    <li>These mods define most endgame Warframe builds &mdash; the sooner you start collecting them, the better</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Void Relics: Prime Gear</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Prime</span>
+                </div>
+                <ul class="list">
+                    <li>Prime weapons and Warframes are significantly more powerful than their base versions &mdash; better base stats, more mod capacity, and Orokin Reactor/Catalyst built in</li>
+                    <li>Collect Void Relics from missions, then crack them in <strong>Void Fissure</strong> missions to extract Prime parts</li>
+                    <li>Trade with other players for Prime parts you're missing &mdash; see <a href="Warframe_Void_Relics_Meta_Guide.html">Void Relics Meta Guide</a></li>
+                    <li>Priority Prime targets at this stage: <strong>Rhino Prime</strong>, <strong>Soma Prime</strong>, <strong>Orthos Prime</strong></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: PRIORITY MODS -->
+    <section class="category-section" id="priority-mods">
+        <h2>&#128295; 5. Priority Mods for MR 1&ndash;10</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Warframe Mods</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Frame</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Vitality</strong> &mdash; +440% health at max rank; your most important survivability mod</li>
+                    <li><strong>Steel Fiber</strong> &mdash; +110% armor; works best on high-armor frames like Rhino and Inaros</li>
+                    <li><strong>Redirection</strong> &mdash; +440% shields; better on low-armor frames like Mag and Nova</li>
+                    <li><strong>Streamline</strong> &mdash; &minus;30% ability energy cost; lets you cast more often</li>
+                    <li><strong>Intensify</strong> &mdash; +30% ability strength; core ability mod for casters</li>
+                    <li><strong>Flow</strong> &mdash; +150% energy max; pairs with Streamline for sustained casting</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Primary Weapon Mods</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Weapons</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Serration</strong> &mdash; +165% damage; max rank this as soon as possible, it costs a lot of Endo</li>
+                    <li><strong>Split Chamber</strong> &mdash; +90% multishot (fires an extra projectile); effectively doubles DPS</li>
+                    <li><strong>Point Strike</strong> &mdash; +150% critical chance; essential for crit-based rifles</li>
+                    <li><strong>Vital Sense</strong> &mdash; +120% critical damage multiplier</li>
+                    <li>Two <strong>elemental damage mods</strong> (e.g. Hellfire + Infected Clip = Radiation) &mdash; match elements to enemy faction</li>
+                    <li>See <a href="Warframe_Damage_Guide.html">Damage Guide</a> for faction matchups</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Where to Get Them</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Sources</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Serration, Vitality, Redirection</strong> &mdash; drop from nearly any enemy; also sold in the Market</li>
+                    <li><strong>Split Chamber</strong> &mdash; drops from Corrupted Heavy Gunner (Orokin Derelict) or traded from players</li>
+                    <li><strong>Streamline, Intensify, Continuity</strong> &mdash; Nightmare mode mission rewards (unlocked after completing a planet)</li>
+                    <li><strong>Flow</strong> &mdash; drops from Orokin Tower missions (Void)</li>
+                    <li>Buy Endo from <strong>Maroo's Bazaar</strong> weekly Ayatan missions to rank up mods faster</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: WHAT TO AVOID -->
+    <section class="category-section" id="what-to-avoid">
+        <h2>&#9888;&#65039; 6. What to Avoid at This Stage</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #f87171;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Common New Player Mistakes</h3>
+                    <span class="type-tag" style="background:rgba(248,113,113,0.18);color:#f87171;border:1px solid rgba(248,113,113,0.45);">Avoid</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Buying Warframes with Platinum</strong> &mdash; almost every frame can be farmed in-game; save Platinum for slots and cosmetics</li>
+                    <li><strong>Ignoring mod capacity</strong> &mdash; an unmodded rank-30 weapon is weaker than a well-modded rank-0 weapon</li>
+                    <li><strong>Skipping Orokin Reactors and Catalysts</strong> &mdash; always install these on gear you plan to keep; they double mod capacity</li>
+                    <li><strong>Selling mods you think are useless</strong> &mdash; many mods seem bad early but are essential in builds later</li>
+                    <li><strong>Rushing the star chart without clearing nodes</strong> &mdash; every uncleared node is locked MR progress later</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd54f;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Platinum: What to Spend It On</h3>
+                    <span class="type-tag" style="background:rgba(255,213,79,0.18);color:#ffd54f;border:1px solid rgba(255,213,79,0.45);">Economy</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Warframe slots</strong> &mdash; you start with 2; buy more as you build new frames (50 Platinum for 2 slots)</li>
+                    <li><strong>Weapon slots</strong> &mdash; same priority; you need slots before you can equip new gear</li>
+                    <li><strong>Orokin Reactor / Catalyst</strong> (if not available from alerts) &mdash; 20 Platinum each, worth every credit</li>
+                    <li><strong>Do NOT spend on</strong>: Warframes (farmable), weapons (farmable), booster packs (poor value), cosmetics until you're stable</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: WHAT'S NEXT -->
+    <section class="category-section" id="next">
+        <h2>&#127775; 7. What&rsquo;s Next &mdash; MR 11&ndash;20 Expansion</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">You&rsquo;re Ready for Chapter 2 When&hellip;</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Checklist</span>
+                </div>
+                <ul class="list">
+                    <li>You have reached MR 10 or higher</li>
+                    <li>The War Within quest is complete and your Operator is active</li>
+                    <li>You have a reliable meta primary weapon at rank 30 with full mods</li>
+                    <li>Serration, Split Chamber, and Vitality are all at or near max rank</li>
+                    <li>You have at least one syndicate earning standing for you every session</li>
+                    <li>Your Rhino (or equivalent tank frame) is fully built and modded</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Preview: What&rsquo;s Coming in MR 11&ndash;20</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Preview</span>
+                </div>
+                <ul class="list">
+                    <li>Open worlds: Fortuna, Cambion Drift, Plains Eidolon hunts</li>
+                    <li>Your first Kuva Lich and Kuva weapon</li>
+                    <li>Railjack space combat</li>
+                    <li>Arbitrations and Disruption for top-tier rewards</li>
+                    <li>The New War quest and unlocking Kahl-175</li>
+                    <li>Archon Hunts and your first Archon Shards</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Continue the Path</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Next Up</span>
+                </div>
+                <ul class="list">
+                    <li><a href="Warframe_Tenno_Path_Expansion.html">&#8594; MR 11&ndash;20: Expansion</a> &mdash; open worlds, Railjack, Kuva weapons, and the mid-game loop</li>
+                    <li><a href="Warframe_Tenno_Path_Endgame.html">&#8594; MR 21&ndash;30: Endgame</a> &mdash; Steel Path, Archon Shards, Incarnon Genesis, and the ceiling</li>
+                    <li><a href="Warframe_Mastery_Rank_Guide.html">Mastery Rank Guide</a> &mdash; full XP requirements and test guides for every rank</li>
+                    <li><a href="Warframe_Progression_Guide.html">Progression Guide</a> &mdash; broader roadmap reference</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) {
+            target.style.display = 'block';
+            requestAnimationFrame(() => target.classList.add('qi-fade-in'));
+        }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+        showSection(hash, false);
+    }
+
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) {
+                showMenu();
+                history.pushState({ section: null }, '', location.pathname + location.search);
+            } else {
+                showSection(targetId, true);
+            }
+        });
+    });
+
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) {
+            showSection(e.state.section, false);
+        } else {
+            showMenu();
+        }
+    });
+});
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; The Tenno Path: MR 21&ndash;30 Endgame</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.container a:not(.home-emoji-btn):not(.settings-emoji-btn):not(.nav-btn-top) { color: #c49410; text-decoration: none; }
+.container a:not(.home-emoji-btn):not(.settings-emoji-btn):not(.nav-btn-top):hover { color: #d9aa28; text-decoration: underline; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile {
+    display: flex !important; flex-direction: column; align-items: flex-start; text-align: left;
+    min-height: 110px; padding: 20px 22px !important; border-radius: 14px;
+    text-decoration: none !important; color: inherit;
+    background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease;
+}
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128293; The Tenno Path: MR 21&ndash;30</h1>
+        <p class="subtitle">Endgame &mdash; The Ceiling of the Origin System</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="overview"><div class="qi-tile-icon">&#128214;</div><h2 class="qi-tile-title">Overview</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="steel-path"><div class="qi-tile-icon">&#9876;&#65039;</div><h2 class="qi-tile-title">Steel Path</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="archon-shards"><div class="qi-tile-icon">&#128142;</div><h2 class="qi-tile-title">Archon Shards</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="incarnon"><div class="qi-tile-icon">&#9889;</div><h2 class="qi-tile-title">Incarnon Genesis</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="circuit"><div class="qi-tile-icon">&#128260;</div><h2 class="qi-tile-title">Circuit &amp; Duviri</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="endgame-frames"><div class="qi-tile-icon">&#128293;</div><h2 class="qi-tile-title">Endgame Frames</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="the-ceiling"><div class="qi-tile-icon">&#127944;</div><h2 class="qi-tile-title">The Ceiling</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <section class="category-section" id="overview">
+        <h2>&#128214; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What This Chapter Covers</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Mastery Rank 21 through 30 &mdash; the endgame phase where optimization becomes the primary activity</li>
+                    <li>Steel Path &mdash; hard mode for the entire Star Chart, with its own economy and exclusive rewards</li>
+                    <li>Archon Shards &mdash; the most impactful permanent stat upgrade system in the game</li>
+                    <li>Incarnon Genesis adapters &mdash; transformative weapon upgrades that turn base weapons into endgame powerhouses</li>
+                    <li>Duviri Circuit farming and Void Cascade runs for sustained Incarnon acquisition</li>
+                    <li>What &ldquo;done&rdquo; looks like in Warframe &mdash; and why most veterans never actually stop playing</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Where You Should Be Coming In</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Prerequisites</span></div>
+                <ul class="list">
+                    <li>The New War, Angels of the Zariman, and The Duviri Paradox quests are all complete</li>
+                    <li>Steel Path is unlocked &mdash; every node on every planet is cleared</li>
+                    <li>At least one Kuva or Tenet weapon is fully built and modded at 55%+ elemental bonus</li>
+                    <li>Helminth Segment is installed and you have at least two ability infusions on your main frames</li>
+                    <li>At least one Archon Hunt is complete and you have slotted your first Archon Shard</li>
+                    <li>Your Focus school Way-Bounds are at least two tiers invested</li>
+                    <li>If any of the above is missing, return to the <a href="Warframe_Tenno_Path_Expansion.html">MR 11&ndash;20 Expansion chapter</a> first</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">The Endgame Mindset</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Mindset</span></div>
+                <ul class="list">
+                    <li>Warframe&rsquo;s endgame is not a single pinnacle to reach &mdash; it is a wide plateau with many peaks. There is no single &ldquo;best build&rdquo; that finishes the game. There are dozens of viable approaches, each with different strengths and play styles</li>
+                    <li>At this stage you are no longer asking &ldquo;what do I unlock next?&rdquo; &mdash; you are asking &ldquo;how do I make this frame or weapon as powerful as it can possibly be?&rdquo; The difference is the shift from breadth to depth</li>
+                    <li>The enemies in Steel Path have 250% extra health, shields, and armor compared to the base Star Chart. Content that felt trivial at MR 20 becomes genuinely threatening again. Builds that were &ldquo;good enough&rdquo; before may not survive here without optimization</li>
+                    <li>Most endgame players run a small stable of 3&ndash;5 highly optimized builds for different content types, rather than trying to make every frame work in every situation</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="steel-path">
+        <h2>&#9876;&#65039; 2. Steel Path</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Steel Path Is</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Steel Path</span></div>
+                <ul class="list">
+                    <li>Steel Path is an alternate version of the entire Star Chart where every mission has dramatically increased enemy stats: +250% health, +250% shields, +250% armor, and +100% enemy damage. It is unlocked by clearing every node on every planet in the standard Star Chart</li>
+                    <li>Steel Path missions drop the same resources as their standard counterparts, but also drop <strong>Steel Essence</strong> &mdash; the exclusive Steel Path currency. Steel Essence is spent at <strong>Teshin</strong> in any Relay for powerful rewards</li>
+                    <li>The first time you clear each node in Steel Path you earn a permanent reward. Clearing all Steel Path nodes earns Teshin&rsquo;s exclusive cosmetics and a large Steel Essence payout</li>
+                    <li>Steel Path has its own set of daily and weekly missions called <strong>Acolytes</strong>. Acolytes are elite assassins that spawn during Steel Path missions and drop <strong>Acolyte mods</strong> &mdash; some of the most powerful weapon mods in the game, including Weeping Wounds, Blood Rush, and Gladiator Set mods</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Steel Essence Farming</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Farming</span></div>
+                <ul class="list">
+                    <li>The most efficient Steel Essence farms are long-run <strong>Steel Path Survival</strong> missions on nodes with high enemy density. Mot (Void) and Uranus Survival nodes are popular choices</li>
+                    <li>Acolytes spawn every few minutes in Steel Path endless missions and drop 2 Steel Essence each. In a 60-minute survival run with a competent squad, 30&ndash;50 Steel Essence per hour is achievable</li>
+                    <li>Steel Essence is spent at Teshin on: <strong>Arcane Adapters</strong> (adds an Arcane slot to a weapon), <strong>Kuva</strong> (for Lich rerolling), <strong>Relic Packs</strong>, and Teshin&rsquo;s rotating cosmetic shop</li>
+                    <li>The weekly Steel Path Incursions offer guaranteed Steel Essence for completing specific mission types. Always complete these before the weekly reset on Sunday</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Builds for Steel Path</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Builds</span></div>
+                <ul class="list">
+                    <li>Standard mod builds that worked in the base Star Chart often underperform in Steel Path due to the 250% armor increase on Grineer. You need either consistent armor strip or damage types that bypass armor (Viral+Slash for Grineer, Corrosive for heavy units)</li>
+                    <li><strong>Galvanized mods</strong> (from Arbitrations) are significantly stronger than their standard counterparts in Steel Path because the kill-stack multipliers apply to the enormous enemy health pools. Prioritize Galvanized Chamber, Galvanized Aptitude, and Galvanized Scope on your main weapons</li>
+                    <li><strong>Arcane Avenger</strong> (from Eidolons or trading) grants a large critical chance bonus on being damaged &mdash; effectively permanent in Steel Path where you are frequently hit. Pairs exceptionally well with crit-focused weapons</li>
+                    <li>Warframe survival: builds that relied on enemy damage being low enough to not matter will break in Steel Path. You need either invulnerability (Revenant, Mesa, Octavia), massive damage reduction (Rhino, Inaros, Hildryn), or healing (Garuda, Trinity, Nidus)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="archon-shards">
+        <h2>&#128142; 3. Archon Shards</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Archon Shards Are</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Shards</span></div>
+                <ul class="list">
+                    <li>Archon Shards are permanent stat upgrades slotted directly into a Warframe&rsquo;s Archon Shard interface (accessed from the Arsenal). Each Warframe has five shard slots. Shards provide flat stat bonuses that stack with &mdash; and often far exceed &mdash; what mods can provide</li>
+                    <li>There are three base shard types: <strong>Crimson</strong> (ability strength and other Warframe stats), <strong>Azure</strong> (shields, energy max, and armor), and <strong>Amber</strong> (health and energy regen). Each type has multiple bonus options to choose from when slotting</li>
+                    <li>Shards can be <strong>Tauforged</strong> &mdash; a variant with 1.5&times; the stat bonus of a standard shard. Tauforged shards are rarer and drop less frequently from Archon Hunts</li>
+                    <li>Once slotted, a shard is permanently installed. It can be removed with Helminth Coalescent (consumed in the process) but removing and reinstalling costs resources each time. Plan your shard loadout before committing</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How to Farm Archon Shards</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Farming</span></div>
+                <ul class="list">
+                    <li><strong>Archon Hunts</strong> are weekly three-mission assassination chains. Each week a different Archon boss rotates: Amar (Crimson shards), Nira (Azure shards), and Boreal (Amber shards). The weekly Archon Hunt guarantees one shard of the corresponding color</li>
+                    <li>The weekly Archon Hunt resets on Sunday. Complete it every single week &mdash; over time this is the primary source of shard income for most players</li>
+                    <li>Additional shards can be earned through: <strong>Void Cascade</strong> (Zariman, chance per run), <strong>Whispers in the Walls</strong> missions (Deimos labs), and occasionally from Baro Ki&rsquo;Teer&rsquo;s special stock</li>
+                    <li>Archon Hunt missions feature unique Sentient modifiers called <strong>Archon Hunts Buffs</strong> that empower specific ability types. Read the mission modifiers before selecting your loadout &mdash; mismatched frames will struggle significantly</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Shard Priority &mdash; What to Slot First</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Priority</span></div>
+                <ul class="list">
+                    <li><strong>Crimson &rarr; Ability Strength</strong> &mdash; almost universally valuable. Most Warframe builds benefit from more ability strength, and two Crimson shards provide a significant boost beyond what mods alone can achieve</li>
+                    <li><strong>Azure &rarr; Energy Max</strong> &mdash; pairs with any high-energy-cost frame. More energy max means more casts before running dry, especially during Steel Path missions where energy pads are scarce</li>
+                    <li><strong>Amber &rarr; Casting Speed</strong> &mdash; reduces the time it takes to cast abilities. On frames with long cast animations (Saryn, Equinox, Citrine) this is transformative</li>
+                    <li><strong>Azure &rarr; Armor</strong> &mdash; for tanky frames (Inaros, Rhino, Lavos) adding flat armor with shards combined with mod-based armor provides enormous effective health totals</li>
+                    <li>Do not spread shards across many frames early. Pick your two or three main frames and max those shard loadouts first before diversifying</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="incarnon">
+        <h2>&#9889; 4. Incarnon Genesis</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Incarnon Genesis Is</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Incarnon</span></div>
+                <ul class="list">
+                    <li>Incarnon Genesis adapters are endgame upgrade items that permanently transform a base weapon into an <strong>Incarnon</strong> variant &mdash; a dramatically more powerful version with a new firing mode, unique passive bonuses, and an Incarnon Evolution tree of upgrades</li>
+                    <li>The Incarnon form is activated mid-mission by charging the weapon&rsquo;s Incarnon Meter (done by achieving specific conditions, usually headshots or kills). When the meter is full, you enter Incarnon mode: the weapon transforms visually and gains a completely new firing behavior for a limited duration</li>
+                    <li>Each Incarnon adapter has five <strong>Evolution Stages</strong> with multiple passive options to choose from. Unlocking each stage requires completing specific in-mission challenges (e.g., &ldquo;kill 100 enemies with headshots&rdquo;, &ldquo;complete 3 Survivals&rdquo;). Once unlocked, you choose one passive from that stage permanently</li>
+                    <li>Incarnon weapons are among the most powerful in the game. Some base weapons that were considered mediocre or outright poor become top-tier with their Incarnon adapter installed</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How to Get Incarnon Adapters</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Sources</span></div>
+                <ul class="list">
+                    <li><strong>Duviri Circuit</strong> &mdash; the primary farm. Each week 12 specific Incarnon adapters are available, split into two pools of 6. Completing Circuit runs earns Pathos Clamps, which are spent on adapters at the Duviri vendor. Both Drifter and Warframe Circuit modes must be completed to access all 12</li>
+                    <li><strong>Void Cascade</strong> (Zariman Ten Zero) &mdash; drops Incarnon Genesis adapters at specific rotation rewards. Extended runs (30+ minutes) are the most efficient. Running with a coordinated squad that can maintain multiple Vitoplast nodes simultaneously maximizes adapter drops per hour</li>
+                    <li><strong>Holdfasts Standing</strong> &mdash; certain adapters are purchasable directly from Hombask in the Chrysalith (Zariman hub) for Holdfasts Standing. Check her stock first before committing to a farm &mdash; if the adapter you want is directly purchasable, buy it instead</li>
+                    <li>The full adapter rotation across both Circuit pools cycles every two weeks. Plan your farming schedule around which adapters are available in the current rotation</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Priority Incarnon Adapters</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Priority</span></div>
+                <ul class="list">
+                    <li><strong>Torid Incarnon</strong> &mdash; transforms the Torid (toxic cloud launcher) into an area denial powerhouse. One of the strongest status weapons in the game in Incarnon form. Exceptional for Steel Path Survival</li>
+                    <li><strong>Braton Incarnon</strong> &mdash; the humble starter rifle becomes a rapid-fire critical machine. Exceptional damage profile with extremely high critical chance in Incarnon form</li>
+                    <li><strong>Lato Incarnon</strong> &mdash; the starter pistol becomes a burst-fire secondary with massive critical multipliers. Outperforms many Prime secondaries in sustained DPS</li>
+                    <li><strong>Felarx Incarnon</strong> &mdash; shotgun that transforms into a rapid-fire energy scatter gun. Exceptional against dense enemy groups</li>
+                    <li><strong>Laetum Incarnon</strong> (requires Incarnon weapon blueprint from Duviri) &mdash; the strongest secondary pistol in the game for raw damage output. Its Incarnon form fires explosive projectiles with massive area damage</li>
+                    <li>See <a href="Warframe_Meta_Weapons_Codex.html">Meta Weapons Codex</a> for the full Incarnon tier list and per-adapter evolution recommendations</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="circuit">
+        <h2>&#128260; 5. Circuit &amp; Duviri Farming</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How the Circuit Works</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Circuit</span></div>
+                <ul class="list">
+                    <li>The Circuit is Duviri&rsquo;s endless mission mode. You are presented with a random pool of Warframes and weapons at the start. You pick one of each and build a temporary loadout from that pool, then run increasingly difficult waves of missions</li>
+                    <li>Every five waves you reach a <strong>Tier</strong> checkpoint and earn a reward. The reward table includes Incarnon Genesis adapters, Duviri-exclusive weapon parts (Syam, Innodem, Edun, Azothane), and Pathos Clamps</li>
+                    <li>Two Circuit variants exist: <strong>Drifter Circuit</strong> (you play as the Drifter) and <strong>Warframe Circuit</strong> (you play as a Warframe from the random pool). Each has a separate reward rotation. Both must be run each week to access all 12 available adapters</li>
+                    <li>The Circuit difficulty scales indefinitely. Most efficient farming stops at the first adapter reward (around Tier 3&ndash;5 depending on the week) and restarts rather than pushing to higher tiers where enemy scaling outpaces reward quality</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Circuit Strategy</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Strategy</span></div>
+                <ul class="list">
+                    <li>Because you are using a borrowed loadout, your personal mods do not apply. The game provides a set of pre-built mod configurations for each Warframe and weapon in the pool &mdash; these are fixed and cannot be changed mid-run</li>
+                    <li>When choosing your loadout from the random pool, prioritize Warframes that are strong with limited modding: <strong>Revenant</strong> (near-invulnerable regardless of mods), <strong>Mesa</strong> (Peacemaker scales with the fixed mods reasonably well), <strong>Octavia</strong> (enemy crowd control is mod-independent)</li>
+                    <li>For weapons, prefer high-base-damage primaries (Braton Prime, Soma Prime, Lanka) or melee weapons with innate high damage (Gram Prime, Nikana Prime) since the fixed mod sets favor these</li>
+                    <li>Some weeks your random pool will be excellent; others it will be weak. Do not force a bad pool deeper than needed &mdash; the Incarnon adapter reward is available at relatively low tiers regardless of difficulty</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="endgame-frames">
+        <h2>&#128293; 6. Endgame Warframes</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Survivability Tier</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Tank</span></div>
+                <ul class="list">
+                    <li><strong>Revenant</strong> &mdash; his Mesmer Skin ability absorbs all incoming damage (including one-shots) and reflects it back as a stagger. Nearly unkillable in any content. Extremely easy to play. Farm from Nightwave or Eidolons on Plains of Eidolon</li>
+                    <li><strong>Inaros</strong> &mdash; enormous health pool (often 75,000+ health with mods and shards), no shields, regenerates health from finishers. Can survive hits that kill every other frame. Farm from Sands of Inaros quest</li>
+                    <li><strong>Hildryn</strong> &mdash; uses shields instead of energy for abilities, with Aegis Storm providing near-permanent crowd control. Farm from Fortuna Standing with Vox Solaris</li>
+                    <li><strong>Nidus</strong> &mdash; stacks mutation that increases survivability exponentially. Near-immortal at high stacks. Farm from the Infested Ship on Eris</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #f87171;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Damage Tier</h3><span class="type-tag" style="background:rgba(248,113,113,0.18);color:#f87171;border:1px solid rgba(248,113,113,0.45);">DPS</span></div>
+                <ul class="list">
+                    <li><strong>Saryn</strong> &mdash; spreads Spores across all enemies in range, then detonates them for massive area damage. The queen of large-scale enemy clear. Farm from Kela De Thaym on Sedna</li>
+                    <li><strong>Mesa</strong> &mdash; Peacemaker auto-targets all enemies in range with extreme accuracy. With Galvanized mods and Arcane Velocity on her Regulators, she deletes rooms in seconds. Farm from Mutalist Alad V on Eris</li>
+                    <li><strong>Equinox</strong> &mdash; accumulates damage from enemy kills and releases it in a massive area burst. Can kill entire rooms of Steel Path enemies in one ability cast at high stacks. Farm from missions across the Star Chart</li>
+                    <li><strong>Mirage</strong> &mdash; creates clone copies of herself that duplicate all weapon fire, effectively multiplying your weapon&rsquo;s DPS by 4&ndash;5x with the Hall of Malevolence Augment. Farm from Hidden Messages quest</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Support &amp; Utility Tier</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Support</span></div>
+                <ul class="list">
+                    <li><strong>Octavia</strong> &mdash; forces all nearby enemies into an involuntary dance animation, rendering them completely unable to attack for the duration. With her Mallet and Resonator combo active, your entire squad is effectively invulnerable to enemy attacks. Farm from Lua music puzzle missions</li>
+                    <li><strong>Trinity</strong> &mdash; heals the entire squad and provides permanent energy restoration. Essential for Eidolon Tridolon runs and Archon Hunts where energy management is critical. Farm from Ambulas boss on Pluto</li>
+                    <li><strong>Wisp</strong> &mdash; places stat-boosting reservoir buffs that apply to the entire squad. Her Haste mote increases fire rate, Vitality motes increase health, and Shock motes paralyze enemies. Universally valuable in any squad composition. Farm from Ropalolyst on Jupiter</li>
+                    <li><strong>Citrine</strong> &mdash; crystallizes enemies and provides squad-wide damage type bonuses through her Fractured Blast. Her shards grant rolling stat bonuses during missions. Farm from Orowyrm in Duviri</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="the-ceiling">
+        <h2>&#127944; 7. The Ceiling &mdash; What Does &ldquo;Done&rdquo; Look Like?</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">MR 30 and Beyond</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Ceiling</span></div>
+                <ul class="list">
+                    <li>MR 30 is the current hard cap for Mastery Rank. Reaching it means you have leveled enough gear to earn the maximum possible Mastery XP &mdash; a milestone that takes most dedicated players over a year of regular play</li>
+                    <li>At MR 30 you earn the title <strong>Mastery Rank 30</strong> and access to the <strong>Legendary Core</strong> &mdash; a special item that instantly maxes the rank of any non-Primed mod. This is the rarest and most valuable item in the game</li>
+                    <li>Beyond MR 30, the game continues to release new content: new Warframes, new weapons, new open worlds, new quest chapters, and new seasonal events. There is always something new to farm, even at the absolute ceiling of progression</li>
+                    <li>Most endgame players measure their progress not by MR but by the quality of their builds: how many Archon Shards are slotted, which Incarnon adapters are maxed, which Arcanes are at Rank 5, and how high they can push in Steel Path Endurance missions</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Long-Term Goals at the Endgame</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Goals</span></div>
+                <ul class="list">
+                    <li><strong>Complete all Archon Shard slots</strong> on your main 3&ndash;5 frames (5 shards each, ideally Tauforged). This alone represents months of weekly Archon Hunt completions</li>
+                    <li><strong>Max all Arcanes</strong> on your primary frames and Amp (Rank 5 requires multiple copies of each Arcane &mdash; trade with players or farm Eidolons extensively)</li>
+                    <li><strong>Collect all Incarnon Genesis adapters</strong> &mdash; there are over 40 in the current game, cycling through the two-week Duviri rotation</li>
+                    <li><strong>Complete all Nightwave seasons</strong> &mdash; each season&rsquo;s Nora&rsquo;s Choice exclusive rewards (Umbra Formas, Vitus Essence, exclusive cosmetics) are limited and do not return</li>
+                    <li><strong>Farm the Acolyte mod set to max rank</strong> &mdash; Blood Rush, Weeping Wounds, Gladiator Might, Eleventh Storm, Maiming Strike, and Focused Defense are among the most impactful melee mods and require significant Steel Path farming to acquire and rank up</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">The Real Answer to &ldquo;Am I Done?&rdquo;</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Perspective</span></div>
+                <ul class="list">
+                    <li>Warframe is designed for long-term engagement. Digital Extremes releases major content updates every few months and smaller updates more frequently. A player who &ldquo;finishes&rdquo; the game in January will have new content to pursue by March</li>
+                    <li>The honest answer is that most veteran players never feel truly done. They rotate between: catching up on new content as it releases, optimizing existing builds further, collecting cosmetics, helping new players through difficult content, and trading in the player economy</li>
+                    <li>If you have reached MR 30, completed The New War, the Duviri Paradox, Whispers in the Walls, filled your main frames with Tauforged Archon Shards, and maxed your priority Incarnon adapters &mdash; you are as close to &ldquo;done&rdquo; as the game currently allows. And something new is already in development</li>
+                    <li>The Compendium will continue to grow alongside the game. Return to the <a href="Warframe_Endgame_Systems_Codex.html">Endgame Systems Codex</a> and <a href="Warframe_Systems_Dashboard.html">Systems &amp; Progress</a> for current endgame meta and strategy as new updates land</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Return to the Path</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Next Up</span></div>
+                <ul class="list">
+                    <li><a href="Warframe_Tenno_Path.html">&#8592; MR 1&ndash;10: Foundation</a> &mdash; where it all began</li>
+                    <li><a href="Warframe_Tenno_Path_Expansion.html">&#8592; MR 11&ndash;20: Expansion</a> &mdash; open worlds, Railjack, Kuva weapons, and The New War</li>
+                    <li><a href="Warframe_Start_Here.html">New to Warframe? Start Here</a> &mdash; the full introduction to the game and this Compendium</li>
+                    <li><a href="Warframe_Endgame_Systems_Codex.html">Endgame Systems Codex</a> &mdash; deep dives into Helminth, Archon Shards, Incarnon, and Steel Path meta</li>
+                    <li><a href="Warframe_Meta_Weapons_Codex.html">Meta Weapons Codex</a> &mdash; weapon tier lists with Incarnon and Kuva/Tenet weapons included</li>
+                    <li><a href="../!Warframe_Master_Index.html">&#127968; Return to Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(targetId, true); }
+        });
+    });
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) { showSection(e.state.section, false); } else { showMenu(); }
+    });
+});
+</script>
+
+</body>
+</html>
+

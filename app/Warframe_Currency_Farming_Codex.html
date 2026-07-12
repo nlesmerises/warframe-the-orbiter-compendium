@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Currency Farming Codex</title>
+    <style>
+body { padding-top: 154.6px !important; }
+
+.page-shell {
+    width: min(1750px, calc(100vw - 48px));
+    margin: 0 auto 40px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    padding: 36px 40px 40px;
+    box-sizing: border-box;
+}
+
+/* ── Tile Hub ─────────────────────── */
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+
+/* ── Submenu section text enlargement ───────────────── */
+.category-section .card h3 {
+    font-size: 1.6rem !important;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-weight: 700;
+    color: #ffab00;
+    letter-spacing: 1px;
+}
+.category-section .card > p {
+    font-size: 1.05rem !important;
+    line-height: 1.7;
+    color: #cbd5e1;
+    margin: 12px 0 20px;
+}
+.category-section .box h4 {
+    font-size: 1.1rem !important;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-bottom: 12px;
+}
+.category-section .mod-list li {
+    font-size: 1rem !important;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+.category-section .card {
+    padding: 32px !important;
+}
+.type-tag {
+    font-size: 0.85rem !important;
+    padding: 6px 14px !important;
+    border-radius: 20px !important;
+    font-weight: 600;
+}
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+<header>
+    <h1>&#128176; Currency &amp; Farming Codex</h1>
+    <p class="subtitle">Complete interactive guide to Origin System monetary & progression farms</p>
+</header>
+
+<div class="toc no-print">
+    <div class="qi-grid">
+        <a href="#" class="qi-tile toc-toggle" data-section="section-credits" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128176;</div><h2 class="qi-tile-title">Credits</h2><p class="qi-tile-desc">Best farmed via The Index (Neptune) or Profit-Taker. Demand scales sharply into endgame crafting — establish a reliable loop early.</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-endo" style="border-left-color:#ffa726;"><div class="qi-tile-icon">&#128293;</div><h2 class="qi-tile-title">Endo</h2><p class="qi-tile-desc">Used exclusively to rank up mods. Arbitrations and Sanctum Anatomica bounties are the top sustained sources.</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-platinum" style="border-left-color:#ffe082;"><div class="qi-tile-icon">&#128142;</div><h2 class="qi-tile-title">Platinum</h2><p class="qi-tile-desc">Fully tradeable premium currency. Farm prime parts, sell to other players — you never need to spend real money.</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-ducats" style="border-left-color:#ffb74d;"><div class="qi-tile-icon">&#129689;</div><h2 class="qi-tile-title">Ducats</h2><p class="qi-tile-desc">Exclusive currency of Baro Ki'Teer, the Void Trader who appears at Relays every two weeks. Convert unwanted Prime parts.</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-kuva" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#129768;</div><h2 class="qi-tile-title">Kuva</h2><p class="qi-tile-desc">Crimson substance that fuels the Riven system and Kuva weapon rerolls. Farmed via Kuva Siphons, Floods, and Survival.</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-standing" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#128101;</div><h2 class="qi-tile-title">Standing</h2><p class="qi-tile-desc">Reputation currency for each faction — six primary Syndicates plus open-world factions, each with separate daily caps.</p></a>
+    </div>
+</div>
+
+<div class="category-section" id="section-credits">
+<div class="card" id="credits" style="border-left:6px solid #ffd700;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">&#x1F4B0; Credits</h3>
+                <span class="type-tag" style="background: rgba(255,215,0,0.2); color: #ffd700; border: 1px solid rgba(255,215,0,0.4);">Primary Currency</span>
+            </div>
+            <p>Credits are the lifeblood of the Origin System economy. Every Foundry build, blueprint purchase, trade tax, and mod fusion costs credits — and the demand scales sharply as you progress into endgame crafting. New players often find themselves credit-starved after investing in mid-tier weapon builds, making a reliable farming loop essential well before Steel Path. Credit multipliers from boosters, Smeeta Kavat charm procs, or the Secura Lecta whip can dramatically accelerate any of the methods below.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#128204; Best Farming Nodes</h4>
+                    <ul class="mod-list">
+                        <li><strong>The Index (Neptune):</strong> The single best sustained credit farm. High-Risk Investment returns roughly 200,000–400,000 credits per run. Bring a point-carrier like Rhino or Revenant and an energy-sustain support to keep runs fast and efficient.</li>
+                        <li><strong>Profit-Taker Orb (Venus):</strong> Drops a massive lump-sum credit reward on kill plus guaranteed Toroids. Requires max Solaris United standing and an optimized Archgun build — but each run takes under 5 minutes for enormous returns.</li>
+                        <li><strong>Steel Path Missions (any node):</strong> All Steel Path missions grant an inherent credit bonus multiplier. Running Disruption or Survival on Sedna while farming other resources simultaneously is an efficient passive credit source.</li>
+                        <li><strong>Orokin Void Survival:</strong> Excellent for newer players — Void missions drop credit caches and rare resources simultaneously, making them a solid early farm before Index access.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#128176; Credit Tips</h4>
+                    <ul class="mod-list">
+                        <li>Activate a Credit Booster before any Index or Profit-Taker run — it doubles all credit drops and stacks with Smeeta Kavat charm procs for an effective 4× multiplier.</li>
+                        <li>The <strong>Secura Lecta</strong> (Sequence syndicate whip) doubles credits dropped by killed enemies — a passive multiplier for any non-Index mission.</li>
+                        <li>Avoid spending credits on low-tier mods you can obtain as drops. Reserve your reserves for high-rank mod fusion and Baro Ki'Teer Prime blueprint purchases.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="category-section" id="section-endo">
+<div class="card" id="endo" style="border-left:6px solid #ffa726;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">&#x1F48E; Endo</h3>
+                <span class="type-tag" style="background: rgba(255,167,38,0.2); color: #ffa726; border: 1px solid rgba(255,167,38,0.4);">Upgrade Resource</span>
+            </div>
+            <p>Endo is a pure energy substance used exclusively to fuse and rank up mods — and demand for it never stops. Every weapon, Warframe, and companion relies on ranked mods for its power budget. Maxing a single R10 mod like Serration costs over 1 million Endo; a full endgame loadout can exceed 10 million. Unlike credits, Endo cannot be purchased with platinum and cannot be traded, so a dedicated farming loop is the only path to a fully modded build.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#128204; Best Farming Nodes</h4>
+                    <ul class="mod-list">
+                        <li><strong>Vodyanoi (Sedna Arena):</strong> The undisputed best raw Endo farm. Enemies drop Endo directly and frequently. Bring Nekros (Despoil) to double drops, with Nidus or Khora for grouping. An organized squad can yield 30,000–60,000 Endo per hour.</li>
+                        <li><strong>Arbitrations (any Steel Path mission):</strong> Award 100 Endo per Arbitration Drone killed and drop 1,000 Endo bundles from Arbitration Honors rewards. Excellent for solo players who can't coordinate a Vodyanoi squad.</li>
+                        <li><strong>Sanctum Bounties (Deimos):</strong> High drop rates for 1,000–4,000 Endo bundles as bounty completion rewards — great when combined with Son Token farming.</li>
+                        <li><strong>Ayatan Weekly (Mars):</strong> Visit Maroo's Bazaar each week for a guaranteed Ayatan Sculpture mission. Sculptures convert to significant Endo at Maroo's statue — always hunt them in missions too.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#128160; Endo Tips</h4>
+                    <ul class="mod-list">
+                        <li>Fill Ayatan Sculptures with Stars before converting them — a fully starred Amber Star sculpture yields 3,450 Endo versus 450 empty.</li>
+                        <li>Selling duplicate mods at the Mod menu grants 2–15 Endo each. While individually small, disposing of excess drops from a long Survival run adds up quickly.</li>
+                        <li>Resource Boosters do NOT affect Endo drops — only dedicated Endo farming nodes and Nekros work. Focus on Vodyanoi for raw efficiency over any passive multiplier.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="category-section" id="section-platinum">
+<div class="card" id="platinum" style="border-left:6px solid #ffe082;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">&#x1FA99; Platinum</h3>
+                <span class="type-tag" style="background: rgba(255,224,130,0.2); color: #ffe082; border: 1px solid rgba(255,224,130,0.4);">Premium Currency</span>
+            </div>
+            <p>Platinum is Warframe's premium currency — and critically, it is fully tradeable between players. You never need to spend real money to acquire it. The entire in-game economy runs on player trading: rare Prime parts, Arcanes, Riven mods, and high-demand items can be listed on Warframe.Market and sold to other Tenno for platinum. A consistent farming and selling habit can sustain any endgame build without a single real-money purchase.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#129689; Best Platinum Sources</h4>
+                    <ul class="mod-list">
+                        <li><strong>Prime Parts (Void Fissures):</strong> Run Void Fissures to crack Relics, then check Warframe.Market for current prices. Vaulted Prime parts command the highest prices — sell them during Prime Vault rotations when demand spikes.</li>
+                        <li><strong>Arcanes (Eidolons / Vosfor):</strong> Endgame Arcanes like Arcane Energize, Grace, and Molt Augmented sell for significant platinum. Eidolon runs and Vosfor-for-Arcane exchanges are steady sources.</li>
+                        <li><strong>Corrupted Mods (Deimos Vaults):</strong> Orokin Vault runs on Deimos drop rare Corrupted mods like Blind Rage, Fleeting Expertise, and Narrow Minded — all consistently high-value on the market.</li>
+                        <li><strong>Riven Mods:</strong> Unveiling Rivens and selling well-rolled ones for popular meta weapons (Braton Vandal, Tombfinger, etc.) is the highest platinum ceiling activity, though it requires some market knowledge.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#128178; Spending Tips</h4>
+                    <ul class="mod-list">
+                        <li><strong>Always buy Warframe and Weapon Slots first</strong> — the default slot count is too low to support a growing collection, and slots cannot be earned any other way.</li>
+                        <li>Never spend platinum on resources, credits, or common mods. Those are always farmable. Reserve plat for slots, unique cosmetics, or items that are genuinely time-gated.</li>
+                        <li>Check Warframe.Market before buying anything in-game — player prices are almost always dramatically lower than the in-game market price.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="category-section" id="section-ducats">
+<div class="card" id="ducats" style="border-left:6px solid #ffb74d;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">&#x1F3B4; Ducats</h3>
+                <span class="type-tag" style="background: rgba(255,183,77,0.2); color: #ffb74d; border: 1px solid rgba(255,183,77,0.4);">Orokin Currency</span>
+            </div>
+            <p>Orokin Ducats are the exclusive currency of Baro Ki'Teer, the enigmatic Void Trader who appears at Relays every two weeks for a 48-hour window. His rotating stock includes Primed mods, unique cosmetics, weapons, and special augments that cannot be obtained anywhere else. Ducats are generated entirely by converting Prime parts — the byproduct of Void Fissure runs — at the Ducat Kiosks found in every Relay. Stockpiling ducats before Baro arrives ensures you never miss a desirable offering.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#127919; Best Farming Strategies</h4>
+                    <ul class="mod-list">
+                        <li><strong>Void Fissure Captures &amp; Exterminates:</strong> The fastest relic-cracking missions. Run them on Lith or Meso tier for quick completion. At the end, always choose Silver (45 Ducats) or Gold (100 Ducats) rarity rewards over Bronze (15 Ducats) — even if you don't need the part.</li>
+                        <li><strong>Vaulted Relic Stockpiling:</strong> Vaulted Prime parts sell for more platinum but also convert to the same Ducat values. If a vaulted part is abundant in your inventory, check its platinum price first — if it's low, melt it for Ducats instead.</li>
+                        <li><strong>Ducat Kiosk Locations:</strong> Found in every Relay (Earth, Mars, Jupiter, Pluto, Sedna, Cetus/Fortuna entrances). Convert your excess Prime parts regularly rather than hoarding them — especially before Baro's confirmed arrival.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#128142; Baro Tips</h4>
+                    <ul class="mod-list">
+                        <li>Baro visits every two weeks, alternating between PC and console schedules. Check the in-game alert or community sites for exact timing and inventory previews before he arrives.</li>
+                        <li>Prioritize <strong>Primed mods</strong> (Primed Continuity, Primed Flow, etc.) — they are the highest-value purchases and the main reason to farm Ducats aggressively.</li>
+                        <li>Baro's inventory rotates each visit. If you miss an item, it will likely return within a few months — never overspend credits on Baro items at the cost of your Foundry reserves.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="category-section" id="section-kuva">
+<div class="card" id="kuva" style="border-left:6px solid #ef5350;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">&#x1FA78; Kuva</h3>
+                <span class="type-tag" style="background: rgba(239,83,80,0.2); color: #ef5350; border: 1px solid rgba(239,83,80,0.4);">Exotic Material</span>
+            </div>
+            <p>Kuva is a crimson exotic substance harvested from the Grineer Kuva Fortress and closely tied to the Orokin Queens' power. In gameplay, it is the fuel that drives the Riven system — each reroll of a Riven mod's stats costs 1,200–3,600 Kuva depending on the number of previous rolls. Chasing a god-tier Riven for a meta weapon can easily consume hundreds of thousands of Kuva, so a reliable and high-throughput farming loop is essential for serious Riven crafters.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#128204; Best Farming Nodes</h4>
+                    <ul class="mod-list">
+                        <li><strong>Taveuni (Kuva Fortress Survival):</strong> The best dedicated Kuva farm. Enemies drop Kuva directly; life support capsules also generate it. A coordinated squad with Nekros and speed Warframes can yield 30,000–50,000 Kuva per hour.</li>
+                        <li><strong>Kuva Lich / Sister of Parvos Loop:</strong> Each Lich or Sister you vanquish rewards 3,000–12,000 Kuva as a bonus. If you're farming Kuva weapons anyway, the Kuva payout is a significant secondary income.</li>
+                        <li><strong>Kuva Fortress Daily Missions:</strong> The daily Kuva Siphon and Kuva Flood missions (rotating across all planets) award 550–1,200 Kuva respectively. Always run the Flood when available — it takes only a few minutes for a guaranteed high payout.</li>
+                        <li><strong>Teshin Honours (Relays):</strong> Spend Steel Essence (earned from Steel Path missions) at Teshin to purchase 10,000 Kuva bundles weekly. An excellent passive top-up if you regularly run Steel Path anyway.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#128308; Kuva Tips</h4>
+                    <ul class="mod-list">
+                        <li>Resource Boosters double Kuva drops from survival missions and Siphons — always activate one before a long Taveuni session.</li>
+                        <li>Kuva Siphon and Flood missions require disrupting the Kuva cloud with a Operator Void Dash. Practice the timing — missing a cloud on a Flood is a significant lost payout.</li>
+                        <li>Keep a stockpile of at least 100,000 Kuva before actively rerolling a high-rank Riven. Without a buffer, you'll constantly interrupt farming sessions mid-roll cycle.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="category-section" id="section-standing">
+<div class="card" id="standing" style="border-left:6px solid #4ade80;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">&#x1F91D; Syndicate Standing</h3>
+                <span class="type-tag" style="background: rgba(74,222,128,0.2); color: #4ade80; border: 1px solid rgba(74,222,128,0.4);">Reputation</span>
+            </div>
+            <p>Standing is the reputation currency of Warframe's many factions — and each one runs a separate, independent economy. The six primary Syndicates (Steel Meridian, Arbiters of Hexis, Cephalon Suda, The Perrin Sequence, Red Veil, New Loka) offer Augment mods, exclusive weapons, and relic packs. The open-world hubs — Cetus, Fortuna, and the Necralisk — each have their own standing economy gating Operator Amp parts, K-Drive mods, companion upgrades, and powerful faction gear. Standing accumulation is capped daily by your Mastery Rank (MR × 1,000 per day per faction), so planning which syndicates to prioritize is essential early.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#129309; Primary Syndicate Farming</h4>
+                    <ul class="mod-list">
+                        <li><strong>Daily Syndicate Missions:</strong> Each syndicate offers 3 daily missions. Always run them — they award base standing plus any Medallions hidden in the tileset. Equip a Loot Radar mod (Animal Instinct on your companion) to see all 8 Medallions on the minimap.</li>
+                        <li><strong>Syndicate Medallions:</strong> Collectibles hidden throughout Syndicate missions that award bonus standing when turned in at the syndicate terminal in any Relay. Each mission contains up to 8 — finding them all can triple the standing payout of a single run.</li>
+                        <li><strong>Ally Syndicate Benefit:</strong> Each primary syndicate has an allied and an enemy syndicate. Earning standing with one also passively earns a percentage for its ally — choose your primary syndicate wisely to maximize dual-faction progress.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#127757; Open-World Standing</h4>
+                    <ul class="mod-list">
+                        <li><strong>Cetus (Ostron):</strong> Earn standing through Bounties on the Plains of Eidolon. Higher-tier bounties award more standing per run. Prioritize reaching Mastery with the Ostron to unlock Operator Amp parts from Hok's Anvil.</li>
+                        <li><strong>Fortuna (Solaris United):</strong> Bounties on Orb Vallis award Solaris standing. Reaching max rank unlocks Profit-Taker access and the powerful K-Drive mods from Roky.</li>
+                        <li><strong>Necralisk (Entrati):</strong> Complete Son's Conservation missions, Isolation Vault bounties, and Deimos activities. Entrati standing is the primary gateway to Necramech parts and Helminth segment upgrades.</li>
+                        <li><strong>Nightwave (Nora Night):</strong> Weekly and daily Nightwave challenges award Nightwave Credits, redeemable for Aura mods, Kuva, and cosmetics — a supplementary standing economy that runs in parallel with all others.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- DESIGNS PHILOSOPHY BANNER -->
+    <div class="philosophy-banner no-print" style="margin-top: 30px; background: rgba(0,0,0,0.2); border-left: 4px solid var(--accent); padding: 15px; border-radius: 8px;">
+        <h4 style="margin-top: 0; color: var(--accent);">&#x1F3AF; Our Playstyle Philosophy</h4>
+        <p style="margin-bottom: 0;">Farming in Warframe should be highly optimized but always enjoyable. Use these clickable references to target resources efficiently. Swap out squad roles, scale difficulties to your liking, and always remember to configure boosters whenever farming extensive long-haul rewards!</p>
+</div>
+
+</div><!-- container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

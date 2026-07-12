@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Warframe Orbiter Codex &mdash; what your home ship is, every station and console (Navigation, Arsenal, Foundry, Helminth, Incubator, Transference and more), how to use each, and which segments unlock them.">
+    <title>Warframe: The Orbiter Compendium &mdash; Orbiter Codex</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128752;&#65039; Orbiter Codex</h1>
+        <p class="subtitle">Your home ship &mdash; what every station does and where to go next</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="what-is-the-orbiter" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#x1F6F8;</div><h2 class="qi-tile-title">What Is the Orbiter?</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="navigation" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#x1F5FA;&#xFE0F;</div><h2 class="qi-tile-title">Navigation (Cockpit)</h2><p class="qi-tile-desc">The console at the front of the Orbiter. Opens the Star Chart — where you pick planets, nodes, and mission types, and launch into play.</p></a>
+            <a class="qi-tile toc-toggle" data-section="stations" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#x1F527;</div><h2 class="qi-tile-title">The Stations</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="segments" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#x1F511;</div><h2 class="qi-tile-title">Segments &mdash; What Unlocks Each Station</h2><p class="qi-tile-desc">Some stations exist from the start; others are segments you install after a quest or milestone. Verify exact prerequisites in-game if you&#39;re unsure — this is the typical path.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. WHAT IS THE ORBITER? -->
+    <section class="category-section" id="what-is-the-orbiter">
+        <h2>&#x1F6F8; 1. What Is the Orbiter?</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <h3>&#128752;&#65039; Your Mobile Home Base</h3>
+                <ul class="list">
+                    <li>The <strong>Orbiter</strong> is your personal ship &mdash; the hub you return to between missions to gear up, craft, and manage everything you own.</li>
+                    <li>It is run by your ship's AI, <strong>Cephalon Ordis</strong>, who narrates events and flags new items.</li>
+                    <li>The small ship you <em>deploy into missions</em> is the <strong>Landing Craft</strong> (Liset, Mantis, etc.); the Orbiter is the larger vessel it docks with. Landing Craft choice affects your <strong>Air Support</strong> ability, not the Orbiter's stations.</li>
+                    <li>The Orbiter <strong>grows over time</strong>: new consoles and rooms (&ldquo;segments&rdquo;) are added as you complete quests and progress &mdash; see the segment table at the bottom.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <h3>&#129517; How to Use This Page</h3>
+                <ul class="list">
+                    <li>Each station below has a quick <strong>what it is / how you use it / when you care</strong>.</li>
+                    <li>Where the compendium has a deep page for that activity, the card <strong>links straight to it</strong> &mdash; treat this as your &ldquo;start here&rdquo; map.</li>
+                    <li>New player? Read top to bottom. Veteran? Jump to the station you need.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. NAVIGATION (COCKPIT) -->
+    <section class="category-section" id="navigation">
+        <h2>&#x1F5FA;&#xFE0F; 2. Navigation (Cockpit)</h2>
+        <div class="card" style="border-left:6px solid #4ade80;">
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#128203; What It Is</h4>
+                    <p>The console at the front of the Orbiter. Opens the <strong>Star Chart</strong> &mdash; where you pick planets, nodes, and mission types, and launch into play.</p>
+                </div>
+                <div class="box">
+                    <h4>&#128270; How You Use It &amp; Where to Go</h4>
+                    <p>Plan your route through the system, unlock <strong>Junctions</strong>, and find mission types. Pair with the <a href="Warframe_Progression_Guide.html" style="color:#89cff0;">Progression Guide</a>, the <a href="Warframe_Quest_Codex.html" style="color:#89cff0;">Quest Codex</a>, and the <a href="Warframe_Drop_Tables.html" style="color:#89cff0;">Drop Tables</a> to decide <em>where</em> to run for what you need.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. THE STATIONS -->
+    <section class="category-section" id="stations">
+        <h2>&#x1F527; 3. The Stations &mdash; What Each One Does</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#9876;&#65039; Arsenal</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Equip and customize your Warframe, primary, secondary, melee, companion, and Archwing &mdash; plus mods and appearance.</li>
+                    <li><strong>Use it for:</strong> Loadouts, Forma, polarities, and cosmetics.</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Builds_Codex.html" style="color:#89cff0;">Builds Codex</a> &middot; <a href="Warframe_Meta_Weapons_Codex.html" style="color:#89cff0;">Meta Weapons</a> &middot; <a href="Warframe_Weapon_Build_Customizer.html" style="color:#89cff0;">Build Customizer</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128296; Foundry</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Craft and claim everything &mdash; Warframes, weapons, gear, and resources from blueprints.</li>
+                    <li><strong>Use it for:</strong> Building new gear (watch build timers) and claiming finished items.</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Foundry_Planner.html" style="color:#89cff0;">Foundry Planner</a> &middot; <a href="Warframe_Foundry_Farming_Guide.html" style="color:#89cff0;">Foundry Farming</a> &middot; <a href="Warframe_Weapons_Recipe_Ingredients.html" style="color:#89cff0;">Weapon Recipes</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128290; Mods (Upgrade)</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Manage your mod collection, fuse/rank mods with Endo, and apply them via the Arsenal.</li>
+                    <li><strong>Use it for:</strong> Ranking key mods and slotting Arcanes &amp; Rivens.</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Mods_Database.html" style="color:#89cff0;">Mods Database</a> &middot; <a href="Warframe_Arcane_Codex.html" style="color:#89cff0;">Arcane Codex</a> &middot; <a href="Warframe_Riven_Guide.html" style="color:#89cff0;">Riven Guide</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#129516; Helminth Infirmary</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> The Helminth segment &mdash; <strong>subsume</strong> a Warframe to learn an ability, then inject it onto another frame.</li>
+                    <li><strong>Use it for:</strong> Replacing a weak ability with a strong borrowed one (the heart of high-end builds).</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Helminth_Synergy_App.html" style="color:#89cff0;">Helminth Synergy App</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128062; Incubator</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Breed and revive <strong>Kubrow and Kavat</strong> companions; manage genetic stabilizers.</li>
+                    <li><strong>Use it for:</strong> Hatching companions and swapping which one is active.</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Companions_Vehicles_Codex.html" style="color:#89cff0;">Companions &amp; Vehicles</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128064; Transference / Personal Quarters</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> The <strong>Somatic Link</strong> chair &mdash; switch to your <strong>Operator</strong> and access Focus schools (after <em>The Second Dream</em> / <em>The War Within</em>).</li>
+                    <li><strong>Use it for:</strong> Operator play, Focus, and Eidolon hunting.</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Mechanics_Focus_Guide.html" style="color:#89cff0;">Operator &amp; Focus Guide</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128226; Syndicate / Communications</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Manage <strong>Syndicate</strong> allegiances, claim standing rewards, and read your Inbox from Ordis.</li>
+                    <li><strong>Use it for:</strong> Pledging syndicates and spending standing.</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Syndicate_Manager.html" style="color:#89cff0;">Syndicate Manager</a> &middot; <a href="Warframe_Syndicate_Farming_Guide.html" style="color:#89cff0;">Syndicate Farming</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128176; Market</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Buy blueprints, cosmetics, slots, and bundles &mdash; with credits or platinum.</li>
+                    <li><strong>Use it for:</strong> Warframe/weapon slots, Reactors/Catalysts, and starter blueprints.</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Platinum_Farming_Guide.html" style="color:#89cff0;">Platinum Farming</a> &middot; <a href="Warframe_Trading_Ledger.html" style="color:#89cff0;">Trading Ledger</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128300; Codex / Cephalon Simaris</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Your scanned-enemy/lore database; Simaris targets give standing for scanning.</li>
+                    <li><strong>Use it for:</strong> Completing scans, buying Simaris offerings (e.g. Sculptures, mods).</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Drop_Tables.html" style="color:#89cff0;">Drop Tables</a> for where things come from.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128640; Railjack / Dry Dock</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Access your <strong>Railjack</strong> (your crewed battleship) once unlocked; Cephalon Cy assists.</li>
+                    <li><strong>Use it for:</strong> Railjack missions, crew, and intrinsics.</li>
+                    <li><strong>Go deeper:</strong> <a href="Warframe_Railjack_Codex.html" style="color:#89cff0;">Railjack Codex</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#127912; Decoration / Captura</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Decorate your Orbiter, place an Articula, play Somachord tracks, and stage photos with <strong>Captura</strong>.</li>
+                    <li><strong>Use it for:</strong> Personalization &mdash; no gameplay impact, pure home-making.</li>
+                    <li><strong>Go deeper:</strong> personal preference; nothing to farm here.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128231; Inbox (Ordis)</h3>
+                <ul class="list">
+                    <li><strong>What:</strong> Story messages, event mails, and <strong>gift/reward attachments</strong> from Ordis and syndicates.</li>
+                    <li><strong>Use it for:</strong> Claiming attached rewards and starting quests delivered by mail &mdash; check it often.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SEGMENTS -->
+    <section class="category-section" id="segments">
+        <h2>&#x1F511; 4. Segments &mdash; What Unlocks Each Station</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Some stations exist from the start; others are <strong>segments</strong> you install after a quest or milestone. Verify exact prerequisites in-game if you're unsure &mdash; this is the typical path.</p>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ce93d8;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Station / Segment</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">How It's Unlocked</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Navigation, Arsenal, Foundry, Mods, Market, Codex, Inbox</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Available from the start (<em>Vor's Prize</em> onward)</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Incubator (Kubrow/Kavat)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Build the Incubator Segment after <em>Howl of the Kubrow</em></td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Transference / Operator (Somatic Link)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);"><em>The Second Dream</em> (Operator) &amp; <em>The War Within</em> (Focus)</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Helminth Infirmary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Install the Helminth Segment after <em>Heart of Deimos</em></td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Railjack / Dry Dock access</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Build your Railjack via <em>Rising Tide</em> (Dry Dock is in the Clan Dojo)</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;">Syndicate console</td><td style="padding:7px 14px;color:#9fb0c4;">Unlocks as you reach the required Mastery Rank to pledge syndicates</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="color:#9fb0c4;margin-top:0.8rem;font-size:0.85rem;">New here? Start at <a href="Warframe_Progression_Guide.html" style="color:#89cff0;">Progression</a> and the <a href="Warframe_Quest_Codex.html" style="color:#89cff0;">Quest Codex</a> &mdash; most segments arrive naturally as you play the story.</p>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

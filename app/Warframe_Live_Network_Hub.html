@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Live Network Hub</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        body {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-height: 100vh !important;
+            padding: 110px 1.5rem 2rem !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Title outside the panel */
+        .page-title-block {
+            width: 100%;
+            max-width: 1750px;
+            padding: 0 0 1.2rem 0;
+        }
+        .page-title-block p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Glass panel */
+        .hub-container {
+            width: 100%;
+            max-width: 1750px;
+            background: rgba(10,15,30,0.7);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+            box-sizing: border-box;
+        }
+
+        .section-label {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #ffab00;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0 0 1.2rem 0;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(255,171,0,0.15);
+        }
+
+        /* Hub card grid */
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 900px) { .hub-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 580px) { .hub-grid { grid-template-columns: 1fr; } }
+
+        .hub-card {
+            background: rgba(15,22,42,0.45);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-left: 3px solid #ffab00;
+            border-radius: 14px;
+            padding: 20px 22px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .hub-card:hover {
+            transform: translateY(-3px);
+            border-left-color: #ffd740;
+            background: rgba(23,33,62,0.75);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+        .hub-card-icon { font-size: 1.6rem; margin-bottom: 10px; }
+        .hub-card h2 {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffab00;
+            margin: 0 0 6px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .hub-card p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .hub-card .ext-badge {
+            margin-top: 10px;
+            font-size: 0.7rem;
+            color: #64748b;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Security notice */
+        .notice-box {
+            background: rgba(251,191,36,0.05);
+            border: 1px solid rgba(251,191,36,0.2);
+            border-left: 3px solid #fbbf24;
+            border-radius: 12px;
+            padding: 18px 22px;
+        }
+        .notice-box h4 {
+            color: #fbbf24;
+            margin: 0 0 8px 0;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 0.95rem;
+        }
+        .notice-box p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        /* iframe */
+        .iframe-container {
+            width: 100%; height: 80vh;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; overflow: hidden; background: #000;
+        }
+        iframe { width: 100%; height: 100%; border: none; }
+    
+body { padding-top: 154.6px !important; }
+</style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"></div>
+</div>
+
+<div class="container" style="max-width:1750px; width:1750px;">
+    <header>
+        <h1>&#127760; Live Network Hub</h1>
+        <p class="subtitle">Direct internet feeds for market economy and active world states</p>
+    </header>
+        <div class="section-label">Network Terminals</div>
+        <div class="hub-grid">
+            <a href="https://warframe.market/" target="_blank" class="hub-card" style="border-left-color: #ffab00;">
+                <div class="hub-card-icon">&#128176;</div>
+                <h2>&#128177; Warframe.market</h2>
+                <div class="hub-card-desc"><p>Real-time player trading hub for Prime parts, Mods, Arcanes, and Riven markets.</p></div>
+                <span class="ext-badge">&#8599; Opens in new tab</span>
+            </a>
+            <a href="https://tenno.tools/" target="_blank" class="hub-card" style="border-left-color: #22d3ee;">
+                <div class="hub-card-icon">&#127757;</div>
+                <h2>&#128295; Tenno.tools</h2>
+                <div class="hub-card-desc"><p>Live world state tracker for Fissures, Sorties, Invasions, and Void Trader cycles.</p></div>
+                <span class="ext-badge">&#8599; Opens in new tab</span>
+            </a>
+            <a href="https://overframe.gg/" target="_blank" class="hub-card" style="border-left-color: #a78bfa;">
+                <div class="hub-card-icon">&#9876;&#65039;</div>
+                <h2>&#128640; Overframe Builds</h2>
+                <div class="hub-card-desc"><p>Community Warframe and weapon builds with mod configs, ratings, and guides.</p></div>
+                <span class="ext-badge">&#8599; Opens in new tab</span>
+            </a>
+            <a href="https://warframe.fandom.com/wiki/WARFRAME_Wiki" target="_blank" class="hub-card" style="border-left-color: #34d399;">
+                <div class="hub-card-icon">&#128214;</div>
+                <h2>&#128218; Warframe Wiki</h2>
+                <div class="hub-card-desc"><p>The official community wiki &mdash; drop tables, lore, enemy stats, and update notes.</p></div>
+                <span class="ext-badge">&#8599; Opens in new tab</span>
+            </a>
+            <a href="Warframe_Drop_Tables.html" class="hub-card" style="border-left-color: #fb7185;">
+                <div class="hub-card-icon">&#128202;</div>
+                <h2>&#127922; Official Drop Tables</h2>
+                <div class="hub-card-desc"><p>DE's official drop rate database &mdash; opens in the app.</p></div>
+                <span class="ext-badge">&#8594; Opens page</span>
+            </a>
+            <a href="https://semlar.com/" target="_blank" class="hub-card" style="border-left-color: #fb923c;">
+                <div class="hub-card-icon">&#128295;</div>
+                <h2>&#128295; Semlar Tools</h2>
+                <div class="hub-card-desc"><p>Advanced mod calculators, Riven disposition tracker, and damage simulators.</p></div>
+                <span class="ext-badge">&#8599; Opens in new tab</span>
+            </a>
+        </div>
+
+        <div class="notice-box">
+            <h4>&#8505; Notice regarding Security</h4>
+            <p>Most external sites (like Warframe.market and the Wiki) actively block being embedded, so their tiles safely open in a new browser tab.</p>
+        </div>
+    </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            if (scrollHeight <= clientHeight + 50) { jumpBtn.style.display = 'none'; return; }
+            jumpBtn.style.display = 'flex';
+            if (scrollTop > (scrollHeight - clientHeight) / 2) { jumpBtn.innerText = '&#9650;'; jumpBtn.title = 'Jump to Top'; isAtBottom = true; }
+            else { jumpBtn.innerText = '&#9660;'; jumpBtn.title = 'Jump to Bottom'; isAtBottom = false; }
+        };
+        jumpBtn.addEventListener('click', () => { isAtBottom ? window.scrollTo({ top: 0, behavior: 'smooth' }) : window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); });
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+});
+</script>
+
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+
+
+
+
+

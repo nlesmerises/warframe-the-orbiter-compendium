@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Deep Archimedea Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#129516; Deep Archimedea Guide</h1>
+        <p class="subtitle">Weekly Cavia endgame challenge &mdash; rotating restrictions, Archon Shards, and exclusive Arcanes</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="section-overview" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">Overview</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-restrictions" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128683;</div><h2 class="qi-tile-title">Common Restrictions &amp; Counters</h2><p class="qi-tile-desc">Warframe abilities are disabled entirely. Focus on weapon damage. Use Arcane Energize to maintain other buffs. Lavos and Hildryn are exceptions — Lavos uses cooldowns (not energ...</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-loadouts" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">Recommended Loadouts</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-restriction-ref" style="border-left-color:#ffa726;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">All Known Restrictions</h2><p class="qi-tile-desc">Restrictions rotate weekly and are shown before you enter. Each mission in the 3-mission set may have a different restriction. Read all three before building your loadout.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-shards" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#128142;</div><h2 class="qi-tile-title">Archon Shard Reference</h2><p class="qi-tile-desc">Archon Shards are socketed into Warframes at Helminth to grant permanent passive bonuses. Each Warframe can hold up to 5 shards. Shards come in 5 colors, each tied to an Archon...</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-missions" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">Missions &amp; Cavia</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. OVERVIEW -->
+    <section class="category-section" id="section-overview">
+        <h2>&#128203; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Prerequisites</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Complete the <strong>Whispers in the Walls</strong> quest</li>
+                    <li>Reach sufficient <strong>Cavia Standing</strong> rank to unlock missions</li>
+                    <li>Access via Loid in the Necralisk (Deimos) lower level</li>
+                    <li>Recommended: Archon Hunt and Steel Path experience before attempting</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Weekly Reset</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Resets every <strong>Sunday at midnight UTC</strong></li>
+                    <li>3 missions per week &mdash; must complete in order (1 &#8594; 2 &#8594; 3)</li>
+                    <li>Each mission has unique restrictions and modifiers that rotate</li>
+                    <li>Restrictions apply to your entire loadout &mdash; plan all 3 before building</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Reward Tiers</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li><strong>1 mission:</strong> Entry reward (resources, standing)</li>
+                    <li><strong>2 missions:</strong> Mid-tier reward (mods, Arcane fragments)</li>
+                    <li><strong>All 3:</strong> Full reward + <strong>guaranteed Archon Shard</strong></li>
+                    <li>Exclusive Arcanes only obtainable from Deep Archimedea</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. COMMON RESTRICTIONS & COUNTERS -->
+    <section class="category-section" id="section-restrictions">
+        <h2>&#128683; 2. Common Restrictions &amp; Counters</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">No Abilities / Abilities Restricted</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Restriction</span></div>
+                <p style="color:#94a3b8;">Warframe abilities are disabled entirely. Focus on weapon damage. Use Arcane Energize to maintain other buffs. Lavos and Hildryn are exceptions &mdash; Lavos uses cooldowns (not energy) and Hildryn uses Shields.</p>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Specific Weapon Type Only</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Restriction</span></div>
+                <p style="color:#94a3b8;">Only weapons of one category (Rifles, Shotguns, Bows, Melee, etc.) deal damage. Build your strongest weapon of that type. Melee-only runs favor Blood Rush/Weeping Wounds combo builds.</p>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Companion Restricted</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Restriction</span></div>
+                <p style="color:#94a3b8;">No Sentinel, Pet, or MOA. Build your Warframe to be fully self-sufficient. Arcane Energize provides energy without Carrier. Use a frame with built-in armor or health sustain.</p>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Reduced Energy / No Energy Regen</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Restriction</span></div>
+                <p style="color:#94a3b8;">Energy orbs give little or nothing. Use Gear wheel energy restores (Ciphers, Team Energy Restores). Zenurik Wellspring helps. Hunter Adrenaline / Rage converts damage taken to energy &mdash; pairs with tanky frames.</p>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Knockdown Amplified</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Restriction</span></div>
+                <p style="color:#94a3b8;">Enemies knock you down frequently. Equip Fortitude mod, Primed Sure Footed, or bring Rhino/Inaros for innate knockdown resistance. Knockdown immune Arcanes also help.</p>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Necramech Required</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Restriction</span></div>
+                <p style="color:#94a3b8;">Portions of the mission require piloting a Necramech. Bring a leveled Bonewidow or Voidrig with health and armor mods. Arquebex (Voidrig's heavy weapon) is strong for boss phases.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. RECOMMENDED LOADOUT PICKS -->
+    <section class="category-section" id="section-loadouts">
+        <h2>&#127919; 3. Recommended Loadout Picks</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">No-Ability Frames</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Loadout</span></div>
+                <ul class="list">
+                    <li><strong>Inaros:</strong> Massive health pool, self-revive from sand, no energy needed</li>
+                    <li><strong>Nidus:</strong> Stack-based survivability, mutation passive keeps him alive</li>
+                    <li><strong>Revenant:</strong> Mesmer Skin blocks damage without abilities if pre-cast</li>
+                    <li><strong>Lavos:</strong> Abilities run on cooldowns &mdash; completely immune to energy restrictions</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Strong Weapon Picks</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Loadout</span></div>
+                <ul class="list">
+                    <li><strong>Rifle:</strong> Cedo, Felarx, Incarnon Braton/Boltor</li>
+                    <li><strong>Secondary:</strong> Kuva Nukor, Tenet Cycron, Incarnon Lex</li>
+                    <li><strong>Melee:</strong> Heavy attack builds with Incarnon adapters (Hate, Dokrahm)</li>
+                    <li><strong>Bow:</strong> Kuva Bramma for AoE, Nataruk for precision damage</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Exclusive Rewards</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Loadout</span></div>
+                <ul class="list">
+                    <li>Arcane Reaper &mdash; unique to Deep Archimedea</li>
+                    <li>Grimoire Incarnon upgrades (Paragraphs) &mdash; only source</li>
+                    <li>Archon Shard (guaranteed on full clear)</li>
+                    <li>Cavia Standing and Voca (Whispers in the Walls resource)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ALL KNOWN RESTRICTIONS REFERENCE -->
+    <section class="category-section" id="section-restriction-ref">
+        <h2>&#128203; 4. All Known Restrictions Reference</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Restrictions rotate weekly and are shown before you enter. Each mission in the 3-mission set may have a different restriction. Read all three before building your loadout.</p>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ffa726;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Restriction</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">What It Does</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Counter Strategy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#f87171;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">No Abilities</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">All Warframe abilities disabled</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Lavos (cooldowns), Inaros, Nidus, weapon-focused builds</td></tr>
+                    <tr><td style="padding:7px 14px;color:#f87171;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">No Primary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Primary weapons deal no damage</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Kuva Nukor, Tenet Cycron secondary + melee build</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#f87171;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">No Secondary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Secondary weapons deal no damage</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Strong primary + heavy attack melee combo</td></tr>
+                    <tr><td style="padding:7px 14px;color:#f87171;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">No Melee</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Melee weapons deal no damage</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Full gunplay build; AoE primary like Kuva Bramma</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#fff176;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">No Companion</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Sentinels/Pets/MOAs disabled</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Self-sustaining frame; rely on gear restores for ammo/energy</td></tr>
+                    <tr><td style="padding:7px 14px;color:#fff176;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Energy Reduction</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Energy orbs give 50%&ndash;0%</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Rage/Hunter Adrenaline, Zenurik Wellspring, Team Restores</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#fff176;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Knockdown Vulnerability</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Enemies proc knockdown more often</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Primed Sure Footed, Fortitude mod, knockdown immune Arcanes</td></tr>
+                    <tr><td style="padding:7px 14px;color:#fff176;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Shield Drain</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Shields slowly deplete over time</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Health-tank frames (Inaros, Nidus); ignore shields entirely</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#80cbc4;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Necramech Segment</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Portion requires piloting Necramech</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Voidrig + Arquebex for damage; Bonewidow for survival</td></tr>
+                    <tr><td style="padding:7px 14px;color:#80cbc4;font-weight:600;">Eximus Units Only</td><td style="padding:7px 14px;color:#9fb0c4;">Enhanced overguard Eximus enemies</td><td style="padding:7px 14px;color:#e2e8f0;">Operator Void damage strips Overguard; then apply damage</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 5. ARCHON SHARD REFERENCE -->
+    <section class="category-section" id="section-shards">
+        <h2>&#128142; 5. Archon Shard Reference</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Archon Shards are socketed into Warframes at Helminth to grant permanent passive bonuses. Each Warframe can hold up to 5 shards. Shards come in 5 colors, each tied to an Archon boss.</p>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128308; Crimson Shard &mdash; Archon Amar</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Shard</span></div>
+                <ul class="list">
+                    <li><strong>Ability Strength</strong> &mdash; flat bonus to power strength %</li>
+                    <li><strong>Casting Speed</strong> &mdash; faster ability animations</li>
+                    <li><strong>Melee Crit Chance</strong> &mdash; direct melee crit % increase</li>
+                    <li><strong>Tauforged (orange):</strong> 50% stronger effect per shard slot</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128309; Amber Shard &mdash; Archon Boreal</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Shard</span></div>
+                <ul class="list">
+                    <li><strong>Ability Efficiency</strong> &mdash; reduces energy cost</li>
+                    <li><strong>Initial Energy</strong> &mdash; start missions with bonus energy</li>
+                    <li><strong>Energy Max</strong> &mdash; larger energy pool</li>
+                    <li><strong>Tauforged:</strong> Best for ability-heavy frames needing energy sustain</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128312; Azure Shard &mdash; Archon Nira</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Shard</span></div>
+                <ul class="list">
+                    <li><strong>Health</strong> &mdash; flat health % increase</li>
+                    <li><strong>Shield Capacity</strong> &mdash; larger shield pool</li>
+                    <li><strong>Shield Recharge Rate</strong> &mdash; faster shield recovery</li>
+                    <li><strong>Tauforged:</strong> Best for shield-gating builds (Hildryn, Harrow)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128994; Topaz Shard &mdash; Archon Amar (alt)</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Shard</span></div>
+                <ul class="list">
+                    <li><strong>Toxin Damage</strong> &mdash; bonus Toxin to all attacks</li>
+                    <li><strong>Void Damage</strong> &mdash; bonus Void damage (Operator synergy)</li>
+                    <li><strong>Status Duration</strong> &mdash; longer status effect durations</li>
+                    <li><strong>Tauforged:</strong> Niche but strong on specific elemental builds</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128995; Violet Shard &mdash; Archon Nira (alt)</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Shard</span></div>
+                <ul class="list">
+                    <li><strong>Ability Range</strong> &mdash; larger AoE on abilities</li>
+                    <li><strong>Ability Duration</strong> &mdash; longer lasting buffs/debuffs</li>
+                    <li><strong>Knockdown Resistance</strong> &mdash; direct immunity option</li>
+                    <li><strong>Tauforged:</strong> Best for support/CC frames (Khora, Nova)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128293; Tauforged Shards</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Shard</span></div>
+                <ul class="list">
+                    <li>Rare variant of each shard color &mdash; 50% more powerful effect</li>
+                    <li>Obtained only from completing <strong>all 3 Deep Archimedea missions</strong> in a week</li>
+                    <li>Cannot be traded &mdash; must be earned personally</li>
+                    <li>Best socket strategy: 1&ndash;2 Tauforged in key slots, rest normal shards</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. MISSION TYPES & CAVIA SYNDICATES -->
+    <section class="category-section" id="section-missions">
+        <h2>&#127919; 6. Mission Types &amp; Cavia Syndicates</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Mission Objectives</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Missions</span></div>
+                <ul class="list">
+                    <li><strong>Exterminate:</strong> Kill all enemies &mdash; straightforward but restricted loadout complicates it</li>
+                    <li><strong>Survival:</strong> Survive for a set duration with life support drain</li>
+                    <li><strong>Defense:</strong> Protect a target through multiple waves</li>
+                    <li><strong>Excavation:</strong> Protect excavation drills through multiple digs</li>
+                    <li>Mission type is revealed before entry alongside the restriction</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Cavia Standing</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Missions</span></div>
+                <ul class="list">
+                    <li>Cavia is the Deimos research group &mdash; reached via Whispers in the Walls quest</li>
+                    <li>Earn standing via Deep Archimedea completion and weekly Deimos missions</li>
+                    <li>Voca items (drops from Murmur enemies) convert to Cavia standing</li>
+                    <li>Higher Cavia rank unlocks better access tiers for Deep Archimedea rewards</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Pre-Run Checklist</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Missions</span></div>
+                <ul class="list">
+                    <li>&#9989; Check all 3 restrictions before choosing loadout</li>
+                    <li>&#9989; Bring Team Energy Restores if energy-restricted</li>
+                    <li>&#9989; Confirm your Necramech is modded if Mech segment appears</li>
+                    <li>&#9989; Pack Primed Sure Footed if knockdown vulnerability is active</li>
+                    <li>&#9989; Run solo or with trusted squad &mdash; random squads may abandon mid-run</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

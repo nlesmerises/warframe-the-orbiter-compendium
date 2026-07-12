@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Warframe Kahl-175 / Veilbreaker Codex &mdash; the weekly Break Narmer solo mission: how to unlock it, the Garrison hub and its vendors (Chipper), weekly Stock and Archon Hunt loop, collectibles (Stockpiles, comms, Lohk turrets), and rewards including Archon Shards.">
+    <title>Warframe: The Orbiter Compendium &mdash; Kahl &amp; Veilbreaker Codex</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#129686; Kahl &amp; Veilbreaker Codex</h1>
+        <p class="subtitle">The weekly Break Narmer solo run &mdash; Garrison hub, the weekly loop, collectibles, and rewards</p>
+    </header>
+
+    <div class="card" style="border-left:3px solid #ffab00;margin-bottom:20px;">
+        <p style="margin:0;color:#9fb0c4;font-size:0.9rem;"><strong style="color:#ffab00;">Living data note:</strong> The Veilbreaker loop is stable, but weekly Stock items, mission rotations, and reward tables shift over updates. Confirm the current Garrison offerings and Archon Hunt rewards in-game.</p>
+    </div>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="what-is-veilbreaker" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#129686;</div><h2 class="qi-tile-title">What Is Veilbreaker?</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="unlock" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128275;</div><h2 class="qi-tile-title">How to Unlock It</h2><p class="qi-tile-desc">Kahl&#39;s Garrison is the home base where you start the weekly mission, spend Stock at Chipper , and track progress. Access it from Navigation once unlocked.</p></a>
+            <a class="qi-tile toc-toggle" data-section="weekly-loop" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#128260;</div><h2 class="qi-tile-title">The Weekly Loop</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="collectibles" style="border-left-color:#ffb74d;"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">Mission Collectibles</h2><p class="qi-tile-desc">Sweep the level thoroughly each week — grabbing every Stockpile is what maxes your weekly Stock. Kahl&#39;s &quot;Brother&quot; rescues (freeing fellow soldiers) also feed long-term unlocks.</p></a>
+            <a class="qi-tile toc-toggle" data-section="kahl-kit" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128481;</div><h2 class="qi-tile-title">Kahl's Kit</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="rewards" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#9959;</div><h2 class="qi-tile-title">Rewards &amp; Archon Shards</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="tips" style="border-left-color:#ffa726;"><div class="qi-tile-icon">&#128161;</div><h2 class="qi-tile-title">Tips</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. WHAT IS VEILBREAKER -->
+    <section class="category-section" id="what-is-veilbreaker">
+        <h2>&#129686; 1. What Is Veilbreaker?</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Play as Kahl-175</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li><strong>Veilbreaker</strong> is the quest and ongoing system where you play as <strong>Kahl-175</strong>, a freed Grineer soldier &mdash; not a Warframe.</li>
+                    <li>Kahl uses guns, grenades, and stolen abilities in a weekly solo mission called <strong>Break Narmer</strong>.</li>
+                    <li>It's a low-pressure weekly that feeds straight into endgame power via <strong>Archon Shards</strong>.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Why Do It Weekly</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li><strong>Stock</strong> &mdash; weekly currency spent at the Garrison for rewards.</li>
+                    <li>Reliable path toward <strong>Archon Hunt</strong> resources and account-wide upgrades.</li>
+                    <li>Fun change of pace &mdash; a stealthy, gun-focused soldier loadout.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. HOW TO UNLOCK IT -->
+    <section class="category-section" id="unlock">
+        <h2>&#128275; 2. How to Unlock It</h2>
+        <div class="card" style="border-left:6px solid #42a5f5;">
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#128203; Prerequisites</h4>
+                    <ul class="list">
+                        <li>Complete <strong>The New War</strong> quest &mdash; this introduces Kahl and unlocks Veilbreaker.</li>
+                        <li>Play the short <strong>Veilbreaker</strong> quest from the Codex / inbox to open the <strong>Kahl's Garrison</strong> hub.</li>
+                        <li>After that, <strong>Break Narmer</strong> becomes a repeatable <strong>weekly</strong> mission.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#129686; The Garrison Hub</h4>
+                    <p>Kahl's Garrison is the home base where you start the weekly mission, spend <strong>Stock</strong> at <strong>Chipper</strong>, and track progress. Access it from Navigation once unlocked.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. THE WEEKLY LOOP -->
+    <section class="category-section" id="weekly-loop">
+        <h2>&#128260; 3. The Weekly Loop</h2>
+        <div class="card" style="border-left:6px solid #4ade80;">
+            <ul class="list">
+                <li>Each week a new <strong>Break Narmer</strong> mission rotates in &mdash; a solo objective run as Kahl.</li>
+                <li>Complete objectives and gather collectibles to earn <strong>Stock</strong> (the cap resets weekly).</li>
+                <li>Spend Stock at <strong>Chipper</strong> in the Garrison for the rotating reward catalog.</li>
+                <li>Veilbreaker also ties into the weekly <strong>Archon Hunt</strong> for <strong>Archon Shards</strong>.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 4. MISSION COLLECTIBLES -->
+    <section class="category-section" id="collectibles">
+        <h2>&#127919; 4. Mission Collectibles</h2>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ffb74d;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Collectible</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">What It Is</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Why Grab It</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Stockpiles</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Hidden caches scattered in the mission</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Main source of weekly <strong>Stock</strong></td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Comms Devices</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Narmer broadcast units to destroy</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Bonus objectives &amp; completion credit</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;">Lohk Turrets</td><td style="padding:7px 14px;color:#e2e8f0;">Enemy turrets Kahl can hack/seize</td><td style="padding:7px 14px;color:#9fb0c4;">Help clear rooms; tied to objectives</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="color:#9fb0c4;margin-top:0.6rem;font-size:0.85rem;">Sweep the level thoroughly each week &mdash; grabbing every Stockpile is what maxes your weekly Stock. Kahl's <strong>"Brother" rescues</strong> (freeing fellow soldiers) also feed long-term unlocks.</p>
+    </section>
+
+    <!-- 5. KAHL'S KIT -->
+    <section class="category-section" id="kahl-kit">
+        <h2>&#128481; 5. Kahl's Kit</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Weapons &amp; Grenades</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Kit</span></div>
+                <ul class="list">
+                    <li>Kahl runs <strong>Grineer weapons</strong> and a grenade slot rather than Warframe powers.</li>
+                    <li>Straightforward gunplay &mdash; aim, suppress, and clear objectives.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Stolen Abilities</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Kit</span></div>
+                <ul class="list">
+                    <li>Kahl can <strong>seize enemy abilities</strong> (e.g. turret control, sensor pulses) during the mission.</li>
+                    <li>Use them to solve the room puzzles and reach hidden Stockpiles.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. REWARDS & ARCHON SHARDS -->
+    <section class="category-section" id="rewards">
+        <h2>&#9959; 6. Rewards &amp; Archon Shards</h2>
+        <div class="card" style="border-left:6px solid #ce93d8;">
+            <ul class="list">
+                <li><strong>Chipper's catalog</strong> &mdash; spend Stock on resources, arcanes, cosmetics, and useful materials.</li>
+                <li><strong>Archon Shards</strong> &mdash; the headline reward from the weekly <strong>Archon Hunt</strong>; slot them into Warframes for permanent stat boosts.</li>
+                <li>Plan shard colors against your build &mdash; see the <a href="Warframe_Archon_Planner_App.html" style="color:#89cff0;">Archon Planner</a>.</li>
+                <li>Great steady source of otherwise grindy materials with almost no risk.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 7. TIPS -->
+    <section class="category-section" id="tips">
+        <h2>&#128161; 7. Tips</h2>
+        <div class="card" style="border-left:6px solid #ffa726;">
+            <ul class="list">
+                <li><strong>Do it once a week</strong> &mdash; Stock and Archon Hunt both reset weekly; don't leave them on the table.</li>
+                <li>Explore for every <strong>Stockpile</strong> before extracting &mdash; that's the bulk of your Stock.</li>
+                <li>Pair the weekly with your <strong>Archon Hunt</strong> and reset chores &mdash; see the <a href="Warframe_Reset_Checklist.html" style="color:#89cff0;">Weekly Reset Checklist</a>.</li>
+                <li>Spend Stock before it caps; unspent earnings above the weekly limit are wasted.</li>
+            </ul>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

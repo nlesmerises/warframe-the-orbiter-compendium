@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Conclave PvP Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#9876;&#65039; Conclave PvP Guide</h1>
+        <p class="subtitle">Player vs. Player &middot; Conclave Syndicate &middot; modes &middot; builds &middot; exclusive rewards</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="overview" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#9876;&#65039;</div><h2 class="qi-tile-title">Overview</h2><p class="qi-tile-desc">Warframe's dedicated PvP mode hosted by the Conclave Syndicate — separate from PvE, low population, exclusive cosmetic rewards.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="access" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128273;</div><h2 class="qi-tile-title">Access &amp; Setup</h2><p class="qi-tile-desc">Visit Teshin in any Relay. No MR requirement. Set matches to private/invite-only for farming with friends.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="modes" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#127918;</div><h2 class="qi-tile-title">Game Modes</h2><p class="qi-tile-desc">Annihilation, Team Annihilation, Lunaro, and Cephalon Capture — each with separate standing rewards.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="mechanics" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#9881;&#65039;</div><h2 class="qi-tile-title">PvP Mechanics</h2><p class="qi-tile-desc">Abilities and weapons are rebalanced for PvP — stats, damage, and mechanics differ significantly from PvE versions.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="builds" style="border-left-color:#ffb74d;"><div class="qi-tile-icon">&#128295;</div><h2 class="qi-tile-title">Builds &amp; Loadouts</h2><p class="qi-tile-desc">Recommended frames and weapons for Conclave, including budget options for newer players.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="syndicate" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#127942;</div><h2 class="qi-tile-title">Conclave Syndicate</h2><p class="qi-tile-desc">Exclusive cosmetics, sigils, and mods available only through Conclave standing — and how to farm them efficiently.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. OVERVIEW -->
+    <section class="category-section" id="overview">
+        <h2>&#9876;&#65039; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">What Is Conclave?</h3>
+                    <span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span>
+                </div>
+                <ul class="list">
+                    <li>Warframe's dedicated <strong>Player vs. Player (PvP)</strong> mode &mdash; entirely separate from PvE gameplay</li>
+                    <li>Hosted by the <strong>Conclave Syndicate</strong>, led by Teshin &mdash; accessible from any Relay</li>
+                    <li>All abilities and weapons are <strong>rebalanced for PvP</strong> &mdash; stats, damage, and mechanics differ significantly from PvE versions</li>
+                    <li>Introduced as a permanent alternative game mode; population is low but a dedicated community exists</li>
+                    <li>The primary reason most players engage with Conclave is to farm <strong>exclusive cosmetics and mods</strong> unavailable anywhere else</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Honest State of Conclave (2026)</h3>
+                    <span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Population is sparse</strong> &mdash; matchmaking can take several minutes on most platforms; finding a full lobby is rare</li>
+                    <li>The community is small but enthusiastic; experienced players dominate most lobbies</li>
+                    <li>DE has made limited investment in Conclave development in recent years &mdash; expect minimal updates</li>
+                    <li>If you want the exclusive rewards (skins, sigils, mods), plan for a longer grind than PvE equivalents</li>
+                    <li>Cross-save has not meaningfully fixed population fragmentation across platforms</li>
+                    <li><strong>Solo farming</strong> is possible for some standing &mdash; see tips in the Syndicate section</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. ACCESS & SETUP -->
+    <section class="category-section" id="access">
+        <h2>&#128274; 2. Access &amp; Setup</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Getting Started</h3>
+                    <span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Access</span>
+                </div>
+                <ul class="list">
+                    <li>Visit <strong>Teshin</strong> in any Relay &mdash; he is in the back-left corridor near the Conclave terminal</li>
+                    <li>No quest or MR requirement to enter &mdash; Conclave is accessible from early in the game</li>
+                    <li>From the Conclave terminal, browse active lobbies or create your own session</li>
+                    <li>You can set matches to <strong>private</strong> or <strong>invite-only</strong> &mdash; useful for farming with friends or a premade group</li>
+                    <li>Standing gain from private/invite-only matches is reduced compared to public matches</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Loadout Restrictions</h3>
+                    <span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Access</span>
+                </div>
+                <ul class="list">
+                    <li>Only weapons and Warframes with a <strong>Conclave rating</strong> can be used in PvP</li>
+                    <li>Most standard weapons are allowed; Riven-modded, Kuva, and Tenet weapons have restricted or adjusted stats</li>
+                    <li>Mods have <strong>PvP-specific values</strong> &mdash; a mod that gives +165% damage in PvE may give +20% in Conclave</li>
+                    <li>Dedicated <strong>Conclave mods</strong> (earned via Conclave standing) are often more effective in PvP than standard mods</li>
+                    <li>Check the mod description's PvP icon to see its Conclave-specific stat value</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Conclave-Specific Mods</h3>
+                    <span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Access</span>
+                </div>
+                <ul class="list">
+                    <li>Purchasable from Teshin with Conclave Standing at various ranks</li>
+                    <li>Categories: weapon damage, reload, movement (parkour speed, aim glide), ability tweaks, survivability</li>
+                    <li>Some are <strong>PvE-legal</strong> too &mdash; Enduring Paralysis (Ash augment), Electromagnetic Shielding, etc. are used in PvE builds</li>
+                    <li>Worth farming standing specifically for PvE-useful Conclave mods even if you don't play PvP long-term</li>
+                    <li>Full mod list available from Teshin's standing store sorted by rank requirement</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. GAME MODES -->
+    <section class="category-section" id="modes">
+        <h2>&#127918; 3. Game Modes</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128308; Annihilation (Deathmatch)</h3>
+                    <span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Modes</span>
+                </div>
+                <ul class="list">
+                    <li>Free-for-all deathmatch &mdash; every player for themselves</li>
+                    <li>First player to reach the kill threshold wins; if time expires, most kills wins</li>
+                    <li>No teams; full chaos; good for learning PvP movement and aiming without team coordination</li>
+                    <li>Most common mode for solo queueing &mdash; lower player counts still function (4-player minimum)</li>
+                    <li>Standing gain: per kill + bonus for finishing in top half</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128101; Team Annihilation</h3>
+                    <span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Modes</span>
+                </div>
+                <ul class="list">
+                    <li>4v4 team deathmatch &mdash; first team to reach the kill threshold wins</li>
+                    <li>Coordinated teamplay matters &mdash; flanking, cover fire, and ability synergies are viable</li>
+                    <li>Reviving teammates is possible &mdash; a downed player becomes a slow target; reviving costs time but denies the kill</li>
+                    <li>Best mode for premade groups &mdash; communication via squad turns this into a genuine tactical experience</li>
+                    <li>Standing gain: per kill + win bonus</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#127919; Capture the Cephalon</h3>
+                    <span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Modes</span>
+                </div>
+                <ul class="list">
+                    <li>Team objective mode &mdash; capture the enemy Cephalon and return it to your base while defending your own</li>
+                    <li>Direct equivalent of Capture the Flag &mdash; the Cephalon carrier is slowed and can be killed to drop it</li>
+                    <li>High teamwork requirement &mdash; needs dedicated carriers, defenders, and interceptors</li>
+                    <li>Most fun in a coordinated premade; chaotic in a random lobby</li>
+                    <li>Standing gain: per capture + win bonus; higher per-match ceiling than deathmatch</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#127968; Cephalon Capture (Solo/Mixed)</h3>
+                    <span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Modes</span>
+                </div>
+                <ul class="list">
+                    <li>Collect Cephalon fragments scattered across the map &mdash; each fragment is worth points</li>
+                    <li>Fragments are dropped by killed players and must be physically carried to a deposit point</li>
+                    <li>A hybrid of deathmatch and objective &mdash; aggressive players farm kills, strategic players farm deposits</li>
+                    <li>Good standing gain when played aggressively with a fast-moving frame</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#127981; Lunaro (Sports Mode)</h3>
+                    <span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Modes</span>
+                </div>
+                <ul class="list">
+                    <li>A unique ball-sport mode &mdash; no weapons, no killing; score by launching the Lunaro ball into the opposing team's goal</li>
+                    <li>Abilities are severely restricted; movement and positioning are the primary skills</li>
+                    <li>Niche but beloved by a small dedicated community; very different feel from other Conclave modes</li>
+                    <li>Standing gain is modest &mdash; Lunaro is primarily played for fun, not standing efficiency</li>
+                    <li>The Lunaro community occasionally organizes scheduled matches &mdash; check community Discord servers</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PVP MECHANICS -->
+    <section class="category-section" id="mechanics">
+        <h2>&#9881;&#65039; 4. PvP Mechanics</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Health &amp; Damage</h3>
+                    <span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Mechanics</span>
+                </div>
+                <ul class="list">
+                    <li>All Warframes have <strong>normalized health and shields</strong> in Conclave &mdash; your PvE stats do not carry over</li>
+                    <li>Damage is heavily reduced versus PvE &mdash; weapons that one-shot enemies in PvE may do 5&ndash;20% of a player's health per shot</li>
+                    <li>Status effects work differently: most procs deal less damage, shorter duration, or are fully disabled in PvP</li>
+                    <li>Headshots deal bonus damage &mdash; aim for the head, especially with slower-firing weapons</li>
+                    <li>Stamina exists in Conclave for blocking and certain movement actions &mdash; manage it during fights</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Movement &amp; Mobility</h3>
+                    <span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Mechanics</span>
+                </div>
+                <ul class="list">
+                    <li>PvP rewards aggressive, mobile play &mdash; staying still is a death sentence</li>
+                    <li><strong>Bullet jumping</strong>, wall-running, and aim glide are your primary survival tools; use them constantly</li>
+                    <li>Directional bullet jumps change your velocity unpredictably &mdash; hard to track for opponents</li>
+                    <li>Sprint speed and parkour mods matter more in Conclave than in PvE &mdash; equip dedicated movement mods</li>
+                    <li>Vertical movement (wall runs, double jumps) is heavily underused by new players &mdash; climb and attack from above</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Abilities in PvP</h3>
+                    <span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Mechanics</span>
+                </div>
+                <ul class="list">
+                    <li>Abilities are <strong>rebalanced individually</strong> &mdash; some are strong, many are nerfed to near-uselessness</li>
+                    <li>Hard CC (sleep, freeze, full stun) is removed or has very short duration to prevent instant-kill chains</li>
+                    <li>Movement abilities (Volt Speed, Zephyr Tail Wind, Wisp Wil-o-Wisp) retain utility for repositioning</li>
+                    <li>Defensive abilities (Rhino Iron Skin, Mesa Ballistic Battery) are reduced in value</li>
+                    <li>Damage abilities deal only a fraction of their PvE damage &mdash; kills via abilities alone are rare</li>
+                    <li>Best approach: treat abilities as supplements to weapon kills, not replacements</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Tips for New PvP Players</h3>
+                    <span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Mechanics</span>
+                </div>
+                <ul class="list">
+                    <li>Expect to lose &mdash; a lot &mdash; at first; the Conclave skill floor is high for veteran players</li>
+                    <li>Focus on movement first: never stop moving, use every parkour trick available</li>
+                    <li>Pick a simple, responsive weapon for learning &mdash; hitscan weapons (rifles, pistols) are easier to land than projectiles</li>
+                    <li>Use cover and vertical elevation; attack from unexpected angles</li>
+                    <li>Avoid bringing complex ability builds &mdash; simple, durable frames (Rhino, Excalibur) are better for learning</li>
+                    <li>Standing is earned even from losses &mdash; don't quit; every match awards some standing</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. BUILDS & LOADOUTS -->
+    <section class="category-section" id="builds">
+        <h2>&#128736;&#65039; 5. Builds &amp; Loadouts</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Recommended Frames for Beginners</h3>
+                    <span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Builds</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Excalibur</strong> &mdash; Exalted Blade has PvP viability; Slash Dash is a fast gap-closer; well-rounded and beginner-friendly</li>
+                    <li><strong>Rhino</strong> &mdash; Iron Skin absorbs some hits; straightforward survivability; good for learning while taking hits</li>
+                    <li><strong>Volt</strong> &mdash; Speed boosts mobility and escape; Electric Shield provides minor cover; quick playstyle</li>
+                    <li><strong>Ash</strong> &mdash; Teleport for rapid repositioning; Bladestorm is nerfed but Smoke Screen gives brief evasion</li>
+                    <li>Avoid squishy casters (Saryn, Octavia) until you understand the movement game</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Competitive Frame Picks</h3>
+                    <span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Builds</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Zephyr</strong> &mdash; Tail Wind gives exceptional aerial mobility; very hard to track mid-air; top movement frame in PvP</li>
+                    <li><strong>Loki</strong> &mdash; Invisibility works in PvP (shorter duration); Radial Disarm has limited effect; top stealth frame for ambush play</li>
+                    <li><strong>Valkyr</strong> &mdash; Hysteria is usable in PvP; high melee output; aggressive close-range playstyle</li>
+                    <li><strong>Wukong</strong> &mdash; Cloud Walker grants brief invulnerability; strong for disengaging from bad fights</li>
+                    <li><strong>Titania</strong> &mdash; Razorwing miniature form is a tiny, fast-moving target; extremely hard to hit</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Weapon Recommendations</h3>
+                    <span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Builds</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Hitscan primaries</strong> (Strun Wraith, Soma, Paris Prime) &mdash; consistent damage; no projectile travel time to account for</li>
+                    <li><strong>Shotguns</strong> &mdash; very strong at close range in PvP; Strun Wraith and Kohm variants shred in melee range</li>
+                    <li><strong>Bows</strong> (Paris Prime, Dread) &mdash; high burst damage if you can land shots; rewarding for experienced players</li>
+                    <li><strong>Secondaries</strong> &mdash; Lex Prime, Euphona Prime, and Furis variants are top picks; high damage-per-shot for close engagements</li>
+                    <li><strong>Melee</strong> &mdash; Nikana, Orthos Prime, and fast-attacking swords work well; block cancels are important for melee dueling</li>
+                    <li>Avoid slow projectile launchers (Ogris, Zarr) &mdash; experienced players dodge them easily</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Key Conclave Mods to Equip</h3>
+                    <span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Builds</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Mobilize</strong> (Exilus mod) &mdash; reduces aim glide drain; lets you stay airborne longer and aim from height</li>
+                    <li><strong>Constitution</strong> &mdash; faster recovery from knockdowns; critical for staying on your feet</li>
+                    <li><strong>Directed Convergence</strong> &mdash; faster aiming down sights; important for hitscan weapons</li>
+                    <li><strong>Evasion</strong> &mdash; brief dodge invulnerability frames; strong defensive mod</li>
+                    <li><strong>Conclave-specific elemental mods</strong> &mdash; have higher PvP values than standard elemental mods; replace standard mods with these as you earn them</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CONCLAVE SYNDICATE & REWARDS -->
+    <section class="category-section" id="syndicate">
+        <h2>&#127942; 6. Conclave Syndicate &amp; Rewards</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Syndicate Ranks</h3>
+                    <span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Syndicate</span>
+                </div>
+                <ul class="list">
+                    <li>Five ranks with Teshin: <strong>Neutral &rarr; Typhoon &rarr; Hurricane &rarr; Tornadic &rarr; Tempest &rarr; Typhoon Elite</strong> (exact names vary by display)</li>
+                    <li>Standing is earned from kills, assists, objectives, and match wins in any Conclave mode</li>
+                    <li>Each rank unlocks new items in Teshin's store &mdash; cosmetics, mods, and decorations gate behind rank</li>
+                    <li>Daily standing cap applies &mdash; same formula as other syndicates (MR &times; 1,000 base)</li>
+                    <li>Private lobbies with friends still award standing, but at a reduced rate</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Exclusive Cosmetics</h3>
+                    <span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Syndicate</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Conclave Sigils</strong> &mdash; rank-gated sigils; some are visually distinct and cannot be obtained any other way</li>
+                    <li><strong>Conclave Skins</strong> &mdash; several Warframe skins are Conclave-exclusive (Teshin's Graxx armor sets, Conclave-themed accessories)</li>
+                    <li><strong>Conclave Noggle</strong> (Teshin Noggle) &mdash; decorative figure; standing purchase</li>
+                    <li><strong>Stencils &amp; Emblems</strong> &mdash; minor cosmetics for Orbiter decoration</li>
+                    <li>Cosmetics are permanently account-bound once purchased &mdash; no time limit to use them</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Exclusive &amp; PvE-Useful Mods</h3>
+                    <span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Syndicate</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Enduring Paralysis</strong> (Ash augment) &mdash; extends Ash's Smoke Screen stun; used in PvE Ash builds</li>
+                    <li><strong>Electromagnetic Shielding</strong> &mdash; Shield Gating mod with PvE applications</li>
+                    <li><strong>Mobilize</strong> &mdash; aim glide duration increase; widely used in PvE mobility builds</li>
+                    <li><strong>Prepare for Glory</strong> &mdash; Valkyr augment with PvP and niche PvE uses</li>
+                    <li><strong>Mod Archive</strong> &mdash; several unique Conclave mods have PvE crossover value; check Teshin's full store list</li>
+                    <li>Target these mods specifically to minimize required standing grind if you dislike PvP</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Standing Farming Strategy</h3>
+                    <span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Syndicate</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Public Annihilation</strong> &mdash; queue in, earn standing per kill even in losses; fastest public standing gain</li>
+                    <li><strong>Private match with a friend</strong> &mdash; create a session, invite a friend, and take turns earning kills; slower but reliable if public queues are dead</li>
+                    <li><strong>Lunaro private</strong> &mdash; if you only want standing and don't enjoy combat, Lunaro with a friend can be farmed by scoring repeatedly</li>
+                    <li>Reach the first two syndicate ranks for the most-wanted PvE mods (Mobilize, Electromagnetic Shielding) &mdash; this is the minimum grind if you just want those</li>
+                    <li>Full Tempest rank is a long-term project; plan several weeks of daily cap farming</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

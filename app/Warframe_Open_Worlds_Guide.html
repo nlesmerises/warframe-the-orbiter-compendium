@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Open Worlds Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#127757; Open Worlds Guide</h1>
+        <p class="subtitle">Plains of Eidolon &middot; Orb Vallis &middot; Cambion Drift &middot; Zariman &mdash; syndicates, resources &amp; activities</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="section-plains"      style="border-left-color:#34d399;"><div class="qi-tile-icon">&#127804;</div><h2 class="qi-tile-title">Plains of Eidolon</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-vallis"      style="border-left-color:#60a5fa;"><div class="qi-tile-icon">&#127981;</div><h2 class="qi-tile-title">Orb Vallis</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-deimos"      style="border-left-color:#a78bfa;"><div class="qi-tile-icon">&#129514;</div><h2 class="qi-tile-title">Cambion Drift</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-zariman"     style="border-left-color:#ffab00;"><div class="qi-tile-icon">&#9889;</div><h2 class="qi-tile-title">Zariman</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-ranks"       style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128202;</div><h2 class="qi-tile-title">Syndicate Ranks</h2><p class="qi-tile-desc">Daily standing cap = Mastery Rank &#215; 1,000 (e.g. MR 30 = 30,000/day). This cap applies per syndicate per day and resets at midnight UTC.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-resources"   style="border-left-color:#f87171;"><div class="qi-tile-icon">&#9935;&#65039;</div><h2 class="qi-tile-title">Key Resources</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-fishing"     style="border-left-color:#00bcd4;"><div class="qi-tile-icon">&#127907;</div><h2 class="qi-tile-title">Fishing Reference</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-tips"        style="border-left-color:#ffa726;"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">Efficiency Tips</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <section class="category-section" id="section-plains">
+        <h2>&#127804; 1. Plains of Eidolon &mdash; Earth</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F3D9;&#xFE0F; Cetus &mdash; Ostron Syndicate</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Syndicate</span></div>
+                <ul class="list">
+                    <li>Earn Standing via bounties, fishing, and mining</li>
+                    <li><strong>Hok's Anvil:</strong> Craft Zaw melee weapons (fully modular)</li>
+                    <li><strong>Fisher Hai-Luk:</strong> Process fish for Ostron resources</li>
+                    <li><strong>Old Man Suumbaat:</strong> Convert mining gems for standing</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127769; Day/Night Activities</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Activities</span></div>
+                <ul class="list">
+                    <li><strong>Day:</strong> Bounties, Grineer patrols, resource farming, fishing</li>
+                    <li><strong>Night:</strong> Eidolon hunts (see Eidolon Hunt Guide for full details)</li>
+                    <li>Fishing: Murkray (deep water), Norg (night only), Charc Eel</li>
+                    <li>Mining: Pyrol, Auron, Coprun &mdash; needed for Zaw components</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128302; Quills Syndicate</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Syndicate</span></div>
+                <ul class="list">
+                    <li>Hidden behind a wall in Cetus &mdash; talk to the Quills NPC</li>
+                    <li>Earn Standing by trading Sentient Cores from Eidolon fights</li>
+                    <li>Higher rank unlocks stronger Amp components (beyond Mote Prism)</li>
+                    <li>Essential progression for serious Operator gameplay</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-vallis">
+        <h2>&#127981; 2. Orb Vallis &mdash; Venus</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F3ED; Fortuna &mdash; Solaris United</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Syndicate</span></div>
+                <ul class="list">
+                    <li>Earn Standing by completing Solaris United bounties on the Vallis</li>
+                    <li><strong>Rude Zuud:</strong> Craft Kitgun secondaries (modular, highly customizable)</li>
+                    <li><strong>The Business:</strong> Conservation &mdash; track and capture animals for standing</li>
+                    <li><strong>Smokefinger:</strong> Mining equipment and gem exchange</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F30A; Key Activities</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Activities</span></div>
+                <ul class="list">
+                    <li><strong>K-Drive races:</strong> Earn Ventkids standing for K-Drive mods and cosmetics</li>
+                    <li><strong>Toroids:</strong> Vega, Calda, Sola &mdash; farm from Corpus bases or Profit-Taker boss</li>
+                    <li><strong>Conservation:</strong> Pobbers, Bolarolas, Sawgaws &mdash; high standing per capture</li>
+                    <li><strong>Profit-Taker Orb:</strong> Vox Solaris content, Archgun usage required</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F4BC; Vox Solaris &mdash; Elite Tier</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Elite</span></div>
+                <ul class="list">
+                    <li>Unlocked only after reaching max rank with Solaris United</li>
+                    <li>Talk to Little Duck in Fortuna's back room (restricted area)</li>
+                    <li>Earn via Toroid farming and Profit-Taker bounties</li>
+                    <li>Rewards: top-tier Amp components unavailable elsewhere</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-deimos">
+        <h2>&#129514; 3. Cambion Drift &mdash; Deimos</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F3DB;&#xFE0F; Necralisk &mdash; Entrati Syndicate</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Syndicate</span></div>
+                <ul class="list">
+                    <li><strong>Daughter:</strong> Deimos fishing, Predasite/Vulpaphyla companions</li>
+                    <li><strong>Son:</strong> Conservation of Deimos creatures for Entrati Standing</li>
+                    <li><strong>Father:</strong> Necramech parts, Otak tokens, crafting components</li>
+                    <li><strong>Loid:</strong> Isolation Vault bounties (Cavia-linked content)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffa726;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F306; Fass &amp; Vome Cycles</h3><span class="type-tag" style="background:rgba(255,167,38,0.18);color:#ffa726;border:1px solid rgba(255,167,38,0.45);">Cycles</span></div>
+                <ul class="list">
+                    <li><strong>Fass (day):</strong> Ravenous Fass wyrm visible in sky &mdash; some fish only spawn here</li>
+                    <li><strong>Vome (night):</strong> Vome wyrm active &mdash; different resource spawns</li>
+                    <li>Fass Residue / Vome Residue: unique crafting resources from their corpses</li>
+                    <li>Check active cycle before farming specific fish or resources</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #f87171;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F3DA;&#xFE0F; Isolation Vaults</h3><span class="type-tag" style="background:rgba(248,113,113,0.18);color:#f87171;border:1px solid rgba(248,113,113,0.45);">Missions</span></div>
+                <ul class="list">
+                    <li>Run bounties from Loid at the bottom floor of the Necralisk</li>
+                    <li>Tier 1 &rarr; 2 &rarr; 3 can be completed in a single run</li>
+                    <li>Rewards: Necramech mods, Orokin Matrices, Entrati Standing</li>
+                    <li>Required for Necramech progression and Deimos weapon blueprints</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1FA6A; Cavia Syndicate</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Syndicate</span></div>
+                <ul class="list">
+                    <li>Added with <strong>Whispers in the Walls</strong> update</li>
+                    <li>Earn standing through Deimos bounties and conservation</li>
+                    <li>Unlocks <strong>Deep Archimedea</strong> missions (see Deep Archimedea Guide)</li>
+                    <li>Rewards: Grimoire Incarnon upgrades, exclusive Arcanes</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-zariman">
+        <h2>&#9889; 4. Zariman &mdash; Angels of the Zariman</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128640; Chrysalith &mdash; Holdfasts Syndicate</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Hub</span></div>
+                <ul class="list">
+                    <li>Zariman colony survivors &mdash; accessed after <strong>Angels of the Zariman</strong> quest</li>
+                    <li><strong>Quinn:</strong> Holdfasts bounties and primary lore contact</li>
+                    <li><strong>Cavalero:</strong> Incarnon Genesis adapters (rotate weekly) and Zariman weapons</li>
+                    <li>Earn Voidplume currency from missions and Void entity kills</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#9889; Void Mission Types</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Missions</span></div>
+                <ul class="list">
+                    <li><strong>Void Cascade:</strong> Collect Void sparks before Exolizers overfill</li>
+                    <li><strong>Void Flood:</strong> Seal Void Ruptures spreading across the map</li>
+                    <li><strong>Void Armageddon:</strong> Survival variant with Void angel encounters</li>
+                    <li><strong>Void Survival:</strong> Standard survival with Zariman modifiers</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F31F; Holdfasts Standing</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Standing</span></div>
+                <ul class="list">
+                    <li>Earn via completing Zariman missions and Holdfasts bounties from Quinn</li>
+                    <li><strong>Voidplume Quills, Dawn, Crest</strong> &mdash; traded for large standing chunks</li>
+                    <li>Drop from Void Angels (boss encounters within missions)</li>
+                    <li>Higher rank unlocks more Incarnon adapter offerings from Cavalero</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#10024; Incarnon Genesis System</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">System</span></div>
+                <ul class="list">
+                    <li>Weapon upgrade adapters that unlock a transformed "Incarnon" fire mode</li>
+                    <li>Obtained from Cavalero on a rotating weekly basis (5 weapons offered)</li>
+                    <li>Apply to existing weapons &mdash; does not consume the base weapon</li>
+                    <li>Some of the highest-performing weapon builds in the game use Incarnon adapters</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-ranks">
+        <h2>&#128202; 5. Syndicate Rank Reference</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Daily standing cap = Mastery Rank &times; 1,000 (e.g. MR 30 = 30,000/day). This cap applies per syndicate per day and resets at midnight UTC.</p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:1.5rem;">
+            <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ffab00;">
+                <div style="padding:12px 16px;background:rgba(255,171,0,0.08);border-bottom:1px solid rgba(255,255,255,0.07);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;"><h3 style="margin:0;font-size:0.95rem;">&#x1F3D9;&#xFE0F; Ostron &mdash; Plains of Eidolon</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Syndicate</span></div>
+                    <div style="font-size:0.75rem;color:#9fb0c4;margin-top:2px;">Key unlock: Old Mate &rarr; access to all Zaw parts &amp; Quills entry</div>
+                </div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:7px 12px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Rank</th><th style="padding:7px 12px;text-align:right;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Standing</th><th style="padding:7px 12px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Key Unlock</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Outsider</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">0</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Basic bounties</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Visitor</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">500</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Zaw Strikes</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Neutral</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">1,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Zaw Grips &amp; Links</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Offworlder</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">2,500</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Tier 3 bounties</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Accepted</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">5,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Advanced Zaw parts</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Cetus Insider</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">10,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Tier 5 bounties</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;">Old Mate</td><td style="padding:6px 12px;color:#ffab00;text-align:right;">20,000</td><td style="padding:6px 12px;color:#4caf50;">All content unlocked</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #60a5fa;">
+                <div style="padding:12px 16px;background:rgba(96,165,250,0.08);border-bottom:1px solid rgba(255,255,255,0.07);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;"><h3 style="margin:0;font-size:0.95rem;">&#x1F3ED; Solaris United &mdash; Orb Vallis</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Syndicate</span></div>
+                    <div style="font-size:0.75rem;color:#9fb0c4;margin-top:2px;">Key unlock: Old Mate &rarr; Vox Solaris access (Little Duck)</div>
+                </div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:7px 12px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Rank</th><th style="padding:7px 12px;text-align:right;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Standing</th><th style="padding:7px 12px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Key Unlock</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Neutral</td><td style="padding:6px 12px;color:#60a5fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">0</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Basic bounties</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Offworlder</td><td style="padding:6px 12px;color:#60a5fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">500</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Kitgun Chambers</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Doer</td><td style="padding:6px 12px;color:#60a5fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">2,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Kitgun Grips &amp; Loaders</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Uplift</td><td style="padding:6px 12px;color:#60a5fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">5,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">MOA companion parts</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Instrument</td><td style="padding:6px 12px;color:#60a5fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">12,500</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">K-Drive parts</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Hand</td><td style="padding:6px 12px;color:#60a5fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">22,500</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Tier 5 Vallis bounties</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;">Old Mate</td><td style="padding:6px 12px;color:#60a5fa;text-align:right;">40,000</td><td style="padding:6px 12px;color:#4caf50;">Vox Solaris access</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #a78bfa;">
+                <div style="padding:12px 16px;background:rgba(167,139,250,0.08);border-bottom:1px solid rgba(255,255,255,0.07);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;"><h3 style="margin:0;font-size:0.95rem;">&#x1F3DB;&#xFE0F; Entrati &mdash; Cambion Drift</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Syndicate</span></div>
+                    <div style="font-size:0.75rem;color:#9fb0c4;margin-top:2px;">Uses token system &mdash; tokens must be converted to standing at Mother</div>
+                </div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:7px 12px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Rank</th><th style="padding:7px 12px;text-align:right;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Standing</th><th style="padding:7px 12px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Key Unlock</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Stranger</td><td style="padding:6px 12px;color:#a78bfa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">0</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Basic Deimos bounties</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Acquaintance</td><td style="padding:6px 12px;color:#a78bfa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">500</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Predasite companions</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Associate</td><td style="padding:6px 12px;color:#a78bfa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">2,500</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Vulpaphyla companions</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Friend</td><td style="padding:6px 12px;color:#a78bfa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">7,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Necramech parts</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Trusted</td><td style="padding:6px 12px;color:#a78bfa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">18,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Isolation Vault tier 3</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Confidant</td><td style="padding:6px 12px;color:#a78bfa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">40,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Deimos weapons</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;">Family</td><td style="padding:6px 12px;color:#a78bfa;text-align:right;">60,000</td><td style="padding:6px 12px;color:#4caf50;">All content unlocked</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #00bcd4;">
+                <div style="padding:12px 16px;background:rgba(0,188,212,0.08);border-bottom:1px solid rgba(255,255,255,0.07);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;"><h3 style="margin:0;font-size:0.95rem;">&#128640; Holdfasts &mdash; Zariman</h3><span class="type-tag" style="background:rgba(0,188,212,0.18);color:#00bcd4;border:1px solid rgba(0,188,212,0.45);">Syndicate</span></div>
+                    <div style="font-size:0.75rem;color:#9fb0c4;margin-top:2px;">Key unlock: Higher ranks &rarr; more Incarnon adapter slots from Cavalero</div>
+                </div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:7px 12px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Rank</th><th style="padding:7px 12px;text-align:right;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Standing</th><th style="padding:7px 12px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Key Unlock</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Pilgrim</td><td style="padding:6px 12px;color:#00bcd4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">0</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Basic Zariman missions</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Excubitor</td><td style="padding:6px 12px;color:#00bcd4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">2,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Zariman weapons (Tier 1)</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Legatus</td><td style="padding:6px 12px;color:#00bcd4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">8,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Incarnon adapter access</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Emerald Tribune</td><td style="padding:6px 12px;color:#00bcd4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">20,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Additional adapter slots</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Warmonger</td><td style="padding:6px 12px;color:#00bcd4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">40,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Zariman Arcanes</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Executor</td><td style="padding:6px 12px;color:#00bcd4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">70,000</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Full adapter rotation</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;">Arch-Preator</td><td style="padding:6px 12px;color:#00bcd4;text-align:right;">100,000</td><td style="padding:6px 12px;color:#4caf50;">All content unlocked</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-resources">
+        <h2>&#9935;&#xFE0F; 6. Key Resources by World</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127807; Plains of Eidolon</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Plains</span></div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-top:8px;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Resource</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Source</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Used For</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Cetus Wisps</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Floating near water edges (day)</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Amp parts, Zaw components</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Pyrol / Auron</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Mining (common)</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Zaw crafting</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Sentirum / Zodian</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Mining (rare gem nodes)</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Amp components, Focus Lenses</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Fish Oil / Scales</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Processing caught fish</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Amp parts, Ostron standing</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;">Sentient Cores</td><td style="padding:5px 10px;color:#9fb0c4;">Eidolon fragments &amp; kills</td><td style="padding:5px 10px;color:#9fb0c4;">Quills standing</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128167; Orb Vallis</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Vallis</span></div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-top:8px;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Resource</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Source</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Used For</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Vega Toroid</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Temple of Profit</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Vox Solaris standing</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Calda Toroid</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Spaceport</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Vox Solaris standing</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Sola Toroid</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Research Labs</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Vox Solaris standing</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Hesperon / Trembera</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Mining (rare)</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Kitgun parts, MOA parts</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;">Cubic Diodes</td><td style="padding:5px 10px;color:#9fb0c4;">Mining (common)</td><td style="padding:5px 10px;color:#9fb0c4;">Kitgun &amp; K-Drive parts</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F9EB; Cambion Drift</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Deimos</span></div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-top:8px;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Resource</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Source</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Used For</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Fass Residue</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Fass cycle, wyrm corpse</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Fish bait, Deimos crafting</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Vome Residue</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Vome cycle, wyrm corpse</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Fish bait, Deimos crafting</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Thaumica</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Mining</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Necramech parts</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Entrati Tokens</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Bounties, conservation, fishing</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Convert to Entrati standing at Mother</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;">Orokin Matrix</td><td style="padding:5px 10px;color:#9fb0c4;">Isolation Vault rewards</td><td style="padding:5px 10px;color:#9fb0c4;">Necramech mods, Entrati standing</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#9889; Zariman</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Zariman</span></div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-top:8px;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Resource</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Source</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Used For</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Voidplume Quill</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Void entity kills (common)</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Holdfasts standing (small)</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Voidplume Dawn</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Mission rewards (uncommon)</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Holdfasts standing (medium)</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Voidplume Crest</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Void Angel boss kills</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Holdfasts standing (large)</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Incarnon Adapters</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Cavalero (weekly rotation)</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Apply to weapons for Incarnon mode</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;">Riven Fragments</td><td style="padding:5px 10px;color:#9fb0c4;">Mission completion</td><td style="padding:5px 10px;color:#9fb0c4;">Combine into Riven Mods</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-fishing">
+        <h2>&#127907; 7. Fishing Quick Reference</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127907; Plains of Eidolon &mdash; Key Fish</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Plains</span></div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-top:8px;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Fish</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Time</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Bait / Notes</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Mawfish</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Day/Night</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">No bait, common in ponds</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Murkray</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Night only</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Murkray Bait &mdash; deep ocean water</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Norg</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Night only</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Norg Bait &mdash; lake shores</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Cuthol</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Day (Fass)</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Cuthol Bait &mdash; shallow rivers</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;">Charc Eel</td><td style="padding:5px 10px;color:#9fb0c4;">Any</td><td style="padding:5px 10px;color:#9fb0c4;">Cave water only, no bait needed</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="border-left:6px solid #00bcd4;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#129302; Orb Vallis &mdash; Key Fish</h3><span class="type-tag" style="background:rgba(0,188,212,0.18);color:#00bcd4;border:1px solid rgba(0,188,212,0.45);">Vallis</span></div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-top:8px;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);"><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Fish</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Temp</th><th style="padding:6px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Bait / Notes</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Tink</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Any</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">No bait, most common Vallis fish</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Charamote</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Any</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Charamote Bait &mdash; open lake</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Longwinder</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Cold only</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Longwinder Bait &mdash; cold cycle ponds</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Brickie</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Warm only</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">No bait &mdash; shallow warm water</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;">Mirewinder</td><td style="padding:5px 10px;color:#9fb0c4;">Cold only</td><td style="padding:5px 10px;color:#9fb0c4;">Mirewinder Bait &mdash; cave lakes</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-tips">
+        <h2>&#127919; 8. Efficiency Tips by World</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F4A1; Plains of Eidolon</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Tips</span></div>
+                <ul class="list">
+                    <li>Run Tier 5 bounties for the fastest standing &mdash; each stage rewards independently</li>
+                    <li>Collect Cetus Wisps during day runs; they respawn each time you enter the Plains</li>
+                    <li>Fish at night with bait near ocean water for Murkray &mdash; highest Ostron standing fish</li>
+                    <li>Bring a Resource Booster if farming fish or mining &mdash; doubles yield with no time cost</li>
+                    <li>Mining rare gems (Sentirum, Zodian) spawn in cave nodes &mdash; prioritize cave sweeps</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F4A1; Orb Vallis</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Tips</span></div>
+                <ul class="list">
+                    <li>Toroid farming at base camps is the fastest Vox Solaris standing method &mdash; use Nekros for extra drops</li>
+                    <li>Profit-Taker bounty (Phase 4) drops Crisma Toroids &mdash; highest-value Toroid per run</li>
+                    <li>Conservation gives more standing per capture than bounties at lower ranks &mdash; use Son's Echo-Lures</li>
+                    <li>Temperature cycle affects which fish spawn &mdash; check before fishing runs</li>
+                    <li>K-Drive races near Fortuna give Ventkids standing with no enemy engagement required</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F4A1; Cambion Drift</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Tips</span></div>
+                <ul class="list">
+                    <li>Chain Isolation Vault tiers (1&rarr;2&rarr;3) in a single run for maximum Entrati token reward</li>
+                    <li>Collect all five NPC token types daily (Son, Daughter, Father, Loid, Mother) for best standing per day</li>
+                    <li>Fass/Vome cycle determines which fish and resources are available &mdash; plan runs around it</li>
+                    <li>Necramech spawns in Vault runs &mdash; kill for Necramech mod drops alongside bounty rewards</li>
+                    <li>Servofish on Deimos require a Fishing Spear (not a Rod) &mdash; buy from Daughter</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#x1F4A1; Zariman</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Tips</span></div>
+                <ul class="list">
+                    <li>Void Cascade is the most efficient mission type for Voidplume density per run</li>
+                    <li>Kill Void Angels for Voidplume Crests &mdash; highest standing value per item</li>
+                    <li>Check Cavalero's weekly rotation every reset (Monday) &mdash; each rotation offers 5 Incarnon adapters</li>
+                    <li>Holdfasts bounties from Quinn stack with mission completion standing &mdash; always take a bounty before starting</li>
+                    <li>Riven Fragments combine in sets of 5 &mdash; run multiple missions before claiming to batch your Rivens</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(targetId, true); }
+        });
+    });
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) { showSection(e.state.section, false); } else { showMenu(); }
+    });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

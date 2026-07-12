@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Syndicate Standing Manager</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        body { padding-top: 154.6px !important; }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .control-panel {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            align-self: start;
+        }
+        
+        .syndicate-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .syndicate-card-row {
+            background: rgba(20, 27, 41, 0.45);
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 18px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 15px;
+            align-items: center;
+            transition: all 0.25s ease;
+        }
+        
+        .syndicate-card-row:hover {
+            background: rgba(23, 33, 62, 0.6);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        
+        .syn-icon {
+            width: 50px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .syn-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .syn-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .syn-title-text {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #fff;
+        }
+        
+        .badge-status {
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+        
+        .badge-pledge { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-ally { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-opposed { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px dashed rgba(239, 68, 68, 0.25); }
+        .badge-enemy { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .badge-neutral { background: rgba(255, 255, 255, 0.04); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.06); }
+        
+        .standing-input-grp {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .standing-field {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            width: 100px;
+            text-align: right;
+        }
+        
+        .standing-field:focus {
+            border-color: #8b5cf6;
+            outline: none;
+        }
+        
+        .rank-badge {
+            font-size: 0.8rem;
+            color: #ffab00;
+            font-weight: 700;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary-accent);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .sim-val {
+            font-weight: bold;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1.1rem;
+        }
+        
+        .sim-plus { color: #10b981; }
+        .sim-minus { color: #ef4444; }
+        .sim-zero { color: #94a3b8; }
+        
+        /* Control elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label.control-lbl {
+            display: block;
+            color: #cbd5e1;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .input-inline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .control-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+        }
+        
+        .control-input:focus {
+            border-color: #8b5cf6;
+            outline: none;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+        }
+        
+        .btn-action {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            border: none;
+            color: #fff;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+            filter: brightness(1.1);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-shadow: none;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+        
+        .pledge-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .pledge-opt {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+        
+        .pledge-opt:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .pledge-opt.selected {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: #8b5cf6;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+        }
+        
+        .desc-tip {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+    
+.container { max-width: 1750px; width: 100%; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+</style>
+
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Incarnon_Tracker.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a id="nav-next-top" href="Warframe_Trading_Ledger.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<div class="container">
+    <header>
+        <h1>&#127894;&#xFE0F; Syndicate Pledge Simulator</h1>
+        <p class="subtitle">Interactive Standing Pledge, Alliance, & daily Cap Simulator</p>
+    </header>
+
+    <div class="main-grid">
+        <!-- LEFT COLUMN: CONTROLS -->
+        <div class="control-panel">
+            <h3 style="color: var(--accent-gold); margin-bottom: 20px; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;">&#x1F39B;&#xFE0F; Simulator Controls</h3>
+            
+            <div class="form-group">
+                <label class="control-lbl" for="mr-input">Mastery Rank (MR)</label>
+                <div class="input-inline">
+                    <input type="number" id="mr-input" min="0" max="34" value="15" class="control-input">
+                </div>
+                <div class="desc-tip" id="daily-cap-info">Daily Standing Limit: 23,500</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-lbl">Active Pledge</label>
+                <div class="pledge-grid">
+                    <div class="pledge-opt" data-syn="meridian">&#128308; Meridian</div>
+                    <div class="pledge-opt" data-syn="arbiters">&#128993; Arbiters</div>
+                    <div class="pledge-opt" data-syn="suda">&#128309; Suda</div>
+                    <div class="pledge-opt" data-syn="perrin">&#128994; Perrin</div>
+                    <div class="pledge-opt" data-syn="veil">&#128995; Veil</div>
+                    <div class="pledge-opt" data-syn="loka">&#127811; Loka</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-lbl" for="gain-input">Simulated Standing Gain</label>
+                <input type="number" id="gain-input" min="0" value="10000" class="control-input">
+                <div class="desc-tip">Enter standing earned to check positive/negative standing gains across all six factions.</div>
+                <button type="button" id="btn-set-max" class="btn-action btn-secondary" style="padding: 8px; font-size: 0.85rem; margin-top: 8px;">Set to Daily Limit</button>
+            </div>
+            
+            <button type="button" id="btn-apply-sim" class="btn-action">Commit Simulated Standing</button>
+            <button type="button" id="btn-reset-standings" class="btn-action btn-secondary">Reset All Standings to 0</button>
+        </div>
+
+        <!-- RIGHT COLUMN: STANDINGS MATRIX -->
+        <div class="syndicate-list">
+            <!-- Steel Meridian -->
+            <div class="syndicate-card-row" id="card-meridian" style="border-left: 4px solid #ef4444;">
+                <div class="syn-icon" style="color: #ef4444;">&#128308;</div>
+                <div class="syn-details">
+                    <div class="syn-meta-row">
+                        <span class="syn-title-text">Steel Meridian</span>
+                        <span class="badge-status badge-neutral" id="status-meridian">Neutral</span>
+                    </div>
+                    <div class="syn-meta-row">
+                        <span class="rank-badge" id="rank-lbl-meridian">Rank 0: Neutral</span>
+                        <div class="standing-input-grp">
+                            <input type="number" id="val-meridian" class="standing-field" value="0">
+                            <span class="sim-val sim-zero" id="sim-diff-meridian">+0</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-meridian" style="background: #ef4444;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arbiters of Hexis -->
+            <div class="syndicate-card-row" id="card-arbiters" style="border-left: 4px solid #eab308;">
+                <div class="syn-icon" style="color: #eab308;">&#128993;</div>
+                <div class="syn-details">
+                    <div class="syn-meta-row">
+                        <span class="syn-title-text">Arbiters of Hexis</span>
+                        <span class="badge-status badge-neutral" id="status-arbiters">Neutral</span>
+                    </div>
+                    <div class="syn-meta-row">
+                        <span class="rank-badge" id="rank-lbl-arbiters">Rank 0: Neutral</span>
+                        <div class="standing-input-grp">
+                            <input type="number" id="val-arbiters" class="standing-field" value="0">
+                            <span class="sim-val sim-zero" id="sim-diff-arbiters">+0</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-arbiters" style="background: #eab308;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cephalon Suda -->
+            <div class="syndicate-card-row" id="card-suda" style="border-left: 4px solid #3b82f6;">
+                <div class="syn-icon" style="color: #3b82f6;">&#128309;</div>
+                <div class="syn-details">
+                    <div class="syn-meta-row">
+                        <span class="syn-title-text">Cephalon Suda</span>
+                        <span class="badge-status badge-neutral" id="status-suda">Neutral</span>
+                    </div>
+                    <div class="syn-meta-row">
+                        <span class="rank-badge" id="rank-lbl-suda">Rank 0: Neutral</span>
+                        <div class="standing-input-grp">
+                            <input type="number" id="val-suda" class="standing-field" value="0">
+                            <span class="sim-val sim-zero" id="sim-diff-suda">+0</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-suda" style="background: #3b82f6;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Perrin Sequence -->
+            <div class="syndicate-card-row" id="card-perrin" style="border-left: 4px solid #06b6d4;">
+                <div class="syn-icon" style="color: #06b6d4;">&#128994;</div>
+                <div class="syn-details">
+                    <div class="syn-meta-row">
+                        <span class="syn-title-text">The Perrin Sequence</span>
+                        <span class="badge-status badge-neutral" id="status-perrin">Neutral</span>
+                    </div>
+                    <div class="syn-meta-row">
+                        <span class="rank-badge" id="rank-lbl-perrin">Rank 0: Neutral</span>
+                        <div class="standing-input-grp">
+                            <input type="number" id="val-perrin" class="standing-field" value="0">
+                            <span class="sim-val sim-zero" id="sim-diff-perrin">+0</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-perrin" style="background: #06b6d4;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Red Veil -->
+            <div class="syndicate-card-row" id="card-veil" style="border-left: 4px solid #dc2626;">
+                <div class="syn-icon" style="color: #dc2626;">&#128995;</div>
+                <div class="syn-details">
+                    <div class="syn-meta-row">
+                        <span class="syn-title-text">Red Veil</span>
+                        <span class="badge-status badge-neutral" id="status-veil">Neutral</span>
+                    </div>
+                    <div class="syn-meta-row">
+                        <span class="rank-badge" id="rank-lbl-veil">Rank 0: Neutral</span>
+                        <div class="standing-input-grp">
+                            <input type="number" id="val-veil" class="standing-field" value="0">
+                            <span class="sim-val sim-zero" id="sim-diff-veil">+0</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-veil" style="background: #dc2626;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Loka -->
+            <div class="syndicate-card-row" id="card-loka" style="border-left: 4px solid #10b981;">
+                <div class="syn-icon" style="color: #10b981;">&#127811;</div>
+                <div class="syn-details">
+                    <div class="syn-meta-row">
+                        <span class="syn-title-text">New Loka</span>
+                        <span class="badge-status badge-neutral" id="status-loka">Neutral</span>
+                    </div>
+                    <div class="syn-meta-row">
+                        <span class="rank-badge" id="rank-lbl-loka">Rank 0: Neutral</span>
+                        <div class="standing-input-grp">
+                            <input type="number" id="val-loka" class="standing-field" value="0">
+                            <span class="sim-val sim-zero" id="sim-diff-loka">+0</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-loka" style="background: #10b981;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // Faction definitions & relationships
+    const relationships = {
+        meridian: { ally: 'veil', opposed: 'perrin', enemy: 'loka' },
+        arbiters: { ally: 'suda', opposed: 'veil', enemy: 'perrin' },
+        suda: { ally: 'arbiters', opposed: 'loka', enemy: 'veil' },
+        perrin: { ally: 'loka', opposed: 'meridian', enemy: 'arbiters' },
+        veil: { ally: 'meridian', opposed: 'arbiters', enemy: 'suda' },
+        loka: { ally: 'perrin', opposed: 'suda', enemy: 'meridian' }
+    };
+
+    const keys = ['meridian', 'arbiters', 'suda', 'perrin', 'veil', 'loka'];
+
+    // Rank Ranges
+    const rankInfo = [
+        { level: -2, name: "Enemy", min: -44000, max: -22000 },
+        { level: -1, name: "Opposed", min: -22000, max: 0 },
+        { level: 0, name: "Neutral", min: 0, max: 5000 },
+        { level: 1, name: "Rank 1", min: 5000, max: 22000 },
+        { level: 2, name: "Rank 2", min: 22000, max: 44000 },
+        { level: 3, name: "Rank 3", min: 44000, max: 70000 },
+        { level: 4, name: "Rank 4", min: 70000, max: 99000 },
+        { level: 5, name: "Rank 5", min: 99000, max: 132000 }
+    ];
+
+    // Load saved settings
+    let savedMR = parseInt(safeStorage.getItem('codex_mr')) || 15;
+    let savedPledge = safeStorage.getItem('codex_pledge') || 'meridian';
+    
+    document.getElementById('mr-input').value = savedMR;
+    
+    // Standing values initialization
+    let standings = {};
+    keys.forEach(k => {
+        standings[k] = parseInt(safeStorage.getItem('codex_syn_' + k)) || 0;
+        document.getElementById('val-' + k).value = standings[k];
+    });
+
+    // Inputs & buttons
+    const mrInput = document.getElementById('mr-input');
+    const gainInput = document.getElementById('gain-input');
+    const pledgeOpts = document.querySelectorAll('.pledge-opt');
+    const btnSetMax = document.getElementById('btn-set-max');
+    const btnApplySim = document.getElementById('btn-apply-sim');
+    const btnResetStandings = document.getElementById('btn-reset-standings');
+
+    // Calculate MR daily cap
+    function getDailyCap(mr) {
+        return 16000 + (mr * 500);
+    }
+
+    function updateMRCap() {
+        const mr = parseInt(mrInput.value) || 0;
+        safeStorage.setItem('codex_mr', mr);
+        const cap = getDailyCap(mr);
+        document.getElementById('daily-cap-info').textContent = `Daily Standing Limit: ${cap.toLocaleString()}`;
+    }
+
+    mrInput.addEventListener('input', () => {
+        updateMRCap();
+        updateSimulation();
+    });
+
+    // Handle pledge clicks
+    pledgeOpts.forEach(opt => {
+        opt.addEventListener('click', () => {
+            pledgeOpts.forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            savedPledge = opt.dataset.syn;
+            safeStorage.setItem('codex_pledge', savedPledge);
+            updateSimulation();
+        });
+    });
+
+    // Set initial pledge class
+    const initialSelected = document.querySelector(`.pledge-opt[data-syn="${savedPledge}"]`);
+    if (initialSelected) initialSelected.classList.add('selected');
+
+    // Set standard max cap button
+    btnSetMax.addEventListener('click', () => {
+        const mr = parseInt(mrInput.value) || 0;
+        gainInput.value = getDailyCap(mr);
+        updateSimulation();
+    });
+
+    // Update standing changes on manual edit
+    keys.forEach(k => {
+        document.getElementById('val-' + k).addEventListener('input', (e) => {
+            const val = Math.min(132000, Math.max(-44000, parseInt(e.target.value) || 0));
+            standings[k] = val;
+            safeStorage.setItem('codex_syn_' + k, val);
+            updateSimulation();
+        });
+    });
+
+    // Reset standings button
+    btnResetStandings.addEventListener('click', () => {
+        if (confirm("Are you sure you want to reset all standings to 0?")) {
+            keys.forEach(k => {
+                standings[k] = 0;
+                safeStorage.setItem('codex_syn_' + k, 0);
+                document.getElementById('val-' + k).value = 0;
+            });
+            updateSimulation();
+        }
+    });
+
+    // Apply simulation to live standings
+    btnApplySim.addEventListener('click', () => {
+        const simulatedGains = calculateGains();
+        keys.forEach(k => {
+            let newVal = standings[k] + simulatedGains[k];
+            newVal = Math.min(132000, Math.max(-44000, newVal));
+            standings[k] = newVal;
+            safeStorage.setItem('codex_syn_' + k, newVal);
+            document.getElementById('val-' + k).value = newVal;
+        });
+        updateSimulation();
+        alert("Simulated standing committed to your workspace cache successfully!");
+    });
+
+    // Calculate gains for each syndicate
+    function calculateGains() {
+        const baseGain = parseInt(gainInput.value) || 0;
+        const gains = {};
+        keys.forEach(k => gains[k] = 0);
+
+        if (savedPledge) {
+            gains[savedPledge] = baseGain;
+            const rel = relationships[savedPledge];
+            gains[rel.ally] = Math.floor(baseGain * 0.5);
+            gains[rel.opposed] = -Math.floor(baseGain * 0.5);
+            gains[rel.enemy] = -baseGain;
+        }
+
+        return gains;
+    }
+
+    // Determine Rank details based on value
+    function getRankDetails(val) {
+        for (let i = rankInfo.length - 1; i >= 0; i--) {
+            const rank = rankInfo[i];
+            if (val >= rank.min) {
+                return rank;
+            }
+        }
+        return rankInfo[0];
+    }
+
+    // Main UI updates
+    function updateSimulation() {
+        const simulatedGains = calculateGains();
+        
+        keys.forEach(k => {
+            const currentVal = standings[k];
+            const simGain = simulatedGains[k];
+            const newVal = Math.min(132000, Math.max(-44000, currentVal + simGain));
+            
+            // Diff indicator update
+            const diffEl = document.getElementById('sim-diff-' + k);
+            diffEl.className = 'sim-val';
+            if (simGain > 0) {
+                diffEl.textContent = `+${simGain.toLocaleString()}`;
+                diffEl.classList.add('sim-plus');
+            } else if (simGain < 0) {
+                diffEl.textContent = `${simGain.toLocaleString()}`;
+                diffEl.classList.add('sim-minus');
+            } else {
+                diffEl.textContent = `+0`;
+                diffEl.classList.add('sim-zero');
+            }
+
+            // Status badges update
+            const statusEl = document.getElementById('status-' + k);
+            statusEl.className = 'badge-status';
+            if (savedPledge === k) {
+                statusEl.textContent = 'Pledge';
+                statusEl.classList.add('badge-pledge');
+            } else if (relationships[savedPledge].ally === k) {
+                statusEl.textContent = 'Ally (+50%)';
+                statusEl.classList.add('badge-ally');
+            } else if (relationships[savedPledge].opposed === k) {
+                statusEl.textContent = 'Opposed (-50%)';
+                statusEl.classList.add('badge-opposed');
+            } else if (relationships[savedPledge].enemy === k) {
+                statusEl.textContent = 'Enemy (-100%)';
+                statusEl.classList.add('badge-enemy');
+            } else {
+                statusEl.textContent = 'Neutral';
+                statusEl.classList.add('badge-neutral');
+            }
+
+            // Rank metadata & Progress bar calculation
+            const currentRank = getRankDetails(currentVal);
+            const rankLabel = document.getElementById('rank-lbl-' + k);
+            rankLabel.textContent = `${currentRank.name} (Lvl ${currentRank.level})`;
+
+            const progressEl = document.getElementById('progress-' + k);
+            const range = currentRank.max - currentRank.min;
+            const progress = range > 0 ? ((currentVal - currentRank.min) / range) * 100 : 100;
+            progressEl.style.width = Math.min(100, Math.max(0, progress)) + '%';
+        });
+    }
+
+    // Initialize display
+    updateMRCap();
+    updateSimulation();
+    
+    // Auto-update when simulated gain edits
+    gainInput.addEventListener('input', updateSimulation);
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+
+</body>
+</html>
+
+
+
+

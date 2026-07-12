@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Warframe Riven Mod Guide &mdash; what rivens are, unveiling, the disposition system, Kuva rolling and grading, desirable stats, and the riven trading economy.">
+    <title>Warframe: The Orbiter Compendium &mdash; Riven Mod Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128290; Riven Mod Guide</h1>
+        <p class="subtitle">Unveiling, disposition, Kuva rolling, grading, and the riven trading economy</p>
+    </header>
+
+    <div class="card" style="border-left:3px solid #ffab00;margin-bottom:20px;">
+        <p style="margin:0;color:#9fb0c4;font-size:0.9rem;"><strong style="color:#ffab00;">Living data note:</strong> Riven <em>mechanics</em> below are stable, but <strong>dispositions change with most major updates</strong> and weapon meta shifts constantly. Always check a weapon's current disposition in-game (or the Warframe wiki / a live riven market) before buying or valuing a riven.</p>
+    </div>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="riven-basics" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#x1F3B0;</div><h2 class="qi-tile-title">What Is a Riven Mod?</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="acquiring" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#x1F4CD;</div><h2 class="qi-tile-title">Where Rivens Come From</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="disposition" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#x2696;&#xFE0F;</div><h2 class="qi-tile-title">Disposition</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="rolling" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#x1F300;</div><h2 class="qi-tile-title">Rolling &amp; Kuva</h2><p class="qi-tile-desc">Re-rolling a riven costs Kuva and randomizes its stats again. The cost escalates with each roll (starting low, climbing to a fixed ceiling after ~13 rolls). Every roll can chang...</p></a>
+            <a class="qi-tile toc-toggle" data-section="stats" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#x1F4D6;</div><h2 class="qi-tile-title">Reading a Roll</h2><p class="qi-tile-desc">Rule of thumb for a “god roll”: the two or three stats your build actually scales with, a harmless (or no) negative, on a weapon with decent disposition.</p></a>
+            <a class="qi-tile toc-toggle" data-section="trading" style="border-left-color:#4dd0e1;"><div class="qi-tile-icon">&#x1F4B0;</div><h2 class="qi-tile-title">The Riven Trading Economy</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. WHAT IS A RIVEN MOD? -->
+    <section class="category-section" id="riven-basics">
+        <h2>&#x1F3B0; 1. What Is a Riven Mod?</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <h3>&#127922; Randomized, Weapon-Specific Mods</h3>
+                <ul class="list">
+                    <li>A riven is a <strong>special mod tied to one specific weapon</strong> (e.g. &ldquo;Braton Riven&rdquo;) with <strong>randomized</strong> stats.</li>
+                    <li>Each riven rolls <strong>2&ndash;3 positive stats</strong> and sometimes <strong>1 negative</strong> (a negative often makes the positives stronger).</li>
+                    <li>Riven stats stack with regular mods, so a good riven can push a weapon well past its normal ceiling.</li>
+                    <li>Rivens exist for primaries, secondaries, melee, archguns, Kitguns, Zaws, and some companion weapons.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <h3>&#128273; Veiled vs. Unveiled</h3>
+                <ul class="list">
+                    <li>Rivens drop <strong>veiled</strong> &mdash; unknown weapon and stats, with a challenge to complete.</li>
+                    <li>Complete the challenge (or use a <strong>Riven Cipher</strong> to skip it) to <strong>unveil</strong> &mdash; this reveals the weapon and an initial random roll.</li>
+                    <li>You then <strong>roll/re-roll</strong> with Kuva to change stats.</li>
+                    <li><strong>MR&nbsp;8</strong> is required to trade rivens.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. WHERE RIVENS COME FROM -->
+    <section class="category-section" id="acquiring">
+        <h2>&#x1F4CD; 2. Where Rivens Come From</h2>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #4ade80;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Source</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Cadence</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Sorties</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Daily (1 per day)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">A common veiled riven reward in the rotation</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Steel Path Incursions</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Daily</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Riven Slivers &rarr; combine 10 at Palladino for a veiled riven</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Nightwave</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Seasonal store</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Veiled rivens appear periodically &mdash; see <a href="Warframe_Nightwave_Guide.html" style="color:#89cff0;">Nightwave</a></td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;">Player Trade</td><td style="padding:7px 14px;color:#e2e8f0;">Anytime (MR8+)</td><td style="padding:7px 14px;color:#9fb0c4;">Buy unveiled/rolled rivens directly &mdash; see <a href="Warframe_Trading_Ledger.html" style="color:#89cff0;">Trading Ledger</a></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 3. DISPOSITION -->
+    <section class="category-section" id="disposition">
+        <h2>&#x2696;&#xFE0F; 3. Disposition &mdash; The Most Important Number</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#9899; What Disposition Does</h3>
+                <ul class="list">
+                    <li>Disposition is a <strong>strength multiplier</strong> shown as <strong>1&ndash;5 dots</strong> on the riven.</li>
+                    <li><strong>Higher disposition = bigger stat values</strong> from the same roll.</li>
+                    <li>It is <strong>inversely tied to weapon popularity</strong>: weapons people use a lot get <em>low</em> disposition; rarely-used weapons get <em>high</em> disposition.</li>
+                    <li>DE <strong>rebalances dispositions periodically</strong> (typically with major updates). A meta weapon's riven can lose value overnight when its disposition drops.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128161; What It Means For You</h3>
+                <ul class="list">
+                    <li>A high-disposition riven on a <em>good</em> weapon is the jackpot &mdash; and the most expensive.</li>
+                    <li>Low-disposition rivens (popular meta guns) give smaller bonuses &mdash; often not worth a mod slot over a standard mod.</li>
+                    <li>Before chasing a riven, ask: <em>does the disposition make it beat my current build?</em></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ROLLING & KUVA -->
+    <section class="category-section" id="rolling">
+        <h2>&#x1F300; 4. Rolling &amp; Kuva</h2>
+        <div class="card" style="border-left:6px solid #ef5350;">
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#127922; How Rolling Works</h4>
+                    <p>Re-rolling a riven costs <strong>Kuva</strong> and randomizes its stats again. The cost <strong>escalates</strong> with each roll (starting low, climbing to a fixed ceiling after ~13 rolls). Every roll can change the number of stats (2 vs 3), which stats appear, and whether there's a negative.</p>
+                </div>
+                <div class="box">
+                    <h4>&#128308; Farming Kuva</h4>
+                    <p>Kuva comes from <strong>Kuva Siphon / Kuva Flood</strong> missions (Kuva Fortress &amp; the requiem-marked nodes), <strong>Steel Path</strong> bonuses, and <strong>resource boosters</strong>. Floods give the most per run. Stockpile before a rolling session &mdash; god rolls can take dozens of attempts.</p>
+                </div>
+            </div>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#128230; Riven Slots</h4>
+                    <p>Riven capacity is <strong>limited</strong> (15 by default) and expandable with platinum in increments. Veiled rivens you intend to sell still consume a slot &mdash; unveil/trade or dissolve duplicates to stay under the cap.</p>
+                </div>
+                <div class="box">
+                    <h4>&#128721; Know When to Stop</h4>
+                    <p>Decide your target stats <em>before</em> rolling. A &ldquo;good enough&rdquo; roll you keep beats a god roll you bankrupt yourself chasing. Lock in a 2-stat roll with no harmful negative as a solid baseline.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. READING A ROLL -->
+    <section class="category-section" id="stats">
+        <h2>&#x1F4D6; 5. Reading a Roll &mdash; Which Stats Matter</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <h3>&#9989; High-Value Positives</h3>
+                <ul class="list">
+                    <li><strong>Critical Damage</strong> and <strong>Critical Chance</strong> &mdash; king for crit weapons.</li>
+                    <li><strong>Multishot</strong> &mdash; near-universal damage multiplier.</li>
+                    <li><strong>Base Damage</strong> &mdash; always useful.</li>
+                    <li><strong>Elemental</strong> (Heat/Toxin/Electric/Cold) &mdash; for status/elemental builds.</li>
+                    <li><strong>Fire Rate / Attack Speed</strong> &mdash; situational but strong on the right gun.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <h3>&#9940; &ldquo;Harmless&rdquo; Negatives (good to roll)</h3>
+                <ul class="list">
+                    <li><strong>Zoom, Recoil, Punch Through, Ammo Max</strong> &mdash; rarely hurt; a negative here boosts your positives.</li>
+                    <li><strong>Damage to a faction you don't fight</strong> can be acceptable.</li>
+                    <li>Avoid negatives to your <em>core</em> stat (e.g. &minus;Critical Damage on a crit gun, &minus;Multishot, &minus;Damage).</li>
+                </ul>
+            </div>
+        </div>
+        <p style="color:#9fb0c4;margin-top:0.6rem;font-size:0.85rem;">Rule of thumb for a &ldquo;god roll&rdquo;: the two or three stats your build actually scales with, a harmless (or no) negative, on a weapon with decent disposition.</p>
+    </section>
+
+    <!-- 6. THE RIVEN TRADING ECONOMY -->
+    <section class="category-section" id="trading">
+        <h2>&#x1F4B0; 6. The Riven Trading Economy</h2>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #4dd0e1;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Value Driver</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Effect on Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Weapon meta</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Rivens for strong, popular-to-build weapons sell highest</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Disposition</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Higher dots = stronger roll = more plat; watch for upcoming rebalances</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Roll quality</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Clean 2&ndash;3 desired stats + harmless negative command a premium</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Veiled / unrolled</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Sold as lottery tickets &mdash; cheaper, buyer takes the rolling risk</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;">Trade tax / MR gate</td><td style="padding:7px 14px;color:#9fb0c4;">Rivens cost credits to trade and require MR&nbsp;8; high-roll rivens have high trade tax</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card" style="margin-top:1rem;border-left:6px solid #4dd0e1;">
+            <h3>&#128176; Selling Smart</h3>
+            <ul class="list">
+                <li>Price-check live before listing &mdash; riven prices swing with every disposition pass.</li>
+                <li>Veiled rivens for hyped weapons can be flipped without rolling at all.</li>
+                <li>Keep a couple of <strong>Riven Slivers</strong> banked; combining for a free veiled riven is steady value.</li>
+                <li>Log trades in the <a href="Warframe_Trading_Ledger.html" style="color:#89cff0;">Trading Ledger</a> and cross-reference <a href="Warframe_Rare_Mods_Value_Guide.html" style="color:#89cff0;">Rare Mod Values</a>.</li>
+            </ul>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Foundry Resource Planner</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        body { padding-top: 154.6px !important; }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1.8fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .item-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        label.control-lbl {
+            display: block;
+            color: #cbd5e1;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .control-select, .control-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .control-select:focus, .control-input:focus {
+            border-color: #8b5cf6;
+            outline: none;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+        }
+        
+        .btn-action {
+            display: inline-block;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            border: none;
+            color: #fff;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+            filter: brightness(1.1);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-shadow: none;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+        
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
+            box-shadow: none;
+        }
+        
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.3);
+            color: #fff;
+        }
+        
+        .queue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .queue-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        
+        .queue-item:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .queue-title {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 700;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .queue-details {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+        
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #f87171;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        
+        .remove-btn:hover {
+            background: rgba(239, 68, 68, 0.15);
+        }
+        
+        .shopping-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        
+        .shopping-row {
+            background: rgba(20, 27, 41, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .shopping-row:hover {
+            background: rgba(23, 33, 62, 0.6);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        
+        .shopping-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .resource-title {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.05rem;
+        }
+        
+        .owned-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .owned-field {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 5px 8px;
+            border-radius: 6px;
+            width: 70px;
+            text-align: right;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .owned-field:focus {
+            border-color: #8b5cf6;
+            outline: none;
+        }
+        
+        .needed-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        
+        .progress-container {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 3px;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #8b5cf6;
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+        
+        .progress-complete {
+            background: #10b981 !important;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+        }
+        
+        .badge-status {
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        
+        .badge-done { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-farming { background: rgba(245, 158, 11, 0.12); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); }
+        
+        /* Custom Customizer Modal/Panel */
+        .custom-inputs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .custom-inputs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .custom-resource-box {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .custom-resource-box span {
+            font-size: 0.72rem;
+            color: #cbd5e1;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .custom-resource-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.8rem;
+            padding: 3px 6px;
+            border-radius: 4px;
+            text-align: right;
+        }
+    
+.container { max-width: 1750px; width: 100%; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+</style>
+
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Farming_Codex_App.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a id="nav-next-top" href="Warframe_Incarnon_Tracker.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<div class="container">
+    <header>
+        <h1>&#127959;&#xFE0F; Foundry Crafting Planner</h1>
+        <p class="subtitle">Queue Items & Calculate Combined Resource Requirements</p>
+    </header>
+
+    <div class="main-grid">
+        <!-- LEFT COLUMN: QUEUE & CONTROLS -->
+        <div class="panel">
+            <h3 style="color: var(--accent-gold); margin-bottom: 20px; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;">&#x2795; Add to Queue</h3>
+            
+            <div class="item-form-group">
+                <div>
+                    <label class="control-lbl" for="preset-select">Select Preset Recipe</label>
+                    <select id="preset-select" class="control-select">
+                        <option value="">-- Select a craftable --</option>
+                        <option value="excalibur">Warframe: Excalibur</option>
+                        <option value="rhino">Warframe: Rhino</option>
+                        <option value="wukong">Warframe: Wukong</option>
+                        <option value="saryn">Warframe: Saryn</option>
+                        <option value="volt">Warframe: Volt</option>
+                        <option value="soma">Primary: Soma</option>
+                        <option value="torid">Primary: Torid</option>
+                        <option value="ignis_wraith">Primary: Ignis Wraith</option>
+                        <option value="redeemer">Melee: Redeemer</option>
+                    </select>
+                </div>
+                <button type="button" id="btn-add-preset" class="btn-action">Add Preset to Queue</button>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label class="control-lbl" style="color: #c084fc;">Create Custom Item</label>
+                <input type="text" id="custom-name" placeholder="Item Name (e.g. Lex Prime)" class="control-input" style="margin-bottom: 10px;">
+                
+                <span class="control-lbl" style="font-size: 0.8rem; opacity: 0.8;">Ingredients:</span>
+                <div class="custom-inputs-grid" id="custom-inputs-container">
+                    <!-- Javascript will inject inputs here dynamically -->
+                </div>
+                
+                <button type="button" id="btn-add-custom" class="btn-action btn-secondary" style="width: 100%; margin-top: 15px;">Add Custom Item</button>
+            </div>
+            
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px; margin-top: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;">&#x1F4CB; Active Queue</h3>
+                    <button type="button" id="btn-clear-queue" class="btn-action btn-danger" style="padding: 6px 12px; font-size: 0.78rem;">Clear All</button>
+                </div>
+                <div class="queue-list" id="queue-container">
+                    <!-- Queue list items injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: COMBINED REQUIREMENTS -->
+        <div class="panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                <h3 style="color: var(--accent-gold); margin: 0; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;">&#x1F6D2; Required Shopping List</h3>
+                <button type="button" id="btn-copy-list" class="btn-action btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">&#128203; Copy Checklist</button>
+            </div>
+            
+            <div class="shopping-list" id="shopping-list-container">
+                <!-- Shopping list items dynamically populated -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // Shared Resources List
+    const primaryResources = [
+        "Orokin Cell", "Argon Crystal", "Neurodes", "Neural Sensors", 
+        "Control Module", "Morphics", "Gallium", "Plastids", 
+        "Polymer Bundle", "Rubedo", "Ferrite", "Alloy Plate", 
+        "Nano Spores", "Circuits", "Salvage", "Cryotic"
+    ];
+
+    // Presets Database
+    const presets = {
+        excalibur: {
+            name: "Warframe: Excalibur",
+            ingredients: { "Orokin Cell": 3, "Neurodes": 1, "Nano Spores": 150, "Control Module": 1, "Polymer Bundle": 150, "Rubedo": 800, "Ferrite": 1000, "Alloy Plate": 1000, "Plastids": 220 }
+        },
+        rhino: {
+            name: "Warframe: Rhino",
+            ingredients: { "Orokin Cell": 3, "Morphics": 1, "Gallium": 1, "Control Module": 1, "Polymer Bundle": 150, "Rubedo": 800, "Ferrite": 1000, "Alloy Plate": 1000, "Plastids": 600 }
+        },
+        wukong: {
+            name: "Warframe: Wukong",
+            ingredients: { "Orokin Cell": 3, "Argon Crystal": 2, "Neural Sensors": 1, "Plastids": 1200, "Polymer Bundle": 4000, "Rubedo": 2500, "Ferrite": 5000, "Nano Spores": 10000, "Circuits": 150 }
+        },
+        saryn: {
+            name: "Warframe: Saryn",
+            ingredients: { "Orokin Cell": 3, "Neural Sensors": 1, "Plastids": 1000, "Polymer Bundle": 3000, "Rubedo": 800, "Alloy Plate": 5000, "Salvage": 10000, "Control Module": 1 }
+        },
+        volt: {
+            name: "Warframe: Volt",
+            ingredients: { "Orokin Cell": 3, "Argon Crystal": 1, "Neurodes": 1, "Plastids": 500, "Polymer Bundle": 1000, "Rubedo": 800, "Ferrite": 2000, "Salvage": 5000, "Control Module": 1 }
+        },
+        soma: {
+            name: "Primary: Soma",
+            ingredients: { "Orokin Cell": 1, "Morphics": 7, "Plastids": 600, "Rubedo": 1200, "Polymer Bundle": 1000, "Alloy Plate": 7500, "Cryotic": 200 }
+        },
+        torid: {
+            name: "Primary: Torid",
+            ingredients: { "Orokin Cell": 1, "Control Module": 10, "Plastids": 1200, "Nano Spores": 8000 }
+        },
+        ignis_wraith: {
+            name: "Primary: Ignis Wraith",
+            ingredients: { "Orokin Cell": 3, "Circuits": 150, "Polymer Bundle": 1200, "Nano Spores": 4500 }
+        },
+        redeemer: {
+            name: "Melee: Redeemer",
+            ingredients: { "Argon Crystal": 1, "Morphics": 2, "Rubedo": 500 }
+        }
+    };
+
+    // Load queue & owned items from safeStorage
+    let queue = JSON.parse(safeStorage.getItem('codex_foundry_queue')) || [];
+    let owned = JSON.parse(safeStorage.getItem('codex_foundry_owned')) || {};
+
+    // Populate Custom Input Fields
+    const customContainer = document.getElementById('custom-inputs-container');
+    primaryResources.forEach(res => {
+        customContainer.innerHTML += `
+            <div class="custom-resource-box">
+                <span>${res}</span>
+                <input type="number" id="custom-${res.replace(/\s+/g, '')}" min="0" value="0" class="custom-resource-input">
+            </div>
+        `;
+    });
+
+    const presetSelect = document.getElementById('preset-select');
+    const btnAddPreset = document.getElementById('btn-add-preset');
+    const customName = document.getElementById('custom-name');
+    const btnAddCustom = document.getElementById('btn-add-custom');
+    const queueContainer = document.getElementById('queue-container');
+    const btnClearQueue = document.getElementById('btn-clear-queue');
+    const shoppingContainer = document.getElementById('shopping-list-container');
+    const btnCopyList = document.getElementById('btn-copy-list');
+
+    // Add preset listener
+    btnAddPreset.addEventListener('click', () => {
+        const val = presetSelect.value;
+        if (!val) return;
+
+        const presetItem = presets[val];
+        const newItem = {
+            id: Date.now().toString() + Math.random().toString(36).substring(2, 5),
+            name: presetItem.name,
+            ingredients: { ...presetItem.ingredients }
+        };
+
+        queue.push(newItem);
+        saveQueue();
+        render();
+    });
+
+    // Add custom listener
+    btnAddCustom.addEventListener('click', () => {
+        const name = customName.value.trim();
+        if (!name) {
+            alert("Please enter a name for the custom item.");
+            return;
+        }
+
+        const ingredients = {};
+        primaryResources.forEach(res => {
+            const inputVal = parseInt(document.getElementById(`custom-${res.replace(/\s+/g, '')}`).value) || 0;
+            if (inputVal > 0) {
+                ingredients[res] = inputVal;
+            }
+        });
+
+        if (Object.keys(ingredients).length === 0) {
+            alert("Please input at least one ingredient count.");
+            return;
+        }
+
+        const newItem = {
+            id: Date.now().toString() + Math.random().toString(36).substring(2, 5),
+            name: name,
+            ingredients: ingredients
+        };
+
+        queue.push(newItem);
+        saveQueue();
+        
+        // Reset custom inputs
+        customName.value = '';
+        primaryResources.forEach(res => {
+            document.getElementById(`custom-${res.replace(/\s+/g, '')}`).value = 0;
+        });
+
+        render();
+    });
+
+    // Clear all listener
+    btnClearQueue.addEventListener('click', () => {
+        if (queue.length > 0 && confirm("Are you sure you want to clear the entire crafting queue?")) {
+            queue = [];
+            saveQueue();
+            render();
+        }
+    });
+
+    // Copy list to clipboard
+    btnCopyList.addEventListener('click', () => {
+        if (queue.length === 0) {
+            alert("Crafting queue is empty.");
+            return;
+        }
+
+        const aggregated = aggregateResources();
+        let txt = `&#9881;&#65039; WARFRAME FOUNDRY PLANNER WORKSHEET\n`;
+        txt += `Active Queue:\n`;
+        queue.forEach((item, idx) => {
+            txt += `  [ ] ${idx + 1}. ${item.name}\n`;
+        });
+        
+        txt += `\nResource Requirements:\n`;
+        Object.keys(aggregated).forEach(res => {
+            const req = aggregated[res];
+            const own = owned[res] || 0;
+            const status = own >= req ? "DONE" : `${own}/${req}`;
+            txt += `  [ ] ${res}: ${status} required\n`;
+        });
+
+        navigator.clipboard.writeText(txt).then(() => {
+            alert("Planner checklist copied to clipboard!");
+        });
+    });
+
+    // Save helpers
+    function saveQueue() {
+        safeStorage.setItem('codex_foundry_queue', JSON.stringify(queue));
+    }
+
+    function saveOwned() {
+        safeStorage.setItem('codex_foundry_owned', JSON.stringify(owned));
+    }
+
+    // Aggregate resources needed across all items in the queue
+    function aggregateResources() {
+        const aggregated = {};
+        queue.forEach(item => {
+            Object.keys(item.ingredients).forEach(res => {
+                aggregated[res] = (aggregated[res] || 0) + item.ingredients[res];
+            });
+        });
+        return aggregated;
+    }
+
+    // Main render function
+    function render() {
+        // Render Queue
+        queueContainer.innerHTML = '';
+        if (queue.length === 0) {
+            queueContainer.innerHTML = `<div style="text-align: center; color: #94a3b8; font-size: 0.88rem; padding: 20px;">Queue is empty. Select a preset or create a custom item to begin!</div>`;
+        } else {
+            queue.forEach(item => {
+                const detailsStr = Object.entries(item.ingredients)
+                    .map(([name, count]) => `${name} x${count}`)
+                    .join(", ");
+                
+                queueContainer.innerHTML += `
+                    <div class="queue-item">
+                        <div>
+                            <div class="queue-title">${item.name}</div>
+                            <div class="queue-details">${detailsStr}</div>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem('${item.id}')">&times;</button>
+                    </div>
+                `;
+            });
+        }
+
+        // Render Shopping List
+        shoppingContainer.innerHTML = '';
+        const aggregated = aggregateResources();
+        const sortedResources = Object.keys(aggregated).sort();
+
+        if (sortedResources.length === 0) {
+            shoppingContainer.innerHTML = `<div style="text-align: center; color: #94a3b8; font-size: 0.95rem; padding: 40px;">No resources required. Add items to your crafting queue to see combined totals.</div>`;
+        } else {
+            sortedResources.forEach(res => {
+                const reqVal = aggregated[res];
+                const ownVal = owned[res] || 0;
+                const progressPercent = Math.min(100, Math.max(0, (ownVal / reqVal) * 100));
+                
+                const isComplete = ownVal >= reqVal;
+                const statusBadgeClass = isComplete ? 'badge-done' : 'badge-farming';
+                const statusBadgeText = isComplete ? 'Complete' : 'Farming';
+                const progressFillClass = isComplete ? 'progress-fill progress-complete' : 'progress-fill';
+
+                shoppingContainer.innerHTML += `
+                    <div class="shopping-row">
+                        <div class="shopping-meta">
+                            <span class="resource-title">${res}</span>
+                            <div class="owned-controls">
+                                <span class="needed-label">Owned:</span>
+                                <input type="number" class="owned-field" min="0" value="${ownVal}" data-res="${res}">
+                                <span class="needed-label">/ ${reqVal}</span>
+                                <span class="badge-status ${statusBadgeClass}">${statusBadgeText}</span>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="${progressFillClass}" style="width: ${progressPercent}%;"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Set up input change events for owned fields
+            const ownedFields = document.querySelectorAll('.owned-field');
+            ownedFields.forEach(field => {
+                field.addEventListener('input', (e) => {
+                    const resName = e.target.dataset.res;
+                    const val = Math.max(0, parseInt(e.target.value) || 0);
+                    owned[resName] = val;
+                    saveOwned();
+                    
+                    // Live update the progress bar without full re-render for performance
+                    const row = e.target.closest('.shopping-row');
+                    const reqVal = aggregated[resName];
+                    const progressPercent = Math.min(100, Math.max(0, (val / reqVal) * 100));
+                    
+                    const fill = row.querySelector('.progress-fill');
+                    fill.style.width = progressPercent + '%';
+                    
+                    const badge = row.querySelector('.badge-status');
+                    if (val >= reqVal) {
+                        badge.className = 'badge-status badge-done';
+                        badge.textContent = 'Complete';
+                        fill.classList.add('progress-complete');
+                    } else {
+                        badge.className = 'badge-status badge-farming';
+                        badge.textContent = 'Farming';
+                        fill.classList.remove('progress-complete');
+                    }
+                });
+            });
+        }
+    }
+
+    // Expose remove function globally
+    window.removeItem = function(id) {
+        queue = queue.filter(item => item.id !== id);
+        saveQueue();
+        render();
+    };
+
+    // Initial render
+    render();
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+
+</body>
+</html>
+
+
+
+
+

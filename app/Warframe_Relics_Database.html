@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <title>Warframe: The Orbiter Compendium &mdash; Void Relic Directory</title>
+    <style>
+        :root {
+            --border-color: #1f2a3e;
+
+            --primary-accent: #3949ab;
+            --accent-gold: #ffab00;
+
+            --lith-color: #a1887f;
+            --meso-color: #4db6ac;
+            --neo-color: #90a4ae;
+            --axi-color: #ffd54f;
+            --requiem-color: #e57373;
+        }
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        .filter-section {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* .search-input width/padding/border/font: see global rule in codex_glass_theme.css */
+
+        .search-input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(255, 171, 0, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .tabs-container {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            color: #8fa0b0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-gold);
+            color: #080a10;
+            border-color: var(--accent-gold);
+            box-shadow: 0 4px 12px rgba(255, 171, 0, 0.25);
+        }
+
+        /* REFINEMENT EXPLANATION HEADER BANNER */
+        .calculator-banner {
+            background: rgba(255, 171, 0, 0.05);
+            border: 1.5px dashed rgba(255, 171, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 2rem;
+            font-size: 0.92rem;
+            color: #cbd5e0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .calculator-banner 
+
+        .calculator-banner table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        .calculator-banner th, .calculator-banner td {
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .calculator-banner th {
+            background: rgba(255, 255, 255, 0.02);
+            color: #fff;
+        }
+
+        .relics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            transition: all 0.3s ease-in-out;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .relics-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 800px) {
+            .relics-grid { grid-template-columns: 1fr; }
+        }
+
+        .relic-card {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .relic-card:hover {
+            background: var(--card-hover-bg);
+            border-color: var(--accent-gold);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .relic-
+
+        .relic-name {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .relic-badge {
+            font-size: 0.72rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .relic-badge.lith { background: var(--lith-color); color: #000; }
+        .relic-badge.meso { background: var(--meso-color); color: #000; }
+        .relic-badge.neo { background: var(--neo-color); color: #000; }
+        .relic-badge.axi { background: var(--axi-color); color: #000; }
+        .relic-badge.requiem { background: var(--requiem-color); color: #fff; }
+
+        .relic-farm {
+            font-size: 0.8rem;
+            color: #a0aec0;
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-accent);
+        }
+
+        /* REFINEMENT SELECTOR */
+        .refinement-bar {
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .refinement-btn {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: #8fa0b0;
+            padding: 5px 2px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .refinement-btn:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .refinement-btn.active {
+            background: var(--primary-accent);
+            color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* REWARDS LIST */
+        .rewards-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .reward-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.2s;
+        }
+
+        .reward-item.bronze-bg { border-left: 4.5px solid #cd7f32; }
+        .reward-item.silver-bg { border-left: 4.5px solid #c0c0c0; }
+        .reward-item.gold-bg { border-left: 4.5px solid #ffd700; background: rgba(255, 215, 0, 0.03); }
+
+        .reward-item.highlighted {
+            background: rgba(255, 171, 0, 0.15) !important;
+            border-color: var(--accent-gold);
+            transform: scale(1.01);
+        }
+
+        .reward-rarity {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+        .reward-rarity.bronze { color: #cd7f32; }
+        .reward-rarity.silver { color: #cfd8dc; }
+        .reward-rarity.gold { color: #ffd700; text-shadow: 0 0 4px rgba(255, 215, 0, 0.3); }
+
+        .reward-percent {
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #8fa0b0;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px dashed var(--border-color);
+        }
+    
+.tabs-container { max-width: 1750px; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Foundry_Farming_Guide.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a id="nav-next-top" href="Warframe_Mods_Database.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+
+
+
+
+    <div class="container" style="max-width:1750px;">
+        <header>
+            <h1>&#128273; Void Relic Directory</h1>
+            <p class="subtitle">Searchable Archive of Prime Parts & Fissure Rewards</p>
+        </header>
+    <script src="assets/js/relic_data.js"></script>
+
+        <!-- Relic Vault Liquidation Calculator Panel -->
+        <div class="totals-panel" style="margin-top: 25px; margin-bottom: 25px; border: 1.5px solid var(--accent-gold); background: linear-gradient(135deg, rgba(20, 27, 41, 0.9), rgba(10, 15, 25, 0.95)); padding: 30px; border-radius: 16px;">
+            <div class="totals-header" style="color: var(--accent-gold); font-size: 1.8rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid rgba(255, 171, 0, 0.25); padding-bottom: 12px; margin-bottom: 15px;">
+                &#128142; Void Relic Liquidation Dashboard
+                <div style="display: flex; gap: 8px;">
+                    <button class="reset-btn" id="btn-global-radiant" style="background: rgba(255, 171, 0, 0.15); color: var(--accent-gold); border-color: rgba(255, 171, 0, 0.4); font-size: 0.8rem; padding: 4px 10px; cursor: pointer;">All Radiant</button>
+                    <button class="reset-btn" id="btn-global-intact" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e0; border-color: rgba(255, 255, 255, 0.15); font-size: 0.8rem; padding: 4px 10px; cursor: pointer;">All Intact</button>
+                    <button class="reset-btn" id="btn-clear-relic-inv" style="background: rgba(244, 67, 54, 0.15); color: #ff8a80; border-color: rgba(244, 67, 54, 0.4); font-size: 0.8rem; padding: 4px 10px; cursor: pointer;">Clear Stock</button>
+                </div>
+            </div>
+            
+            <p style="color: #94a3b8; font-size: 0.92rem; margin-top: -10px; margin-bottom: 20px;">
+                Enter the quantity of relics you own directly on their cards. This dashboard computes the statistical expected value (EV) of your vault for Ducat conversion and Platinum trade.
+            </p>
+
+            <div class="grid-2col" style="gap: 25px; margin-bottom: 25px;">
+                <!-- Left: Aggregated Fissure EV Summary -->
+                <div class="box" style="background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <h4 style="color: var(--accent-gold); margin-top: 0; margin-bottom: 12px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x1F4CA; Statistical Vault Value</h4>
+                        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.95rem;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Total Relics Checked In:</span>
+                                <strong id="val-total-relics" style="color: #fff;">0</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Expected Ducats EV:</span>
+                                <strong id="val-total-ducats" style="color: var(--accent-gold); font-size: 1.15rem; font-family: monospace;">0.0 EV</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Expected Platinum EV:</span>
+                                <strong id="val-total-plat" style="color: #00e5ff; font-size: 1.15rem; font-family: monospace;">0p EV</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Void Traces Needed:</span>
+                                <strong id="val-total-traces" style="color: #a1887f;">0</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Active Inventory Overview -->
+                <div class="box" style="background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <h4 style="color: var(--accent-gold); margin-top: 0; margin-bottom: 12px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x1F3E6; Your Vault Inventory</h4>
+                        <div id="liquidation-inventory-list" style="max-height: 120px; overflow-y: auto; font-size: 0.82rem; color: #cbd5e0; display: flex; flex-direction: column; gap: 5px;">
+                            <span style="color: #94a3b8; font-style: italic; text-align: center; margin-top: 15px;">Your inventory is empty. Enter relic quantities below to see them here.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CALCULATOR/PROBABILITY SUMMARY BANNER -->
+        <div class="calculator-banner">
+            <h3>&#128302; Fissure Refinement Probabilities</h3>
+            <span>Refining relics with Void Traces increases the chance of acquiring Uncommon (Silver) and Rare (Gold) rewards:</span>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Refinement Status</th>
+                        <th>Void Trace Cost</th>
+                        <th>Common Drop (x3)</th>
+                        <th>Uncommon Drop (x2)</th>
+                        <th>Rare Drop (x1)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Intact</strong></td>
+                        <td>0 Traces</td>
+                        <td>25.33% each</td>
+                        <td>11.00% each</td>
+                        <td>2.00%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exceptional</strong></td>
+                        <td>25 Traces</td>
+                        <td>23.33% each</td>
+                        <td>13.00% each</td>
+                        <td>4.00%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flawless</strong></td>
+                        <td>50 Traces</td>
+                        <td>20.00% each</td>
+                        <td>17.00% each</td>
+                        <td>6.00%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Radiant</strong></td>
+                        <td>100 Traces</td>
+                        <td>16.67% each</td>
+                        <td>20.00% each</td>
+                        <td>10.00%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="filter-section">
+            <input type="text" class="search-input" id="relic-search" placeholder="Search relics by name or search specifically by prime drop item (e.g. 'Saryn', 'Glaive')...">
+            
+            <div class="tabs-container" id="tier-tabs">
+                <button class="tab-btn active" data-tab="all"> All Relics</button>
+                <button class="tab-btn" data-tab="active-only" style="border-color: var(--glow-green); color: var(--glow-green);"> Active Only</button>
+                <button class="tab-btn" data-tab="vaulted-only" style="border-color: #e65100; color: #e65100;"> Vaulted Only</button>
+                <button class="tab-btn" data-tab="lith"> Lith</button>
+                <button class="tab-btn" data-tab="meso"> Meso</button>
+                <button class="tab-btn" data-tab="neo"> Neo</button>
+                <button class="tab-btn" data-tab="axi"> Axi</button>
+                <button class="tab-btn" data-tab="requiem"> Requiem</button>
+            </div>
+        </div>
+
+        <div class="relics-grid" id="relics-display-grid">
+            <!-- Cards will be dynamically injected here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('relics-display-grid');
+            const searchInput = document.getElementById('relic-search');
+            const tabButtons = document.querySelectorAll('#tier-tabs .tab-btn');
+            
+            let allRelics = [];
+            let filteredRelics = [];
+            let activeTab = 'all';
+            let displayLimit = 60;
+            const relicRefinements = {};
+            
+            let relicQuantities = {};
+            function loadRelicQuantities() {
+                const saved = safeStorage.getItem('codex_relic_quantities');
+                if (saved) {
+                    try {
+                        relicQuantities = JSON.parse(saved);
+                    } catch(e) {}
+                }
+            }
+            function saveRelicQuantities() {
+                safeStorage.setItem('codex_relic_quantities', JSON.stringify(relicQuantities));
+            }
+
+            function calculateLiquidation() {
+                let totalRelics = 0;
+                let totalDucats = 0;
+                let totalPlat = 0;
+                let totalTraces = 0;
+                
+                let activeRelicsList = [];
+
+                for (const [name, qty] of Object.entries(relicQuantities)) {
+                    if (qty > 0) {
+                        totalRelics += qty;
+                        
+                        const ref = relicRefinements[name] || 'intact';
+                        
+                        let ducatEV = 23.3;
+                        let platEV = 2.92;
+                        let traceCost = 0;
+                        
+                        if (ref === 'exceptional') {
+                            ducatEV = 26.2;
+                            platEV = 3.3;
+                            traceCost = 25;
+                        } else if (ref === 'flawless') {
+                            ducatEV = 30.3;
+                            platEV = 3.8;
+                            traceCost = 50;
+                        } else if (ref === 'radiant') {
+                            ducatEV = 35.5;
+                            platEV = 4.5;
+                            traceCost = 100;
+                        }
+                        
+                        totalDucats += ducatEV * qty;
+                        totalPlat += platEV * qty;
+                        totalTraces += traceCost * qty;
+                        
+                        activeRelicsList.push({ name, qty, ref });
+                    }
+                }
+
+                document.getElementById('val-total-relics').textContent = totalRelics.toLocaleString();
+                document.getElementById('val-total-ducats').textContent = totalDucats.toFixed(1) + ' EV';
+                document.getElementById('val-total-plat').textContent = Math.round(totalPlat) + 'p EV';
+                document.getElementById('val-total-traces').textContent = totalTraces.toLocaleString();
+                
+                const listContainer = document.getElementById('liquidation-inventory-list');
+                if (activeRelicsList.length === 0) {
+                    listContainer.innerHTML = `<span style="color: #94a3b8; font-style: italic; text-align: center; margin-top: 15px;">Your inventory is empty. Enter relic quantities below to see them here.</span>`;
+                } else {
+                    activeRelicsList.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+                    listContainer.innerHTML = activeRelicsList.map(r => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.04);">
+                            <span><strong>${r.name}</strong> (${r.ref})</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <input type="number" class="inv-list-qty-input" data-name="${r.name}" min="0" value="${r.qty}" style="width: 50px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); color: #fff; text-align: center; border-radius: 4px; padding: 2px 4px; font-size: 0.75rem;">
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    listContainer.querySelectorAll('.inv-list-qty-input').forEach(input => {
+                        input.addEventListener('change', (e) => {
+                            const val = Math.max(0, parseInt(e.target.value, 10) || 0);
+                            const name = e.target.dataset.name;
+                            relicQuantities[name] = val;
+                            saveRelicQuantities();
+                            calculateLiquidation();
+                            
+                            // Redraw cards to sync inputs
+                            renderRelics(false);
+                        });
+                    });
+                }
+            }
+
+            // Add pagination container to HTML if not present
+            let paginationContainer = document.getElementById('pagination-container');
+            if (!paginationContainer) {
+                paginationContainer = document.createElement('div');
+                paginationContainer.id = 'pagination-container';
+                paginationContainer.style.textAlign = 'center';
+                paginationContainer.style.marginTop = '30px';
+                paginationContainer.style.marginBottom = '30px';
+                paginationContainer.style.display = 'flex';
+                paginationContainer.style.justifyContent = 'center';
+                grid.parentNode.insertBefore(paginationContainer, grid.nextSibling);
+            }
+
+            const loadMoreBtn = document.createElement('button');
+            loadMoreBtn.className = 'tab-btn';
+            loadMoreBtn.style.padding = '10px 30px';
+            loadMoreBtn.style.fontSize = '1rem';
+            loadMoreBtn.style.borderRadius = '30px';
+            loadMoreBtn.style.display = 'none';
+            loadMoreBtn.style.border = '1.5px solid var(--accent-gold)';
+            loadMoreBtn.style.background = 'rgba(255, 171, 0, 0.1)';
+            loadMoreBtn.style.color = 'var(--accent-gold)';
+            loadMoreBtn.style.cursor = 'pointer';
+            loadMoreBtn.style.transition = 'all 0.2s';
+            loadMoreBtn.innerText = 'Load More Relics';
+            loadMoreBtn.onmouseover = () => { loadMoreBtn.style.background = 'var(--accent-gold)'; loadMoreBtn.style.color = '#080a10'; };
+            loadMoreBtn.onmouseout = () => { loadMoreBtn.style.background = 'rgba(255, 171, 0, 0.1)'; loadMoreBtn.style.color = 'var(--accent-gold)'; };
+            paginationContainer.appendChild(loadMoreBtn);
+
+            loadMoreBtn.addEventListener('click', () => {
+                displayLimit += 60;
+                renderRelics(false);
+            });
+
+            // Helper to categorize rewards (Bronze, Silver, Gold) based on Intact chances (25.33%, 11%, 2%)
+            function getRewardRarity(itemName, intactRewards) {
+                if (!intactRewards) return 'bronze';
+                const intactReward = intactRewards.find(r => r.item && r.item.name === itemName);
+                if (!intactReward) return 'bronze';
+                const chance = intactReward.chance;
+                if (chance <= 2.5) return 'gold';
+                if (chance <= 12.0) return 'silver';
+                return 'bronze';
+            }
+
+            // Fetch Relics.json
+            Promise.resolve({ json: () => Promise.resolve(allRelicsData) })
+                .then(res => res.json())
+                .then(data => {
+                    const baseRelics = {};
+                    
+                    data.forEach(relic => {
+                        const name = relic.name;
+                        if (!name) return;
+                        
+                        // Parse name matching "Lith A1 Intact"
+                        const match = name.match(/(.*) (Intact|Exceptional|Flawless|Radiant)$/);
+                        if (!match) return; // Skip placeholder or non-standard entries
+                        
+                        const baseName = match[1];
+                        const refinement = match[2].toLowerCase();
+                        
+                        if (!baseRelics[baseName]) {
+                            const tierMatch = baseName.match(/^(Lith|Meso|Neo|Axi|Requiem)\b/i);
+                            const tier = tierMatch ? tierMatch[1] : "Other";
+                            
+                            baseRelics[baseName] = {
+                                name: baseName,
+                                tier: tier,
+                                vaulted: relic.vaulted || false,
+                                marketInfo: relic.marketInfo || null,
+                                locations: relic.locations || [],
+                                rewards: {}
+                            };
+                        }
+                        
+                        // Pick locations from the version that has them
+                        if (relic.locations && relic.locations.length > 0 && baseRelics[baseName].locations.length === 0) {
+                            baseRelics[baseName].locations = relic.locations;
+                        }
+                        
+                        baseRelics[baseName].rewards[refinement] = relic.rewards;
+                    });
+                    
+                    // Sort base relics alphabetically with natural ordering (e.g. Axi A1 before Axi A10)
+                    allRelics = Object.values(baseRelics).sort((a, b) => {
+                        return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
+                    });
+
+                    // Set default refinements to Intact
+                    allRelics.forEach(r => {
+                        relicRefinements[r.name] = 'intact';
+                    });
+
+                    loadRelicQuantities();
+                    calculateLiquidation();
+
+                    // Wire global buttons
+                    document.getElementById('btn-global-radiant').addEventListener('click', () => {
+                        allRelics.forEach(r => {
+                            relicRefinements[r.name] = 'radiant';
+                        });
+                        renderRelics(true);
+                        calculateLiquidation();
+                    });
+
+                    document.getElementById('btn-global-intact').addEventListener('click', () => {
+                        allRelics.forEach(r => {
+                            relicRefinements[r.name] = 'intact';
+                        });
+                        renderRelics(true);
+                        calculateLiquidation();
+                    });
+
+                    document.getElementById('btn-clear-relic-inv').addEventListener('click', () => {
+                        if(confirm("Are you sure you want to clear all relic stock quantities to 0?")) {
+                            relicQuantities = {};
+                            saveRelicQuantities();
+                            renderRelics(true);
+                            calculateLiquidation();
+                        }
+                    });
+ 
+                    filterRelics();
+                })
+                .catch(err => {
+                    console.error("Failed to load relics database:", err);
+                    grid.innerHTML = `
+                        <div class="no-results">
+                            Error loading relics database. Please ensure the Codex Server is running.
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 10px; font-family: monospace;">
+                                Details: ${err.name} - ${err.message}
+                            </div>
+                        </div>
+                    `;
+                });
+
+            // Filter Relics based on tier tab and search input
+            function filterRelics() {
+                const query = searchInput.value.toLowerCase().trim();
+                displayLimit = 60; // Reset pagination limit
+
+                filteredRelics = allRelics.filter(relic => {
+                    // Category tab filter
+                    let matchesTab = false;
+                    const relicTier = relic.tier.toLowerCase();
+                    if (activeTab === 'all') {
+                        matchesTab = true;
+                    } else if (activeTab === 'active-only') {
+                        matchesTab = !relic.vaulted;
+                    } else if (activeTab === 'vaulted-only') {
+                        matchesTab = relic.vaulted;
+                    } else {
+                        matchesTab = relicTier === activeTab;
+                    }
+                    if (!matchesTab) return false;
+
+                    // Search query filter
+                    if (query === '') return true;
+
+                    const matchesName = relic.name.toLowerCase().includes(query);
+                    const matchesTier = relic.tier.toLowerCase().includes(query);
+                    
+                    // Match query against rewards
+                    const intactRewards = relic.rewards['intact'] || [];
+                    const matchesRewards = intactRewards.some(r => r.item && r.item.name.toLowerCase().includes(query));
+                    
+                    // Match query against locations
+                    const matchesLocations = relic.locations && relic.locations.some(l => l.location && l.location.toLowerCase().includes(query));
+
+                    return matchesName || matchesTier || matchesRewards || matchesLocations;
+                });
+
+                renderRelics(true);
+            }
+
+            // Render visible relic cards
+            function renderRelics(resetGrid = true) {
+                if (resetGrid) {
+                    grid.innerHTML = '';
+                }
+
+                if (filteredRelics.length === 0) {
+                    grid.innerHTML = `
+                        <div class="no-results">
+                             No Void Relics found matching "${searchInput.value}" under this tier category.
+                        </div>
+                    `;
+                    loadMoreBtn.style.display = 'none';
+                    return;
+                }
+
+                const visible = filteredRelics.slice(0, displayLimit);
+                
+                // If resetting grid, clear it. Otherwise, keep existing cards (if loading more)
+                if (resetGrid) {
+                    grid.innerHTML = '';
+                }
+
+                const query = searchInput.value.toLowerCase().trim();
+
+                visible.forEach(relic => {
+                    const name = relic.name;
+                    const tier = relic.tier;
+                    const refLevel = relicRefinements[name] || 'intact';
+                    
+                    const intactRewards = relic.rewards['intact'] || [];
+                    const currentRewards = relic.rewards[refLevel] || [];
+                    
+                    // Sort rewards: Gold first, then Silver, then Bronze
+                    const sortedRewards = [...currentRewards].sort((a, b) => {
+                        const rarityA = getRewardRarity(a.item.name, intactRewards);
+                        const rarityB = getRewardRarity(b.item.name, intactRewards);
+                        const weight = { 'gold': 3, 'silver': 2, 'bronze': 1 };
+                        return weight[rarityB] - weight[rarityA];
+                    });
+
+                    // Highest chance node for quick summary
+                    let farmSummary = 'Vaulted';
+                    if (relic.locations && relic.locations.length > 0) {
+                        const sortedLocs = [...relic.locations].sort((a, b) => b.chance - a.chance);
+                        farmSummary = sortedLocs[0].location;
+                        if (farmSummary.length > 25) farmSummary = farmSummary.substring(0, 23) + '...';
+                    }
+
+                    const card = document.createElement('div');
+                    card.className = 'relic-card';
+                    card.style.cursor = 'pointer';
+                    card.addEventListener('click', () => showRelicModal(relic));
+
+                    const vaultedBadge = relic.vaulted ? `<span class="relic-badge" style="background:#e65100; color:#fff; margin-left:5px;">Vaulted</span>` : '';
+
+                    const cardHeader = document.createElement('div');
+                    cardHeader.className = 'relic-header';
+                    cardHeader.innerHTML = `
+                        <h3 class="relic-name">${name}</h3>
+                        <div style="display:flex; align-items:center; gap:5px;">
+                            <span class="relic-badge ${tier.toLowerCase()}">${tier}</span>
+                            ${vaultedBadge}
+                        </div>
+                    `;
+
+                    const farmBlock = document.createElement('div');
+                    farmBlock.className = 'relic-farm';
+                    farmBlock.innerText = relic.vaulted ? `Vaulted (No active drop nodes)` : ` Best Farm: ${farmSummary}`;
+                    // Rewards List (Moved up)
+                    const list = document.createElement('ul');
+                    list.className = 'rewards-list';
+
+
+                    // Refinement Selector
+                    const selector = document.createElement('div');
+                    selector.className = 'refinement-bar';
+                    ['intact', 'exceptional', 'flawless', 'radiant'].forEach(level => {
+                        const btn = document.createElement('button');
+                        btn.className = `refinement-btn ${refLevel === level ? 'active' : ''}`;
+                        btn.innerText = level.charAt(0).toUpperCase() + level.slice(1);
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation(); // Stop click from opening modal
+                            relicRefinements[name] = level;
+                            
+                            // Update active button classes in this selector
+                            selector.querySelectorAll('.refinement-btn').forEach(b => b.classList.remove('active'));
+                            btn.classList.add('active');
+                            
+                            calculateLiquidation();
+                            
+                            // Update the rewards list locally
+                            const newRewards = relic.rewards[level] || [];
+                            const sortedNewRewards = [...newRewards].sort((a, b) => {
+                                const rarityA = getRewardRarity(a.item.name, intactRewards);
+                                const rarityB = getRewardRarity(b.item.name, intactRewards);
+                                const weight = { 'gold': 3, 'silver': 2, 'bronze': 1 };
+                                return weight[rarityB] - weight[rarityA];
+                            });
+                            
+                            list.innerHTML = '';
+                            sortedNewRewards.forEach(reward => {
+                                const itemName = reward.item.name;
+                                const rarity = getRewardRarity(itemName, intactRewards);
+                                const chanceVal = reward.chance < 1 ? (reward.chance * 100).toFixed(2) + '%' : reward.chance.toFixed(2) + '%';
+                                const li = document.createElement('li');
+                                li.className = `reward-item ${rarity}-bg`;
+                                if (query !== '' && itemName.toLowerCase().includes(query)) {
+                                    li.classList.add('highlighted');
+                                }
+                                li.innerHTML = `
+                                    <div>
+                                        <span class="reward-rarity ${rarity}">${rarity}</span>
+                                        <span>${itemName}</span>
+                                    </div>
+                                    <span class="reward-percent">${chanceVal}</span>
+                                `;
+                                list.appendChild(li);
+                            });
+                        });
+                        selector.appendChild(btn);
+                    });
+
+                    sortedRewards.forEach(reward => {
+                        const itemName = reward.item.name;
+                        const rarity = getRewardRarity(itemName, intactRewards);
+                        
+                        // Parse drop chance format
+                        const chanceVal = reward.chance < 1 ? (reward.chance * 100).toFixed(2) + '%' : reward.chance.toFixed(2) + '%';
+
+                        const li = document.createElement('li');
+                        li.className = `reward-item ${rarity}-bg`;
+
+                        // Highlight if item name matches query
+                        if (query !== '' && itemName.toLowerCase().includes(query)) {
+                            li.classList.add('highlighted');
+                        }
+
+                        li.innerHTML = `
+                            <div>
+                                <span class="reward-rarity ${rarity}">${rarity}</span>
+                                <span>${itemName}</span>
+                            </div>
+                            <span class="reward-percent">${chanceVal}</span>
+                        `;
+                        list.appendChild(li);
+                    });
+
+                    const qtyVal = relicQuantities[name] || 0;
+                    const qtyContainer = document.createElement('div');
+                    qtyContainer.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:0.85rem;';
+                    qtyContainer.innerHTML = `
+                        <span style="color:#a0aec0; font-weight:bold;">Stock Owned:</span>
+                        <input type="number" class="relic-qty-input" data-name="${name}" min="0" value="${qtyVal}" style="width: 70px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.4); color: #fff; text-align: center; outline: none;">
+                    `;
+                    qtyContainer.querySelector('input').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                    qtyContainer.querySelector('input').addEventListener('change', (e) => {
+                        const val = Math.max(0, parseInt(e.target.value, 10) || 0);
+                        relicQuantities[name] = val;
+                        e.target.value = val;
+                        saveRelicQuantities();
+                        calculateLiquidation();
+                    });
+
+                    card.appendChild(cardHeader);
+                    card.appendChild(farmBlock);
+                    card.appendChild(qtyContainer);
+                    card.appendChild(selector);
+                    card.appendChild(list);
+
+                    grid.appendChild(card);
+                });
+
+                // Show/hide load more button
+                if (filteredRelics.length > displayLimit) {
+                    loadMoreBtn.style.display = 'inline-block';
+                    loadMoreBtn.innerText = `Load More Relics (Showing ${displayLimit} of ${filteredRelics.length})`;
+                } else {
+                    loadMoreBtn.style.display = 'none';
+                }
+            }
+
+            // Display Detail Modal on Card Click
+            function showRelicModal(relic) {
+                const existing = document.querySelector('.relic-modal-overlay');
+                if (existing) document.body.removeChild(existing);
+
+                const overlay = document.createElement('div');
+                overlay.className = 'relic-modal-overlay no-print';
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100vw';
+                overlay.style.height = '100vh';
+                overlay.style.background = 'rgba(10, 12, 18, 0.8)';
+                overlay.style.backdropFilter = 'blur(6px)';
+                overlay.style.zIndex = '100000';
+                overlay.style.display = 'flex';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 0.25s ease';
+
+                const modalBox = document.createElement('div');
+                modalBox.style.background = 'rgba(14, 19, 29, 0.95)';
+                modalBox.style.backdropFilter = 'blur(15px)';
+                modalBox.style.border = '2.5px solid var(--accent-gold)';
+                modalBox.style.borderRadius = '16px';
+                modalBox.style.padding = '25px';
+                modalBox.style.maxWidth = '600px';
+                modalBox.style.width = '90%';
+                modalBox.style.maxHeight = '85vh';
+                modalBox.style.overflowY = 'auto';
+                modalBox.style.boxShadow = '0 15px 40px rgba(0,0,0,0.6)';
+                modalBox.style.color = '#fff';
+                modalBox.style.fontFamily = "'Segoe UI', Roboto, sans-serif";
+                modalBox.style.transform = 'scale(0.9)';
+                modalBox.style.transition = 'transform 0.25s ease';
+                modalBox.style.textAlign = 'left';
+
+                const name = relic.name;
+                const tier = relic.tier;
+                const intactRewards = relic.rewards['intact'] || [];
+                let currentRef = relicRefinements[name] || 'intact';
+
+                // Modal Header
+                const header = document.createElement('h3');
+                header.style.margin = '0 0 15px 0';
+                header.style.fontSize = '24px';
+                header.style.color = 'var(--accent-gold)';
+                header.style.borderBottom = '1.5px solid var(--border-color)';
+                header.style.paddingBottom = '10px';
+                header.style.display = 'flex';
+                header.style.justifyContent = 'space-between';
+                header.style.alignItems = 'center';
+                header.innerHTML = `
+                    <span>${name} Relic</span>
+                    <span class="relic-badge ${tier.toLowerCase()}">${tier}</span>
+                `;
+                modalBox.appendChild(header);
+
+                // Vaulted Warning Banner
+                if (relic.vaulted) {
+                    const warning = document.createElement('div');
+                    warning.style.background = 'rgba(230, 81, 0, 0.15)';
+                    warning.style.border = '1px solid #e65100';
+                    warning.style.borderRadius = '8px';
+                    warning.style.padding = '10px 15px';
+                    warning.style.marginBottom = '15px';
+                    warning.style.fontSize = '12.5px';
+                    warning.style.color = '#ff9800';
+                    warning.innerHTML = ` <strong>PRIME VAULTED:</strong> This relic has been retired to the Prime Vault. It cannot be obtained from active in-game missions, but any existing relics in your inventory can still be refined and opened in Void Fissures.`;
+                    modalBox.appendChild(warning);
+                }
+
+                // Refinement Selector in Modal
+                const refSelector = document.createElement('div');
+                refSelector.style.marginBottom = '15px';
+                refSelector.innerHTML = `
+                    <label style="color:var(--accent-gold); font-size:11px; text-transform:uppercase; letter-spacing:0.5px; font-weight:bold; display:block; margin-bottom:8px;"> Select Refinement Status:</label>
+                `;
+                const bar = document.createElement('div');
+                bar.className = 'refinement-bar';
+                bar.style.maxWidth = '300px';
+
+                ['intact', 'exceptional', 'flawless', 'radiant'].forEach(level => {
+                    const btn = document.createElement('button');
+                    btn.className = `refinement-btn ${currentRef === level ? 'active' : ''}`;
+                    btn.innerText = level.charAt(0).toUpperCase() + level.slice(1);
+                    btn.addEventListener('click', () => {
+                        bar.querySelectorAll('.refinement-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        currentRef = level;
+                        
+                        relicRefinements[name] = level;
+                        updateModalRewards();
+                        renderRelics(false); // Update background view under modal
+                    });
+                    bar.appendChild(btn);
+                });
+                refSelector.appendChild(bar);
+                modalBox.appendChild(refSelector);
+
+                // Rewards Listing in Modal
+                const rewardsTitle = document.createElement('div');
+                rewardsTitle.style.color = '#fff';
+                rewardsTitle.style.fontSize = '11px';
+                rewardsTitle.style.textTransform = 'uppercase';
+                rewardsTitle.style.letterSpacing = '0.5px';
+                rewardsTitle.style.fontWeight = 'bold';
+                rewardsTitle.style.marginBottom = '8px';
+                rewardsTitle.innerText = ' Relic Rewards & Drop Rates:';
+                modalBox.appendChild(rewardsTitle);
+
+                const rewardsList = document.createElement('ul');
+                rewardsList.className = 'rewards-list';
+                rewardsList.style.marginBottom = '20px';
+                modalBox.appendChild(rewardsList);
+
+                function updateModalRewards() {
+                    rewardsList.innerHTML = '';
+                    const currentRewards = relic.rewards[currentRef] || [];
+                    
+                    const sorted = [...currentRewards].sort((a, b) => {
+                        const rarityA = getRewardRarity(a.item.name, intactRewards);
+                        const rarityB = getRewardRarity(b.item.name, intactRewards);
+                        const weight = { 'gold': 3, 'silver': 2, 'bronze': 1 };
+                        return weight[rarityB] - weight[rarityA];
+                    });
+
+                    sorted.forEach(reward => {
+                        const itemName = reward.item.name;
+                        const rarity = getRewardRarity(itemName, intactRewards);
+                        const chanceVal = reward.chance < 1 ? (reward.chance * 100).toFixed(2) + '%' : reward.chance.toFixed(2) + '%';
+                        
+                        const li = document.createElement('li');
+                        li.className = `reward-item ${rarity}-bg`;
+                        li.innerHTML = `
+                            <div>
+                                <span class="reward-rarity ${rarity}">${rarity}</span>
+                                <strong>${itemName}</strong>
+                            </div>
+                            <span class="reward-percent">${chanceVal}</span>
+                        `;
+                        rewardsList.appendChild(li);
+                    });
+                }
+
+                // Initial rewards load inside modal
+                updateModalRewards();
+
+                // Farming Nodes in Modal
+                const farmTitle = document.createElement('div');
+                farmTitle.style.color = '#00d2ff';
+                farmTitle.style.fontSize = '11px';
+                farmTitle.style.textTransform = 'uppercase';
+                farmTitle.style.letterSpacing = '0.5px';
+                farmTitle.style.fontWeight = 'bold';
+                farmTitle.style.marginBottom = '8px';
+                farmTitle.innerText = ' Farming Nodes & Missions:';
+                modalBox.appendChild(farmTitle);
+
+                if (relic.locations && relic.locations.length > 0) {
+                    const sortedLocs = [...relic.locations].sort((a, b) => b.chance - a.chance);
+                    const tableContainer = document.createElement('div');
+                    tableContainer.style.maxHeight = '180px';
+                    tableContainer.style.overflowY = 'auto';
+                    tableContainer.style.border = '1.5px solid var(--border-color)';
+                    tableContainer.style.borderRadius = '8px';
+                    tableContainer.style.background = 'rgba(0,0,0,0.2)';
+                    tableContainer.style.marginBottom = '20px';
+
+                    const table = document.createElement('table');
+                    table.style.width = '100%';
+                    table.style.borderCollapse = 'collapse';
+                    table.style.textAlign = 'left';
+
+                    table.innerHTML = `
+                        <thead>
+                            <tr style="background: rgba(255,255,255,0.02);">
+                                <th style="padding: 6px 10px; font-size: 11px; text-transform: uppercase; color: #a0aec0; border-bottom: 1.5px solid var(--border-color);">Location Node</th>
+                                <th style="padding: 6px 10px; font-size: 11px; text-transform: uppercase; color: #a0aec0; border-bottom: 1.5px solid var(--border-color); text-align: center;">Rarity</th>
+                                <th style="padding: 6px 10px; font-size: 11px; text-transform: uppercase; color: #a0aec0; border-bottom: 1.5px solid var(--border-color); text-align: right;">Chance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sortedLocs.map(l => {
+                                const chancePercent = l.chance < 1 ? (l.chance * 100).toFixed(2) + '%' : l.chance.toFixed(2) + '%';
+                                return `
+                                    <tr>
+                                        <td style="padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; color: #e2e8f0;">${l.location}</td>
+                                        <td style="padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; color: #a0aec0; text-align: center;">${l.rarity || 'N/A'}</td>
+                                        <td style="padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; color: var(--accent-gold); text-align: right; font-weight: bold; font-family: monospace;">${chancePercent}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    `;
+                    tableContainer.appendChild(table);
+                    modalBox.appendChild(tableContainer);
+                } else {
+                    const emptyFarm = document.createElement('div');
+                    emptyFarm.style.marginBottom = '20px';
+                    emptyFarm.style.background = 'rgba(255, 255, 255, 0.02)';
+                    emptyFarm.style.padding = '12px';
+                    emptyFarm.style.borderRadius = '8px';
+                    emptyFarm.style.borderLeft = '4px solid #718096';
+                    emptyFarm.style.color = '#a0aec0';
+                    emptyFarm.style.fontSize = '13.5px';
+                    emptyFarm.innerText = relic.vaulted 
+                        ? 'Vaulted relic. Active drop locations are currently locked.' 
+                        : 'No active drop locations. Likely acquired via special syndicate packs or specific alerts.';
+                    modalBox.appendChild(emptyFarm);
+                }
+
+                // Trading links (Warframe Market)
+                let tradingHTML = '';
+                if (relic.marketInfo && relic.marketInfo.urlName) {
+                    const marketUrl = `https://warframe.market/items/${relic.marketInfo.urlName}`;
+                    tradingHTML = `
+                        <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 171, 0, 0.03); padding: 10px 15px; border-radius: 8px; border: 1.5px solid rgba(255, 171, 0, 0.15);">
+                            <div>
+                                <strong style="color: var(--accent-gold); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block;"> Warframe Market Trade:</strong>
+                                <span style="color: #cbd5e0; font-size: 13px;">Check live trading values and average platinum prices.</span>
+                            </div>
+                            <a href="${marketUrl}" target="_blank" style="background: var(--accent-gold); border: none; color: #080a10; padding: 6px 16px; border-radius: 20px; font-weight: bold; font-size: 11.5px; text-decoration: none; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';"> View Market</a>
+                        </div>
+                    `;
+                }
+                const tradingDiv = document.createElement('div');
+                tradingDiv.innerHTML = tradingHTML;
+                modalBox.appendChild(tradingDiv);
+
+                // Footer close buttons
+                const buttonsHTML = `
+                    <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 25px; border-top: 1.5px solid var(--border-color); padding-top: 15px;">
+                        <button id="close-modal-btn" style="background: var(--accent-gold); border: none; color: #080a10; padding: 8px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 12px; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">Close</button>
+                    </div>
+                `;
+                const buttonsDiv = document.createElement('div');
+                buttonsDiv.innerHTML = buttonsHTML;
+                modalBox.appendChild(buttonsDiv);
+
+                overlay.appendChild(modalBox);
+                document.body.appendChild(overlay);
+
+                // Fade-in trigger
+                setTimeout(() => {
+                    overlay.style.opacity = '1';
+                    modalBox.style.transform = 'scale(1)';
+                }, 10);
+
+                // Close handlers
+                const closeModal = () => {
+                    document.removeEventListener('keydown', escHandler);
+                    window.removeEventListener('keydown', escHandler);
+                    overlay.style.opacity = '0';
+                    modalBox.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        if (document.body.contains(overlay)) {
+                            document.body.removeChild(overlay);
+                        }
+                    }, 200);
+                };
+
+                const escHandler = (e) => {
+                    if (e.key === 'Escape' || e.keyCode === 27) {
+                        closeModal();
+                    }
+                };
+                document.addEventListener('keydown', escHandler);
+                window.addEventListener('keydown', escHandler);
+
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) closeModal();
+                });
+                
+                overlay.querySelector('#close-modal-btn').addEventListener('click', closeModal);
+            }
+
+            // Setup search handler
+            searchInput.addEventListener('input', filterRelics);
+
+            // Setup tabs handlers
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeTab = btn.getAttribute('data-tab');
+                    filterRelics();
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

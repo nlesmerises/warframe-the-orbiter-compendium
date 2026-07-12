@@ -1,0 +1,387 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../assets/js/common.js?v=9"></script>
+    <meta charset="UTF-8">
+    <title>Warframe: The Orbiter Compendium &mdash; Release Notes</title>
+    <link rel="stylesheet" href="../assets/fonts/fonts.css">
+    <link rel="stylesheet" href="../assets/css/codex_glass_theme.css?v=9">
+    <script src="../assets/vendor/marked.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; padding: 120px 30px 40px !important; }
+        .doc-container { max-width: 1750px; margin: 0 auto; background: rgba(8, 12, 24, 0.85); padding: 40px; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); box-sizing: border-box; }
+        #content h1, #content h2 { color: #ffab00; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-top: 30px; }
+        #content h1 { color: #89cff0; letter-spacing: 1px; }
+        #content h3 { color: #34d399; margin-top: 20px; }
+        #content a { color: #60a5fa; text-decoration: none; }
+        #content a:hover { text-decoration: underline; }
+        #content code { background: rgba(255,255,255,0.1); padding: 2px 5px; border-radius: 4px; font-family: monospace; }
+        #content ul { margin-bottom: 20px; padding-left: 20px; }
+        #content li { margin-bottom: 8px; color: #cbd5e1; }
+    </style>
+
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="../Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+</div><div class="doc-container">
+    <div id="content"></div>
+</div>
+
+<script type="text/markdown" id="md-source">
+# 📚 The Orbiter Compendium — Changelog
+
+All notable changes to the Warframe: The Orbiter Compendium project will be documented in this file.
+
+## Versioning
+
+This project follows Semantic Versioning (MAJOR.MINOR.PATCH). The rules, in force going forward:
+
+- The version number only ever increases. A number is never reused, reset, or reordered.
+- A release that adds pages or features bumps the MINOR number (the middle one) and resets PATCH to 0.
+- A release that only fixes bugs or does cosmetic cleanup bumps the PATCH number (the last one).
+- MAJOR (the first number) is reserved for a full redesign or a change that breaks saved data or existing bookmarks.
+- The single source of truth is the `VERSION` file. The root `version.js` and `app/assets/js/version.js` must always match it.
+
+The version history prior to this policy was not consistently SemVer-compliant (numbers were sometimes reused or bumped on the wrong digit for feature releases). Rather than freeze that inconsistency, the entire historical sequence was renumbered once (2026-07-09) to real SemVer, start to finish, so every past release now carries an accurate classification. See the [Version Archive](Version_Archive.html) for anything before this file's oldest entry.
+
+## [1.27.5] - 2026-07-12
+
+### Fixed
+- **Nebula background missed 2 pages** — `Warframe_Core_Codex_Hub.html` and `Warframe_Endgame_Dashboard.html` each had their own page-local `body{}` background override (duplicate radial-gradient, loading after the shared stylesheet and winning the cascade), silently blocking the sitewide nebula background added in 1.27.4 on exactly these two pages. Found via a sitewide scan for any page-local `body{}` rule with its own `background-image`. Removed both overrides so the shared rule applies.
+- **`app/docs/*.html` pages were missed by every cache-buster bump in 1.27.4** — those bumps only targeted `app/*.html` directly, leaving the five documentation pages pinned to `common.js?v=3` and `codex_glass_theme.css?v=7`, predating all of 1.27.4's fixes. Bumped to match every other page.
+- **Preflight `Check 4` false positive** — the CDN/offline-risk scan matched any `href=`/`src=` attribute, so the Discord/GitHub contact links on `License_Agreement.html` (plain `<a href>` navigation links, not loaded resources) were flagged as offline-breaking dependencies. Narrowed the regex to only match `<link href>`, `<script src>`, `<img src>`, `<iframe src>`.
+- **Arsenal quick-nav icon vertical alignment** — the 🔫 gun emoji's artwork sits low within its own character cell (same class of issue as the previously-documented Site Map glyph, different axis), reading visibly lower than the other 10 top-bar icons despite its bounding box being correctly positioned. Nudged via `transform:translateY(-6px)`, targeted at just that one icon.
+
+## [1.27.4] - 2026-07-12
+
+### Fixed
+- **Sitewide toolbar-button sizing** — `common.js`'s Back/Forward/Prev Chapter/Next Chapter nav-button helpers unified button *behavior* across pages by reusing whatever nav markup each page already had hardcoded in its HTML, but never overwrote that markup's inline style, so pages kept whatever stale button size they'd been hand-copied with. Both helpers now always reapply the canonical style, enforced from one place on every page.
+- **Sitewide search-input styling** — five pages (`Warframe_Builds_Codex.html`, `Warframe_Meta_Weapons_Codex.html`, `Warframe_Mods_Database.html`, `Warframe_Augment_Codex.html`, `Warframe_Relics_Database.html`) each had independently hand-rolled search-box CSS with different padding/border/radius/font. Replaced with one shared rule (same single-source-of-truth pattern as the sitewide `h1` rule).
+- **Global search pill box-sizing bug** — the top-right "Search the Compendium…" pill rendered at different total widths on different pages (398px vs 451px at an identical viewport) because its shared rule never set `box-sizing` explicitly, so it inherited whichever convention (`border-box` vs `content-box`) each page's own CSS happened to establish. Pinned `box-sizing:border-box` inside the shared rule so it can no longer depend on page-level resets.
+- **Weapons Codex sidebar filter box** — the "Filter armory…" search input shared a flex row with the "+ Add Meta Weapon" button, compressing it narrower than the equivalent box on other pages. Moved onto its own row, and normalized its wrapper padding to match Builds Codex, closing a residual width gap.
+- Removed an orphaned, fully-unused `.page-banner-title` CSS block (~50 lines) on `Warframe_Meta_Weapons_Codex.html`, left over from a title-banner implementation superseded by the standardized `<h1>` pattern.
+- **Top-bar quick-nav icons now match each linked page's own title emoji** (independent review by Oliver Oernster): Progression Roadmap's own title emoji changed to a rocket (matching its nav icon); the other 7 nav icons changed to match their target page's `<h1>` emoji instead of an unrelated generic icon (Arsenal swords→gun, Mods & Arcanes nut/bolt→folder, Farming & Economy seedling→pick, Combat & Mechanics collision→crossed swords, Endgame & Activities trophy→fire, Tools & Maintenance broom→package).
+
+### Changed
+- **Nebula background made sitewide** — the starry nebula photo previously only on the home page (`!Warframe_Master_Index.html`) now appears behind every page's content panel. Replaced the identical copy-pasted radial-gradient `body` background rule in all three shared stylesheets (`codex_glass_theme.css`, `dashboard.css`, `farming_codex_style.css`) with the same shared nebula image, referenced once per stylesheet rather than duplicated per-page.
+
+## [1.27.3] - 2026-07-11
+
+### Fixed
+- Repaired the home page (Master Index), which had been left with an unclosed script tag and no closing body/html tags after an old session-tracking script was removed. The page is now valid HTML and the leftover dev-only heartbeat code is gone.
+- Standardised the browser-tab title separator on the five documentation pages (Documentation, License, Release Notes, Version Archive, Development History) from a hyphen to an em dash, matching every other page.
+
+## [1.27.1] - 2026-07-11
+
+### Fixed
+- Cleaned up the last remaining pages using bare paragraph text instead of the compendium's card-based layout (19 pages, including the Warframe and Meta Weapons build codices).
+- Fixed inconsistent panel widths on the Documentation, License, and Release Notes pages — they now match the rest of the compendium exactly.
+- Removed a stray leftover backup file.
+
+### Added
+- Two new automated layout checks that catch panel-width bugs before they ship, so this class of issue gets caught going forward instead of slipping through.
+
+## [1.27.0] - 2026-07-09
+
+### Changed (Foundry Operations Center "contained" panel treatment — 2026-07-08)
+- **Foundry Operations Center — "contained" panel treatment** (`Warframe_Foundry_Farming_Guide.html`, `assets/css/foundry_dashboard.css`) — established and applied the site's "no text pages" standard (accent-bordered info panel + live progress bar, matching `Warframe_Mods_Database.html` and `Warframe_Active_Projects_Farming_Hub.html`) to all 11 Foundry divisions. Each division now opens into a labeled-row summary (How It Works / priority items / build tip, with tag-pill groupings) above its existing checklist; the 8 divisions with checkboxes show a live "X/Y Steps" progress bar. Added a default (not hover-only) colored left-border accent to the landing tile grid. Moved the "Back to Divisions" button inline into each division's title bar, right-aligned next to the title.
+
+### Fixed (Sitewide Missing-CSS Sweep + Bug Review — 2026-07-07)
+- **Sitewide shared-theme CSS variable gap** (`assets/css/codex_glass_theme.css`) — ~18 CSS custom properties (`--gold-primary`, `--text-primary/secondary/muted/light`, `--color-primary/accent`, `--font-display/orbitron`, `--bg-card`, `--transition-smooth`, `--accent-prime/-dim`, `--accent-purple`, `--border-accent`, `--radius-lg/-md`) were referenced across the theme's own rules but never defined in its `:root` — every rule using them silently rendered with no color/font/radius/transition. Affected all 79 pages linking the stylesheet, most visibly `Warframe_Builds_Codex.html` (the canonical layout reference), where a large share of encyclopedia/frame-card borders and corners were flat and square instead of accented and rounded. Added the missing variables. Bumped the stylesheet's cache-busting query string (`?v=4` &rarr; `?v=7`) across all 79 referencing pages as further component gaps were found and fixed (`.warning`, `.success-box`, `.time-tag`, `.ref-label`, `.desc-text`, `.mod-item`/`.mod-name`/`.mod-desc`, `.tab-btn`, `.totals-panel`/`.totals-header`).
+- **Active Projects Farming Hub** (`Warframe_Active_Projects_Farming_Hub.html`) — the entire page's tracker content had zero CSS defined anywhere; added page-scoped glass styling with per-project accent colors.
+- **Archon Planner shard dropdowns** (`Warframe_Archon_Planner_App.html`) — the shard type/stat dropdowns rendered as unstyled default browser dropdowns; added dark-themed styling.
+- **Combat Mechanics faction cards & rank table** (`Warframe_Combat_Mechanics.html`) — the Damage Types faction cards and Syndicate Rank Requirements table had no CSS despite most of the page's other cards being styled.
+- **Archon Planner syntax error** (`Warframe_Archon_Planner_App.html`) — a corrupted line broke the entire shard-fusion script (pre-existing corruption, not from this session's work). Fixed and verified.
+- **Circuit Tracker missing grid container** (`Warframe_Circuit_Tracker_App.html`) — the weekly rotation grid container was missing from the HTML entirely, so the grid never rendered. Restored it.
+- **Site Map heading level** (`Warframe_Site_Map.html`) — the page title is now a proper `<h1>` matching every other page.
+
+### Changed
+- **Foundry Operations Center reorganization + full-page glass fix** (`Warframe_Foundry_Farming_Guide.html`, `assets/css/foundry_dashboard.css`) — converted the always-visible 11-division long-scroll page into a real toggle hub using the page's own tile system, with a back button, hash deep-linking, and browser back/forward. Converted tile footer status labels to glass pill badges. **Fixed two large bugs:** the embedded Bio-Lab companion breeding tool referenced 10 CSS custom properties that were never defined anywhere, and separately the actual checklist UI (`.task-item` etc., used 79 times across all 11 divisions) also had zero CSS defined — every checklist item on the whole page was bare text next to a checkbox. Added real values plus glass card treatment sitewide across every division. Verified in-browser across multiple divisions. Content diff-checked — zero content loss.
+- **Inventory & Space Optimizer bug fixes** (`Warframe_Inventory_Cleanup_Guide.html`) — already structurally compliant, so no rewrite; canonicalized 6 tile anchors to the shared `.qi-tile` classes. **Fixed two real bugs:** an undefined `var(--accent-color)` was silently falling back to gray on two cards, and `.item-row`/`.item-name`/`.item-detail`/`.item-list`/`.desc-text` were never defined in `codex_glass_theme.css`, so all 138 item entries across the page's 6 checklists were rendering as unstyled default list items. Removed the dead heartbeat script. Content diff-checked — zero changes.
+- **Foundry Weapon Recipe & Ingredients standardization** (`Warframe_Weapons_Recipe_Ingredients.html`) — single-topic page, no tile-hub needed; applied the canonical header/container treatment directly. **Fixed a real bug:** `.recipe-card`, `.desc-text`, `.item-list`, `.item-row`, `.item-name`, `.item-detail` were never defined in `codex_glass_theme.css` — the page had been rendering as unstyled default divs/lists. Added local definitions. Removed a dead tracker script and the dead heartbeat script. Content diff-checked — zero factual changes.
+- **Steel Path Readiness Audit standardization** (`Warframe_Steel_Path_Audit.html`) — migrated to canonical tile-hub structure with 4 section tiles (Essential Mods, Critical Arcanes, Loadout Mechanics, Survival & Focus). This page already had correct `category-section` markup but was missing the toggle behavior entirely — replaced the old always-visible long-scroll layout with the canonical hub pattern. Preserved all 9 checkbox IDs exactly (`safeStorage` persistence keys on them). Removed two dead jump-button scripts and a duplicate Prev/Next-chapter script. Content diff-checked — zero changes.
+- **Riven Mod Guide standardization** (`Warframe_Riven_Guide.html`) — migrated to canonical tile-hub structure with 6 section tiles (What Is a Riven Mod?, Where Rivens Come From, Disposition, Rolling & Kuva, Reading a Roll, The Riven Trading Economy). Preserved the exact pre-existing anchor IDs. Content diff-checked — zero changes.
+- **Resource Farming Codex standardization** (`Warframe_Resource_Farming_Guide.html`) — migrated to canonical tile-hub structure with 3 section tiles (Inner System, Outer System, Deep Space & Special Zones), grouping the previously flat 20-planet grid by star-chart position. **Fixed a real bug:** the entire drop-rarity color legend (`.rarity-common/uncommon/rare/research`, `.legend`) was never defined in `codex_glass_theme.css` and had been rendering as plain unstyled text. Added local color definitions. Kept the "Done" card-tracker script. Content diff-checked — zero changes.
+- **Rare Mods Value Guide standardization** (`Warframe_Rare_Mods_Value_Guide.html`) — migrated to canonical tile-hub structure with 7 section tiles (Corrupted, Galvanized, 60/60 Elemental, Ultra Rare & Stances, Nightmare & Aura, Drop Source Reference, Trading Value Tiers). Flattened the old two-column sidebar layout into standalone sections. Kept the "Done" card-tracker script. Removed the unused `mod_database.js` include, dead heartbeat script, and duplicate Prev/Next-chapter script. Content diff-checked — zero changes.
+- **Railjack Fleet Command standardization** (`Warframe_Railjack_Codex.html`) — migrated to canonical tile-hub structure with 7 section tiles (Meta Ship Components, AI Crew Setup, Armaments, Plexus, Intrinsics, Mission Types, Resource Reference). Flattened the old two-column layout into standalone sections. Kept the "Done" card-tracker script — genuinely functional on this page. Removed the unused `mod_database.js` include, dead heartbeat script, and a duplicate Prev/Next-chapter script. Content diff-checked — zero changes.
+- **Quest Codex standardization** (`Warframe_Quest_Codex.html`) — migrated to canonical tile-hub structure with 6 section tiles (How Quests Work, Arc I-IV, Side Quests). Preserved the exact pre-existing anchor IDs that `search_index.js` deep-links into. Fixed a mojibake encoding bug ("HÃ¶llvania" &rarr; "H&ouml;llvania"). Content diff-checked — zero factual changes.
+- **Progression Roadmap standardization** (`Warframe_Progression_Guide.html`) — migrated from a custom dashboard-tile + modal-overlay pattern to the canonical tile-hub structure with 4 section tiles (Phase 1: Early Game, Phase 2: Mid Game, Phase 3: Pre-Endgame, Phase 4: True Endgame). Preserved the tile teaser blurbs (unique text not repeated in the modal content) as section lead-in lines. Added a local `.trap-warning` CSS definition (never defined in `codex_glass_theme.css`). Removed the now-dead `openModal`/`closeModal` script, a dead `global-jump-btn` handler, and a duplicate hand-rolled Prev/Next-chapter script that `common.js` already handles automatically. Content diff-checked — zero factual changes.
+- **Orbiter Codex standardization** (`Warframe_Orbiter_Codex.html`) — migrated to canonical tile-hub structure with 4 section tiles (What Is the Orbiter?, Navigation, The Stations, Segments). Preserved the exact pre-existing anchor IDs that `search_index.js` deep-links into. Content diff-checked — zero changes.
+- **Nightwave Guide standardization** (`Warframe_Nightwave_Guide.html`) — migrated to canonical tile-hub structure with 7 section tiles (What Is Nightwave?, Challenge Types, NW Credit Store, Tricky Acts & Solutions, Standing Per Rank, Act Strategy Reference, NW Credit Store Priority Guide). No external anchor dependencies found — used fresh `section-X` IDs. Content diff-checked — zero changes.
+- **Necramech Codex standardization** (`Warframe_Necramech_Codex.html`) — migrated to canonical tile-hub structure with 8 section tiles (What Is a Necramech?, How to Unlock, Where the Parts Drop, Voidrig, Bonewidow, Modding & Arch-guns, Where You Use Them, Leveling Tips). Preserved the exact pre-existing anchor IDs that `search_index.js` deep-links into. Content diff-checked — zero changes.
+- **Core Mechanics Cheat Sheet standardization** (`Warframe_Mechanics_Focus_Guide.html`) — migrated to canonical tile-hub structure with 8 section tiles (Damage & Status Meta, Focus Schools, Critical Hit Tiers, Mod Capacity & Forma, Focus School Comparison, How Focus Works, Per-School Deep Dive, Farming Focus & Lenses). Preserved the 6 pre-existing anchor IDs that `search_index.js` deep-links into. Added missing `.dmg-viral`/`.dmg-slash`/`.dmg-corrosive`/`.dmg-heat`/`.dmg-mag`/`.dmg-rad` color classes (never defined in `codex_glass_theme.css`). Kept the "Done" card-tracker script — genuinely functional on this page. Removed the unused `mod_database.js` include and dead heartbeat script. Content diff-checked — zero changes.
+- **Mastery Rank Efficiency Guide standardization** (`Warframe_Mastery_Rank_Guide.html`) — migrated to canonical tile-hub structure with 7 section tiles, the first being the existing Interactive Mastery Rank Calculator widget. Preserved every calculator element ID exactly (`input-extra-weapons`, `input-rj-intrinsics`, `input-drifter-intrinsics`, `cb-starchart`, `cb-steelpath`, all `scan-*`/`display-*` outputs) since `updateMRCalculator()` depends on them — verified the calculator still computes correctly after migration. Content diff-checked — zero changes.
+- **Kuva Lich & Sisters of Parvos Guide standardization** (`Warframe_Lich_Guide.html`) — migrated to canonical tile-hub structure with 9 section tiles (Overview, Creating Your Lich/Sister, Requiem Mods, Murmur Farming, Notable Weapons, Requiem Mod Reference, Lich Level Progression, Bonus Element Reference, Full Weapon List), `category-section` wrappers, hash/back-button toggle behavior. No external anchor dependencies found. Content diff-checked — zero changes.
+- **Kahl & Veilbreaker Codex standardization** (`Warframe_Kahl_Veilbreaker_Codex.html`) — migrated to canonical tile-hub structure with 7 section tiles (What Is Veilbreaker?, How to Unlock It, The Weekly Loop, Mission Collectibles, Kahl's Kit, Rewards & Archon Shards, Tips), `category-section` wrappers, hash/back-button toggle behavior. Preserved the exact pre-existing anchor IDs that `search_index.js` deep-links into. Content diff-checked line-for-line — zero changes.
+- **Endgame Systems Codex standardization** (`Warframe_Endgame_Systems_Codex.html`) — migrated to canonical tile-hub structure with 5 section tiles (The Helminth System, Ability Quick Reference, Archon Shards, Incarnon Genesis, Adapter List). Preserved every functional checkbox ID/class exactly (55 `.subsume-checkbox` Warframe entries, 6 `.unlock-checkbox` unlock-steps, `#helminth-search` filter input) since the page's own scripts depend on them — verified checkbox persistence, the search filter, and the "Done" card tracker all still work after migration. Added missing `.subsume-grid`/`.subsume-item`/`.unlock-step`/`.shard-*` CSS to this page's own `<style>` block (none of these were defined in `codex_glass_theme.css`, so the tracker and shard-color spans had no layout/color styling before). Removed the unused `mod_database.js` include and dead heartbeat script. Content diff-checked — zero changes.
+- **Endgame Modes Codex standardization** (`Warframe_Endgame_Modes_Codex.html`) — migrated to canonical tile-hub structure with 3 section tiles (Arbitrations, The Steel Path, Preparation Checklist), `category-section` wrappers, hash/back-button toggle behavior. Preserved the exact pre-existing anchor IDs (`arbitrations`, `steel-path`) that `search_index.js` deep-links into. Removed 3 dead scripts: a Helminth subsumption/unlock-checklist script whose selectors never matched anything on this page, an unused `mod_database.js` include, and the dead heartbeat script. Replaced undefined `var(--accent)` with a concrete color. Content diff-checked — zero changes.
+- **Eidolon Hunt Guide standardization** (`Warframe_Eidolon_Hunt_Guide.html`) — migrated to canonical tile-hub structure with 7 section tiles (The Three Eidolons, Pre-Hunt Requirements, Fight Sequence, Rewards, Arcane Drop Table, Amp Naming & Tiers, Quills Rank Reference), `category-section` wrappers, hash/back-button toggle behavior. Content diff-checked against the pre-migration version (only cosmetic em-dash entity normalization, zero factual changes).
+- **Duviri Codex standardization** (`Warframe_Duviri_Codex.html`) — migrated to canonical tile-hub structure with 7 section tiles (What Is Duviri?, The Spiral & Its Moods, Decrees, Experience vs. Circuit, Pathos Clamps & Kullervo, Drifter Intrinsics, Practical Tips), `category-section` wrappers, hash/back-button toggle behavior. Preserved the exact pre-existing anchor IDs that `search_index.js` deep-links into. Content diff-checked line-for-line — zero changes.
+- **Safe Disposal Protocol SOP standardization** (`Warframe_Disposal_Guidelines_SOP.html`) — migrated to canonical tile-hub structure with 3 section tiles (Disposal Protocols, Reclaimable Blueprints, Pre-Flight Checklist), `category-section` wrappers, hash/back-button toggle behavior. **Fixed a real pre-existing bug:** the page used `.sop-card`, `card-cyan`, `card-violet`, `.step-list`, `.step-item`, `.step-num`, `.badge-warn`, `.desc-text`, and `var(--accent-color)` — none of which were ever defined in `codex_glass_theme.css`, so the page had been rendering with zero custom styling. Converted to canonical `.card`/`.box`/`.type-tag` markup with concrete colors, preserving every step, badge, and blueprint entry exactly. Removed a dead card-tracker script that never matched any element on this page, plus the dead heartbeat script.
+- **Deep Archimedea Guide standardization** (`Warframe_Deep_Archimedea_Guide.html`) — migrated to canonical tile-hub structure with 6 section tiles (Overview, Restrictions & Counters, Recommended Loadouts, All Known Restrictions, Archon Shard Reference, Missions & Cavia), `category-section` wrappers, hash/back-button toggle behavior. Content diff-checked against the pre-migration version (only cosmetic em-dash entity normalization, zero factual changes).
+- **Conservation Codex standardization** (`Warframe_Conservation_Codex.html`) — migrated to canonical tile-hub structure with 6 section tiles (What Is Conservation?, How a Hunt Works, Gear You Need, Per-World Reference, Rewards, Tips), `category-section` wrappers, hash/back-button toggle behavior. Preserved the exact pre-existing anchor IDs (`what-is-conservation`, `how-a-hunt-works`, `gear`, `per-world`, `rewards`, `tips`) that `search_index.js` deep-links into. Removed dead jump-button script (target element never existed). Content diff-checked line-for-line — zero changes.
+- **Core Mod Acquisition Guide standardization** (`Warframe_Mod_Farming_Guide.html`) — migrated to canonical tile-hub structure with 8 section tiles (Corrupted, Nightmare, Aura, Primed, Open World Set, Galvanized & Arbitrations, Augments, Notable Rare Drops), `category-section` wrappers, hash/back-button toggle behavior. Removed the unused `mod_database.js` script include (page never called into it — mod lists were always static HTML) and the dead heartbeat/session-tracking script. All 34 mod entries verified unchanged against the pre-migration version.
+- **Companions & Vehicles Codex standardization** (`Warframe_Companions_Vehicles_Codex.html`) — migrated to canonical tile-hub structure with 6 section tiles (Pets & Sentinels, Vehicles, Companion Type Comparison, Top Companions by Role, Necramech Comparison, Archwing Quick Reference), `category-section` wrappers, hash/back-button toggle behavior. Fixed a pre-existing broken structure (missing closing `</ul>`/`</div>` tags) and removed dead heartbeat/jump-button script. Owned-checkbox persistence (`safeStorage`) preserved and verified in-browser.
+- **Arcane Codex standardization** (`Warframe_Arcane_Codex.html`) — migrated to canonical tile-hub structure with 8 section tiles, `category-section` wrappers, hash/back-button toggle behavior, and head-loaded `nav_sequence.js`.
+- **Tile hub conversion — 16 pages** — all remaining text/scroll pages converted from Quick Index link bar to tile dashboard hub format matching Tenno Path / Zariman Guide style: Damage Guide, Status Effects Guide, 1999 Höllvania Guide, Albrecht Labs Guide, Amp & Operator Guide, Arbitrations Guide, Conclave Guide, Currency Farming Codex, Endo Farming Volume, Frame Builds Reference, Mission Types Guide, Platinum Farming Guide, Profit Taker Guide, Seasonal Events Guide, Syndicate Farming Guide, Tenet & Kuva Weapons Guide, Void Relics Meta Guide
+- **Page template updated** (`_page_template.html`) — now ships with canonical tile hub CSS, tile grid HTML, and tile-hub JS; all new pages start with the correct pattern
+
+### Fixed (2026-07-05)
+- Removed three broken status-icon `<img>` references on Combat Mechanics (cold.png, radiation.png, magnetic.png do not exist; icons were already self-hiding via onerror — tags removed to stop referencing missing files)
+- Added viewport meta tag to four docs pages that were missing it: Dev History Archive, License Agreement, README, Version Archive
+- Corrected 1.5.20 changelog nav_sequence.js entry count from 67 to 72
+- Standardized Master Index browser-tab title separator from colon to em dash, matching every other page
+
+---
+
+## [1.26.0] - 2026-07-05
+
+### Added
+- **The Tenno Path: MR 1–10 Foundation** (`Warframe_Tenno_Path.html`) — rebuilt as dedicated Foundation page; 7 sections covering MR 1–4, MR 5–7, MR 8–10, priority mods, what to avoid, and what's next; amber links throughout
+- **The Tenno Path: MR 11–20 Expansion** (`Warframe_Tenno_Path_Expansion.html`) — new dedicated page; 7 sections covering open worlds, Railjack, Kuva Liches, Sisters of Parvos, The New War, Zariman, Focus schools, and priority builds
+- **The Tenno Path: MR 21–30 Endgame** (`Warframe_Tenno_Path_Endgame.html`) — new dedicated page; 7 sections covering Steel Path, Archon Shards, Incarnon Genesis, Circuit farming, endgame Warframes, and the ceiling
+- **New to Warframe? Start Here** (`Warframe_Start_Here.html`) — welcome/intro page reachable from Master Index pill button; 7 sections: what Warframe is, what the Compendium is, how the game works, first hours, factions, the game loop, and where to start
+- **Master Index** — separator converted to clickable pill button; Tenno Path tier pills now individually clickable to their own pages
+- **Wired** — all 4 new pages in nav_sequence.js (72 entries) and Site Map Getting Started category
+
+### Fixed (Infrastructure Standardization Pass — 2026-07-05)
+- **Inventory Cleanup Guide rebuilt** — complete rebuild to standard template; Quick Index tile nav wired with `pushState`/`popstate` so browser Back returns to tile menu instead of leaving the page
+- **Body-style blocks moved to `<head>` — 36 pages** — inline `<style>` blocks incorrectly placed in `<body>` relocated to `<head>` per HTML spec
+- **Title tags standardized — 19 pages** — canonical `Warframe: The Orbiter Compendium — Page Name` pattern applied across all affected pages
+- **Custom wrapper classes converted to `.container` — 13 pages** — eliminated per-page hand-rolled glass panel CSS (`page-shell`, `page-panel`, `hub-container`, `database-panel`, `relic-dashboard`, `app-container`, `dashboard-panel`, `settings-container`); all now use the single shared `.container` class from `codex_glass_theme.css`
+- **Dead CSS stripped — 37 pages** — `.navigation-capsule` float nav rules removed from all pages that carried them; no HTML was rendering these elements
+- **Viewport meta added — 21 pages** — `<meta name="viewport">` was absent; added to all affected pages; Foundry Farming Guide also received missing `<meta charset="UTF-8">`
+- **Broken links fixed** (`Warframe_Start_Here.html`) — 2 links to deleted Economy Guide corrected to Currency Farming Codex
+- **Combat Mechanics** — added missing `body { padding-top: 120px !important; }`
+- **Rare Mods Value Guide** — converted to `.container`; fixed title separator from `:` to `—`
+- **Relic Tracker** — restored `margin-bottom: 100px` after container conversion
+- **Title separator cleanup — 7 pages** — QA sweep found Augment Codex, Mods Database, Helminth Synergy App, System Settings, Tennokai Melee Codex, Archon Planner App, and Circuit Tracker App still using `:` or `-` as separator; all corrected to `—`
+- **Encoding corruption fixed — 15 pages** — em dashes, en dashes, and right single quotes stored as mangled Windows-1252 byte sequences replaced with HTML named entities; corruption was invisible via HTTP dev server but visible as garbage when pages opened via `file://` URL
+
+### Added (Tooling — 2026-07-05)
+- **Preflight Check 9** — scans all HTML files for mangled UTF-8 encoding sequences at build time; script now self-configures UTF-8 stdout on Windows
+- **QA checklist `file://` spot-check** — added encoding spot-check step to open each page via `file://` to catch corruption the HTTP dev server masks
+
+---
+
+## [1.25.0] - 2026-07-04
+
+### Added
+- **The Tenno Path** (`Warframe_Tenno_Path.html`) — MR 1 to 30 step-by-step progression guide; 4 sections covering About This Guide, Foundation (MR 1–10), Expansion (MR 11–20), and Endgame (MR 21–30); fully cross-linked to existing Compendium pages throughout
+- **Master Index card** — full-width amber Tenno Path card added below the 6 hub cards with amber separator "New to Warframe? — Start Here"; 3 chapter tier pills (Foundation / Expansion / Endgame) inline on the card
+- **Wired** — nav_sequence (entry 64), Site Map (Getting Started category)
+
+---
+
+## [1.24.0] - 2026-07-04
+
+### Added
+- **5 new content pages** completing near-full game coverage:
+  - `Warframe_Albrecht_Labs_Guide.html` — Sanctum Anatomica, Cavia syndicate, Isolation Vaults & Arcana, Netracell weekly, Incarnon Genesis adapters
+  - `Warframe_Mission_Types_Guide.html` — Disruption, ESO, The Index, Sorties, Defense/Survival/Excavation/Spy/Interception/Kuva Flood, reward summary
+  - `Warframe_Frame_Builds_Reference.html` — 22 meta frames across DPS, Support, Tank, Utility, and Specialist categories; role/mods/use-case per frame
+  - `Warframe_Tenet_Kuva_Weapons_Guide.html` — Kuva & Tenet farming steps, full weapon lists, elemental bonus selection, Valence Fusion math, top picks
+  - `Warframe_Conclave_Guide.html` — All PvP modes (Annihilation, Capture the Cephalon, Lunaro), PvP mechanics, frame/weapon picks, exclusive rewards
+- **Dashboard wiring** — all 5 pages linked into Systems Dashboard, Endgame Dashboard, and/or Core Codex Hub; nav_sequence now 63 entries
+
+---
+
+## [1.23.0] - 2026-07-04
+
+### Added
+- **8 new content pages** covering previously unrepresented game systems:
+  - **Warframe 1999 / Höllvania Guide** — open world hub, Eleanor/Arthur vendors, Cyte-09, Jade, Techrot enemies
+  - **Zariman Ten-Zero Guide** — Angels open world, Holdfast syndicate, Void Cascade/Flood/Armageddon, arcane farming
+  - **Amp & Operator Guide** — Amp builds by tier and use case, all 5 Focus schools, Void Mode, crafting vendors
+  - **Arbitrations Guide** — one-life rules, Shield Drones, rotation rewards, Vitus Essence shop, Aura Forma
+  - **Profit-Taker & Exploiter Guide** — heist phases, shield cycling, Archgun priority, Exploiter Thermia, Hildryn
+  - **Seasonal Events Guide** — Plague Star, Ghoul Purge, Thermia Fractures, Acolytes, Wolf of Saturn Six
+  - **Status Effects & Proc Guide** — all 13 proc types, stacking rules, meta combos, enemy faction matchups
+  - **Void Relics Meta Guide** — relic eras, refinement, fissure selection, Ducat value, Void Trace management
+- **Dashboard wiring** — all 8 pages linked into Systems Dashboard, Endgame Dashboard, and Core Codex Hub
+- **Canonical page template** and **QA checklist rule** — standing procedure for all future pages
+
+---
+
+## [1.22.2] - 2026-07-04
+
+### Fixed
+- **Complete h3/h4 emoji sweep — 26 pages.** Every section-level heading across all 66 pages now has an emoji. Data card labels (individual Warframe/weapon names in grids, UI picker labels, repeated per-card labels, JS template literals) are intentionally excluded by design.
+- **Glass back panel added to 4 pages.** Platinum Farming Guide, Endo Farming Volume, Inventory Cleanup Guide, and Steel Path Audit were all missing a glass panel entirely — the only four remaining pages without one.
+- **Return to Index button removed (4 pages).** The same four pages used a show/hide section drilldown that injected a "Return to Index" button whenever a Quick Index link was clicked. The pattern has been removed: all sections are now always visible, Quick Index links scroll directly to anchors.
+
+---
+
+## [1.22.1] - 2026-07-04
+
+### Fixed
+- **Full emoji QA sweep — all 66 pages.** Visual pass through every page confirmed and corrected h1/h2 emoji coverage across the entire Compendium.
+  - **4 pages restored from git** (Archon Planner, Circuit Tracker, Tennokai Melee, Meta Weapons) — a prior bulk sweep had corrupted these files. Restored cleanly and re-patched.
+  - **12 pages: h2 section emojis added** — prior sweep missed the `<h2 id="...">` and `<h2><span>` tag formats entirely.
+  - **7 dashboard pages: h1 emojis added** (Warframe Dashboard, Arsenal, Economy, Endgame, Systems, Core Terminals, Tenno Foundry).
+  - **Steel Path Audit, Reset Checklist, Resource Farming Guide** — section and planet-level emojis filled in.
+  - **Weapon Build Customizer** — h1 gun emoji added.
+- **Nav sequence: 4 pages activated.** Open Worlds Guide, Relic Tracker, Nightwave Guide, and Reset Checklist are now part of the Prev/Next Chapter flow.
+
+---
+
+## [1.22.0] - 2026-07-04
+
+### Added
+- **Status effects section fully expanded (Combat Mechanics).** The Damage Types & Status Effects section grew from 4 short entries to 7 complete ones. Cold, Radiation, and Magnetic have been added — all essential for Steel Path and endgame play, but previously missing. Every entry now explains the mechanic numerically, which enemy factions it counters, and how it synergizes with other status types.
+- **Currency Farming Codex fully enriched.** All six currency sections (Credits, Endo, Platinum, Ducats, Kuva, Syndicate Standing) have been rewritten with lore context, expanded farming strategies, and a practical tips column. Previously each section had one sentence and one or two bullet points.
+
+### Fixed
+- **Back and Forward buttons now permanently mirror the browser.** The custom in-app history stack has been replaced with direct `history.back()` and `history.forward()` calls. Both buttons are always visible and enabled — clicking Back or Forward when there is nowhere to go is a silent no-op, exactly as the browser handles it. This design is also forward-compatible with the planned Electron executable.
+- **Settings page layout restored.** The version badge was separated from the page title by the Entry 64 standardization pass. Restored the original inline flex-row — title and badge side-by-side, badge centered. Also added a missing icon to the "Data Management" section.
+- **Companions & Vehicles: four reference sections moved inside the glass panel.** Companion Type Comparison, Top Companions by Role, Necramech Comparison, and Archwing Quick Reference were rendering above the page title. They now appear inside the panel, below the title as intended.
+- **Relic Tracker and Relics Database layout fixes.** Relic Tracker title emoji removed (bare title standard). Relics Database had an undefined wrapper class — replaced with the standard glass panel.
+- **Sub-page titles cleaned up (7 pages).** Emoji removed from page titles across six Economy and Arsenal sub-pages; a stray leading space and unencoded character fixed on the Disposal Guidelines page.
+- The **Back button** now always works. On pages opened directly (with no prior in-app navigation), Back returns you to the master index instead of doing nothing.
+
+### Fixed (cosmetic standardization — 2026-07-03)
+- **Back-panel standardization (11 pages).** Full audit of all 66 pages — 11 were genuinely missing a glass back panel. All pages now have consistent panel treatment.
+- **Dashboard top-to-title spacing.** Main content area top padding reduced to match the canonical title offset from the reference page.
+- **Top-alignment sweep (6 pages).** Six pages had overrides pushing the title too low. All corrected to the standard body padding.
+- **Orphaned-title sweep (6 pages).** Six pages had their title floating outside the glass panel. All moved inside with the canonical `<header>/<h1>/<p class="subtitle">` structure.
+- **Page-title standardization (16 pages).** All 66 pages now use the canonical header/subtitle structure. 16 pages required fixes.
+- **Railjack Codex §5–§7 reorder.** Three sections were rendering above the page title at body level. Moved inside the container in correct order.
+
+---
+
+## [1.21.12] - 2026-07-01
+
+### Fixed
+- Corrected the pre-1.5.0 version range in the Release Notes (there were no 1.3.x or 1.4.x releases).
+
+---
+
+## [1.21.11] - 2026-07-01
+
+### Added
+- **Version Archive page**: pre-1.5.0 version history has moved to its own page, reachable from a new "View Version Archive" button in Settings. This page now shows only the current v1.5.0+ line.
+
+---
+
+## [1.21.10] - 2026-07-01
+
+### Fixed
+- Small polish from Oliver Oernster's review: the Site Map icon now visually matches its neighbors, a leftover debug message was removed, and a stale duplicate title was cleaned up on the home page.
+
+---
+
+## [1.21.9] - 2026-06-30
+
+### Fixed
+- **Three pages opened showing the wrong content first.** Endgame Systems Codex, Rare Mods Value Guide, and Vendor Tracking Guide each had a reference table rendering above the page title instead of below the relevant section. Fixed on all three, and reordered Endgame Systems Codex so each reference table sits next to the topic it covers.
+
+---
+
+## [1.21.8] - 2026-06-30
+
+### Fixed
+- **v1.5.7's removal of "by Zylxyz" was a mistake — reverted.** The title is back to "Warframe: The Orbiter Compendium by Zylxyz".
+- **The real bug: the title could overlap the search box on narrower windows.** Capped the title's width so it gracefully shortens instead of running into the search box, at any window size.
+
+---
+
+## [1.21.7] - 2026-06-30
+
+### Fixed
+- **The floating amber title no longer drifts between pages.** It was hand-copied into every page and had drifted into several different positions and styles — most visibly, it could wrap onto two lines and overlap the header icons on the Builds Codex page. The title is now generated from one shared definition, so it looks and sits identically everywhere.
+
+---
+
+## [1.21.6] - 2026-06-30
+
+### Added
+- **Full Development History page** — the complete pre-v1.5.1 development log is now available in-app via the "Full Development History" link above, for anyone curious about the project's full build history.
+
+---
+
+## [1.21.5] - 2026-06-30
+
+### Added
+- **New "Warframes" quick-nav icon** (🛡️) in the top header, between Arsenal and Mods & Arcanes — jumps straight to the Warframe build guides.
+
+---
+
+## [1.21.4] - 2026-06-30
+
+### Fixed
+- **Companions & Vehicles "Owned" checkboxes did nothing** — clicking any of the five checkboxes silently failed and saved nothing. They now save and restore correctly, and survive an Export/Import backup.
+
+### Added
+- **In-memory-storage warning** (Settings → Data Management): if browser storage is unavailable, Settings now warns you that progress is temporary and prompts an immediate backup export.
+
+---
+
+## [1.21.3] - 2026-06-30
+
+### Changed
+- **In-app Release Notes:** reworded the historical project-rename entry so it no longer prints the former project name — it now states the reference was corrected to the current name. The retired name no longer appears anywhere in user-facing text.
+
+---
+
+## [1.21.2] - 2026-06-30
+
+### Fixed
+- **Back button dead end on directly-opened / docs pages** (Release Notes, README): when the in-app history stack had no previous entry, Back rendered greyed-out and disabled with nowhere to go. It now falls back to real browser history when you arrived from elsewhere in the app, and otherwise returns to the Master Index home — so Back is never a dead end. The fix lives in the shared `common.js` nav cluster, so it applies on every page.
+- **Duplicate element IDs on the Combat & Mechanics page** (`mr-input`, `cap-value`): the embedded Mastery-Rank widget shared IDs with the header widget (invalid HTML, broken label association); it now uses unique IDs.
+
+### Changed
+- **Settings — Information & Docs:** centered the "View Docs" and "View Release Notes" buttons within their cards.
+
+---
+
+## [1.21.1] - 2026-06-29
+
+Consolidated release. Renumbered to **1.5.0** to sit cleanly above every earlier build (the interim 1.0.2–1.0.5 line had dropped below the already-published 1.2.1, breaking version order). From here the number only ever climbs. This release folds in all work since 1.0.2.
+
+### Added
+- **Necramech Codex** — Voidrig vs Bonewidow: how to unlock them, where the parts drop (Isolation Vault bounties on Cambion Drift), full ability breakdowns, Necramech and Arch-gun (Mausolon) modding, where they're used (Orphix, open worlds, Steel Path), and leveling tips.
+- **Kahl & Veilbreaker Codex** — the weekly Break Narmer solo run as Kahl-175: unlocking it, the Garrison hub and Chipper, the weekly Stock loop, mission collectibles (Stockpiles, comms, Lohk turrets), and rewards including Archon Shards.
+- **Mastery Rank** — added a second "Overall (to MR30)" progress bar so the headline always moves forward, alongside the existing next-rank bar.
+
+### Changed
+- **Fully offline fonts** — all Google Fonts are now bundled locally (`app/assets/fonts/`); the suite renders with no internet connection and no CDN dependency.
+- **Global search** rebuilt to cover the new pages (385 entries).
+- **README** now credits Technical Advisor **Oliver Oernster** for his end-to-end review.
+
+### Fixed
+- Addressed an external code review (Oliver Oernster): removed a stray test scaffold and a leaked local file path from the Drop Tables page; deleted a dead duplicate `common.js`; fixed the Release Notes / README floating title overprinting long text; corrected the reviewer-credit spelling; fixed a Mastery "Legendary" rank off-by-one at the MR30 boundary; removed the console platform options on this PC-only app; tidied the storage-meter label and quota; hardened the Helminth subsume search and the mod/relic modal close; and removed leftover debug logging.
+
+---
+
+## Older Versions
+
+Version history before 1.17.0 (the pre-release development line, 1.0.0 through 1.16.0) has moved to the [Version Archive](Version_Archive.html) page.
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mdText = document.getElementById('md-source').textContent;
+        document.getElementById('content').innerHTML = marked.parse(mdText);
+    });
+</script>
+
+<style>#nav-forward-top { display: none !important; }</style>
+<script>
+/* Back button -> Settings menu. Document-level capture so it keeps working even after
+   the shared engine rebuilds the header, and on file:// where the engine's path is wrong. */
+document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('#nav-back-top') : null;
+    if (!b) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    window.location.href = '../Warframe_System_Settings.html';
+}, true);
+</script>
+
+</body>
+</html>

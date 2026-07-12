@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Mastery Rank Efficiency</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Progression_Guide.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a id="nav-next-top" href="Warframe_Meta_Weapons_Codex.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#127891; Mastery Rank Efficiency</h1>
+        <p class="subtitle">The fastest methods to farm Mastery Points and hit MR30</p>
+    </header>
+
+    <div class="warning-box">
+         RULE #1: You ONLY get Mastery Points the VERY FIRST TIME you rank an item up to 30. Putting a Forma into a weapon and re-leveling it gives you ZERO mastery points.
+    </div>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="section-calculator" style="border-left-color:#ffab00;"><div class="qi-tile-icon">&#128202;</div><h2 class="qi-tile-title">Interactive Mastery Rank Calculator</h2><p class="qi-tile-desc">Track your progress toward MR30 and Legendary ranks. This calculator automatically scans your completed Warframes, companions, and weapons checked off in the Codex, and lets you...</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-math" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#128220;</div><h2 class="qi-tile-title">The Math of Mastery Points</h2><p class="qi-tile-desc">To rank up quickly, you must prioritize the items that give the most points. Always have these building in your Foundry.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-farming" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128204;</div><h2 class="qi-tile-title">Best Farming Locations</h2><p class="qi-tile-desc">Do not level weapons in normal missions. It takes too long. Use these three dedicated XP farming nodes.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-pipeline" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128296;</div><h2 class="qi-tile-title">The Foundry Pipeline</h2><p class="qi-tile-desc">The biggest mistake players make is waiting until they need MR to start building weapons. By the time you need it, you are stuck behind 12-24 hour crafting timers.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-missed" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#128270;</div><h2 class="qi-tile-title">Easy-to-Miss Points</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-milestones" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#127891;</div><h2 class="qi-tile-title">Milestone Unlocks</h2><p class="qi-tile-desc">Each Mastery Rank unlocks new systems, weapons, and game features. Key milestones listed below. Daily standing cap also increases by 1,000 per rank.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-values" style="border-left-color:#ffb74d;"><div class="qi-tile-icon">&#128202;</div><h2 class="qi-tile-title">Point Values Reference</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. INTERACTIVE MASTERY RANK CALCULATOR -->
+    <section class="category-section" id="section-calculator">
+        <h2>&#128202; 1. Interactive Mastery Rank Calculator</h2>
+        <div class="card" style="border-left: 4px solid #ffab00;">
+            <p class="desc-text" style="color: #cbd5e0; margin-bottom: 20px;">
+                Track your progress toward MR30 and Legendary ranks. This calculator automatically scans your completed Warframes, companions, and weapons checked off in the Codex, and lets you input your in-game intrinsics and extra weapons.
+            </p>
+            <div class="grid-2col" style="gap: 20px; margin-bottom: 25px;">
+                <!-- Left Panel: Inputs -->
+                <div class="box" style="background: rgba(0,0,0,0.2); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px;">
+                    <h4 style="color: #ffab00; margin-top: 0; margin-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#128225; Codex Automatic Scan</h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.95rem; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Completed Warframes (6,000 pts ea):</span>
+                            <span id="scan-warframes" style="font-weight: bold; color: #fff;">0 / 102</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Completed Companions (6,000 pts ea):</span>
+                            <span id="scan-companions" style="font-weight: bold; color: #fff;">0 / 5</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Codex Weapons (3,000 pts ea):</span>
+                            <span id="scan-weapons" style="font-weight: bold; color: #fff;">0</span>
+                        </div>
+                    </div>
+
+                    <h4 style="color: #ffab00; margin-top: 0; margin-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#9999;&#65039; Manual Progress Inputs</h4>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div>
+                            <label style="display: block; font-size: 0.85rem; color: #a0aec0; margin-bottom: 4px;">Other Weapons Leveled In-Game (3,000 pts ea):</label>
+                            <input type="number" id="input-extra-weapons" min="0" value="0" style="width: 100px; padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.4); color: #fff;">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; color: #a0aec0; margin-bottom: 4px;">Railjack Intrinsics (0-50):</label>
+                                <input type="number" id="input-rj-intrinsics" min="0" max="50" value="0" style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.4); color: #fff;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; color: #a0aec0; margin-bottom: 4px;">Drifter Intrinsics (0-50):</label>
+                                <input type="number" id="input-drifter-intrinsics" min="0" max="50" value="0" style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.4); color: #fff;">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 20px; margin-top: 5px;">
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #cbd5e0; cursor: pointer;">
+                                <input type="checkbox" id="cb-starchart" style="width: 16px; height: 16px; accent-color: #ffab00;">
+                                Star Chart (+27,518)
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #cbd5e0; cursor: pointer;">
+                                <input type="checkbox" id="cb-steelpath" style="width: 16px; height: 16px; accent-color: #ffab00;">
+                                Steel Path (+27,518)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Results -->
+                <div class="box" style="background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255, 171, 0, 0.2); padding: 20px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <h4 style="color: #ffab00; margin-top: 0; margin-bottom: 10px;">&#128202; Calculated Standing</h4>
+                        <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px;">
+                            <span id="display-mr-badge" style="font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 1.8rem; font-weight: 800; color: #ffab00; text-shadow: 0 0 10px rgba(255, 171, 0, 0.3);">MR 0</span>
+                            <span id="display-mr-title" style="color: #a0aec0; font-size: 1rem;">Novice</span>
+                        </div>
+                        <div style="font-size: 0.95rem; color: #e2e8f0; margin-bottom: 15px;">
+                            Total Mastery Points: <strong id="display-total-points" style="color: #fff; font-family: monospace; font-size: 1.15rem;">0</strong>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #a0aec0; margin-bottom: 4px;">
+                                <span>Next Rank Progress</span>
+                                <span id="display-progress-text">0 / 2,500</span>
+                            </div>
+                            <div style="width: 100%; height: 10px; background: rgba(0,0,0,0.5); border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                                <div id="display-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ffab00, #ffd54f); transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #a0aec0; margin-bottom: 4px;">
+                                <span>Overall (to MR30)</span>
+                                <span id="display-overall-text">0%</span>
+                            </div>
+                            <div style="width: 100%; height: 10px; background: rgba(0,0,0,0.5); border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                                <div id="display-overall-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #7e57c2, #ce93d8); transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; border-left: 3px solid #ffab00; font-size: 0.85rem; color: #cbd5e0; line-height: 1.4;">
+                        <span id="display-summary">Keep leveling weapons and checking them off to reach the next rank!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. THE MATH OF MASTERY POINTS -->
+    <section class="category-section" id="section-math">
+        <h2>&#128220; 2. The Math of Mastery Points</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <p>To rank up quickly, you must prioritize the items that give the most points. Always have these building in your Foundry.</p>
+                <div class="grid-2col">
+                    <div class="box">
+                        <h4>&#127942; High Value (6,000 Points Each)</h4>
+                        <ul class="list">
+                            <li><strong>Warframes</strong> (Prime or Base)</li>
+                            <li><strong>Companions</strong> (Sentinels, Kavats, Kubrows, Moas)</li>
+                            <li><strong>Archwings &amp; Necramechs</strong></li>
+                            <li><strong>K-Drives</strong> (from Fortuna)</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>&#11088; Standard Value (3,000 Points Each)</h4>
+                        <ul class="list">
+                            <li><strong>Primary Weapons</strong></li>
+                            <li><strong>Secondary Weapons</strong></li>
+                            <li><strong>Melee Weapons</strong></li>
+                            <li><strong>Archguns &amp; Archmelees</strong></li>
+                            <li><strong>Sentinel Weapons</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box" style="margin-top:20px; background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.35);">
+                    <h4 style="color: #c084fc;">&#128156; The Secret Goldmine: Intrinsics</h4>
+                    <p>Every single Intrinsic point you spend in <strong>Railjack</strong> or <strong>The Duviri Paradox</strong> gives you <strong>1,500 Mastery Points</strong>. Maxing out your Duviri and Railjack trees will instantly give you hundreds of thousands of Mastery Points without having to craft a single weapon!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. BEST FARMING LOCATIONS -->
+    <section class="category-section" id="section-farming">
+        <h2>&#128204; 3. The Best Farming Locations</h2>
+        <div class="card" style="border-left:6px solid #42a5f5;">
+            <p>Do not level weapons in normal missions. It takes too long. Use these three dedicated XP farming nodes.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#127942; 1. Elite Sanctuary Onslaught (ESO)</h4>
+                    <p><strong>Best for:</strong> Leveling Weapons (Insanely Fast)<br><strong>Location:</strong> Cephalon Simaris (Syndicate Menu)</p>
+                    <ul class="list">
+                        <li>This is the fastest weapon XP farm in the game.</li>
+                        <li><strong>The Trick:</strong> Unequip all weapons except the ONE you want to level. If you only bring one weapon, it absorbs 75% of all shared Affinity from your teammates.</li>
+                        <li>It takes 2-3 zones to max a weapon from 0 to 30.</li>
+                        <li><em>Note: You cannot bring Warframes under rank 30 into ESO.</em></li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#9878;&#65039; 2. Normal Sanctuary Onslaught (SO)</h4>
+                    <p><strong>Best for:</strong> Leveling Warframes<br><strong>Location:</strong> Cephalon Simaris</p>
+                    <ul class="list">
+                        <li>Because you can't bring under-leveled frames into Elite, you bring them to regular SO.</li>
+                        <li>Cast your abilities as much as possible, as Warframe ability kills give 100% of the Affinity directly to the Warframe.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="box" style="margin-top:20px;">
+                <h4>&#127760; 3. Hydron (Sedna) or Helene (Saturn)</h4>
+                <p><strong>Best for:</strong> Casual leveling &amp; resource farming.</p>
+                <ul class="list">
+                    <li>These are tiny Grineer Defense maps. Players constantly run them to level up.</li>
+                    <li><strong>Helene (Saturn)</strong> is mathematically better because it drops <em>Orokin Cells</em>, which you need hundreds of to build Prime weapons.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. THE FOUNDRY PIPELINE STRATEGY -->
+    <section class="category-section" id="section-pipeline">
+        <h2>&#128296; 4. The &#8220;Foundry Pipeline&#8221; Strategy</h2>
+        <div class="card" style="border-left:6px solid #ef5350;">
+            <p>The biggest mistake players make is waiting until they need MR to start building weapons. By the time you need it, you are stuck behind 12-24 hour crafting timers.</p>
+            <ul class="list">
+                <li><strong>Step 1 (The Dojo Raid):</strong> Go to your Clan Dojo. Visit the Tenno Lab, Energy Lab, Bio Lab, and Chem Lab. Buy the blueprints for <strong>every single weapon</strong> you do not own.</li>
+                <li><strong>Step 2 (The Market Sweep):</strong> Open the ship Market. Check the "Weapons" tab. Check the box for "Blueprints Only." Buy every blueprint that costs Credits.</li>
+                <li><strong>Step 3 (The Pipeline):</strong> Craft 10-15 weapons at once. <strong>Do not claim them.</strong> The Foundry has infinite storage space. Leave them sitting in the Foundry as finished items.</li>
+                <li><strong>Step 4 (The Grind):</strong> When you get an Affinity Booster (from daily login or Baro), claim 3 "fodder" weapons from your foundry, run ESO for 10 minutes to max them to 30, sell them for credits, and immediately claim 3 more.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 5. EASY-TO-MISS MASTERY POINTS -->
+    <section class="category-section" id="section-missed">
+        <h2>&#128270; 5. Easy-to-Miss Mastery Points</h2>
+        <div class="card" style="border-left:6px solid #ce93d8;">
+            <ul class="list">
+                <li><strong>The Star Chart:</strong> Completing the normal Star Chart and The Steel Path Star Chart gives roughly 55,000 Mastery Points.</li>
+                <li><strong>Kitguns &amp; Zaws:</strong> You only get Mastery for the "Chamber" (Kitgun) or "Strike" (Zaw). Furthermore, you do NOT get the points when you hit rank 30 the first time. You must level it to 30, "Gild" it at the vendor, and then level it to 30 a second time to get the points.</li>
+                <li><strong>Modular Pets:</strong> Moas and Predasites work exactly like Zaws. You must level them to 30, Gild them, and level them again to get the mastery points.</li>
+                <li><strong>Kuva &amp; Tenet Weapons:</strong> These go up to Rank 40. You must put 5 Forma into them (ranking them to max 5 times) to get all 4,000 Mastery Points out of them.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 6. MASTERY RANK MILESTONE UNLOCKS -->
+    <section class="category-section" id="section-milestones">
+        <h2>&#127891; 6. Mastery Rank Milestone Unlocks</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Each Mastery Rank unlocks new systems, weapons, and game features. Key milestones listed below. Daily standing cap also increases by 1,000 per rank.</p>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ffd700;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead><tr style="background:rgba(255,255,255,0.05);">
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">MR</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Key Unlock</th>
+                    <th style="padding:9px 14px;text-align:right;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Daily Standing Cap</th>
+                </tr></thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">MR 2</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Trading with other players unlocked</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">3,000</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">MR 3</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Syndicate access (join and earn standing)</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">4,000</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">MR 5</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Riven Mod capacity increased to 3 slots</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">6,000</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">MR 8</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Orokin Derelict access (permanent)</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">9,000</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">MR 10</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Can use any weapon (most locked below this)</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">11,000</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">MR 12</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Riven Mod capacity 6 slots; trade limit increases</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">13,000</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">MR 15</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Riven Mod capacity 9 slots; most end-content accessible</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">16,000</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">MR 20</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Riven Mod capacity 12 slots; all market trades accessible</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">21,000</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#4ade80;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">MR 30</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">True Master title; max standing cap; all content accessible</td><td style="padding:7px 14px;color:#4ade80;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">31,000</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ce93d8;font-weight:600;">MR 30+</td><td style="padding:7px 14px;color:#ce93d8;">Grand Master / Legendary ranks (prestige cosmetic titles)</td><td style="padding:7px 14px;color:#ffab00;text-align:right;">31,000 (cap)</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 7. MASTERY POINT VALUES QUICK REFERENCE -->
+    <section class="category-section" id="section-values">
+        <h2>&#128202; 7. Mastery Point Values Quick Reference</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.5rem;">
+            <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ffb74d;">
+                <div style="padding:10px 14px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.85rem;color:#e2e8f0;font-weight:600;">Mastery Point Sources</div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                    <thead><tr><th style="padding:6px 12px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Source</th><th style="padding:6px 12px;text-align:right;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Max MP</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Weapon (rank 30)</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">3,000</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Warframe (rank 30)</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">6,000</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Companion (rank 30)</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">3,000</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Archwing (rank 30)</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">6,000</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Necramech (rank 40)</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">6,000</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Railjack (rank 30)</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">6,000</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Node completion</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">100 each</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;">Focus School node</td><td style="padding:6px 12px;color:#ffab00;text-align:right;">2,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <h3>&#128204; Top MP Efficiency Picks</h3>
+                <ul class="list">
+                    <li><strong>Weapons first:</strong> Each weapon is 3,000 MP &mdash; buy cheap blueprint weapons from market and level them on Hydron/ESO</li>
+                    <li><strong>Affinity boosters:</strong> Double weapon XP &mdash; run with a booster during ESO for fastest leveling</li>
+                    <li><strong>ESO (Elite Sanctuary Onslaught):</strong> Best affinity per hour; level 8 weapons per run with a strong carry frame</li>
+                    <li><strong>Hydron (Sedna):</strong> Classic leveling node &mdash; public squads always present, 20 waves = rank 30</li>
+                    <li><strong>Don&rsquo;t forget:</strong> Archwing weapons and MOA companions also grant 3,000 MP each</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+
+    // Checkbox Done Trackers
+    const headers = document.querySelectorAll('.card h3, .warframe-card h3, .weapon-card h3, .planet-card h2, .category-card h2, .volume-card h2');
+    headers.forEach((h, index) => {
+        if(h.querySelector('.tracker-container')) return;
+        const safeTitle = h.innerText.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20);
+        const id = 'tracker_' + window.location.pathname.split('/').pop() + '_' + index + '_' + safeTitle;
+        const container = document.createElement('label');
+        container.className = 'tracker-container';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'tracker-checkbox';
+        cb.id = id;
+        const card = h.closest('.warframe-card, .weapon-card, .card, .volume-card');
+        if(safeStorage.getItem(id) === 'true') {
+            cb.checked = true;
+            container.classList.add('completed');
+            if (card) { card.style.opacity = '0.5'; card.style.transition = 'opacity 0.2s ease-in-out'; }
+        }
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(id, e.target.checked);
+            if(e.target.checked) {
+                container.classList.add('completed');
+                if (card) { card.style.opacity = '0.5'; card.style.transition = 'opacity 0.2s ease-in-out'; }
+            } else {
+                container.classList.remove('completed');
+                if (card) { card.style.opacity = '1.0'; }
+            }
+        });
+        container.appendChild(cb);
+        container.appendChild(document.createTextNode('Done'));
+        h.style.display = 'flex';
+        h.style.justifyContent = 'space-between';
+        h.style.alignItems = 'center';
+        h.appendChild(container);
+    });
+
+    // Mastery Rank Calculator Logic
+    function updateMRCalculator() {
+        let wfCompletedCount = 0;
+        for (let i = 0; i < safeStorage.length; i++) {
+            const key = safeStorage.key(i);
+            if (key && key.startsWith('wf_global_') && key.endsWith('_completed')) {
+                if (safeStorage.getItem(key) === 'true') { wfCompletedCount++; }
+            }
+        }
+
+        let companionCompletedCount = 0;
+        const companions = ['panzer', 'smeeta', 'carrier', 'voidrig', 'amesha'];
+        companions.forEach(c => {
+            if (safeStorage.getItem(`tracker_companions_${c}`) === 'true') { companionCompletedCount++; }
+        });
+
+        let weaponCompletedCount = 0;
+        for (let i = 0; i < safeStorage.length; i++) {
+            const key = safeStorage.key(i);
+            if (key && key.startsWith('tracker_Warframe_Weapons_Recipe_Ingredients.html_')) {
+                if (safeStorage.getItem(key) === 'true') { weaponCompletedCount++; }
+            }
+        }
+
+        document.getElementById('scan-warframes').textContent = `${wfCompletedCount} / 102`;
+        document.getElementById('scan-companions').textContent = `${companionCompletedCount} / 5`;
+        document.getElementById('scan-weapons').textContent = `${weaponCompletedCount}`;
+
+        const extraWeapons = parseInt(document.getElementById('input-extra-weapons').value, 10) || 0;
+        const rjIntrinsics = Math.min(50, Math.max(0, parseInt(document.getElementById('input-rj-intrinsics').value, 10) || 0));
+        const drifterIntrinsics = Math.min(50, Math.max(0, parseInt(document.getElementById('input-drifter-intrinsics').value, 10) || 0));
+        const starchartComplete = document.getElementById('cb-starchart').checked;
+        const steelpathComplete = document.getElementById('cb-steelpath').checked;
+
+        safeStorage.setItem('codex_mr_extra_weapons', extraWeapons);
+        safeStorage.setItem('codex_mr_intrinsics_rj', rjIntrinsics);
+        safeStorage.setItem('codex_mr_intrinsics_duviri', drifterIntrinsics);
+        safeStorage.setItem('codex_mr_starchart', starchartComplete);
+        safeStorage.setItem('codex_mr_starchart_sp', steelpathComplete);
+
+        const pointsFromWf = wfCompletedCount * 6000;
+        const pointsFromCompanions = companionCompletedCount * 6000;
+        const pointsFromCodexWeapons = weaponCompletedCount * 3000;
+        const pointsFromExtraWeapons = extraWeapons * 3000;
+        const pointsFromIntrinsics = (rjIntrinsics + drifterIntrinsics) * 1500;
+        const pointsFromStarchart = starchartComplete ? 27518 : 0;
+        const pointsFromSteelpath = steelpathComplete ? 27518 : 0;
+
+        const totalPoints = pointsFromWf + pointsFromCompanions + pointsFromCodexWeapons + pointsFromExtraWeapons + pointsFromIntrinsics + pointsFromStarchart + pointsFromSteelpath;
+
+        document.getElementById('display-total-points').textContent = totalPoints.toLocaleString();
+
+        let rank = 0;
+        let rankLabel = "Initiate";
+        let title = "Novice";
+        let currentLevelBase = 0;
+        let nextLevelRequirement = 2500;
+
+        if (totalPoints >= 2250000) {
+            const extraPoints = totalPoints - 2250000;
+            const legRank = Math.floor(extraPoints / 147500);
+            rank = 30 + legRank;
+            if (legRank > 0) {
+                rankLabel = `L${legRank}`;
+                title = `Legendary ${legRank}`;
+            } else {
+                rankLabel = "MR 30";
+                title = "Grand Master";
+            }
+            currentLevelBase = 2250000 + legRank * 147500;
+            nextLevelRequirement = currentLevelBase + 147500;
+        } else {
+            rank = Math.floor(Math.sqrt(totalPoints / 2500));
+            rankLabel = `MR ${rank}`;
+
+            if (rank >= 27) title = "Grand Master";
+            else if (rank >= 24) title = "Master";
+            else if (rank >= 21) title = "Sage";
+            else if (rank >= 18) title = "Tiger";
+            else if (rank >= 15) title = "Dragon";
+            else if (rank >= 12) title = "Seeker";
+            else if (rank >= 9) title = "Disciple";
+            else if (rank >= 6) title = "Silver";
+            else if (rank >= 3) title = "Gold";
+            else title = "Silver Initiate";
+
+            currentLevelBase = 2500 * rank * rank;
+            nextLevelRequirement = 2500 * (rank + 1) * (rank + 1);
+        }
+
+        const pointsInCurrentLevel = totalPoints - currentLevelBase;
+        const pointsNeededForNextLevel = nextLevelRequirement - currentLevelBase;
+        const percent = Math.min(100, Math.max(0, (pointsInCurrentLevel / pointsNeededForNextLevel) * 100));
+        const remainingPoints = nextLevelRequirement - totalPoints;
+
+        document.getElementById('display-mr-badge').textContent = rankLabel;
+        document.getElementById('display-mr-title').textContent = title;
+        document.getElementById('display-progress-text').textContent = `${pointsInCurrentLevel.toLocaleString()} / ${pointsNeededForNextLevel.toLocaleString()}`;
+        document.getElementById('display-progress-bar').style.width = `${percent}%`;
+
+        const overallPercent = Math.min(100, (totalPoints / 2250000) * 100);
+        document.getElementById('display-overall-bar').style.width = `${overallPercent}%`;
+        document.getElementById('display-overall-text').textContent =
+            rank >= 30 ? "MR30 reached" : `${overallPercent.toFixed(1)}%`;
+
+        let summaryText = "";
+        if (rank >= 30) {
+            summaryText = `&#127881; You have achieved the rank of ${title}! Keep leveling items to push further into the Legendary Ranks.`;
+        } else {
+            summaryText = `&#128170; You are <strong>${remainingPoints.toLocaleString()} points</strong> away from **${rank + 1 === 30 ? "MR30" : `MR ${rank + 1}`}**.`;
+        }
+        document.getElementById('display-summary').innerHTML = summaryText;
+    }
+
+    function loadMRSavedInputs() {
+        const extraWeapons = safeStorage.getItem('codex_mr_extra_weapons');
+        const rjIntrinsics = safeStorage.getItem('codex_mr_intrinsics_rj');
+        const drifterIntrinsics = safeStorage.getItem('codex_mr_intrinsics_duviri');
+        const starchartComplete = safeStorage.getItem('codex_mr_starchart');
+        const steelpathComplete = safeStorage.getItem('codex_mr_starchart_sp');
+
+        if (extraWeapons !== null) document.getElementById('input-extra-weapons').value = extraWeapons;
+        if (rjIntrinsics !== null) document.getElementById('input-rj-intrinsics').value = rjIntrinsics;
+        if (drifterIntrinsics !== null) document.getElementById('input-drifter-intrinsics').value = drifterIntrinsics;
+        if (starchartComplete !== null) document.getElementById('cb-starchart').checked = (starchartComplete === 'true');
+        if (steelpathComplete !== null) document.getElementById('cb-steelpath').checked = (steelpathComplete === 'true');
+    }
+
+    const inputControls = ['input-extra-weapons', 'input-rj-intrinsics', 'input-drifter-intrinsics', 'cb-starchart', 'cb-steelpath'];
+    inputControls.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', updateMRCalculator);
+            el.addEventListener('change', updateMRCalculator);
+        }
+    });
+
+    loadMRSavedInputs();
+    updateMRCalculator();
+
+    window.addEventListener('storage', updateMRCalculator);
+    document.addEventListener('click', () => {
+        setTimeout(updateMRCalculator, 100);
+    });
+
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

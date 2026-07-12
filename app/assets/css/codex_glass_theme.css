@@ -1,0 +1,1424 @@
+/* 
+   Warframe Meta Codex: Global Glassmorphic Dark Theme
+   Shared across all sub-pages for design consistency.
+*/
+
+:root {
+    --bg-color: #060813;
+    --panel-bg: rgba(10, 15, 30, 0.7);
+    --card-bg: rgba(15, 22, 42, 0.45);
+    --card-hover-bg: rgba(23, 33, 62, 0.75);
+    --border-color: rgba(255, 255, 255, 0.06);
+    --text-color: #cbd5e1;
+    
+    --primary-accent: #8b5cf6; /* Neon Purple */
+    --accent-gold: #f59e0b; /* Amber Gold */
+    --glow-green: #10b981; /* Emerald */
+    --glass-backdrop: blur(25px);
+    --font-app: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Newer variable names used by rules added later in this file (and by
+       most pages sitewide) but never aliased here -- they silently fell
+       back to unset, so every rule using them rendered with no color/font/
+       transition at all. Values match farming_codex_style.css, which
+       already used this naming convention, so the look stays consistent
+       across pages that pull in either stylesheet. */
+    --gold-primary: #f59e0b;
+    --text-primary: #cbd5e1;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --text-light: #e2e8f0;
+    --color-primary: #8b5cf6;
+    --color-accent: #3b82f6;
+    --font-display: 'Inter', sans-serif;
+    --font-orbitron: 'Inter', sans-serif;
+    --bg-card: rgba(15, 22, 42, 0.45);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --accent: var(--accent-gold);
+
+    /* Same drift, borrowed from dashboard.css's naming instead --
+       Warframe_Builds_Codex.html (the canonical layout reference) uses
+       these for a large share of its encyclopedia/frame-card borders and
+       corners with no fallback, so they were rendering flat and square. */
+    --accent-prime: #8b5cf6;
+    --accent-prime-dim: rgba(139, 92, 246, 0.15);
+    --accent-purple: #8b5cf6;
+    --border-accent: rgba(0, 232, 252, 0.25);
+    --radius-lg: 20px;
+    --radius-md: 14px;
+}
+
+html, body, body *, button, input, select, textarea, label, table, th, td {
+    font-family: var(--font-app) !important;
+}
+
+.global-top-header > div[style*="top:60px"],
+.global-top-header > div[style*="top: 60px"] {
+    top: 70px !important;
+}
+
+.global-top-header .header-title,
+.global-top-header > div > span {
+    font-family: var(--font-app) !important;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-color);
+    /* Same nebula photo as !Warframe_Master_Index.html's body::before, single shared
+       definition for every app/*.html page -- do not duplicate this rule per-page. */
+    background-image: url('../img/master_index_nebula_bg.avif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 2.5rem 1.5rem;
+    min-height: 100vh;
+    zoom: 1;
+}
+
+/* Page title (h1): single source of truth for font/size/weight/color across
+   every page. Previously each page set its own inline style or page-local
+   <style> rule, and had drifted into a dozen+ treatments (sizes from 1.9rem
+   to 3rem, weights 700-800, several different colors, some pages unstyled
+   entirely). Page-local overrides have been removed so this rule applies
+   uniformly everywhere. */
+h1 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #a8d8ea;
+    margin: 0 0 6px 0;
+}
+
+/* Sidebar/panel search-filter input: single source of truth for width/padding/
+   border/font across every page. Previously each page defined its own local
+   .search-input / .search-bar / .sidebar-search-bar rule and had drifted into
+   different widths, padding, and border-radius. Page-local overrides for this
+   selector should be removed so this rule applies uniformly everywhere. */
+.search-input, .search-bar, .sidebar-search-bar input {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid var(--border-color);
+    border-radius: 30px;
+    padding: 12px 24px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    outline: none;
+    transition: all 0.25s ease;
+}
+.search-input::placeholder, .search-bar::placeholder, .sidebar-search-bar input::placeholder {
+    color: #64748b;
+}
+.search-input:focus, .search-bar:focus, .sidebar-search-bar input:focus {
+    border-color: var(--accent-prime, #22c55e);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--panel-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 3rem 2.5rem;
+    border-radius: 24px;
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.8), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-sizing: border-box;
+}
+
+header {
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+/* Top-to-title spacing: pages whose title lives inside the glass panel get a
+   ~40px gap from the panel's top padding (see Warframe_Mods_Database). Pages
+   that put the title in a bare <header> as a direct child of body have no such
+   gap, so the title sits ~40px higher. Add the equivalent top padding so the
+   title lands at the same distance from the top on every page. Panel pages are
+   unaffected (their header is nested inside .container, not a direct body
+   child). !important overrides the inline padding shorthand these headers use. */
+body > header {
+    padding-top: 40px !important;
+}
+
+p.subtitle {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.15rem;
+    color: #94a3b8;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #94a3b8, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h2 {
+    color: #fff;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    padding-bottom: 12px;
+    margin-top: 3.5rem;
+    margin-bottom: 2rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-gold), transparent);
+    box-shadow: 0 0 10px var(--accent-gold);
+}
+
+h3 {
+    margin-top: 0;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* TOC PANEL */
+.toc {
+    background: rgba(8, 12, 24, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 1.8rem;
+    margin-bottom: 2.5rem;
+    box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.toc h3 {
+    color: var(--accent-gold);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.toc a {
+    text-decoration: none;
+    color: #94a3b8;
+    transition: all 0.25s ease;
+    display: inline-block;
+    padding: 3px 0;
+}
+
+.toc a:hover {
+    color: var(--accent-gold);
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+    transform: translateX(3px);
+}
+
+.completed-toc {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+/* CARDS */
+.warframe-card, .weapon-card, .card, .planet-card, .category-card {
+    background: var(--card-bg);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.warframe-card:hover, .weapon-card:hover, .card:hover, .planet-card:hover, .category-card:hover {
+    background: var(--card-hover-bg);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55);
+    
+}
+
+.role-tag {
+    display: inline-block;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    color: #c084fc;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.72rem;
+    margin-left: 12px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.desc {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    color: #94a3b8;
+}
+
+.grid-2col {
+    display: grid;
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .grid-2col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* DASHBOARD GRID SYSTEM FOR SUB-SECTIONS */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+    margin-top: 1.5rem;
+    align-items: stretch;
+}
+
+@media (max-width: 480px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dashboard-grid .warframe-card,
+.dashboard-grid .weapon-card,
+.dashboard-grid .card,
+.dashboard-grid .planet-card,
+.dashboard-grid .category-card {
+    margin-bottom: 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.dashboard-grid .warframe-card h3,
+.dashboard-grid .weapon-card h3,
+.dashboard-grid .card h3,
+.dashboard-grid .planet-card h2,
+.dashboard-grid .category-card h2 {
+    flex-grow: 0;
+}
+
+.dashboard-grid .grid-2col {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+}
+
+.dashboard-grid h2 {
+    grid-column: 1 / -1;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.box {
+    background: rgba(8, 12, 24, 0.6);
+    padding: 20px;
+    border-left: 4px solid var(--accent-gold);
+    border-radius: 0 12px 12px 0;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.box h4 {
+    margin-top: 0;
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+ul.mod-list {
+    padding-left: 20px;
+    margin: 0;
+}
+
+ul.mod-list li {
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+}
+
+.highlight {
+    font-weight: bold;
+    color: var(--accent-gold);
+}
+
+.warning {
+    font-weight: bold;
+    color: #ef4444;
+}
+
+.time-tag {
+    display: inline-block;
+    background: rgba(255, 171, 0, 0.12);
+    border: 1px solid rgba(255, 171, 0, 0.3);
+    border-radius: 6px;
+    padding: 1px 8px;
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+.ref-label {
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+.desc-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.mod-name {
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+.mod-desc {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-left: 4px;
+}
+
+ul.mod-list li.mod-item {
+    list-style: none;
+}
+
+.mod-grid .mod-item {
+    background: rgba(15, 11, 28, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: var(--transition-smooth);
+}
+
+.mod-grid .mod-item:hover {
+    transform: scale(1.03);
+}
+
+.mod-grid .mod-item h4 {
+    margin: 0 0 6px;
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.mod-grid .mod-item p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.aura {
+    font-weight: bold;
+    color: #fb7185; /* Soft rose */
+}
+
+.exilus {
+    font-weight: bold;
+    color: #38bdf8; /* Soft blue */
+}
+
+/* BUTTONS */
+.print-btn {
+    display: block;
+    width: 200px;
+    margin: 0 auto 2rem auto;
+    padding: 12px;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.print-btn:hover {
+    background: var(--accent-gold);
+    color: #060813;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+    transform: translateY(-1px);
+}
+
+/* CHECKBOX TRACKERS */
+.tracker-container {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.78rem;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: none;
+    letter-spacing: normal;
+    transition: all 0.2s ease;
+}
+
+.tracker-container.completed {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #34d399;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+}
+
+.toc-tracker-container {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* Modern Checkbox styling mapping input */
+.tracker-checkbox,
+.toc-tracker-checkbox,
+.warframe-checkbox-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.25s ease;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.tracker-checkbox:checked,
+.toc-tracker-checkbox:checked {
+    background-color: var(--accent-gold);
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 10px var(--accent-gold);
+}
+
+.tracker-checkbox::after,
+.toc-tracker-checkbox::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    color: #060813;
+    font-size: 10px;
+    font-weight: 900;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tracker-checkbox:checked::after,
+.toc-tracker-checkbox:checked::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* NAVIGATION CAPSULES & BACK BUTTON */
+.back-to-index-container a {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px !important;
+    background: rgba(13, 20, 38, 0.8) !important;
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+    font-family: var(--font-app) !important;
+    font-size: 13px !important;
+    transition: all 0.25s ease-in-out !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.back-to-index-container a:hover {
+    transform: translateY(-1px) scale(1.03);
+    background: rgba(23, 33, 62, 0.9) !important;
+    border-color: var(--primary-accent) !important;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Navigation Capsule Overrides */
+.navigation-capsule {
+    background: rgba(15, 23, 42, 0.94) !important; backdrop-filter: blur(12px) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.2) !important; border-radius: 40px !important;
+    padding: 12px 32px !important; box-shadow: 0 10px 35px rgba(0,0,0,0.6) !important;
+    display: flex !important; align-items: center !important; gap: 20px !important;
+    font-family: 'Inter', sans-serif !important; font-size: 16px !important; white-space: nowrap !important;
+    transition: all 0.3s ease !important;
+}
+.navigation-capsule:hover {
+    border-color: rgba(255, 171, 0, 0.5) !important;
+    box-shadow: 0 12px 40px rgba(255, 171, 0, 0.25), 0 10px 35px rgba(0,0,0,0.6) !important;
+    transform: translateX(-50%) !important;
+}
+.navigation-capsule a {
+    color: #fff !important; text-decoration: none !important; font-weight: 700 !important; cursor: pointer !important;
+    transition: all 0.2s ease-in-out !important;
+    font-size: 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+.navigation-capsule a:hover { color: #ffab00 !important; transform: scale(1.2) !important; text-shadow: 0 0 12px rgba(255, 171, 0, 0.8) !important; background: none !important; }
+
+/* SUB-PAGE LAUNCHER DASHBOARD SYSTEM */
+.subpage-launcher-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 580px) {
+    .subpage-launcher-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.subpage-tile {
+    background: rgba(13, 20, 38, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    user-select: none;
+}
+
+.subpage-tile:hover {
+    background: rgba(23, 33, 62, 0.7);
+    border-color: var(--accent-gold);
+    
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(245, 158, 11, 0.25);
+}
+
+.subpage-tile-icon {
+    font-size: 2.2rem;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.08));
+    transition: transform 0.3s ease;
+}
+
+.subpage-tile:hover .subpage-tile-icon {
+    transform: scale(1.18);
+}
+
+.subpage-tile h4 {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.subpage-tile p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    line-height: 1.3;
+}
+
+/* SUB-PAGE MODAL VIEW SYSTEM */
+.card-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(4, 6, 15, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.card-modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.card-modal-container {
+    width: 90%;
+    max-width: 850px;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-sizing: border-box;
+}
+
+.card-modal-overlay.open .card-modal-container {
+    transform: scale(1);
+}
+
+.close-card-modal {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 2.5rem;
+    color: #94a3b8;
+    cursor: pointer;
+    z-index: 10002;
+    transition: color 0.2s ease;
+    user-select: none;
+}
+
+.close-card-modal:hover { color: #fff; }
+
+/* PRINT MEDIA */
+@media print {
+    body {
+        background: none;
+        color: #000;
+    }
+    .container {
+        border: none;
+        box-shadow: none;
+        background: none;
+        padding: 0;
+        max-width: none;
+    }
+    .no-print {
+        display: none !important;
+    }
+    .warframe-card, .weapon-card, .card, .planet-card, .category-card {
+        border: 1px solid #ccc;
+        box-shadow: none;
+        background: none;
+        page-break-inside: avoid;
+    }
+    header h1 {
+        color: #000;
+        background: none;
+        -webkit-text-fill-color: initial;
+    }
+}
+
+/* ATLAS BUILD CLASSES IMPORTED FROM ORBITER */
+.build-header-tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.build-header-tag h2 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.version-badge {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-primary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.build-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+}
+
+.build-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.version-tag {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.panel-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+/* Mod Grid layout inside dashboard */
+.mod-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.mod-card {
+  background: rgba(15, 11, 28, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 130px;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.mod-card:hover {
+  transform: scale(1.03);
+}
+
+.mod-card.prime {
+  border-color: #d97706; /* Bronze/Golden */
+  box-shadow: 0 0 10px rgba(217, 119, 6, 0.1);
+}
+
+.mod-card.umbral {
+  border-color: #8b5cf6; /* Purple Umbra */
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.15);
+}
+
+.mod-card.augment {
+  border-color: #06b6d4; /* Teal Augment */
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+}
+
+.mod-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.mod-title {
+  color: var(--text-primary);
+}
+
+.mod-cost {
+  color: var(--text-secondary);
+}
+
+.mod-desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.mod-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.aura-exilus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.info-card-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.info-highlight-text {
+  font-family: var(--font-orbitron);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold-primary);
+}
+
+.info-card-subtext {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.accent-blue {
+  color: var(--color-accent) !important;
+}
+
+.sub-section-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  border-left: 3px solid var(--color-primary);
+  padding-left: 0.5rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.info-item {
+  margin-top: 0.75rem;
+}
+
+.info-item h4 {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.info-item p {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+
+
+/* DASHBOARD MENU TILES (Replaces legacy ul lists) */
+.dashboard-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    margin: 15px 0 25px 0;
+}
+
+.menu-tile {
+    background: rgba(15, 22, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.menu-tile:hover {
+    background: rgba(79, 70, 229, 0.4);
+    
+    border-color: var(--accent);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.menu-tile-title {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.menu-tile-desc {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+
+
+
+
+
+
+
+
+/* GLOBAL HIGH-CONTRAST THEME OVERRIDES FOR INLINE STYLES */
+
+/* Override hardcoded yellow / gold text in light theme for contrast */
+
+
+
+
+/* Force paragraph and checklist label text to resolve to the active theme's text color */
+.card p,
+.box p,
+.panel p,
+.unlock-step label,
+.subsume-item label,
+.subsume-label {
+    color: var(--text-color) !important;
+}
+
+/* Dark mode contrast corrections for inline color styles (cyan and purple) */
+[style*="color: #006064"],
+[style*="color:#006064"] {
+    color: #00e5ff !important; /* Neon cyan */
+}
+[style*="border-bottom: 1px solid #b2ebf2"],
+[style*="border-bottom:1px solid #b2ebf2"] {
+    border-bottom-color: rgba(0, 229, 255, 0.25) !important;
+}
+
+[style*="color: #7b1fa2"],
+[style*="color:#7b1fa2"] {
+    color: #e040fb !important; /* Neon magenta/purple */
+}
+[style*="border-bottom: 1px solid #e1bee7"],
+[style*="border-bottom:1px solid #e1bee7"] {
+    border-bottom-color: rgba(224, 64, 251, 0.25) !important;
+}
+
+/* Fix background contrast of steps/boxes in dark mode */
+.unlock-step[style*="background: #e0f7fa"],
+.unlock-step[style*="background:#e0f7fa"] {
+    background: rgba(0, 229, 255, 0.08) !important;
+    border-color: rgba(0, 229, 255, 0.25) !important;
+}
+[style*="background: #fce4ec"],
+[style*="background:#fce4ec"] {
+    background: rgba(224, 64, 251, 0.08) !important;
+    border-color: rgba(224, 64, 251, 0.25) !important;
+    color: var(--text-color) !important;
+}
+
+/* Custom Callout Boxes (Info, Warning, Tips) */
+.warning-box {
+    background: rgba(239, 68, 68, 0.08);
+    border-left: 4px solid #ef4444;
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+
+.info-box {
+    background: rgba(59, 130, 246, 0.08);
+    border-left: 4px solid #3b82f6;
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.success-box {
+    background: rgba(16, 185, 129, 0.08);
+    border-left: 4px solid #10b981;
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* .tab-btn is used on 5 pages with wildly inconsistent local styling --
+   some inline-style every instance, some (Relics_Database's relic-type
+   filters) had none at all and rendered as bare default buttons. Base
+   pill treatment matches what Mods_Database already achieves locally. */
+.tab-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    color: #8fa0b0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+    background: var(--accent-gold);
+    color: #080a10;
+    border-color: var(--accent-gold);
+    box-shadow: 0 4px 12px rgba(255, 171, 0, 0.25);
+}
+
+/* .totals-panel/.totals-header already existed page-scoped in
+   Warframe_Archon_Planner_App.html; Circuit_Tracker_App and
+   Relics_Database use the same classes but never defined them. */
+.totals-panel {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.totals-header {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 2rem;
+    color: #fff;
+    margin: 0 0 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.tip-box {
+    background: rgba(16, 185, 129, 0.08);
+    border-left: 4px solid #10b981;
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+
+/* Global Top Header Pill Buttons */
+.global-top-header a.header-btn,
+.global-top-header button.header-btn {
+    background: rgba(245, 158, 11, 0.04) !important;
+    border: 1px solid rgba(245, 158, 11, 0.2) !important;
+    color: var(--accent-gold) !important;
+    padding: 6px 14px !important;
+    border-radius: 30px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    font-size: 13px !important;
+    transition: all 0.25s ease !important;
+    font-family: var(--font-app) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+}
+.global-top-header a.header-btn:hover,
+.global-top-header button.header-btn:hover {
+    background: rgba(245, 158, 11, 0.12) !important;
+    border-color: var(--accent-gold) !important;
+    color: var(--accent-gold) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.15) !important;
+}
+
+/* Light theme overrides */
+
+
+
+
+/* --- GRAPHICAL ICON BUTTONS & TOOLTIPS --- */
+.icon-btn {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 8px;
+    color: #cbd5e1;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.icon-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: all 0.3s ease;
+}
+.icon-btn:hover {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: rgba(139, 92, 246, 0.5);
+    color: #c4b5fd;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+    transform: translateY(-2px);
+}
+.icon-btn:hover svg {
+    filter: drop-shadow(0 0 5px rgba(139, 92, 246, 0.6));
+}
+
+/* Tooltip container */
+.has-tooltip {
+    position: relative;
+}
+.has-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(15, 23, 42, 0.95);
+    color: #e2e8f0;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    pointer-events: none;
+    z-index: 1000;
+}
+.has-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Unified Header Layout Tweaks for Icons */
+.global-top-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.header-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto;
+}
+.nav-capsule-icons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
+/* --- HYBRID TAB BUTTONS (Local Navigation) --- */
+.tab-icon-btn {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 10px;
+    color: #94a3b8;
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 100px;
+    text-decoration: none;
+    outline: none;
+}
+.tab-icon-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: all 0.3s ease;
+}
+.tab-icon-btn .tab-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+}
+.tab-icon-btn:hover {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.4);
+    color: #e2e8f0;
+}
+.tab-icon-btn.active {
+    background: rgba(139, 92, 246, 0.25);
+    border-color: #a78bfa;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), inset 0 0 10px rgba(139, 92, 246, 0.2);
+}
+.tab-icon-btn.active svg {
+    filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.8));
+}
+
+
+
+
+/* Align gear wheel and header actions (Item 1) */
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+}
+
+/* --- STATIC BOTTOM NAV BAR --- */
+.global-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    z-index: 10000;
+    box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.5);
+}
+.global-bottom-nav .icon-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+}
+
+body {
+    padding-bottom: 80px !important;
+}
+
+/* --- BOTTOM NAV TEXT BUTTONS --- */
+.global-bottom-nav .nav-text-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.global-bottom-nav .nav-text-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffab00;
+}
+.global-bottom-nav .nav-text-btn.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+.global-bottom-nav .nav-text-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Settings button text wrapping fix */
+.header-actions .icon-btn {
+    width: auto;
+    height: auto;
+}
+
+/* Layout alignment & spacing fixes for dynamic headers, checkboxes, and tags */
+.card h3,
+.warframe-card h3,
+.weapon-card h3,
+.planet-card h2,
+.category-card h2,
+.volume-card h2 {
+    flex-grow: 1;
+}
+
+.tracker-container {
+    margin-left: 15px !important;
+    flex-shrink: 0 !important;
+}
+
+.type-tag {
+    margin-left: 15px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Hide jump-dn button by default globally to prevent layout shift/flicker */
+#jump-dn {
+    display: none;
+}

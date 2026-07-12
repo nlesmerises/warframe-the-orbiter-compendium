@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Warframe Conservation Codex &mdash; non-lethal animal hunting across Orb Vallis, Plains of Eidolon, and Cambion Drift: how a hunt works, gear and vendors, per-world reference, and rewards (tags, floofs, standing).">
+    <title>Warframe: The Orbiter Compendium &mdash; Conservation Codex</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#129419; Conservation Codex</h1>
+        <p class="subtitle">Non-lethal hunting across the open worlds &mdash; gear, vendors, and rewards</p>
+    </header>
+
+    <div class="card" style="border-left:3px solid #ffab00;margin-bottom:20px;">
+        <p style="margin:0;color:#9fb0c4;font-size:0.9rem;"><strong style="color:#ffab00;">Living data note:</strong> Conservation mechanics are stable. Exact animal lists, tag-for-floof rates, and standing values can change &mdash; confirm current species and rewards at the in-game vendor or the official Warframe wiki.</p>
+    </div>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="what-is-conservation" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#129419;</div><h2 class="qi-tile-title">What Is Conservation?</h2><p class="qi-tile-desc">Non-lethal hunting across all three open worlds — tranquilize animals for Standing, species tags, and Floofs.</p></a>
+            <a class="qi-tile toc-toggle" data-section="how-a-hunt-works" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">How a Hunt Works</h2><p class="qi-tile-desc">Tranquilizing without spooking grants a Perfect Capture — approach crouched, no gunfire nearby, no missed darts.</p></a>
+            <a class="qi-tile toc-toggle" data-section="gear" style="border-left-color:#ffab00;"><div class="qi-tile-icon">&#129520;</div><h2 class="qi-tile-title">Gear You Need</h2><p class="qi-tile-desc">Tranq Rifle works everywhere once bought; Echo-Lures are per-species and bought from that world's vendor.</p></a>
+            <a class="qi-tile toc-toggle" data-section="per-world" style="border-left-color:#ffa726;"><div class="qi-tile-icon">&#128506;&#65039;</div><h2 class="qi-tile-title">Per-World Reference</h2><p class="qi-tile-desc">Plains of Eidolon, Orb Vallis, and Cambion Drift — animals, lures, and vendor locations for each open world.</p></a>
+            <a class="qi-tile toc-toggle" data-section="rewards" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#127873;</div><h2 class="qi-tile-title">Rewards</h2><p class="qi-tile-desc">Standing turn-ins, Floofs for the Orbiter, and rare resources from perfect captures.</p></a>
+            <a class="qi-tile toc-toggle" data-section="tips" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#128161;</div><h2 class="qi-tile-title">Tips</h2><p class="qi-tile-desc">Warframe choice, movement discipline, and timing tricks for consistent perfect captures.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. WHAT IS CONSERVATION -->
+    <section class="category-section" id="what-is-conservation">
+        <h2>&#129419; 1. What Is Conservation?</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Catch, Don't Kill</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Conservation is <strong>non-lethal hunting</strong>: you tranquilize wild animals and capture them for <strong>Standing, species tags, and Floofs</strong> &mdash; no killing.</li>
+                    <li>Available on all three open worlds: <strong>Orb Vallis, Plains of Eidolon, and Cambion Drift</strong>.</li>
+                    <li>It's a relaxed, low-pressure activity &mdash; a steady standing/decoration source.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Why Do It</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li><strong>Syndicate Standing</strong> from turn-ins (Solaris United / Ostron / Entrati).</li>
+                    <li><strong>Tags</strong> &rarr; redeem for <strong>Floofs</strong> (collectible Orbiter decorations).</li>
+                    <li>Some rare resources and the satisfaction of a <strong>perfect capture</strong> streak.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. HOW A HUNT WORKS -->
+    <section class="category-section" id="how-a-hunt-works">
+        <h2>&#127919; 2. How a Hunt Works</h2>
+        <div class="card" style="border-left:6px solid #42a5f5;">
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#128260; The Loop</h4>
+                    <ul class="list">
+                        <li><strong>Find a track</strong> (footprints) or use an <strong>Echo-Lure</strong> to call the species.</li>
+                        <li><strong>Mimic the lure tones</strong> when prompted to coax the animal in (a small rhythm minigame).</li>
+                        <li>Wait for it to appear, then <strong>tranquilize</strong> it with the Tranq Rifle &mdash; <em>do not</em> use a real weapon.</li>
+                        <li>Capture it. A clean, undisturbed approach yields a <strong>Perfect Capture</strong>.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#127942; Perfect Captures</h4>
+                    <p>Tranquilizing without spooking the animal (no gunfire nearby, no missed darts) grants a <strong>Perfect Capture</strong>, which gives the <strong>best rewards and more tags</strong>. Approach crouched, keep Warframe powers/allies from scaring them, and tag every animal in a group before they flee.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. GEAR YOU NEED -->
+    <section class="category-section" id="gear">
+        <h2>&#129520; 3. Gear You Need</h2>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ffab00;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Gear</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">What It Does</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Where</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Tranq Rifle</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Non-lethal dart rifle &mdash; the core tool</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">The Business (Fortuna) or Son (Necralisk)</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Echo-Lures</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Reusable; call a <em>specific</em> species (one per animal)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">The Business / Master Teasonai / Son</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Pheromone item (one-use)</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Increases <strong>rare</strong> animal spawn chance</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Synthesizer (Vallis) / Oota (Plains) / Gland (Deimos)</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;">Luminous Dye (optional)</td><td style="padding:7px 14px;color:#e2e8f0;">Highlights tracks &amp; animals, easier to follow</td><td style="padding:7px 14px;color:#9fb0c4;">Conservation vendors</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 4. PER-WORLD REFERENCE -->
+    <section class="category-section" id="per-world">
+        <h2>&#128506;&#65039; 4. Per-World Reference</h2>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ffa726;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Open World</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Vendor</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Standing</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Pheromone Item</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Orb Vallis (Fortuna)</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">The Business</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Solaris United</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Pheromone Synthesizer</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Plains of Eidolon (Cetus)</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Master Teasonai</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Ostron</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Pheromone Oota</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;">Cambion Drift (Necralisk)</td><td style="padding:7px 14px;color:#e2e8f0;">Son</td><td style="padding:7px 14px;color:#9fb0c4;">Entrati</td><td style="padding:7px 14px;color:#9fb0c4;">Pheromone Gland</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="color:#9fb0c4;margin-top:0.6rem;font-size:0.85rem;">On Cambion Drift the <strong>Fass / Vome</strong> day-night cycle changes which animals appear. Buy the Tranq Rifle once and it works everywhere; Echo-Lures are per-species and bought from that world's vendor.</p>
+    </section>
+
+    <!-- 5. REWARDS -->
+    <section class="category-section" id="rewards">
+        <h2>&#127873; 5. Rewards</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Tags &amp; Floofs</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>Each successful turn-in grants Standing <strong>and a species tag</strong>.</li>
+                    <li>Trade tags back to the vendor for <strong>Floofs</strong> &mdash; collectible Orbiter decorations.</li>
+                    <li>Perfect captures yield more tags per run.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Standing &amp; Resources</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>Solid <strong>daily standing</strong> toward the world's syndicate &mdash; see <a href="Warframe_Syndicate_Manager.html" style="color:#89cff0;">Syndicate Manager</a>.</li>
+                    <li>Some animals tie into resources/companions for that world.</li>
+                    <li>Great to combine with bounties and fishing on the same trip.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. TIPS -->
+    <section class="category-section" id="tips">
+        <h2>&#128161; 6. Tips</h2>
+        <div class="card" style="border-left:6px solid #ce93d8;">
+            <ul class="list">
+                <li><strong>Never shoot with a real weapon</strong> &mdash; only the Tranq Rifle; a kill ruins the capture.</li>
+                <li>Use the <strong>right Echo-Lure</strong> for the species you want, and a <strong>Pheromone</strong> item when farming rares.</li>
+                <li>Go <strong>solo or with a coordinated squad</strong> &mdash; random gunfire and abilities scare animals.</li>
+                <li>Approach <strong>crouched</strong> and tranq from range for clean Perfect Captures.</li>
+                <li>Pair the trip with open-world bounties &amp; fishing &mdash; see the <a href="Warframe_Open_Worlds_Guide.html" style="color:#89cff0;">Open Worlds Guide</a> and <a href="Warframe_Fishing_Companion_Codex.html" style="color:#89cff0;">Fishing Codex</a>.</li>
+            </ul>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

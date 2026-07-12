@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Inventory &amp; Space Optimizer</title>
+    <style>
+body { padding-top: 154.6px !important; }
+.category-section { display: none; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+.desc-text { color: #9fb0c4; font-size: 0.9rem; line-height: 1.5; }
+.item-list { list-style: none; padding-left: 0; margin: 0; }
+.item-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.88rem; }
+.item-name { color: #ffab00; font-weight: 600; flex-shrink: 0; }
+.item-detail { color: #9fb0c4; text-align: right; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+
+
+
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128230; Inventory &amp; Space Optimizer</h1>
+        <p class="subtitle">Complete checklists &amp; safeguards for managing slots, mod duplicates, and blueprints</p>
+    </header>
+
+<div class="card" style="border-left:3px solid #ffab00; margin-bottom:24px;">
+    <p style="margin:0; color:#cbd5e0; line-height:1.6;">
+        Slot pressure hits every Tenno eventually. This optimizer is a set of <strong>safe</strong> cleanup checklists &mdash; what you can dump for Credits, Endo, and Ducats, and just as importantly <strong>what you must never sell</strong>. Pick a card below; each opens its own checklist.
+    </p>
+    <p style="margin:12px 0 0; color:#cbd5e0; line-height:1.6;">
+        <strong style="color:#ffab00;">Golden rule:</strong> when in doubt, don't sell it. Most gear is cheap to keep but painful to refarm &mdash; sell only what's on a Hit-List, never what's on the Safeguard list.
+    </p>
+    <p style="margin:12px 0 0; color:#9fb0c4; font-size:0.88rem;">
+        Related: <a href="Warframe_Disposal_Guidelines_SOP.html" style="color:#89cff0;">Disposal Guidelines SOP</a> &middot; <a href="Warframe_Rare_Mods_Value_Guide.html" style="color:#89cff0;">Rare Mod Values</a> &middot; <a href="Warframe_Trading_Ledger.html" style="color:#89cff0;">Trading Ledger</a> &middot; <a href="Warframe_Helminth_Synergy_App.html" style="color:#89cff0;">Helminth Synergy</a>
+    </p>
+</div>
+
+    <nav class="toc no-print" id="section-menu">
+        <strong style="display:block; margin-bottom:14px; color:#ffab00; font-family:'Outfit',sans-serif; letter-spacing:1px;">&#128203; Pick a Checklist:</strong>
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="section-hitlist" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">1. Weapons Hit-List</h2><p class="qi-tile-desc">THE RULE OF THUMB: If a weapon is on this list, it is 100% a dead-end with no recipe roles or late-game utility. Once it reaches Rank 30, you can safely sell it for Credits from...</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-neversell" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">2. Never Sell (Safeguard)</h2><p class="qi-tile-desc">The counterpart to the Hit-List. These are easy to sell by accident and painful (or impossible) to get back . Scan for them before any inventory purge — if it&#39;s here, keep it.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-helminth" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">3. Helminth Safeguard</h2><p class="qi-tile-desc">NEVER sell non-prime Warframes for Credits! Even if you get their superior Prime version, keep the regular Warframe in your inventory (or keep it waiting in your Foundry) until...</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-housekeeping" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">4. Housekeeping</h2><p class="qi-tile-desc">1. The Blueprint Credit Goldmine: Go to Inventory -&gt; Miscellaneous . You naturally accumulate hundreds of spare blueprints from boss farms and standard play (such as Harrow Chas...</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-ducats" style="border-left-color:#ffd54f;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">5. Prime Parts &rarr; Ducats</h2><p class="qi-tile-desc">Duplicate Prime parts are the #1 source of Foundry clutter. Instead of hoarding them, turn them into Ducats at any relay&#39;s Ducat Kiosk (beside Baro Ki&#39;Teer&#39;s spot) to spend on B...</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-uselessmods" style="border-left-color:#4dd0e1;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">6. Useless Mods</h2><p class="qi-tile-desc">Melt these mods down in your Mod Console for pure Endo without a second thought. They are either obsolete tutorials, useless stats, or easily replaced duplicates. Keep exactly o...</p></a>
+        </div>
+    </nav>
+
+<div class="category-section" id="section-hitlist">
+<div class="card" id="hitlist" style="border-left: 6px solid #42a5f5;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">&#x1F5D1;&#xFE0F; Safe-to-Discard Weapons List (The Hit-List)</h3>
+                    <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Checklist</span>
+                </div>
+                <p class="desc-text" style="font-size: 1rem; color: #cbd5e0; line-height: 1.6;">
+                    <strong>THE RULE OF THUMB: If a weapon is on this list, it is 100% a dead-end with no recipe roles or late-game utility. Once it reaches Rank 30, you can safely sell it for Credits from your inventory to open up slots! IF A WEAPON IS NOT ON THIS LIST, DO NOT TOUCH IT!</strong>
+                </p>
+                
+                <div class="grid-2col" style="margin-top: 15px;">
+                    <!-- PRIMARY WEAPONS -->
+                    <div class="box" style="border-top: 3px solid #4caf50; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                        <h4 style="color: #81c784; font-size: 1.15rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x1F52B; Primary Weapons (Safe at 30)</h4>
+                        <ul class="item-list">
+                            <li class="item-row"><span class="item-name">MK1-Braton</span> <span class="item-detail">Dead-end starter rifle.</span></li>
+                            <li class="item-row"><span class="item-name">MK1-Paris</span> <span class="item-detail">Dead-end starter bow.</span></li>
+                            <li class="item-row"><span class="item-name">MK1-Strun</span> <span class="item-detail">Dead-end starter shotgun.</span></li>
+                            <li class="item-row"><span class="item-name">Braton</span> <span class="item-detail">Standard automatic rifle.</span></li>
+                            <li class="item-row"><span class="item-name">Paris</span> <span class="item-detail">Standard starter bow.</span></li>
+                            <li class="item-row"><span class="item-name">Strun</span> <span class="item-detail">Base shotgun (Wraith/Prime do not require it).</span></li>
+                            <li class="item-row"><span class="item-name">Gorgon</span> <span class="item-detail">Heavy Grineer LMG (Prisma/Wraith do not require it).</span></li>
+                            <li class="item-row"><span class="item-name">Karak</span> <span class="item-detail">Standard Grineer assault rifle.</span></li>
+                            <li class="item-row"><span class="item-name">Hind</span> <span class="item-detail">Standard Grineer burst rifle.</span></li>
+                            <li class="item-row"><span class="item-name">Harpak</span> <span class="item-detail">Grineer harpoon rifle.</span></li>
+                            <li class="item-row"><span class="item-name">Vulkar</span> <span class="item-detail">Grineer sniper rifle (Wraith does not require it).</span></li>
+                            <li class="item-row"><span class="item-name">Dera</span> <span class="item-detail">Corpus laser rifle (Vandal does not require it).</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- SECONDARY & MELEE WEAPONS -->
+                    <div class="box" style="border-top: 3px solid #81c784; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                        <h4 style="color: #81c784; font-size: 1.15rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x1F3AF; Secondary Weapons (Safe at 30)</h4>
+                        <ul class="item-list" style="margin-bottom: 20px;">
+                            <li class="item-row"><span class="item-name">MK1-Furis</span> <span class="item-detail">Starter machine pistol.</span></li>
+                            <li class="item-row"><span class="item-name">MK1-Kunai</span> <span class="item-detail">Starter throwing stars.</span></li>
+                            <li class="item-row"><span class="item-name">Stug</span> <span class="item-detail">Worst goo-gun in history. Delete instantly!</span></li>
+                            <li class="item-row"><span class="item-name">Seer</span> <span class="item-detail">Captain Vor's heavy pistol.</span></li>
+                            <li class="item-row"><span class="item-name">Tysis</span> <span class="item-detail">Obsolete corrosive pistol (Kunai required).</span></li>
+                        </ul>
+
+                        <h4 style="color: #81c784; font-size: 1.15rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x2694;&#xFE0F; Melee Weapons (Safe at 30)</h4>
+                        <ul class="item-list">
+                            <li class="item-row"><span class="item-name">MK1-Bo</span> <span class="item-detail">Starter staff.</span></li>
+                            <li class="item-row"><span class="item-name">MK1-Furax</span> <span class="item-detail">Starter boxing fists.</span></li>
+                            <li class="item-row"><span class="item-name">Cronus</span> <span class="item-detail">Vor's longsword blueprint.</span></li>
+                            <li class="item-row"><span class="item-name">Kreska</span> <span class="item-detail">Base Corpus hand-axe.</span></li>
+                            <li class="item-row"><span class="item-name">Ether Sword</span> <span class="item-detail">Standard ether longsword.</span></li>
+                            <li class="item-row"><span class="item-name">Heat Sword</span> <span class="item-detail">Standard alert sword blueprint.</span></li>
+                            <li class="item-row"><span class="item-name">Orthos</span> <span class="item-detail">Base polearm (Orthos Prime does not require it).</span></li>
+                            <li class="item-row"><span class="item-name">Galatine</span> <span class="item-detail">Base greatsword (Galatine Prime does not require it).</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HELMINTH SPACE SAFEGUARD & HOUSEKEEPING -->
+            <div class="grid-2col" style="margin-bottom: 24px; gap: 24px;">
+                <!-- HELMINTH SPACE SAFEGUARD -->
+                
+</div>
+</div>
+<div class="category-section" id="section-neversell">
+<div class="card" id="neversell" style="border-left: 6px solid #f87171;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">&#x1F512; Never Sell &mdash; The Safeguard List</h3>
+                    <span class="type-tag" style="background: rgba(248,113,113,0.18); color: #f87171; border: 1px solid rgba(248,113,113,0.45);">Do NOT Discard</span>
+                </div>
+                <p class="desc-text" style="font-size: 1rem; color: #cbd5e0; line-height: 1.6;">
+                    The counterpart to the Hit-List. These are <strong>easy to sell by accident and painful (or impossible) to get back</strong>. Scan for them before any inventory purge &mdash; if it's here, keep it.
+                </p>
+                <div class="grid-2col" style="margin-top: 15px;">
+                    <div class="box" style="border-top: 3px solid #f87171; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                        <h4 style="color: #fca5a5; font-size: 1.15rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x1F527; Build Materials &amp; Upgrades</h4>
+                        <ul class="item-list">
+                            <li class="item-row"><span class="item-name">Forma &amp; Forma Blueprints</span> <span class="item-detail">Always needed; Aura/Umbra Forma especially.</span></li>
+                            <li class="item-row"><span class="item-name">Orokin Catalyst / Reactor (Potatoes)</span> <span class="item-detail">Doubles mod capacity; rare. Keep every one.</span></li>
+                            <li class="item-row"><span class="item-name">Exilus Adapters</span> <span class="item-detail">Warframe &amp; weapon exilus slot unlocks.</span></li>
+                            <li class="item-row"><span class="item-name">Kuva &amp; Riven Slivers</span> <span class="item-detail">Riven rolling currency; not refundable.</span></li>
+                            <li class="item-row"><span class="item-name">Ayatan Stars &amp; Sculptures</span> <span class="item-detail">Endo &amp; Standing; socket stars before storing.</span></li>
+                        </ul>
+                    </div>
+                    <div class="box" style="border-top: 3px solid #f87171; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                        <h4 style="color: #fca5a5; font-size: 1.15rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x23F0; Irreplaceable / Time-Limited</h4>
+                        <ul class="item-list">
+                            <li class="item-row"><span class="item-name">Quest &amp; key items</span> <span class="item-detail">Anything flagged as a quest item.</span></li>
+                            <li class="item-row"><span class="item-name">Founder / Prime Vault / event gear</span> <span class="item-detail">May be unobtainable again.</span></li>
+                            <li class="item-row"><span class="item-name">Arcanes &amp; unranked Rivens</span> <span class="item-detail">Trade them &mdash; don't dissolve by mistake.</span></li>
+                            <li class="item-row"><span class="item-name">Last copy of any useful mod</span> <span class="item-detail">Keep one maxed (see the Useless Mods card for exceptions).</span></li>
+                            <li class="item-row"><span class="item-name">Non-Prime Warframes</span> <span class="item-detail">Keep for Helminth subsume &mdash; see the Helminth Safeguard.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+</div>
+<div class="category-section" id="section-helminth">
+<div class="card" id="helminth" style="margin-bottom: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="margin: 0;">&#x1F33F; The Helminth Safeguard</h3>
+                        <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Crucial Rule</span>
+                    </div>
+                    <p class="desc-text" style="color: #cbd5e0; line-height: 1.5; font-size: 0.95rem;">
+                        <strong>NEVER sell non-prime Warframes for Credits!</strong> <br><br>
+                        Even if you get their superior Prime version, keep the regular Warframe in your inventory (or keep it waiting in your Foundry) until you unlock the <strong>Helminth System</strong> in the late-game. <br><br>
+                        You will "subsume" (feed) these regular Warframes to your ship to permanently unlock their signature ability (like Rhino's <em>Roar</em> or Mirage's <em>Eclipse</em>) so you can cast them on any other warframe. <br><br>
+                        Selling regular frames for Credits now to save slots means you will have to farm them all over again in the future!
+                    </p>
+                    <div class="grid-2col" style="margin-top: 15px;">
+                        <div class="box" style="border-top: 3px solid #4caf50; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                            <h4 style="color: #81c784; font-size: 1.1rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x1F4CC; Keep-One Rules</h4>
+                            <ul class="item-list">
+                                <li class="item-row"><span class="item-name">Subsume once</span> <span class="item-detail">The ability unlocks account-wide; you don't need the frame afterward.</span></li>
+                                <li class="item-row"><span class="item-name">Keep one of each</span> <span class="item-detail">Hold a single non-Prime copy until subsumed; extras can go.</span></li>
+                                <li class="item-row"><span class="item-name">Costs resources + time</span> <span class="item-detail">Subsuming takes materials and a day timer &mdash; bank mats first.</span></li>
+                                <li class="item-row"><span class="item-name">Primes can't subsume</span> <span class="item-detail">Use the regular version to feed Helminth.</span></li>
+                            </ul>
+                        </div>
+                        <div class="box" style="border-top: 3px solid #81c784; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                            <h4 style="color: #81c784; font-size: 1.1rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x1F33F; Most-Wanted Subsume Abilities</h4>
+                            <ul class="item-list">
+                                <li class="item-row"><span class="item-name">Roar (Rhino)</span> <span class="item-detail">Universal damage buff.</span></li>
+                                <li class="item-row"><span class="item-name">Eclipse (Mirage)</span> <span class="item-detail">Big damage / damage reduction.</span></li>
+                                <li class="item-row"><span class="item-name">Nourish (Grendel)</span> <span class="item-detail">Viral damage + energy economy.</span></li>
+                                <li class="item-row"><span class="item-name">Gloom (Sevagoth)</span> <span class="item-detail">Enemy slow + lifesteal.</span></li>
+                                <li class="item-row"><span class="item-name">Pillage (Hildryn)</span> <span class="item-detail">Shield + armor strip.</span></li>
+                            </ul>
+                            <p style="margin: 8px 0 0; color:#9fb0c4; font-size:0.85rem;">Full pairings: <a href="Warframe_Helminth_Synergy_App.html" style="color:#89cff0;">Helminth Synergy App</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MOD & BLUEPRINT HOUSEKEEPING -->
+                
+</div>
+<div class="category-section" id="section-housekeeping">
+<div class="card" id="housekeeping" style="margin-bottom: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="margin: 0;">&#x2705; Housekeeping Checklist</h3>
+                        <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Credits & Endo</span>
+                    </div>
+                    <p class="desc-text" style="color: #cbd5e0; line-height: 1.5; font-size: 0.95rem;">
+                        <strong>1. The Blueprint Credit Goldmine:</strong> <br>
+                        Go to <em>Inventory -&gt; Miscellaneous</em>. You naturally accumulate hundreds of spare blueprints from boss farms and standard play (such as <em>Harrow Chassis</em> or <em>Oberon parts</em>). You can sell these duplicates for <strong>10,000+ Credits each</strong>. Clear them out for hundreds of thousands of free Credits instantly without touching active gear slots!<br><br>
+                        <strong>2. Safe-Dissolve Duplicate Mods for Endo:</strong> <br>
+                        In your Mod Console, filter by <strong>Duplicates</strong>. When selecting your common card stacks (like Redirection or Vitality), choose the <strong>"Select All But One"</strong> option (using middle-mouse button or console command). This safely melts down your extra 50 copies into pure Endo, while protecting your baseline upgrade cards!
+                    </p>
+                    <ul class="item-list" style="margin-top: 6px;">
+                        <li class="item-row"><span class="item-name">3. Spare Prime parts</span> <span class="item-detail">Convert duplicates to Ducats &mdash; see the Prime Parts &rarr; Ducats card.</span></li>
+                        <li class="item-row"><span class="item-name">4. Claim/clear the Foundry</span> <span class="item-detail">Claim finished items and delete stale in-progress builds you'll never finish.</span></li>
+                        <li class="item-row"><span class="item-name">5. Deploy idle Extractors</span> <span class="item-detail">Run Titan/Distilling extractors on cleared planets instead of letting them sit in inventory.</span></li>
+                        <li class="item-row"><span class="item-name">6. Fish, gems &amp; ore</span> <span class="item-detail">Sell raw stock you've already used for standing; keep refined only if a recipe needs it.</span></li>
+                        <li class="item-row"><span class="item-name">7. Decorations &amp; Captura</span> <span class="item-detail">These don't use gear slots &mdash; never sell them to "save space."</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DEDICATED SAFE-TO-DISSOLVE MODS SECTION -->
+            
+<div class="category-section" id="section-ducats">
+<div class="card" id="ducats" style="border-left: 6px solid #ffd54f;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">&#x1F3B4; Prime Parts &rarr; Ducats</h3>
+                    <span class="type-tag" style="background: rgba(255,213,79,0.18); color: #ffd54f; border: 1px solid rgba(255,213,79,0.45);">Baro Currency</span>
+                </div>
+                <p class="desc-text" style="font-size: 1rem; color: #cbd5e0; line-height: 1.6;">
+                    Duplicate <strong>Prime parts</strong> are the #1 source of Foundry clutter. Instead of hoarding them, turn them into <strong>Ducats</strong> at any relay's <em>Ducat Kiosk</em> (beside Baro Ki'Teer's spot) to spend on Baro's rotating stock.
+                </p>
+                <div class="grid-2col" style="margin-top: 15px;">
+                    <div class="box" style="border-top: 3px solid #ffd54f; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                        <h4 style="color: #ffe082; font-size: 1.1rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x1F504; What to Convert</h4>
+                        <ul class="item-list">
+                            <li class="item-row"><span class="item-name">Duplicate Prime parts</span> <span class="item-detail">You already own / already built the full set.</span></li>
+                            <li class="item-row"><span class="item-name">Common (bronze) parts</span> <span class="item-detail">Pile up fastest &mdash; dump freely.</span></li>
+                            <li class="item-row"><span class="item-name">Vaulted sets you won't build</span> <span class="item-detail">Convert rather than store indefinitely.</span></li>
+                        </ul>
+                    </div>
+                    <div class="box" style="border-top: 3px solid #ffd54f; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                        <h4 style="color: #ffe082; font-size: 1.1rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;">&#x1F4B1; Ducat Value &amp; Tips</h4>
+                        <ul class="item-list">
+                            <li class="item-row"><span class="item-name">Common = 15 Ducats</span> <span class="item-detail">Convert in bulk.</span></li>
+                            <li class="item-row"><span class="item-name">Silver = 45 / Gold = 100</span> <span class="item-detail">Highest value &mdash; but check plat value first; some sell well.</span></li>
+                            <li class="item-row"><span class="item-name">Keep one full set</span> <span class="item-detail">Of anything you actually use; convert the rest.</span></li>
+                            <li class="item-row"><span class="item-name">Stockpile before Baro</span> <span class="item-detail">He visits a relay every 2 weeks.</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="margin: 14px 0 0; color:#9fb0c4; font-size:0.88rem;">Check plat value first: <a href="Warframe_Trading_Ledger.html" style="color:#89cff0;">Trading Ledger</a> &middot; <a href="Warframe_Relics_Database.html" style="color:#89cff0;">Relics Database</a> &middot; <a href="Warframe_Vendor_Tracking_Guide.html" style="color:#89cff0;">Vendor Tracking</a></p>
+            </div>
+</div>
+<div class="category-section" id="section-uselessmods">
+<div class="card" id="uselessmods" style="border-left: 6px solid #4dd0e1;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">Useless & Safe-to-Dissolve Mods</h3>
+                    <span class="type-tag" style="background: rgba(255, 171, 0, 0.2); color: #ffab00; border: 1px solid rgba(255,171,0,0.4);">Free Up Endo!</span>
+                </div>
+                <p class="desc-text" style="font-size: 1rem; color: #cbd5e0; line-height: 1.6; margin-bottom: 20px;">
+                    Melt these mods down in your Mod Console for pure Endo without a second thought. They are either obsolete tutorials, useless stats, or easily replaced duplicates. Keep exactly <strong>one maxed-out copy</strong> of any useful mods, and safely dissolve the rest!
+                </p>
+                
+                <div class="grid-2col">
+                    <!-- COMPACT COLUMN 1 -->
+                    <div class="box" style="border-top: 3px solid #4caf50; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                        <h4 style="color: #81c784; font-size: 1.1rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;"> Defective & Obsolete Resistance Mods</h4>
+                        <ul class="item-list" style="margin-bottom: 15px;">
+                            <li class="item-row"><span class="item-name">Damaged / Defective Mods</span> <span class="item-detail">Tutorial versions. Outclassed completely. Dissolve all!</span></li>
+                            <li class="item-row"><span class="item-name">Warm Coat</span> <span class="item-detail">Useless shield resistance. Outclassed.</span></li>
+                            <li class="item-row"><span class="item-name">Lightning Rod</span> <span class="item-detail">Electricity resistance. Never used in meta.</span></li>
+                            <li class="item-row"><span class="item-name">Flame Repellent</span> <span class="item-detail">Heat resistance. Completely redundant.</span></li>
+                            <li class="item-row"><span class="item-name">Antitoxin</span> <span class="item-detail">Toxin resistance. Outclassed by Shield Gating.</span></li>
+                            <li class="item-row"><span class="item-name">Insulated Shell</span> <span class="item-detail">Cold resistance. Pure junk.</span></li>
+                            <li class="item-row"><span class="item-name">Diamond Skin</span> <span class="item-detail">Radiation resistance. Useless utility.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- COMPACT COLUMN 2 -->
+                    <div class="box" style="border-top: 3px solid #81c784; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px;">
+                        <h4 style="color: #81c784; font-size: 1.1rem; margin-top: 0; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;"> Obsolete Utility & Sentinel Mod Stacks</h4>
+                        <ul class="item-list">
+                            <li class="item-row"><span class="item-name">Intruder</span> <span class="item-detail">Extra hacking seconds. Completely bypassed by Ciphers.</span></li>
+                            <li class="item-row"><span class="item-name">Provocation</span> <span class="item-detail">Obsolete bleeding state damage boost. Useless.</span></li>
+                            <li class="item-row"><span class="item-name">Vacuum / Fetch Duplicates</span> <span class="item-detail">Keep exactly 1 maxed copy. Dissolve all duplicate stacks.</span></li>
+                            <li class="item-row"><span class="item-name">Assault Mode / Striker Duplicates</span> <span class="item-detail">Sentinel action triggers. Melt extra copies.</span></li>
+                            <li class="item-row"><span class="item-name">Thief's Wit / Loot Detector Duplicates</span> <span class="item-detail">Keep 1 copy for builds. Dissolve duplicates.</span></li>
+                            <li class="item-row"><span class="item-name">Ammo Drum Duplicates</span> <span class="item-detail">Melt down stacks of 100+ copies of common ammo/clip mods.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><!-- container -->
+
+    <!-- CHECKBOX DONE TRACKERS SCRIPT -->
+    
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Tile click
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) {
+                showMenu();
+                history.pushState({ section: null }, '', location.pathname + location.search);
+            } else {
+                showSection(targetId, true);
+            }
+        });
+    });
+
+    // Browser Back/Forward restores menu or section
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) {
+            showSection(e.state.section, false);
+        } else {
+            showMenu();
+        }
+    });
+
+    // Seed the base history state so Back from first section returns to menu
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+
+    // Select all headers that act as titles for items
+    const headers = document.querySelectorAll('.card h3, .warframe-card h3, .weapon-card h3, .planet-card h2, .category-card h2, .volume-card h2');
+    
+    headers.forEach((h, index) => {
+        if(h.querySelector('.tracker-container')) return;
+        
+        // Generate a unique ID based on the page and the header text
+        const safeTitle = h.innerText.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20);
+        const id = 'tracker_' + window.location.pathname.split('/').pop() + '_' + index + '_' + safeTitle;
+        
+        const container = document.createElement('label');
+        container.className = 'tracker-container';
+        
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'tracker-checkbox';
+        cb.id = id;
+        
+        // Find parent card to apply completion styling
+        const card = h.closest('.warframe-card, .weapon-card, .card, .volume-card');
+        
+        if(safeStorage.getItem(id) === 'true') {
+            cb.checked = true;
+            container.classList.add('completed');
+            if (card) {
+                card.style.opacity = '0.5';
+                card.style.transition = 'opacity 0.2s ease-in-out';
+            }
+        }
+        
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(id, e.target.checked);
+            if(e.target.checked) {
+                container.classList.add('completed');
+                if (card) {
+                    card.style.opacity = '0.5';
+                    card.style.transition = 'opacity 0.2s ease-in-out';
+                }
+            } else {
+                container.classList.remove('completed');
+                if (card) {
+                    card.style.opacity = '1.0';
+                }
+            }
+        });
+        
+        container.appendChild(cb);
+        container.appendChild(document.createTextNode('Done'));
+        
+        // Ensure the header flexes to push the checkbox to the right
+        h.style.display = 'flex';
+        h.style.justifyContent = 'space-between';
+        h.style.alignItems = 'center';
+        h.appendChild(container);
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+

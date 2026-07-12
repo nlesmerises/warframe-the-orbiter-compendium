@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Nightwave Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128251; Nightwave Guide</h1>
+        <p class="subtitle">Nora Night's challenge progression system &mdash; NW Credits, store items, and act strategies</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="section-what-is" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128251;</div><h2 class="qi-tile-title">What Is Nightwave?</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-challenge-types" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">Challenge Types</h2><p class="qi-tile-desc">Refresh every 24 hours. Typically simple tasks: kill X enemies with a damage type, complete a mission on a specific node, craft something, or interact with game systems. Always...</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-store" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128717;</div><h2 class="qi-tile-title">NW Credit Store &mdash; What to Buy</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-tricky" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128295;</div><h2 class="qi-tile-title">Tricky Acts &amp; Solutions</h2><p class="qi-tile-desc">You must unlock every node on the star chart first. Run Arbitration Defense (Lith, Earth) for an easy clear — bring a tank Warframe like Inaros or Revenant. You only need to com...</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-standing-table" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#128202;</div><h2 class="qi-tile-title">Standing Per Rank &mdash; Full Table</h2><p class="qi-tile-desc">Each rank requires 10,000 Standing. Prestige ranks (30+) award NW Credits instead of new items. You do not need to complete every single act to reach max rank in a season.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-act-strategy" style="border-left-color:#4dd0e1;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">Act Strategy Reference</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-store-priority" style="border-left-color:#f48fb1;"><div class="qi-tile-icon">&#11088;</div><h2 class="qi-tile-title">NW Credit Store Priority Guide</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. WHAT IS NIGHTWAVE? -->
+    <section class="category-section" id="section-what-is">
+        <h2>&#128251; 1. What Is Nightwave?</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <h3>&#128251; Series vs. Intermission</h3>
+                <ul class="list">
+                    <li><strong>Series:</strong> Themed story arc with unique cosmetics and lore (limited time)</li>
+                    <li><strong>Intermission:</strong> Filler season between Series &mdash; same mechanics, no story</li>
+                    <li>Nora Night narrates events via radio transmissions during missions</li>
+                    <li>No time-gate on individual challenges &mdash; complete at your own pace within the season</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <h3>&#11088; Standing &amp; Ranks</h3>
+                <ul class="list">
+                    <li>Complete Acts to earn Nightwave Standing</li>
+                    <li>Standing fills a rank bar &mdash; each rank unlocks a reward tier</li>
+                    <li>Prestige ranks continue past max rank for additional NW Credits</li>
+                    <li>NW Credits carry over between seasons &mdash; they do not expire</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. CHALLENGE TYPES -->
+    <section class="category-section" id="section-challenge-types">
+        <h2>&#128203; 2. Challenge Types</h2>
+        <div class="card" style="border-left:6px solid #4ade80;">
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#128197; Daily Acts (1,000 Standing)</h4>
+                    <p>Refresh every 24 hours. Typically simple tasks: kill X enemies with a damage type, complete a mission on a specific node, craft something, or interact with game systems. Always complete these &mdash; they stack up fast.</p>
+                </div>
+                <div class="box">
+                    <h4>&#128198; Weekly Acts (3,000&ndash;5,000 Standing)</h4>
+                    <p>Refresh every 7 days. More involved: complete 3 Nightmare missions, run a Sortie, earn 5,000 Mastery, complete Syndicate missions, etc. Higher Standing per act than Dailies.</p>
+                </div>
+            </div>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#127942; Elite Weekly Acts (7,000&ndash;10,000 Standing)</h4>
+                    <p>The best Standing per act. Typically harder content: complete an Arbitration, run a 60-minute survival, complete all 3 Sorties, etc. Always prioritize these &mdash; they can carry you through multiple ranks solo.</p>
+                </div>
+                <div class="box">
+                    <h4>&#127919; Strategy: Prioritization</h4>
+                    <p>Do Elite Weeklies first, then regular Weeklies, then Dailies as filler. You do not need to complete every act to max the season &mdash; Elite Weeklies alone cover most of the required Standing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. NW CREDIT STORE - WHAT TO BUY -->
+    <section class="category-section" id="section-store">
+        <h2>&#128717; 3. NW Credit Store &mdash; What to Buy</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#11088; Highest Priority</h3>
+                <ul class="list">
+                    <li><strong>Umbra Forma Blueprint</strong> &mdash; only source; essential for Umbra builds</li>
+                    <li><strong>Aura Forma Blueprint</strong> &mdash; upgrades aura slot to accept any aura mod</li>
+                    <li><strong>Arcane Energize</strong> &mdash; top energy Arcane; expensive elsewhere</li>
+                    <li><strong>Nitain Extract</strong> &mdash; limited resource used in many Warframe crafts</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#127775; Medium Priority</h3>
+                <ul class="list">
+                    <li>Vauban / Wolf Sledge / any Warframe parts in the store</li>
+                    <li>Weapon and Warframe slots &mdash; always useful</li>
+                    <li>Season-exclusive cosmetics (Syandanas, Armor sets) &mdash; time-limited</li>
+                    <li>Orokin Reactors / Catalysts if you are running low</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <h3>&#128309; Low Priority / Skip</h3>
+                <ul class="list">
+                    <li>Forma Bundles &mdash; obtainable through normal gameplay and Nightwave drops</li>
+                    <li>Credit Cache &mdash; Credits are plentiful endgame (Index, Profit-Taker)</li>
+                    <li>Common mods and resources available in normal missions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. TRICKY ACTS & SOLUTIONS -->
+    <section class="category-section" id="section-tricky">
+        <h2>&#128295; 4. Tricky Acts &amp; Solutions</h2>
+        <div class="card" style="border-left:6px solid #ef5350;">
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#9878;&#xFE0F; Complete an Arbitration</h4>
+                    <p>You must unlock every node on the star chart first. Run Arbitration Defense (Lith, Earth) for an easy clear &mdash; bring a tank Warframe like Inaros or Revenant. You only need to complete one rotation.</p>
+                </div>
+                <div class="box">
+                    <h4>&#128128; Complete 3 Nightmare Missions</h4>
+                    <p>Any Nightmare node on the star chart counts. Pick the fastest mission type (Capture or Exterminate) on lower-level nodes. Nightmare modifiers stack &mdash; build accordingly or just power through.</p>
+                </div>
+            </div>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#127919; Kill X Eximus Enemies</h4>
+                    <p>Mot Void Survival or any Steel Path mission spawns Eximus units frequently. Run for 10+ minutes to rack up kills efficiently. Disruption tiles in high-level nodes also spawn many Eximus.</p>
+                </div>
+                <div class="box">
+                    <h4>&#128101; Complete Missions with a Full Squad</h4>
+                    <p>Use Recruit chat (/r) or go public on popular nodes (Helene Saturn, Hydron Sedna). Alternatively, invite clan mates or alliance members. Any mission with 4 players at the end of extraction counts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. STANDING PER RANK - FULL TABLE -->
+    <section class="category-section" id="section-standing-table">
+        <h2>&#128202; 5. Standing Per Rank &mdash; Full Table</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Each rank requires 10,000 Standing. Prestige ranks (30+) award NW Credits instead of new items. You do not need to complete every single act to reach max rank in a season.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.5rem;">
+            <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ce93d8;">
+                <div style="padding:10px 14px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.85rem;color:#e2e8f0;font-weight:600;">Act Standing Values</div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);">
+                        <th style="padding:7px 12px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Act Type</th>
+                        <th style="padding:7px 12px;text-align:right;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Standing</th>
+                        <th style="padding:7px 12px;text-align:right;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Ranks (10k each)</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Daily Act</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">1,000</td><td style="padding:6px 12px;color:#9fb0c4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">0.1 per act</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Weekly Act</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">3,000</td><td style="padding:6px 12px;color:#9fb0c4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">0.3 per act</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Weekly Act (hard)</td><td style="padding:6px 12px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">5,000</td><td style="padding:6px 12px;color:#9fb0c4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">0.5 per act</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;">Elite Weekly</td><td style="padding:6px 12px;color:#4ade80;text-align:right;">10,000</td><td style="padding:6px 12px;color:#4ade80;text-align:right;">1 full rank</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ce93d8;">
+                <div style="padding:10px 14px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.85rem;color:#e2e8f0;font-weight:600;">Notable Rank Rewards</div>
+                <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                    <thead><tr style="background:rgba(255,255,255,0.03);">
+                        <th style="padding:7px 12px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Rank</th>
+                        <th style="padding:7px 12px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Reward</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">3</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Nitain Extract &times;5</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">5</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Warframe Slot</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">10</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Aura Forma Blueprint</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">15</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Umbra Forma Blueprint</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">20</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Exclusive Cosmetic</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">30</td><td style="padding:6px 12px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Max Rank &mdash; Prestige begins</td></tr>
+                        <tr><td style="padding:6px 12px;color:#e2e8f0;">31+</td><td style="padding:6px 12px;color:#ffab00;">50 NW Credits per prestige rank</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. ACT STRATEGY REFERENCE -->
+    <section class="category-section" id="section-act-strategy">
+        <h2>&#128203; 6. Act Strategy Reference</h2>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #4dd0e1;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Common Act</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Type</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Fastest Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Complete a Sortie</td><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Elite Weekly</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Run all 3 Sortie missions &mdash; any loadout, just complete them</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Complete an Arbitration</td><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Elite Weekly</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Defense on low-level Arb node; extract at first rotation</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">30-minute Survival</td><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Elite Weekly</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Gabii (Ceres) or Mot (Void) &mdash; AFK-friendly with strong frame</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">3 Nightmare Missions</td><td style="padding:7px 14px;color:#a8d8ea;border-bottom:1px solid rgba(255,255,255,0.04);">Weekly</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Capture nodes on low-level Nightmare &mdash; done in under 3 minutes each</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Kill 150 Enemies</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Daily</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Helene (Saturn) Defense or any Survival &mdash; happens passively</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Complete 3 Bounties</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Daily/Weekly</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Chain Cetus Tier 1 bounties back-to-back &mdash; fastest per run</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Kill X Eximus</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Weekly</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Steel Path Disruption or Mot Survival &mdash; dense Eximus spawn rates</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Complete a Mission with Full Squad</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Weekly</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Go public on Hydron (Sedna) or Helene &mdash; always full squads</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Earn Mastery</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Weekly</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Level any unranked weapon or Warframe to 30 &mdash; instant 3,000+ MR</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;">Gild a Modular Item</td><td style="padding:7px 14px;color:#9fb0c4;">Weekly</td><td style="padding:7px 14px;color:#9fb0c4;">Gild a Zaw or Kitgun at Hok/Rude Zuud &mdash; requires Rank 2 with syndicate</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 7. NW CREDIT STORE PRIORITY GUIDE -->
+    <section class="category-section" id="section-store-priority">
+        <h2>&#11088; 7. NW Credit Store Priority Guide</h2>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #f48fb1;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Item</th>
+                        <th style="padding:9px 14px;text-align:right;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">NW Cost</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Priority</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Umbra Forma Blueprint</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">50</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">&#11088; Always Buy</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Only source &mdash; applies Umbral polarity to any slot</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Aura Forma Blueprint</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">40</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">&#11088; Always Buy</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Makes aura slot universal &mdash; no polarity restriction</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Nitain Extract &times;5</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">15</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">High</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Needed for Vauban, Ash, Wukong, Mesa crafting</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Weapon Slot</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">20</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">Medium</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Usually bought with Plat but NW is free alternative</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Warframe Slot</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">30</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">Medium</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Good if you are expanding your Warframe collection</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Energize</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">40</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">Medium</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">If you don&rsquo;t have it yet &mdash; also drops from Eidolons</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Orokin Reactor/Catalyst</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">20</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Low</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Login rewards and alerts give these regularly</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Credit Cache (25k)</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">10</td><td style="padding:7px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Skip</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Very poor value &mdash; farm Index instead</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;">Forma Bundle</td><td style="padding:7px 14px;color:#ffab00;text-align:right;">15</td><td style="padding:7px 14px;color:#f87171;">Skip</td><td style="padding:7px 14px;color:#9fb0c4;">Obtainable from Nightwave rank rewards and Void fissures</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

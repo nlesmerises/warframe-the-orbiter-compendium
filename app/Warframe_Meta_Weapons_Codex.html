@@ -1,0 +1,2580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Warframe Weapon Calculator &mdash; Select a weapon and build your optimal loadout with live stat calculations.">
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <script src="assets/js/mod_database.js"></script>
+    <script src="assets/js/database_weapons.js"></script>
+    <script src="assets/js/database_encyclopedia.js"></script>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <title>Warframe: The Orbiter Compendium &mdash; Weapons Build Codex</title>
+    <style>
+        :root {
+            --accent: var(--accent-gold, #f59e0b);
+            --positive: #34d399;
+            --negative: #f87171;
+            --sidebar-w: 270px;
+            --topbar-h: 50px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: var(--topbar-h) 0 0 !important;
+            overflow: auto;
+            min-height: 100vh;
+        }
+
+        /* ── Header ─────────────────────────────────────────── */
+        .global-top-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--topbar-h);
+            background: rgba(15, 22, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 12px;
+            z-index: 10000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .header-title-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 2px;
+            user-select: none;
+        }
+
+        .header-title {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 0;
+            text-transform: none;
+            color: var(--accent);
+            background: none;
+            -webkit-text-fill-color: currentColor;
+            line-height: 1.1;
+            text-shadow: none;
+        }
+
+        .header-subtitle { display: none; }
+
+        .home-emoji-btn, .settings-emoji-btn {
+            font-size: 22px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+            user-select: none;
+        }
+        .home-emoji-btn:hover, .settings-emoji-btn:hover { transform: scale(1.15); }
+
+        .header-nav { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+        .nav-btn-top {
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid rgba(245,158,11,0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            font-size: 12.5px;
+            font-weight: 600;
+            white-space: nowrap;
+            height: 28px;
+            padding: 0 10px;
+            background: rgba(245,158,11,0.03);
+        }
+        .nav-btn-top:hover { border-color: rgba(245,158,11,0.42); background: rgba(245,158,11,0.08); }
+        .nav-btn-top.disabled { opacity: 0.28; pointer-events: none; }
+
+        /* scrollbar gutter reserved globally in common.js injectStyle (single source) */
+
+        /* ── Canonical back panel ────────────────────────────────
+           Glass container wrapping the title + two-panel layout, matching the
+           reference codex page (Warframe_Mods_Database .database-panel). The
+           inner header/app-layout fill this panel (their own centering and
+           side padding are neutralized below). */
+        .page-panel {
+            width: 100%;
+            max-width: 1750px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, rgba(12, 16, 28, 0.94), rgba(9, 12, 22, 0.98));
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border: 1.5px solid var(--border-color);
+            padding: 20px 2.5rem 1.75rem;
+            border-radius: 20px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.7);
+            box-sizing: border-box;
+        }
+
+        /* ── Two-Panel App Layout ────────────────────────────── */
+        .app-layout {
+            display: flex;
+            height: calc(100vh - 340px);
+            margin: 0;
+            width: 100%;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ── Left Sidebar ────────────────────────────────────── */
+        .weapon-sidebar {
+            width: var(--sidebar-w);
+            min-width: var(--sidebar-w);
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: rgba(6, 9, 20, 0.99);
+            border-right: 1px solid rgba(255,255,255,0.07);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .weapon-sidebar::-webkit-scrollbar { width: 3px; }
+        .weapon-sidebar::-webkit-scrollbar-track { background: transparent; }
+        .weapon-sidebar::-webkit-scrollbar-thumb { background: rgba(245,158,11,0.18); border-radius: 4px; }
+
+        /* Variant Tabs CSS */
+        .variant-tabs {
+            display: flex;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+            padding: 6px 10px;
+            gap: 6px;
+            justify-content: center;
+        }
+        .variant-tab {
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-weight: bold;
+            border: 1px solid transparent;
+        }
+        .variant-tab:hover { color: #e2e8f0; background: #1e293b; }
+        .variant-tab.active { color: #000; background: var(--accent); border-color: var(--accent); }
+
+        .sidebar-search-bar {
+            padding: 20px 20px 8px;
+            position: sticky;
+            top: 0;
+            background: rgba(6, 9, 20, 0.99);
+            z-index: 5;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* .sidebar-search-bar input width/padding/border/font: see global rule in codex_glass_theme.css */
+
+        /* ── Slot Tabs (Builds Codex style) ────────────────────── */
+        .sidebar-tabs {
+            display: flex;
+            flex-shrink: 0;
+            gap: 6px;
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .sidebar-tab {
+            flex: 1;
+            padding: 9px 4px;
+            text-align: center;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            border-radius: 7px;
+            border: 1px solid transparent;
+            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        /* Per-tab color theming */
+        .sidebar-tab[data-slot="Primary"]   { background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.25); color: #93c5fd; }
+        .sidebar-tab[data-slot="Secondary"] { background: rgba(168,85,247,0.12); border-color: rgba(168,85,247,0.25); color: #d8b4fe; }
+        .sidebar-tab[data-slot="Melee"]     { background: rgba(239,68,68,0.12);  border-color: rgba(239,68,68,0.25);  color: #fca5a5; }
+
+        .sidebar-tab[data-slot="Primary"]:hover   { background: rgba(59,130,246,0.22); transform: translateY(-1px); }
+        .sidebar-tab[data-slot="Secondary"]:hover { background: rgba(168,85,247,0.22); transform: translateY(-1px); }
+        .sidebar-tab[data-slot="Melee"]:hover     { background: rgba(239,68,68,0.22);  transform: translateY(-1px); }
+
+        .sidebar-tab[data-slot="Primary"].active   { background: rgba(59,130,246,0.38) !important; border-color: #3b82f6 !important; color: #fff !important; box-shadow: 0 0 14px rgba(59,130,246,0.45); }
+        .sidebar-tab[data-slot="Secondary"].active { background: rgba(168,85,247,0.38) !important; border-color: #a855f7 !important; color: #fff !important; box-shadow: 0 0 14px rgba(168,85,247,0.45); }
+        .sidebar-tab[data-slot="Melee"].active     { background: rgba(239,68,68,0.38) !important;  border-color: #ef4444 !important; color: #fff !important; box-shadow: 0 0 14px rgba(239,68,68,0.45); }
+
+        /* ── Category Filter Chips ──────────────────────────────── */
+        .category-filters {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            padding: 7px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .cat-filter-btn {
+            flex: 1;
+            min-width: 0;
+            padding: 5px 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.18s;
+            text-align: center;
+        }
+        .cat-filter-btn:hover { background: rgba(255,255,255,0.07); color: #94a3b8; }
+        .cat-filter-btn.active { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.35); color: var(--accent); }
+
+        /* Subcategory label */
+        .subcategory-label {
+            padding: 6px 12px 3px 14px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: #64748b;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            font-family: 'Inter', sans-serif;
+        }
+        .subcategory-label.prime-label { color: rgba(245,158,11,0.65); }
+
+        /* Weapon item (Builds Codex frame-item style) */
+        .weapon-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 14px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            border-radius: 7px;
+            margin: 2px 6px;
+            transition: all 0.18s;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .weapon-item:hover {
+            background: rgba(255,255,255,0.055);
+            border-color: rgba(255,255,255,0.1);
+            transform: translateX(3px);
+        }
+        .weapon-item.active {
+            background: rgba(245,158,11,0.1);
+            border-color: rgba(245,158,11,0.3);
+            transform: translateX(3px);
+        }
+
+        .weapon-item-left { display: flex; align-items: center; gap: 7px; flex: 1; min-width: 0; }
+
+        .weapon-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fbbf24;
+            line-height: 1.3;
+            transition: color 0.12s;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .weapon-item:hover .weapon-name { color: #fde68a; }
+        .weapon-item.active .weapon-name { color: #fef3c7; }
+
+        .weapon-item-category {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+            color: #64748b;
+            flex-shrink: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .variant-chip {
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            padding: 2px 5px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .variant-chip.incarnon { background: rgba(139,92,246,0.2); color: #a78bfa; }
+        .variant-chip.kuva     { background: rgba(239,68,68,0.18); color: #f87171; }
+        .variant-chip.tenet    { background: rgba(6,182,212,0.18); color: #67e8f9; }
+        .variant-chip.wraith   { background: rgba(34,197,94,0.18); color: #86efac; }
+        .variant-chip.kitgun   { background: rgba(249,115,22,0.18); color: #fdba74; }
+
+        /* ── Right Calculator Panel ──────────────────────────── */
+        .calculator-panel {
+            flex: 1;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 28px 32px 110px;
+            background: linear-gradient(160deg, rgba(8,12,28,0.7) 0%, rgba(4,7,16,0.85) 100%);
+        }
+        .calculator-panel::-webkit-scrollbar { width: 4px; }
+        .calculator-panel::-webkit-scrollbar-track { background: transparent; }
+        .calculator-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.09); border-radius: 4px; }
+
+        /* Welcome */
+        .welcome-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 180px);
+            text-align: center;
+            animation: fadeUp 0.35s ease;
+        }
+        .welcome-icon { font-size: 80px; margin-bottom: 24px; opacity: 0.25; }
+        .welcome-state h2 { color: #64748b; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 1.6rem; margin: 0 0 10px; font-weight: 700; position: relative; }
+        .welcome-state h2::after { display: none; }
+        .welcome-state p { color: #64748b; font-size: 0.9rem; }
+
+        /* Suppress theme h2 decoration inside cards */
+        .calc-card h2::after,
+        .weapon-header-info h2::after { display: none !important; }
+        .weapon-header-info h2 { margin: 0 !important; padding-bottom: 0 !important; border-bottom: none !important; position: static; }
+        .calc-card h2 { margin: 0 !important; padding-bottom: 0 !important; border-bottom: none !important; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Weapon Detail ───────────────────────────────────── */
+        .weapon-detail {
+            max-width: none;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            animation: fadeUp 0.22s ease;
+        }
+
+        .calc-card {
+            background: rgba(12, 18, 38, 0.82);
+            border: 1px solid rgba(255,255,255,0.075);
+            border-radius: 16px;
+            padding: 20px 24px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .section-title {
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #67e8f9;
+            margin: 0 0 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.055);
+        }
+
+        /* Header card (Builds Codex build-header style) */
+        .weapon-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 18px;
+            margin-bottom: 16px;
+        }
+
+        .weapon-header-info h2 {
+            margin: 0;
+            color: var(--accent);
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .clickable-weapon-name {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .clickable-weapon-name:hover {
+            color: #fff;
+            text-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
+        }
+
+        .weapon-meta-build-name {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            color: #67e8f9;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+
+        .weapon-meta-line {
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .weapon-summary-text {
+            margin-top: 11px;
+            color: #7a8fa8;
+            font-size: 0.88rem;
+            line-height: 1.65;
+            max-width: 560px;
+        }
+
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            justify-content: flex-end;
+            flex-shrink: 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.9px;
+            font-family: 'Inter', sans-serif;
+        }
+        .badge.slot-primary   { background: rgba(59,130,246,0.1);  color: #93c5fd; border: 1px solid rgba(59,130,246,0.18); }
+        .badge.slot-secondary { background: rgba(168,85,247,0.1);  color: #d8b4fe; border: 1px solid rgba(168,85,247,0.18); }
+        .badge.slot-melee     { background: rgba(239,68,68,0.1);   color: #fca5a5; border: 1px solid rgba(239,68,68,0.18); }
+        .badge.owned-badge    { background: rgba(16,185,129,0.1);  color: #6ee7b7; border: 1px solid rgba(16,185,129,0.18); }
+        .badge.class-badge    { background: rgba(245,158,11,0.07); color: rgba(245,158,11,0.75); border: 1px solid rgba(245,158,11,0.14); }
+        .badge.neutral-badge  { background: rgba(255,255,255,0.05); color: #64748b; border: 1px solid rgba(255,255,255,0.08); }
+
+        /* Base Stats Grid */
+        .base-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .stat-tile {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.055);
+            border-radius: 12px;
+            padding: 12px 14px;
+            transition: border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+        .stat-tile:hover {
+            border-color: rgba(245,158,11,0.35);
+            background: rgba(245,158,11,0.06);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+        }
+        .stat-tile-info-icon {
+            position: absolute;
+            top: 7px; right: 8px;
+            font-size: 10px;
+            color: #475569;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            border: 1px solid #475569;
+            display: flex; align-items: center; justify-content: center;
+            transition: color 0.2s, border-color 0.2s;
+            user-select: none;
+        }
+        .stat-tile:hover .stat-tile-info-icon {
+            color: var(--accent);
+            border-color: rgba(245,158,11,0.5);
+        }
+
+        /* ── Stat Info Modal ─────────────────────────────────── */
+        .stat-info-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 6, 16, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 50000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.22s ease;
+        }
+        .stat-info-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+        .stat-info-panel {
+            background: rgba(10, 15, 35, 0.98);
+            border: 1px solid rgba(245,158,11,0.25);
+            border-radius: 20px;
+            padding: 32px 36px;
+            max-width: 520px;
+            width: 90%;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.75), 0 0 0 1px rgba(245,158,11,0.08);
+            animation: statPanelIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        @keyframes statPanelIn {
+            from { transform: translateY(24px) scale(0.96); opacity: 0; }
+            to   { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .stat-panel-close {
+            position: absolute;
+            top: 16px; right: 18px;
+            background: none; border: none;
+            color: #334155; font-size: 22px;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .stat-panel-close:hover { color: #fff; }
+        .stat-panel-icon {
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .stat-panel-name {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .stat-panel-tagline {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #67e8f9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .stat-panel-section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #334155;
+            margin-bottom: 6px;
+            margin-top: 16px;
+        }
+        .stat-panel-body {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+        .stat-panel-formula {
+            background: rgba(245,158,11,0.06);
+            border: 1px solid rgba(245,158,11,0.15);
+            border-radius: 9px;
+            padding: 10px 14px;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+        .stat-panel-mods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .stat-mod-pill {
+            background: rgba(139,92,246,0.1);
+            border: 1px solid rgba(139,92,246,0.2);
+            color: #c4b5fd;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+        .stat-panel-tip {
+            background: rgba(52,211,153,0.06);
+            border-left: 3px solid rgba(52,211,153,0.4);
+            border-radius: 0 8px 8px 0;
+            padding: 10px 14px;
+            font-size: 0.84rem;
+            color: #6ee7b7;
+            line-height: 1.6;
+            margin-top: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .stat-tile-label {
+            color: #94a3b8;
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 1.1px;
+            margin-bottom: 5px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        .stat-tile-value {
+            color: #e2e8f0;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        /* ── Read-Only Mod Grid ─────────────────────────────── */
+        .mod-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .mod-display-card {
+            background: rgba(8, 13, 28, 0.9);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 12px;
+            padding: 13px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 6px;
+            transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+            cursor: default;
+            min-height: 90px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .mod-display-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(245,158,11,0.04) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .mod-display-card:hover::before { opacity: 1; }
+        .mod-display-card:hover {
+            border-color: rgba(245,158,11,0.28);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .mod-card-slot-num {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #64748b;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .mod-card-name {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            line-height: 1.3;
+        }
+        .mod-card-name.empty {
+            color: #475569;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .mod-card-effect {
+            font-size: 0.68rem;
+            color: #94a3b8;
+            line-height: 1.4;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .weapon-header-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .weapon-action-btn {
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            padding: 0 12px;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 36px;
+            height: 36px;
+            display: inline-block;
+            cursor: pointer;
+            transition: border-color 0.18s, transform 0.18s, background 0.18s;
+            box-sizing: border-box;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .weapon-action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .weapon-action-btn.customize-btn {
+            color: #ecfeff;
+            background: rgba(16,185,129,0.88);
+            border-color: rgba(16,185,129,0.95);
+        }
+
+        .weapon-action-btn.action-print-btn {
+            color: #0f172a;
+            background: rgba(241,245,249,0.94);
+            border-color: rgba(241,245,249,0.95);
+        }
+
+        .weapon-action-btn.save-btn,
+        .weapon-action-btn.new-btn {
+            color: #0f172a;
+            background: rgba(241,245,249,0.94);
+            border-color: rgba(241,245,249,0.95);
+        }
+
+        .weapon-action-btn.delete-btn {
+            color: #fecaca;
+            background: rgba(127,29,29,0.45);
+            border-color: rgba(248,113,113,0.35);
+        }
+
+        .active-loadout-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 14px;
+            padding: 9px 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+        }
+
+        .active-loadout-label {
+            font-size: 12px;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            color: #cbd5e1;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .build-select,
+        .build-name-input,
+        .mod-slot-search,
+        .mod-slot-select {
+            background: rgba(0,0,0,0.36);
+            border: 1px solid rgba(245,158,11,0.28);
+            border-radius: 6px;
+            color: var(--accent);
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 12px;
+            padding: 6px 9px;
+            outline: none;
+        }
+
+        .build-name-input {
+            min-width: 190px;
+            color: #e2e8f0;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+        }
+
+        .mod-display-card.editing {
+            cursor: default;
+            border-style: dashed;
+            border-color: rgba(103,232,249,0.36);
+            background: rgba(8, 18, 35, 0.92);
+        }
+
+        .mod-edit-controls {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            width: 100%;
+        }
+
+        .mod-slot-search,
+        .mod-slot-select {
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: #e2e8f0;
+        }
+
+        /* Build name banner */
+        .build-name-banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding: 9px 14px;
+            background: rgba(245,158,11,0.05);
+            border: 1px solid rgba(245,158,11,0.12);
+            border-radius: 9px;
+        }
+        .build-name-banner-icon { font-size: 1rem; }
+        .build-name-banner-label {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--accent);
+            flex: 1;
+        }
+        .build-name-banner-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: #64748b;
+            font-family: 'Inter', sans-serif;
+            background: rgba(255,255,255,0.04);
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            padding: 8px 14px;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #64748b;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .comparison-table td {
+            padding: 9px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .comparison-table tbody tr:last-child td { border-bottom: none; }
+        .comparison-table tbody tr:hover td { background: rgba(255,255,255,0.018); }
+
+        .ct-stat  { color: #94a3b8; font-size: 0.8rem; font-weight: 600; }
+        .ct-base  { color: #64748b; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 0.88rem; }
+        .ct-built { color: #e2e8f0; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 0.88rem; font-weight: 700; }
+        .ct-delta { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 0.82rem; font-weight: 700; }
+        .ct-delta.pos { color: #34d399; }
+        .ct-delta.neg { color: #f87171; }
+        .ct-delta.neu { color: #64748b; }
+
+        /* Synergies / Notes */
+        .pill-group { display: flex; flex-wrap: wrap; gap: 7px; }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 7px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+        .pill.synergy { background: rgba(139,92,246,0.09); border: 1px solid rgba(139,92,246,0.17); color: #c4b5fd; }
+        .pill.tag     { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); color: #64748b; }
+        .clickable-badge, .clickable-pill { cursor: pointer; transition: transform 0.15s, opacity 0.15s, filter 0.15s; }
+        .clickable-badge:hover, .clickable-pill:hover { transform: translateY(-1px) scale(1.02); opacity: 0.9; filter: brightness(1.2); }
+
+        .notes-block {
+            color: #7a8fa8;
+            font-size: 0.87rem;
+            line-height: 1.65;
+            padding: 13px 16px;
+            background: rgba(255,255,255,0.022);
+            border-radius: 10px;
+            border-left: 3px solid rgba(245,158,11,0.22);
+            margin-top: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ── Mod Info Modal ─────────────────────────────────── */
+        .mod-info-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 6, 16, 0.82);
+            backdrop-filter: blur(10px);
+            z-index: 50000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.22s ease;
+        }
+        .mod-info-overlay.open { display: flex; opacity: 1; }
+        .mod-info-panel {
+            background: rgba(8, 12, 30, 0.99);
+            border: 1px solid rgba(139,92,246,0.3);
+            border-radius: 20px;
+            padding: 32px 36px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(139,92,246,0.1);
+            animation: modPanelIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        @keyframes modPanelIn {
+            from { transform: translateY(20px) scale(0.95); opacity: 0; }
+            to   { transform: translateY(0)    scale(1);    opacity: 1; }
+        }
+        .mod-panel-close {
+            position: absolute; top: 16px; right: 18px;
+            background: none; border: none;
+            color: #334155; font-size: 22px;
+            cursor: pointer; transition: color 0.2s; line-height: 1;
+        }
+        .mod-panel-close:hover { color: #fff; }
+        .mod-panel-slot-num {
+            font-size: 0.62rem; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; color: #64748b;
+            font-family: 'Inter', sans-serif; margin-bottom: 10px;
+        }
+        .mod-panel-name {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1.35rem; font-weight: 700;
+            color: #e2e8f0; letter-spacing: 1.5px;
+            text-transform: uppercase; margin-bottom: 10px;
+        }
+        .mod-panel-type {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+            padding: 4px 12px; border-radius: 999px;
+            margin-bottom: 20px;
+        }
+        .mod-type-corrupted  { background: rgba(239,68,68,0.12);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.25); }
+        .mod-type-galvanized { background: rgba(245,158,11,0.12); color: #fde68a; border: 1px solid rgba(245,158,11,0.25); }
+        .mod-type-primed     { background: rgba(234,179,8,0.12);  color: #fef08a; border: 1px solid rgba(234,179,8,0.3); }
+        .mod-type-arcane     { background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.25); }
+        .mod-type-exilus     { background: rgba(6,182,212,0.12);  color: #67e8f9; border: 1px solid rgba(6,182,212,0.25); }
+        .mod-type-augment    { background: rgba(16,185,129,0.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.25); }
+        .mod-type-default    { background: rgba(139,92,246,0.1);  color: #c4b5fd; border: 1px solid rgba(139,92,246,0.2); }
+        .mod-panel-divider {
+            height: 1px; background: rgba(255,255,255,0.06);
+            margin: 0 0 18px;
+        }
+        .mod-panel-section {
+            margin-bottom: 16px;
+        }
+        .mod-panel-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.63rem; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            color: #334155; margin-bottom: 5px;
+        }
+        .mod-panel-effect {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1rem; font-weight: 700;
+            color: var(--accent); line-height: 1.5;
+        }
+        .mod-panel-farm {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem; color: #94a3b8;
+            line-height: 1.6;
+        }
+        .mod-panel-value {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 0.92rem; font-weight: 700;
+            color: #67e8f9;
+        }
+        .mod-panel-empty {
+            text-align: center; padding: 20px 0;
+            color: #2d3f55;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1rem;
+        }
+        .jump-btns { position: fixed; bottom: 78px; right: 16px; z-index: 9999; }
+
+        .jump-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: rgba(12, 18, 38, 0.92);
+            border: 1px solid rgba(245,158,11,0.22);
+            color: var(--accent);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: bold;
+            transition: all 0.25s;
+        }
+        .jump-btn:hover { background: rgba(245,158,11,0.12); transform: scale(1.1); }
+
+
+
+        /* Responsive */
+        @media (max-width: 880px) {
+            body { overflow: auto; }
+            .app-layout { flex-direction: column; height: auto; }
+            .weapon-sidebar { width: 100%; min-width: unset; height: 200px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+            .calculator-panel { height: auto; overflow: visible; padding: 16px 16px 120px; }
+            .base-stats-grid  { grid-template-columns: repeat(2, 1fr); }
+            .mod-slots-grid   { grid-template-columns: repeat(2, 1fr); }
+        }
+    
+body { padding-top: 154.6px !important; }
+</style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────── -->
+<div class="global-top-header no-print">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings">&#9881;&#65039;</a>
+    <div class="header-title-block">
+        <span class="header-title">&#9876;&#65039; Weapons Build Codex</span>
+        <span class="header-subtitle">Build Calculator &amp; Arsenal Database</span>
+    </div>
+<div class="header-nav no-print"><a id="nav-prev-top" href="Warframe_Mastery_Rank_Guide.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a id="nav-next-top" href="Warframe_Tennokai_Melee_Codex.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<!-- ── Canonical back panel wraps title + app layout ───────── -->
+<div class="container" style="max-width:1750px;">
+
+<!-- ── Page Title (standardized) ───────────────────────────── -->
+<header class="no-print" style="margin:0 0 2rem; padding:0 0 1.5rem;">
+    <h1>&#128299; Weapons Build Codex</h1>
+    <p class="subtitle">Select a weapon from the left panel to view its meta build, stats, and synergies</p>
+</header>
+
+<!-- ── App Layout ─────────────────────────────────────────── -->
+<div class="app-layout">
+
+    <!-- Left Sidebar -->
+    <aside class="weapon-sidebar" id="weaponSidebar">
+        <!-- Slot Tabs -->
+        <div class="sidebar-tabs" id="sidebarTabs">
+            <div class="sidebar-tab active" data-slot="Primary">&#128299;<br>Primary</div>
+            <div class="sidebar-tab" data-slot="Secondary">&#128295;<br>Secondary</div>
+            <div class="sidebar-tab" data-slot="Melee">&#9876;&#65039;<br>Melee</div>
+        </div>
+        <!-- Variant Sub-tabs -->
+        <div class="variant-tabs" id="variantTabs">
+            <div class="variant-tab active" data-variant="Standard">Standard</div>
+            <div class="variant-tab" data-variant="Prime">Prime</div>
+            <div class="variant-tab" data-variant="All">All</div>
+        </div>
+        <!-- Search Bar -->
+        <div class="sidebar-search-bar" style="display:flex; flex-direction:column; gap:8px;">
+            <input type="text" id="sidebarSearch" placeholder="Filter armory..." autocomplete="off">
+            <button class="add-weapon-btn" onclick="openAddWeaponModal()" title="Add curated Meta weapons to your Armory" style="width:100%; background:var(--accent); color:#000; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">+ Add Meta Weapon</button>
+            <button onclick="openEncyclopediaModal()" style="width:100%; background:#1e293b; color:#94a3b8; border:1px solid #334155; padding:8px; border-radius:4px; cursor:pointer; font-weight:bold; transition:all 0.2s;" onmouseover="this.style.background='#334155'; this.style.color='#fff'" onmouseout="this.style.background='#1e293b'; this.style.color='#94a3b8'">&#128218; Full Encyclopedia</button>
+        </div>
+        <div id="sidebarContent"></div>
+    </aside>
+
+    <!-- Right Calculator Panel -->
+    <main class="calculator-panel" id="calculatorPanel">
+        <div class="welcome-state" id="welcomeState">
+            <div class="welcome-icon">&#9876;&#65039;</div>
+            <h2>Select a Weapon</h2>
+            <div class="welcome-hint"><p>Choose from the left panel to open the build calculator.</p></div>
+        </div>
+    </main>
+
+</div>
+<!-- ── /page-panel ─────────────────────────────────────────── -->
+</div>
+
+<!-- ■ Stat Info Modal ■ -->
+<div class="stat-info-overlay" id="statInfoOverlay" onclick="closeStatInfo(event)">
+    <div class="stat-info-panel" onclick="event.stopPropagation()">
+        <button class="stat-panel-close" onclick="closeStatInfo()">&times;</button>
+        <span class="stat-panel-icon" id="statPanelIcon"></span>
+        <div class="stat-panel-name" id="statPanelName"></div>
+        <div class="stat-panel-tagline" id="statPanelTagline"></div>
+        <div class="stat-panel-section-label">What It Does</div>
+        <div class="stat-panel-body" id="statPanelDesc"></div>
+        <div class="stat-panel-section-label">Formula</div>
+        <div class="stat-panel-formula" id="statPanelFormula"></div>
+        <div class="stat-panel-section-label">Key Mods</div>
+        <div class="stat-panel-mods" id="statPanelMods"></div>
+        <div class="stat-panel-section-label">Pro Tip</div>
+        <div class="stat-panel-tip" id="statPanelTip"></div>
+    </div>
+</div>
+
+<!-- ── Glossary Info Modal ─────────────────────────────────── -->
+<div class="stat-info-overlay" id="glossaryInfoOverlay" onclick="closeGlossaryInfo(event)">
+    <div class="stat-info-panel" onclick="event.stopPropagation()">
+        <button class="stat-panel-close" onclick="closeGlossaryInfo()">&times;</button>
+        <div class="stat-panel-name" id="glossaryPanelTitle" style="color: var(--accent); margin-bottom: 5px;">Term</div>
+        <div class="stat-panel-body" id="glossaryPanelDesc" style="margin-top: 15px; font-size: 0.95rem; color: #e2e8f0; line-height: 1.6;">Description</div>
+    </div>
+</div>
+
+<!-- ■ Weapon Lore Modal ■ -->
+<div class="stat-info-overlay" id="weaponLoreOverlay" onclick="closeWeaponLoreModal(event)" style="z-index: 50005;">
+    <div class="stat-info-panel" onclick="event.stopPropagation()" style="max-height:80vh; overflow-y:auto;">
+        <button class="stat-panel-close" onclick="closeWeaponLoreModal()">&times;</button>
+        <div class="stat-panel-name" id="lorePanelTitle" style="color: var(--accent); margin-bottom: 5px; font-size:1.8rem; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;">Weapon Name</div>
+        <div class="stat-panel-body" style="margin-top: 15px; font-size: 0.95rem; color: #e2e8f0; line-height: 1.6;">
+            <div style="margin-bottom: 20px;">
+                <strong style="color:var(--accent);">Lore & Mechanics</strong><br>
+                <div id="lorePanelDesc" style="margin-top:5px;"></div>
+            </div>
+            <div>
+                <strong style="color:var(--accent);">Where to Find It</strong><br>
+                <div id="lorePanelAcq" style="margin-top:5px; padding-left:10px; border-left:3px solid var(--accent);"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ■ Encyclopedia Modal ■ -->
+<div class="stat-info-overlay" id="encyclopediaOverlay" onclick="closeEncyclopediaModal(event)">
+    <div class="stat-info-panel" onclick="event.stopPropagation()" style="width: 600px; max-width: 90vw; max-height: 85vh; display:flex; flex-direction:column;">
+        <button class="stat-panel-close" onclick="closeEncyclopediaModal()">&times;</button>
+        <div class="stat-panel-name" style="color: var(--accent); margin-bottom: 15px; font-size:1.8rem; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; flex-shrink:0;">&#128218; Full Encyclopedia</div>
+        
+        <div style="margin-bottom: 15px; flex-shrink:0;">
+            <input type="text" id="encyclopediaSearch" onkeyup="renderEncyclopediaList()" placeholder="Search 600+ weapons..." autocomplete="off" style="width:100%; padding:10px; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:4px; font-family:'Inter',sans-serif; margin-bottom:10px;">
+            <div class="sidebar-tabs" id="encyclopediaSlotTabs">
+                <div class="sidebar-tab active" data-slot="Primary">Primary</div>
+                <div class="sidebar-tab" data-slot="Secondary">Secondary</div>
+                <div class="sidebar-tab" data-slot="Melee">Melee</div>
+            </div>
+            <div class="variant-tabs" id="encyclopediaVariantTabs">
+                <div class="variant-tab active" data-variant="Standard">Standard</div>
+                <div class="variant-tab" data-variant="Prime">Prime</div>
+                <div class="variant-tab" data-variant="All">All</div>
+            </div>
+            <div id="encyclopediaCategoryTabs" style="display:flex; flex-wrap:wrap; gap:5px; margin-top:10px;"></div>
+        </div>
+
+        <div id="encyclopediaList" style="display:flex; flex-direction:column; gap:8px; overflow-y:auto; padding-right:5px; flex:1;">
+            <!-- Rendered dynamically -->
+        </div>
+    </div>
+</div>
+
+<!-- ■ Mod Info Modal ■ -->
+<div class="stat-info-overlay" id="addWeaponOverlay" onclick="closeAddWeaponModal(event)">
+    <div class="stat-info-panel" onclick="event.stopPropagation()" style="width: 600px; max-width: 90vw; max-height: 85vh; display:flex; flex-direction:column;">
+        <button class="stat-panel-close" onclick="closeAddWeaponModal()">&times;</button>
+        <div class="stat-panel-name" style="color: var(--accent); margin-bottom: 15px; font-size:1.8rem; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; flex-shrink:0;">Master Weapon Database</div>
+        
+        <div style="margin-bottom: 15px; flex-shrink:0;">
+            <input type="text" id="addWeaponSearch" placeholder="Search master database..." autocomplete="off" style="width:100%; padding:10px; background:#0f172a; border:1px solid #334155; color:#fff; border-radius:4px; font-family:'Inter',sans-serif; margin-bottom:10px;">
+            <div class="sidebar-tabs" id="modalSlotTabs">
+                <div class="sidebar-tab active" data-slot="Primary">Primary</div>
+                <div class="sidebar-tab" data-slot="Secondary">Secondary</div>
+                <div class="sidebar-tab" data-slot="Melee">Melee</div>
+            </div>
+            <div class="variant-tabs" id="modalVariantTabs">
+                <div class="variant-tab active" data-variant="Standard">Standard</div>
+                <div class="variant-tab" data-variant="Prime">Prime</div>
+                <div class="variant-tab" data-variant="All">All</div>
+            </div>
+            <div id="addWeaponCategoryTabs" style="display:flex; flex-wrap:wrap; gap:5px; margin-top:10px;"></div>
+        </div>
+
+        <div id="addWeaponList" style="display:flex; flex-direction:column; gap:8px; overflow-y:auto; padding-right:5px; flex:1;">
+            <!-- Rendered dynamically -->
+        </div>
+    </div>
+</div>
+
+<!-- ── Mod Info Modal ─────────────────────────────────── -->
+<div class="mod-info-overlay" id="modInfoOverlay" onclick="closeModInfo(event)">
+    <div class="mod-info-panel" onclick="event.stopPropagation()">
+        <button class="mod-panel-close" onclick="closeModInfo()">&times;</button>
+        <div class="mod-panel-slot-num" id="modPanelSlot"></div>
+        <div class="mod-panel-name" id="modPanelName"></div>
+        <span class="mod-panel-type" id="modPanelType"></span>
+        <div class="mod-panel-divider"></div>
+        <div class="mod-panel-section">
+            <div class="mod-panel-label">Effect</div>
+            <div class="mod-panel-effect" id="modPanelEffect"></div>
+        </div>
+        <div class="mod-panel-section">
+            <div class="mod-panel-label">Farming Location</div>
+            <div class="mod-panel-farm" id="modPanelFarm"></div>
+        </div>
+        <div class="mod-panel-section">
+            <div class="mod-panel-label">Market Value</div>
+            <div class="mod-panel-value">&#128176; <span id="modPanelValue"></span></div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Jump Button ─────────────────────────────────────────── -->
+
+
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  CONSTANTS
+// ════════════════════════════════════════════════════════════
+const STORAGE_VERSION = 1;
+const STORAGE_PREFIX  = 'weapon_codex_builds_v1';
+const guideSequence = window.GUIDE_SEQUENCE || [];
+
+// ════════════════════════════════════════════════════════════
+//  MOD INFO MODAL
+// ════════════════════════════════════════════════════════════
+function getModTypeClass(type) {
+    if (!type) return 'mod-type-default';
+    const t = type.toLowerCase();
+    if (t.includes('corrupted'))  return 'mod-type-corrupted';
+    if (t.includes('galvanized')) return 'mod-type-galvanized';
+    if (t.includes('primed'))     return 'mod-type-primed';
+    if (t.includes('arcane'))     return 'mod-type-arcane';
+    if (t.includes('exilus'))     return 'mod-type-exilus';
+    if (t.includes('augment'))    return 'mod-type-augment';
+    return 'mod-type-default';
+}
+
+function openModInfo(modName, slotIndex) {
+    const overlay = document.getElementById('modInfoOverlay');
+    if (!overlay) return;
+    if (!modName) {
+        document.getElementById('modPanelSlot').textContent   = slotIndex !== undefined ? `Slot ${slotIndex + 1}` : '';
+        document.getElementById('modPanelName').textContent   = 'Empty Slot';
+        document.getElementById('modPanelType').textContent   = '';
+        document.getElementById('modPanelEffect').textContent = '';
+        document.getElementById('modPanelFarm').textContent   = '';
+        document.getElementById('modPanelValue').textContent  = '';
+        document.getElementById('modPanelType').className     = 'mod-panel-type';
+        document.getElementById('modInfoOverlay').querySelector('.mod-info-panel').innerHTML = `
+            <button class="mod-panel-close" onclick="closeModInfo()">&times;</button>
+            <div class="mod-panel-empty">&#128280; This slot is empty</div>`;
+        overlay.style.display = 'flex';
+        requestAnimationFrame(() => overlay.style.opacity = '1');
+        return;
+    }
+    const md = getModData(modName);
+    document.getElementById('modPanelSlot').textContent    = slotIndex !== undefined ? `Slot ${slotIndex + 1}` : 'Mod';
+    document.getElementById('modPanelName').textContent    = modName;
+    const typeEl = document.getElementById('modPanelType');
+    typeEl.textContent  = md?.type || 'Weapon Mod';
+    typeEl.className    = `mod-panel-type ${getModTypeClass(md?.type)}`;
+    document.getElementById('modPanelEffect').textContent  = md?.effect  || 'No effect data available.';
+    document.getElementById('modPanelFarm').textContent    = md?.farm    || 'Farming location not recorded.';
+    document.getElementById('modPanelValue').textContent   = md?.value   || 'Not listed';
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.style.opacity = '1');
+}
+
+function closeModInfo(e) {
+    if (e && e.target !== document.getElementById('modInfoOverlay')) return;
+    const overlay = document.getElementById('modInfoOverlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => { overlay.style.display = 'none'; }, 220);
+}
+
+// ════════════════════════════════════════════════════════════
+//  GLOSSARY MODAL
+// ════════════════════════════════════════════════════════════
+const glossaryDictionary = {
+    // Weapon Slots & Types
+    'primary': { title: 'Primary Weapon', desc: 'Main weapon slot, usually rifles, shotguns, or snipers.' },
+    'secondary': { title: 'Secondary Weapon', desc: 'Sidearm weapon slot, usually pistols or dual sidearms.' },
+    'melee': { title: 'Melee Weapon', desc: 'Close-quarters combat weapon.' },
+    'launcher': { title: 'Launcher', desc: 'Fires explosive projectiles. Often requires caution due to self-stagger.' },
+    'rifle': { title: 'Rifle', desc: 'Standard rapid-fire or semi-auto primary weapon.' },
+    'shotgun': { title: 'Shotgun', desc: 'Fires a spread of pellets for high close-range damage.' },
+    'sniper': { title: 'Sniper', desc: 'High damage, precise, long-range weapon with combo multiplier mechanics.' },
+    'beam': { title: 'Beam', desc: 'Fires a continuous beam of energy, applying status effects very quickly.' },
+    'bow': { title: 'Bow', desc: 'Fires arrows with a charge mechanic for increased damage and punch-through.' },
+    // Variants
+    'prime': { title: 'Prime Variant', desc: 'Enhanced Orokin version of a base weapon with superior stats and polarity slots.' },
+    'kuva': { title: 'Kuva Variant', desc: 'Grineer lich weapon. Can level up to 40 with Forma and has a progenitor element bonus.' },
+    'tenet': { title: 'Tenet Variant', desc: 'Corpus Sister weapon. Similar to Kuva weapons with level 40 cap and elemental bonuses.' },
+    'incarnon': { title: 'Incarnon', desc: 'Weapon that can transform during missions after landing headshots/combo, gaining new mechanics and huge stat boosts.' },
+    // Status
+    'owned': { title: 'Owned', desc: 'You currently possess this weapon in your inventory.' },
+    'unowned': { title: 'Unowned', desc: 'You do not currently possess this weapon in your inventory.' },
+    // Common Synergies
+    'hunter munitions': { title: 'Hunter Munitions Synergy', desc: 'Weapon has high critical chance, making it ideal for applying Slash procs through Hunter Munitions.' },
+    'galvanized aptitude': { title: 'Galvanized Aptitude', desc: 'Benefits greatly from status stacking to multiply base damage.' },
+    'internal bleeding': { title: 'Internal Bleeding Synergy', desc: 'Weapon forces Impact procs and has a low fire rate, making Internal Bleeding highly effective for Slash.' },
+    'hemorrhage': { title: 'Hemorrhage Synergy', desc: 'Secondary weapon with forced Impact procs, perfect for generating Slash via Hemorrhage.' },
+    'viral + slash': { title: 'Viral + Slash', desc: 'Classic meta combination. Viral amplifies damage to health, while Slash bypasses armor entirely.' },
+    'corrosive + heat': { title: 'Corrosive + Heat', desc: 'Excellent against heavily armored targets. Corrosive strips armor while Heat halves remaining armor and burns.' }
+};
+
+function openGlossaryInfo(term) {
+    if (!term) return;
+    const key = term.toLowerCase().trim();
+    const data = glossaryDictionary[key] || { 
+        title: term, 
+        desc: 'Information for this specific term has not been recorded in the database yet.' 
+    };
+
+    document.getElementById('glossaryPanelTitle').textContent = data.title;
+    document.getElementById('glossaryPanelDesc').textContent = data.desc;
+    
+    const overlay = document.getElementById('glossaryInfoOverlay');
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.style.opacity = '1');
+}
+
+function closeGlossaryInfo(e) {
+    if (e && e.target !== document.getElementById('glossaryInfoOverlay')) return;
+    const overlay = document.getElementById('glossaryInfoOverlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => { if (overlay.style.display === 'none') return; overlay.style.display = 'none'; }, 220);
+}
+
+function openAddWeaponModal() {
+    const overlay = document.getElementById('addWeaponOverlay');
+    document.getElementById('addWeaponSearch').value = '';
+    renderAddWeaponList();
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.style.opacity = '1');
+}
+
+function closeAddWeaponModal(e) {
+    if (e && e.target !== document.getElementById('addWeaponOverlay')) return;
+    const overlay = document.getElementById('addWeaponOverlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => { if (overlay.style.display === 'none') return; overlay.style.display = 'none'; }, 220);
+}
+
+function renderAddWeaponList() {
+    const listEl = document.getElementById('addWeaponList');
+    if(!listEl) return;
+    const q = document.getElementById('addWeaponSearch').value.toLowerCase();
+    
+    // Update modal tab active states based on current state
+    document.querySelectorAll('#modalSlotTabs .sidebar-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.slot === state.slotTab);
+    });
+    document.querySelectorAll('#modalVariantTabs .variant-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.variant === state.variantTab);
+    });
+
+    // Use state.weapons (Meta Weapons Database) NOT EncyclopediaDatabase
+    let baseFiltered = state.weapons.filter(w => w.slot === state.slotTab && !state.myWeapons.includes(w.id));
+    
+    // Helper function for isPrime since it might not be a direct boolean in database_weapons.js
+    const isPrimeWeapon = (w) => w.isPrime || w.name.toLowerCase().includes('prime');
+
+    if (state.variantTab === 'Standard') {
+        baseFiltered = baseFiltered.filter(w => !isPrimeWeapon(w));
+    } else if (state.variantTab === 'Prime') {
+        baseFiltered = baseFiltered.filter(w => isPrimeWeapon(w));
+    }
+    
+    // Extract unique categories
+    const categories = [...new Set(baseFiltered.map(w => w.category || w.class).filter(Boolean))].sort();
+    
+    // Render category buttons
+    const catContainer = document.getElementById('addWeaponCategoryTabs');
+    if (catContainer) {
+        let catHtml = `<div class="variant-tab ${state.categoryTab === 'All' ? 'active' : ''}" data-cat="All" style="padding:4px 8px; font-size:0.8rem; cursor:pointer;">All Types</div>`;
+        categories.forEach(cat => {
+            catHtml += `<div class="variant-tab ${state.categoryTab === cat ? 'active' : ''}" data-cat="${cat}" style="padding:4px 8px; font-size:0.8rem; cursor:pointer;">${cat}</div>`;
+        });
+        catContainer.innerHTML = catHtml;
+        
+        catContainer.querySelectorAll('.variant-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                state.categoryTab = btn.dataset.cat;
+                renderAddWeaponList();
+            });
+        });
+    }
+
+    // Apply category filter
+    let filteredWeapons = baseFiltered;
+    if (state.categoryTab !== 'All') {
+        filteredWeapons = filteredWeapons.filter(w => (w.category || w.class) === state.categoryTab);
+    }
+
+    // Sort alphabetically
+    const sortedWeapons = [...filteredWeapons].sort((a, b) => a.name.localeCompare(b.name));
+    
+    let out = '';
+    let count = 0;
+    for (const w of sortedWeapons) {
+        if (q && !w.name.toLowerCase().includes(q)) continue;
+        if (count > 100) break;
+        
+        const safeName = (w.name || "").replace(/\\/g, "\\\\").replace(/\'/g, "\\\'").replace(/"/g, "&quot;");
+        const safeLore = (w.lore && w.lore.text) ? w.lore.text.replace(/\\/g, "\\\\").replace(/\'/g, "\\\'").replace(/"/g, "&quot;").replace(/\n/g, " ") : "Lore unavailable.";
+        
+        out += `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:10px 15px; border-radius:4px; border-left:3px solid var(--accent); transition:all 0.2s;">
+                <div>
+                    <div style="font-weight:bold; font-size:1.05rem; color:#fff; transition:color 0.2s; cursor:default;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'" >${w.name}</div>
+                    <div style="font-size:0.85rem; color:#64748b; margin-top:2px;">${w.slot} &bull; ${w.category || w.class || ''}</div>
+                </div>
+                <button onclick="addWeaponToArmory('${w.id}')" style="background:var(--accent); color:#000; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">Add</button>
+            </div>
+        `;
+        count++;
+    }
+    
+    if (!out) out = '<div style="color:#64748b; padding:10px; text-align:center;">No weapons match your search.</div>';
+    listEl.innerHTML = out;
+}
+
+function openEncyclopediaModal() {
+    document.getElementById('encyclopediaSearch').value = '';
+    renderEncyclopediaList();
+    const overlay = document.getElementById('encyclopediaOverlay');
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.style.opacity = '1');
+}
+
+function closeEncyclopediaModal(e) {
+    if (e && e.target !== document.getElementById('encyclopediaOverlay')) return;
+    const overlay = document.getElementById('encyclopediaOverlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => { if (overlay.style.display === 'none') return; overlay.style.display = 'none'; }, 220);
+}
+
+function renderEncyclopediaList() {
+    const listEl = document.getElementById('encyclopediaList');
+    if(!listEl) return;
+    const searchEl = document.getElementById('encyclopediaSearch');
+    const q = searchEl ? searchEl.value.toLowerCase() : '';
+    
+    // Update modal tab active states based on current state
+    document.querySelectorAll('#encyclopediaSlotTabs .sidebar-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.slot === state.slotTab);
+    });
+    document.querySelectorAll('#encyclopediaVariantTabs .variant-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.variant === state.variantTab);
+    });
+
+    if (typeof EncyclopediaDatabase === 'undefined') return;
+
+    // Filter weapons based on active slot and variant tabs
+    let baseFiltered = EncyclopediaDatabase.filter(w => w.slot === state.slotTab);
+    if (state.variantTab === 'Standard') {
+        baseFiltered = baseFiltered.filter(w => !w.isPrime);
+    } else if (state.variantTab === 'Prime') {
+        baseFiltered = baseFiltered.filter(w => w.isPrime);
+    }
+    
+    // Extract unique categories
+    const categories = [...new Set(baseFiltered.map(w => w.category || w.class).filter(Boolean))].sort();
+    
+    // Render category buttons
+    const catContainer = document.getElementById('encyclopediaCategoryTabs');
+    if (catContainer) {
+        let catHtml = `<div class="variant-tab ${state.categoryTab === 'All' ? 'active' : ''}" data-cat="All" style="padding:4px 8px; font-size:0.8rem; cursor:pointer;">All Types</div>`;
+        categories.forEach(cat => {
+            catHtml += `<div class="variant-tab ${state.categoryTab === cat ? 'active' : ''}" data-cat="${cat}" style="padding:4px 8px; font-size:0.8rem; cursor:pointer;">${cat}</div>`;
+        });
+        catContainer.innerHTML = catHtml;
+        
+        // Bind click listeners for category buttons
+        catContainer.querySelectorAll('.variant-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                state.categoryTab = btn.dataset.cat;
+                renderEncyclopediaList();
+            });
+        });
+    }
+
+    // Apply category filter
+    let filteredWeapons = baseFiltered;
+    if (state.categoryTab !== 'All') {
+        filteredWeapons = filteredWeapons.filter(w => (w.category || w.class) === state.categoryTab);
+    }
+
+    // Sort alphabetically
+    const sortedWeapons = [...filteredWeapons].sort((a, b) => a.name.localeCompare(b.name));
+    
+    let out = '';
+    // Only render top 50 to prevent DOM lag if they aren't searching
+    let count = 0;
+    for (const w of sortedWeapons) {
+        if (q && !w.name.toLowerCase().includes(q)) continue;
+        if (count > 100) break; // Limit render
+        
+        const safeName = (w.name || "").replace(/\\/g, "\\\\").replace(/\'/g, "\\\'").replace(/"/g, "&quot;");
+        const safeLore = (w.lore && w.lore.text) ? w.lore.text.replace(/\\/g, "\\\\").replace(/\'/g, "\\\'").replace(/"/g, "&quot;").replace(/\n/g, " ") : "Lore unavailable.";
+        
+        out += `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#1e293b; padding:10px 15px; border-radius:4px; border-left:3px solid var(--accent); transition:all 0.2s; cursor:default;" onmouseenter="showHoverLore('${safeName}', '${safeLore}'); this.style.background='#334155';" onmouseleave="hideHoverLore(); this.style.background='#1e293b';">
+                <div>
+                    <div style="font-weight:bold; font-size:1.05rem; color:#fff;">${w.name}</div>
+                    <div style="font-size:0.85rem; color:#94a3b8; margin-top:2px;">${w.slot} &bull; ${w.category || w.class || ''}</div>
+                </div>
+            </div>
+        `;
+        count++;
+    }
+    
+    if (!out) out = '<div style="color:#64748b; padding:10px; text-align:center;">No encyclopedia weapons match your search.</div>';
+    if (count > 100) out += '<div style="color:#64748b; padding:10px; text-align:center;">Type to search... displaying top 100 results.</div>';
+    
+    listEl.innerHTML = out;
+}
+
+
+function showHoverLore(name, lore) {
+    document.getElementById('lorePanelTitle').textContent = name;
+    document.getElementById('lorePanelDesc').textContent = lore;
+    document.getElementById('lorePanelAcq').textContent = "Standard Acquisition";
+    
+    const overlay = document.getElementById('weaponLoreOverlay');
+    if (!overlay) return;
+    overlay.style.pointerEvents = 'none';
+    overlay.style.background = 'rgba(0,0,0,0.2)';
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.style.opacity = '1');
+}
+
+function hideHoverLore() {
+    const overlay = document.getElementById('weaponLoreOverlay');
+    if (!overlay) return;
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+        if(overlay.style.opacity === '0') {
+            overlay.style.display = 'none';
+        }
+    }, 200);
+}
+
+function openEncyclopediaLore(name, lore) {
+    document.getElementById('lorePanelTitle').textContent = name;
+    document.getElementById('lorePanelDesc').textContent = lore;
+    document.getElementById('lorePanelAcq').textContent = "Standard Acquisition";
+    
+    const overlay = document.getElementById('weaponLoreOverlay');
+    if (!overlay) return;
+    overlay.style.pointerEvents = 'auto';
+    overlay.style.background = 'rgba(0,0,0,0.8)';
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.style.opacity = '1');
+}
+
+function addWeaponToArmory(weaponId) {
+    if (!state.myWeapons.includes(weaponId)) {
+        state.myWeapons.push(weaponId);
+        saveArmory();
+        renderAddWeaponList();
+        
+        // Auto-switch to the tab of the added weapon and select it
+        const weapon = state.weapons.find(w => w.id === weaponId);
+        if (weapon) {
+            state.slotTab = weapon.slot;
+            renderSidebar();
+            selectWeapon(weaponId);
+            // closeAddWeaponModal(); // Removed so user can add multiple weapons without the modal closing
+        }
+    }
+}
+
+function openWeaponLoreModal(weaponId) {
+    const weapon = state.weapons.find(w => w.id === weaponId);
+    if (!weapon) return;
+    
+    document.getElementById('lorePanelTitle').textContent = weapon.name;
+    document.getElementById('lorePanelDesc').textContent = weapon.lore || "Detailed lore for this weapon has not been recorded yet.";
+    document.getElementById('lorePanelAcq').textContent = weapon.acquisition || "Acquisition details unknown.";
+    
+    const overlay = document.getElementById('weaponLoreOverlay');
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.style.opacity = '1');
+}
+
+function closeWeaponLoreModal(e) {
+    if (e && e.target !== document.getElementById('weaponLoreOverlay')) return;
+    const overlay = document.getElementById('weaponLoreOverlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => { if (overlay.style.display === 'none') return; overlay.style.display = 'none'; }, 220);
+}
+
+
+const STAT_INFO = {
+    baseDamage: {
+        icon: '&#9889;',
+        name: 'Base Damage',
+        tagline: 'Raw damage output per shot or hit',
+        desc: 'Base Damage is the unmodded damage per shot, strike, or tick. It is the foundation all damage mods multiply from. In Warframe, damage types (Impact, Puncture, Slash, Elemental) all contribute to this total. Slash is highly valued for its bleed proc which bypasses armor.',
+        formula: 'Final Damage = Base Damage &times; (1 + Damage Mod%) &times; (1 + Multishot%)',
+        mods: ['Serration', 'Heavy Caliber', 'Hornet Strike', 'Primed Pressure Point', 'Primed Point Blank', 'Galvanized Chamber'],
+        tip: 'Damage mods and multishot both multiply Base Damage independently &mdash; stacking both gives massive DPS gains. Heavy Caliber trades accuracy for +165% damage, ideal for beam weapons.'
+    },
+    critChance: {
+        icon: '&#127919;',
+        name: 'Critical Chance',
+        tagline: 'Probability of landing a critical hit',
+        desc: 'Critical Chance (CC) is the probability each hit will deal critical damage. Above 100% guarantees a yellow crit on every hit, with the overflow % determining the chance of an orange crit (2&times; multiplier). Above 200% produces red crits (3&times; multiplier). High-crit builds are among the most powerful in the game.',
+        formula: 'Effective Crit Tier = floor(CC%) + chance(CC% remainder)',
+        mods: ['Critical Delay', 'Point Strike', 'Galvanized Scope', 'Argon Scope', 'Bladed Rounds', 'True Steel', 'Sacrificial Steel', 'Blood Rush'],
+        tip: 'Blood Rush stacks with combo counter on melee &mdash; at 12&times; combo it can push Critical Chance to 600%+ for consistent red crits. Galvanized Scope activates on headshot kills for massive stacking CC.'
+    },
+    critMultiplier: {
+        icon: '&#128165;',
+        name: 'Critical Multiplier',
+        tagline: 'Damage multiplier on a critical hit',
+        desc: 'Critical Multiplier (CM) is the damage bonus applied when a critical hit is scored. A 2.0&times; multiplier means crits deal double damage. Orange crits (triggered above 100% CC) apply 2&times; the CM. Red crits (above 200% CC) apply 3&times; the CM. Combined with high CC, this is how endgame numbers are achieved.',
+        formula: 'Crit Damage = Base Hit &times; CM &times; Crit Tier Multiplier',
+        mods: ['Vital Sense', 'Organ Shatter', 'Amalgam Organ Shatter', 'Primed Ravage', 'Gladiator Might', 'Killing Blow'],
+        tip: 'Amalgam Organ Shatter gives +85% CM on Melee and also adds a Slide Attack Speed bonus &mdash; making it strictly better than standard Organ Shatter in most builds.'
+    },
+    statusChance: {
+        icon: '&#128293;',
+        name: 'Status Chance',
+        tagline: 'Probability of applying a status effect per hit',
+        desc: 'Status Chance is the probability each pellet or hit applies a status effect. Shotguns calculate status per pellet. Reaching 100%+ guarantees a proc every hit. Viral + Slash is the dominant status combo: Viral halves enemy HP, Slash bleed bypasses armor. Status builds open the door to condition-based scaling mods.',
+        formula: 'Status Proc Rate = Status Chance% &times; Fire Rate (procs per second)',
+        mods: ['Galvanized Aptitude', 'Galvanized Diffusion', 'Malignant Force', 'Rime Rounds', 'Infected Clip', 'Pistol Pestilence', 'Weeping Wounds'],
+        tip: 'Galvanized Aptitude grants +80% status chance per unique status type on the target &mdash; in a full status proc scenario this can reach +480% bonus status, enabling near-certain procs every hit.'
+    },
+    fireRate: {
+        icon: '&#128299;',
+        name: 'Fire Rate',
+        tagline: 'Shots or attacks per second',
+        desc: 'Fire Rate is how many rounds or attacks are performed per second. It directly multiplies DPS &mdash; a weapon that fires twice as fast deals twice the damage in the same time (all else equal). For melee weapons, this is called Attack Speed and works identically. Fire Rate also affects status proc rate since more hits per second means more procs.',
+        formula: 'DPS = Damage per Shot &times; Fire Rate &times; Crit Scalar',
+        mods: ['Vile Acceleration', 'Speed Trigger', 'Lethal Torrent', 'Primed Shred', 'Primed Fury', 'Berserker Fury', 'Arcane Fury'],
+        tip: 'Vile Acceleration gives +90% fire rate at the cost of -15% damage &mdash; this is almost always worth it because the DPS gain from fire rate outweighs the damage penalty by a wide margin.'
+    },
+    magazine: {
+        icon: '&#128230;',
+        name: 'Magazine Size',
+        tagline: 'Rounds before a reload is required',
+        desc: 'Magazine Size is the number of shots or attacks available before the weapon must reload. Larger magazines mean more sustained DPS with fewer interruptions. Some weapons (like bows or single-shot pistols) have magazine size of 1 and always fire from reserve. For melee weapons, there is no magazine &mdash; this stat will show as &mdash;.',
+        formula: 'Sustained DPS = DPS &times; Magazine / (Magazine / Fire Rate + Reload Time)',
+        mods: ['Ammo Drum', 'Magazine Warp', 'Trick Mag', 'Galvanized Chamber', 'Synth Charge'],
+        tip: 'For continuous fire weapons (like Torid or Kuva Nukor), magazine size is critical. A large magazine keeps the Galvanized Chamber multishot bonus active longer without the DPS dip from reloading.'
+    },
+    reload: {
+        icon: '&#9201;&#65039;',
+        name: 'Reload Time',
+        tagline: 'Seconds to reload the weapon',
+        desc: 'Reload Time is the number of seconds the weapon is inactive during a reload. Slower reloads hurt sustained DPS significantly. Some weapon traits like Shotgun Spazz, Primed Charged Shell, or Tactical Reload can reduce this. A few Arcanes and Warframe abilities can also trigger instant reloads mid-fight.',
+        formula: 'Reload DPS Loss = Reload Time / (Fire Cycle Time + Reload Time)',
+        mods: ['Primed Fast Hands', 'Fast Hands', 'Tactical Reload', 'Synth Reflex'],
+        tip: 'Sevagoth\'s passive (Shadow Form) and Wisp\'s Sol Gate can trigger Tactical Reload to instantly refill the magazine &mdash; bypassing reload entirely mid-fight for certain builds.'
+    },
+    baseDPS: {
+        icon: '&#128202;',
+        name: 'Base DPS',
+        tagline: 'Theoretical unmodded damage per second',
+        desc: 'Base DPS (Damage Per Second) is a calculated metric showing this weapon\'s raw output before any mods are applied. It accounts for Base Damage, Fire Rate, Critical Chance, and Critical Multiplier combined into a single performance number. Use it to compare weapons on an equal footing &mdash; higher Base DPS means more potential for scaling.',
+        formula: 'Base DPS = Base Damage &times; Fire Rate &times; (1 + CC% &times; (CM &#8722; 1))',
+        mods: ['All damage mods scale from this value'],
+        tip: 'Base DPS is unmodded only &mdash; the Built Stats table below shows the real modded DPS for this weapon\'s meta build, which is typically 10&ndash;50&times; higher than Base DPS.'
+    }
+};
+
+// ════════════════════════════════════════════════════════════
+//  STAT INFO MODAL
+// ════════════════════════════════════════════════════════════
+function openStatInfo(statKey) {
+    const info = STAT_INFO[statKey];
+    if (!info) return;
+    document.getElementById('statPanelIcon').textContent    = info.icon;
+    document.getElementById('statPanelName').textContent    = info.name;
+    document.getElementById('statPanelTagline').textContent = info.tagline;
+    document.getElementById('statPanelDesc').textContent    = info.desc;
+    document.getElementById('statPanelFormula').textContent = info.formula;
+    document.getElementById('statPanelMods').innerHTML      = info.mods.map(m => `<span class="stat-mod-pill">${m}</span>`).join('');
+    document.getElementById('statPanelTip').textContent     = info.tip;
+    const overlay = document.getElementById('statInfoOverlay');
+    if (!overlay) return;
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.style.opacity = '1');
+}
+
+function closeStatInfo(e) {
+    if (e && e.target !== document.getElementById('statInfoOverlay')) return;
+    const overlay = document.getElementById('statInfoOverlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => { overlay.style.display = 'none'; }, 220);
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        const overlay = document.getElementById('statInfoOverlay');
+        if (overlay && overlay.style.display === 'flex') {
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 220);
+        }
+    }
+});
+
+// ════════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════════
+const state = {
+    weapons:          [],
+    modNames:         [],
+    buildState:       {},
+    selectedWeaponId: null,
+    sidebarSearch:    '',
+    slotTab:          'Primary',   // active tab: Primary | Secondary | Melee
+    variantTab:       'Standard',  // active sub-tab: Standard | Prime | All
+    myWeapons:        []           // user's personal armory collection
+};
+
+// ════════════════════════════════════════════════════════════
+//  NORMALIZE
+// ════════════════════════════════════════════════════════════
+function slugify(v) {
+    return String(v || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function getDefaultMetaMods(slot, category) {
+    const cat = (category || '').toLowerCase();
+    if (slot === 'Melee') {
+        if (/heavy|glaive|hammer|scythe|great/.test(cat))
+            return ['Primed Pressure Point','Killing Blow','Corrupt Charge','Organ Shatter','Amalgam Organ Shatter','Life Strike','Primed Reach','Gladiator Might'];
+        return ['Primed Pressure Point','Condition Overload','Blood Rush','Weeping Wounds','Organ Shatter','Berserker Fury','Primed Reach','Gladiator Might'];
+    }
+    if (slot === 'Secondary')
+        return ['Hornet Strike','Barrel Diffusion','Lethal Torrent','Pistol Gambit','Target Cracker','Augur Pact','Jolt','Pathogen Rounds'];
+    if (/shotgun|spread/.test(cat))
+        return ['Point Blank','Blaze','Sweeping Serration',"Hell's Chamber",'Chilling Grasp','Contagious Spread','Accelerated Blast','Ravage'];
+    if (/bow|sniper/.test(cat))
+        return ['Serration','Split Chamber','Point Strike','Vital Sense','Hunter Munitions','Malignant Force','Rime Rounds','Vigilante Supplies'];
+    if (/beam|continuous/.test(cat))
+        return ['Serration','Split Chamber','Point Strike','Vital Sense','Malignant Force','Rime Rounds','Thermite Rounds','Vigilante Supplies'];
+    return ['Serration','Split Chamber','Point Strike','Vital Sense','Hunter Munitions','Malignant Force','Rime Rounds','Heavy Caliber'];
+}
+
+function normalizeWeapon(w) {
+    const id       = w.id    || slugify(w.name);
+    const slot     = w.slot  || w.type || 'Primary';
+    const category = w.category || w.class || 'Weapon';
+    const stats    = w.stats || {};
+    const hasCuratedBuild = Array.isArray(w.builds) && w.builds.length && w.builds[0].mods && w.builds[0].mods.length;
+    const builds   = hasCuratedBuild
+        ? w.builds
+        : [{ name: 'Meta Build', mods: Array.isArray(w.mods) && w.mods.length ? w.mods.slice(0, 8) : getDefaultMetaMods(slot, category), notes: w.notes || '' }];
+    return {
+        ...w,
+        id, slot,
+        type:     w.type    || slot,
+        category,
+        variant:  w.variant || 'Standard',
+        summary:  w.summary || w.notes || `${w.name} codex entry.`,
+        stats: {
+            baseDamage:     Number(stats.baseDamage     || parseFloat(String(w.damage || '').replace(/[^\d.]/g, '')) || 100),
+            critChance:     Number(stats.critChance     || parseFloat(String(w.crit   || '0').replace('%', '')) || 0),
+            critMultiplier: Number(stats.critMultiplier || 2),
+            statusChance:   Number(stats.statusChance   || parseFloat(String(w.status || '0').replace('%', '')) || 0),
+            fireRate:       Number(stats.fireRate  || 1),
+            magazine:       Number(stats.magazine  || 0),
+            reload:         Number(stats.reload    || 0)
+        },
+        builds,
+        synergies:    Array.isArray(w.synergies) ? w.synergies : [],
+        tags:         Array.isArray(w.tags)      ? w.tags      : [],
+        defaultBuild: builds[0]
+    };
+}
+
+// ════════════════════════════════════════════════════════════
+//  STORAGE
+// ════════════════════════════════════════════════════════════
+function storageKey(id)  { return `${STORAGE_PREFIX}:${id}`; }
+
+function readBuilds(id) {
+    try {
+        const raw    = window.safeStorage.getItem(storageKey(id));
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || parsed.version !== STORAGE_VERSION || !Array.isArray(parsed.builds)) return null;
+        return parsed;
+    } catch { return null; }
+}
+
+function writeBuilds(id, payload) {
+    window.safeStorage.setItem(storageKey(id), JSON.stringify(payload));
+}
+
+function normalizeMods(mods) {
+    const n = Array.isArray(mods) ? mods.slice(0, 8) : [];
+    while (n.length < 8) n.push('');
+    return n;
+}
+
+function defaultArcanesForWeapon(weapon) {
+    const fromSynergy = (weapon.synergies || []).filter(item => /arcane|merciless|deadhead|dexterity|crescendo|fury/i.test(item));
+    const fallback = weapon.slot === 'Melee'
+        ? ['Melee Exposure', 'Melee Crescendo']
+        : weapon.slot === 'Secondary'
+            ? ['Secondary Merciless', 'Secondary Deadhead']
+            : ['Primary Merciless', 'Primary Deadhead'];
+    return fromSynergy.concat(fallback).slice(0, 2);
+}
+
+function normalizeArcanes(arcanes, weapon) {
+    const n = Array.isArray(arcanes) ? arcanes.slice(0, 2) : defaultArcanesForWeapon(weapon);
+    while (n.length < 2) n.push('');
+    return n;
+}
+
+function defaultBuildState(weapon) {
+    const builds = weapon.builds.map((b, i) => ({
+        id:    `${weapon.id}-seed-${i}`,
+        name:  b.name || `Build ${i + 1}`,
+        mods:  normalizeMods(b.mods),
+        arcanes: normalizeArcanes(b.arcanes, weapon),
+        notes: b.notes || weapon.notes || ''
+    }));
+    return { version: STORAGE_VERSION, lastActiveBuildId: builds[0]?.id || null, builds };
+}
+
+function ensureBuildState(weapon) {
+    if (state.buildState[weapon.id]) return state.buildState[weapon.id];
+    let stored = readBuilds(weapon.id);
+    // If every build has all-empty mods, regenerate from weapon defaults
+    if (stored && stored.builds.every(b => (b.mods || []).every(m => !m))) {
+        stored = null;
+    }
+    stored = stored || defaultBuildState(weapon);
+    stored.builds.forEach(build => {
+        build.mods = normalizeMods(build.mods);
+        build.arcanes = normalizeArcanes(build.arcanes, weapon);
+    });
+    if (!readBuilds(weapon.id)) writeBuilds(weapon.id, stored);
+    state.buildState[weapon.id] = stored;
+    return stored;
+}
+
+function saveBuildState(weaponId) {
+    const p = state.buildState[weaponId];
+    if (p) writeBuilds(weaponId, p);
+}
+
+function getBuildById(weaponId, buildId) {
+    return state.buildState[weaponId]?.builds.find(b => b.id === buildId) || null;
+}
+
+function getActiveBuild(weaponId) {
+    const p = state.buildState[weaponId];
+    return getBuildById(weaponId, p?.lastActiveBuildId) || p?.builds[0] || null;
+}
+
+function openWeaponBuildCustomizer(weaponId, action = 'customize') {
+    const payload = state.buildState[weaponId] || {};
+    const params = new URLSearchParams({
+        weapon: weaponId,
+        loadout: payload.lastActiveBuildId || '',
+        action
+    });
+    window.location.href = `Warframe_Weapon_Build_Customizer.html?${params.toString()}`;
+}
+
+// ════════════════════════════════════════════════════════════
+//  MOD CALCULATIONS
+// ════════════════════════════════════════════════════════════
+function parseModEffect(effectText) {
+    const r = { damagePct: 0, critChancePct: 0, critMultiplierPct: 0, statusChancePct: 0, fireRatePct: 0, multishotPct: 0, attackSpeedPct: 0 };
+    if (!effectText) return r;
+    effectText.split(',').forEach(seg => {
+        const m = seg.match(/([+-]?\d+(?:\.\d+)?)%/);
+        if (!m) return;
+        const v = Number(m[1]);
+        const l = seg.toLowerCase();
+        if      (l.includes('critical chance') || l.includes('crit chance'))   r.critChancePct     += v;
+        else if (l.includes('critical damage') || l.includes('critical multiplier')) r.critMultiplierPct += v;
+        else if (l.includes('status chance'))  r.statusChancePct  += v;
+        else if (l.includes('multishot'))      r.multishotPct     += v;
+        else if (l.includes('fire rate'))      r.fireRatePct      += v;
+        else if (l.includes('attack speed'))   r.attackSpeedPct   += v;
+        else if (l.includes('damage'))         r.damagePct        += v;
+    });
+    return r;
+}
+
+function _modDB() { return typeof modDatabase !== 'undefined' ? modDatabase : {}; }
+
+function getModData(name) {
+    const db = _modDB();
+    if (!name || !db[name]) return null;
+    const mod = db[name];
+    return { name, effect: mod.effect || '', parsed: parseModEffect(mod.effect || '') };
+}
+
+function calcBuildStats(weapon, build) {
+    const base  = weapon.stats;
+    const tot   = { damagePct: 0, critChancePct: 0, critMultiplierPct: 0, statusChancePct: 0, fireRatePct: 0, multishotPct: 0, attackSpeedPct: 0 };
+    normalizeMods(build?.mods).forEach(modName => {
+        const md = getModData(modName);
+        if (md) Object.keys(tot).forEach(k => { tot[k] += md.parsed[k] || 0; });
+    });
+    const finalDamage      = base.baseDamage * (1 + tot.damagePct / 100) * (1 + tot.multishotPct / 100);
+    const finalCrit        = base.critChance     * (1 + tot.critChancePct / 100);
+    const finalCritMult    = base.critMultiplier * (1 + tot.critMultiplierPct / 100);
+    const speedScalar      = 1 + ((weapon.slot === 'Melee' ? tot.attackSpeedPct : tot.fireRatePct) / 100);
+    const finalFireRate    = base.fireRate    * speedScalar;
+    const finalStatus      = base.statusChance * (1 + tot.statusChancePct / 100);
+    const critScalar       = 1 + Math.max(finalCrit, 0) / 100 * Math.max(finalCritMult - 1, 0);
+    const dps              = finalDamage * Math.max(finalFireRate, 0.1) * critScalar;
+    const statusRate       = finalFireRate * Math.max(finalStatus, 0) / 100;
+    return { finalDamage, dps, critChance: finalCrit, critMultiplier: finalCritMult, statusChance: finalStatus, fireRate: finalFireRate, statusRate };
+}
+
+function baseDPS(weapon) {
+    const s = weapon.stats;
+    return s.baseDamage * s.fireRate * (1 + (s.critChance / 100) * (s.critMultiplier - 1));
+}
+
+// ════════════════════════════════════════════════════════════
+//  FORMATTERS
+// ════════════════════════════════════════════════════════════
+function fmt(v, d = 1) { return Number(v || 0).toLocaleString(undefined, { maximumFractionDigits: d, minimumFractionDigits: d }); }
+function fmtPct(v, d = 1) { return `${fmt(v, d)}%`; }
+function fmtX(v)  { return `${fmt(v, 2)}x`; }
+
+// ════════════════════════════════════════════════════════════
+//  SIDEBAR
+// ════════════════════════════════════════════════════════════
+function isPrime(w) { return w.isPrime || (w.variant || '').toLowerCase().includes('prime') || w.name.toLowerCase().includes('prime'); }
+
+function variantChip(w) {
+    const v = (w.variant || '').toLowerCase();
+    const n = (w.name   || '').toLowerCase();
+    if (v.includes('incarnon'))              return `<span class="variant-chip incarnon">INC</span>`;
+    if (v.includes('kuva') || n.startsWith('kuva'))   return `<span class="variant-chip kuva">KVA</span>`;
+    if (v.includes('tenet') || n.startsWith('tenet')) return `<span class="variant-chip tenet">TNT</span>`;
+    if (v.includes('wraith'))                return `<span class="variant-chip wraith">WRT</span>`;
+    if (v.includes('kitgun'))                return `<span class="variant-chip kitgun">KIT</span>`;
+    return '';
+}
+
+function renderSidebar() {
+    const q       = state.sidebarSearch.toLowerCase();
+    const content = document.getElementById('sidebarContent');
+    if (!content) return;
+
+    // ■ Update tab active states ■
+    document.querySelectorAll('.sidebar-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.slot === state.slotTab);
+    });
+
+    // ■ Update variant tab active states ■
+    document.querySelectorAll('.variant-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.variant === state.variantTab);
+    });
+
+    // ■ Filter weapons for the active tab AND the user's armory ■
+    let slotWeapons = state.weapons.filter(w => w.slot === state.slotTab && state.myWeapons.includes(w.id));
+    
+    // ■ Filter by variant tab ■
+    if (state.variantTab === 'Standard') {
+        slotWeapons = slotWeapons.filter(w => !isPrime(w));
+    } else if (state.variantTab === 'Prime') {
+        slotWeapons = slotWeapons.filter(w => isPrime(w));
+    }
+    
+    const standard    = slotWeapons.filter(w => !isPrime(w) && (!q || w.name.toLowerCase().includes(q)));
+    const prime       = slotWeapons.filter(w =>  isPrime(w) && (!q || w.name.toLowerCase().includes(q)));
+
+    let html = '';
+
+    if (standard.length) {
+        if (state.variantTab === 'All') html += `<div class="subcategory-label">Standard</div>`;
+        standard.forEach(w => {
+            const active = w.id === state.selectedWeaponId ? 'active' : '';
+            const safeName = (w.name || "").replace(/\\/g, "\\\\").replace(/\'/g, "\\\'").replace(/"/g, "&quot;");
+            const safeLore = (w.lore && w.lore.text) ? w.lore.text.replace(/\\/g, "\\\\").replace(/\'/g, "\\\'").replace(/"/g, "&quot;").replace(/\n/g, " ") : "Lore unavailable.";
+            html += `
+                <div class="weapon-item ${active}" data-weapon-id="${w.id}" >
+                    <div class="weapon-item-left">
+                        <span class="weapon-name">${w.name}</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="weapon-item-category">${w.category || w.class || ''}</span>
+                        <button class="remove-weapon-btn" title="Remove from Armory" onclick="event.stopPropagation(); removeWeaponFromArmory('${w.id}')" style="background:none; border:none; color:#475569; cursor:pointer; font-size:1.4rem; padding:0 2px; line-height:1; transition:color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#475569'">&times;</button>
+                    </div>
+                </div>`;
+        });
+    }
+
+    if (prime.length) {
+        if (state.variantTab === 'All') html += `<div class="subcategory-label prime-label">Prime</div>`;
+        prime.forEach(w => {
+            const active = w.id === state.selectedWeaponId ? 'active' : '';
+            const safeName = (w.name || "").replace(/\\/g, "\\\\").replace(/\'/g, "\\\'").replace(/"/g, "&quot;");
+            const safeLore = (w.lore && w.lore.text) ? w.lore.text.replace(/\\/g, "\\\\").replace(/\'/g, "\\\'").replace(/"/g, "&quot;").replace(/\n/g, " ") : "Lore unavailable.";
+            html += `
+                <div class="weapon-item ${active}" data-weapon-id="${w.id}" >
+                    <div class="weapon-item-left">
+                        <span class="weapon-name">${w.name}</span>
+                        ${variantChip(w)}
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="weapon-item-category">${w.category || w.class || ''}</span>
+                        <button class="remove-weapon-btn" title="Remove from Armory" onclick="event.stopPropagation(); removeWeaponFromArmory('${w.id}')" style="background:none; border:none; color:#475569; cursor:pointer; font-size:1.4rem; padding:0 2px; line-height:1; transition:color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#475569'">&times;</button>
+                    </div>
+                </div>`;
+        });
+    }
+
+    if (!standard.length && !prime.length) {
+        html = `<div style="padding:18px 14px;color:#334155;font-size:12px;font-family:'Inter',sans-serif;">No weapons match.</div>`;
+    }
+
+    content.innerHTML = html;
+
+    // Bind weapon clicks
+    content.querySelectorAll('.weapon-item[data-weapon-id]').forEach(el => {
+        el.addEventListener('click', () => selectWeapon(el.dataset.weaponId));
+    });
+}
+
+// ════════════════════════════════════════════════════════════
+//  SELECT & CALCULATOR
+// ════════════════════════════════════════════════════════════
+function selectWeapon(weaponId) {
+    state.selectedWeaponId = weaponId;
+    renderSidebar();
+    renderCalculator();
+}
+
+function renderCalculator() {
+    const panel = document.getElementById('calculatorPanel');
+    if (!panel) return;
+
+    if (!state.selectedWeaponId) {
+        panel.innerHTML = `
+            <div class="welcome-state">
+                <div class="welcome-icon">&#9876;&#65039;</div>
+                <h2>Select a Weapon</h2>
+                <div class="welcome-hint"><p>Choose a weapon from the left panel to view its meta build.</p></div>
+            </div>`;
+        return;
+    }
+
+    const weapon = state.weapons.find(w => w.id === state.selectedWeaponId);
+    if (!weapon) return;
+
+    const buildPayload = ensureBuildState(weapon);
+    const metaBuild = getActiveBuild(weapon.id)
+        || (weapon.builds && weapon.builds[0])
+        || { name: 'Meta Build', mods: weapon.mods || [], notes: weapon.notes || '' };
+    const built     = calcBuildStats(weapon, metaBuild);
+    const bDPS      = baseDPS(weapon);
+    const s         = weapon.stats;
+
+    // Slot badge
+    const slotCls = { Primary: 'slot-primary', Secondary: 'slot-secondary', Melee: 'slot-melee' }[weapon.slot] || 'neutral-badge';
+
+    const loadoutOptions = buildPayload.builds.map(build => `
+        <option value="${build.id}" ${build.id === buildPayload.lastActiveBuildId ? 'selected' : ''}>${build.name}</option>
+    `).join('');
+
+    // ── Read-only mod cards (clickable) ──
+        // ■ Read-only mod cards (clickable) ■
+    const modSlotsHtml = normalizeMods(metaBuild.mods).map((modName, i) => {
+        const md = getModData(modName);
+        const isEmpty = !modName;
+        const modNameEsc = modName ? modName.replace(/'/g, "\\'") : '';
+        return `
+            <div class="mod-display-card" onclick="openModInfo('${modNameEsc}', ${i})">
+                <span class="stat-tile-info-icon" style="position:absolute;top:6px;right:7px;">i</span>
+                <div class="mod-card-slot-num">Slot ${i + 1}</div>
+                <div class="mod-card-name${isEmpty ? ' empty' : ''}">${modName || 'Empty'}</div>
+                ${md && md.effect ? `<div class="mod-card-effect">${md.effect}</div>` : ''}
+            </div>`;
+    }).join('');
+
+    const arcaneSlotsHtml = normalizeArcanes(metaBuild.arcanes, weapon).map((arcaneName, i) => `
+        <div class="mod-display-card" onclick="openModInfo('${arcaneName.replace(/'/g, "\\'")}', ${i})" title="Click for arcane details">
+            <span class="stat-tile-info-icon" style="position:absolute;top:6px;right:7px;">i</span>
+            <div class="mod-card-slot-num">Arcane Slot ${i + 1}</div>
+            <div class="mod-card-name${arcaneName ? '' : ' empty'}">${arcaneName || 'Empty Arcane'}</div>
+        </div>
+    `).join('');
+
+    function compRow(label, baseVal, builtVal, fmtFn) {
+        const delta = builtVal - baseVal;
+        const pct   = baseVal !== 0 ? (delta / baseVal) * 100 : 0;
+        const cls   = delta > 0.001 ? 'pos' : delta < -0.001 ? 'neg' : 'neu';
+        const sign  = delta >= 0 ? '+' : '';
+        return `
+            <tr>
+                <td class="ct-stat">${label}</td>
+                <td class="ct-base">${fmtFn(baseVal)}</td>
+                <td class="ct-built">${fmtFn(builtVal)}</td>
+                <td class="ct-delta ${cls}">${sign}${fmtFn(delta)} <span style="opacity:0.55;font-size:0.76rem">(${sign}${fmt(pct,0)}%)</span></td>
+            </tr>`;
+    }
+
+    const compRows = [
+        compRow('Damage',          s.baseDamage,                     built.finalDamage,   v => fmt(v, 1)),
+        compRow('DPS',             bDPS,                              built.dps,           v => fmt(v, 0)),
+        compRow('Crit Chance',     s.critChance,                      built.critChance,    v => fmtPct(v)),
+        compRow('Crit Multiplier', s.critMultiplier,                  built.critMultiplier,v => fmtX(v)),
+        compRow('Status Chance',   s.statusChance,                    built.statusChance,  v => fmtPct(v)),
+        compRow('Fire Rate',       s.fireRate,                        built.fireRate,      v => fmt(v, 2)),
+        compRow('Status Rate',     s.fireRate * s.statusChance / 100, built.statusRate,    v => fmt(v, 2))
+    ].join('');
+
+    panel.innerHTML = `
+        <div class="weapon-detail">
+
+            <!-- ── Weapon Header ── -->
+            <div class="calc-card">
+                <div class="weapon-header-row">
+                    <div class="weapon-header-info">
+                        <h2 class="clickable-weapon-name" onclick="openWeaponLoreModal('${weapon.id}')" title="Click to view weapon lore & acquisition">
+                            ${weapon.name}
+                            <span class="stat-tile-info-icon" style="position:relative; top:-4px; margin-left:6px; font-size:1.1rem; width:22px; height:22px; line-height:22px; display:inline-block;">i</span>
+                        </h2>
+                        <div class="weapon-meta-build-name">Best Meta Build: ${metaBuild.name}</div>
+                    </div>
+                    <div>
+                        <div class="weapon-header-actions no-print">
+                            <button class="weapon-action-btn customize-btn" onclick="openWeaponBuildCustomizer('${weapon.id}', 'customize')">Customize Build</button>
+                        </div>
+                        <div class="badge-row">
+                            <span class="badge ${slotCls} clickable-badge" onclick="openGlossaryInfo('${weapon.slot}')">${weapon.slot}</span>
+                            <span class="badge class-badge clickable-badge" onclick="openGlossaryInfo('${weapon.class || weapon.category}')">${weapon.class || weapon.category}</span>
+                            <span class="badge neutral-badge clickable-badge" onclick="openGlossaryInfo('${weapon.variant}')">${weapon.variant}</span>
+                            ${weapon.owned
+                                ? `<span class="badge owned-badge clickable-badge" onclick="openGlossaryInfo('owned')">&#10003; Owned</span>`
+                                : `<span class="badge neutral-badge clickable-badge" onclick="openGlossaryInfo('unowned')">Unowned</span>`}
+                        </div>
+                    </div>
+                </div>
+                <div class="active-loadout-bar no-print">
+                    <span class="active-loadout-label">Active Loadout:</span>
+                    <select class="build-select" data-weapon-id="${weapon.id}">${loadoutOptions}</select>
+                    <button class="weapon-action-btn new-btn" onclick="openWeaponBuildCustomizer('${weapon.id}', 'new-slot')">+ New Slot</button>
+                </div>
+            </div>
+
+            <!-- ── Base Stats ── -->
+            <div class="calc-card">
+                <div class="section-title">Base Stats</div>
+                <div class="base-stats-grid">
+                    <div class="stat-tile" data-stat="baseDamage" onclick="openStatInfo('baseDamage')">
+                        <span class="stat-tile-info-icon">i</span>
+                        <div class="stat-tile-label">Base Damage</div>
+                        <div class="stat-tile-value">${fmt(s.baseDamage, 1)}</div>
+                    </div>
+                    <div class="stat-tile" data-stat="critChance" onclick="openStatInfo('critChance')">
+                        <span class="stat-tile-info-icon">i</span>
+                        <div class="stat-tile-label">Crit Chance</div>
+                        <div class="stat-tile-value">${fmtPct(s.critChance)}</div>
+                    </div>
+                    <div class="stat-tile" data-stat="critMultiplier" onclick="openStatInfo('critMultiplier')">
+                        <span class="stat-tile-info-icon">i</span>
+                        <div class="stat-tile-label">Crit Multiplier</div>
+                        <div class="stat-tile-value">${fmtX(s.critMultiplier)}</div>
+                    </div>
+                    <div class="stat-tile" data-stat="statusChance" onclick="openStatInfo('statusChance')">
+                        <span class="stat-tile-info-icon">i</span>
+                        <div class="stat-tile-label">Status Chance</div>
+                        <div class="stat-tile-value">${fmtPct(s.statusChance)}</div>
+                    </div>
+                    <div class="stat-tile" data-stat="fireRate" onclick="openStatInfo('fireRate')">
+                        <span class="stat-tile-info-icon">i</span>
+                        <div class="stat-tile-label">Fire Rate</div>
+                        <div class="stat-tile-value">${fmt(s.fireRate, 2)}</div>
+                    </div>
+                    <div class="stat-tile" data-stat="magazine" onclick="openStatInfo('magazine')">
+                        <span class="stat-tile-info-icon">i</span>
+                        <div class="stat-tile-label">Magazine</div>
+                        <div class="stat-tile-value">${s.magazine ? fmt(s.magazine, 0) : '&mdash;'}</div>
+                    </div>
+                    <div class="stat-tile" data-stat="reload" onclick="openStatInfo('reload')">
+                        <span class="stat-tile-info-icon">i</span>
+                        <div class="stat-tile-label">Reload</div>
+                        <div class="stat-tile-value">${s.reload ? fmt(s.reload, 2) + 's' : '&mdash;'}</div>
+                    </div>
+                    <div class="stat-tile" data-stat="baseDPS" onclick="openStatInfo('baseDPS')">
+                        <span class="stat-tile-info-icon">i</span>
+                        <div class="stat-tile-label">Base DPS</div>
+                        <div class="stat-tile-value">${fmt(bDPS, 0)}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Meta Build (Read-Only) ── -->
+            <div class="calc-card">
+                <div class="section-title">Meta Build &mdash; Display Only</div>
+                <div class="build-name-banner">
+                    <span class="build-name-banner-icon">&#127942;</span>
+                    <span class="build-name-banner-label">${metaBuild.name}</span>
+                    <span class="build-name-banner-badge">Read Only</span>
+                </div>
+                <div class="mod-slots-grid">${modSlotsHtml}</div>
+                <div class="section-title" style="margin-top:18px">Weapon Arcanes</div>
+                <div class="mod-slots-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr));">${arcaneSlotsHtml}</div>
+                ${metaBuild.notes ? `<div class="notes-block" style="margin-top:14px">${metaBuild.notes}</div>` : ''}
+            </div>
+
+            <!-- ── Built Stats vs Base ── -->
+            <div class="calc-card">
+                <div class="section-title">Built Stats vs Base</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Stat</th>
+                            <th>Base (Unmodded)</th>
+                            <th>With Meta Build</th>
+                            <th>Delta</th>
+                        </tr>
+                    </thead>
+                    <tbody>${compRows}</tbody>
+                </table>
+            </div>
+
+            <!-- ── Synergies & Notes ── -->
+            <div class="calc-card">
+                <div class="section-title">Synergies &amp; Notes</div>
+                ${weapon.synergies && weapon.synergies.length
+                    ? `<div class="pill-group">${weapon.synergies.map(s => `<span class="pill synergy clickable-pill" onclick="openGlossaryInfo('${s.replace(/'/g, "\\'")}')">${s}</span>`).join('')}</div>`
+                    : ''}
+                ${weapon.tags && weapon.tags.length
+                    ? `<div class="pill-group" style="margin-top:9px">${weapon.tags.map(t => `<span class="pill tag clickable-pill" onclick="openGlossaryInfo('${t.replace(/'/g, "\\'")}')">${t}</span>`).join('')}</div>`
+                    : ''}
+                ${weapon.notes ? `<div class="notes-block" style="margin-top:12px">${weapon.notes}</div>` : ''}
+            </div>
+
+        </div>`;
+
+    updateChapterNavigation();
+    bindDetailEvents(weapon.id);
+    panel.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ════════════════════════════════════════════════════════════
+//  DETAIL EVENT BINDING
+// ════════════════════════════════════════════════════════════
+function bindDetailEvents(weaponId) {
+
+    // Build selector
+    document.querySelector(`.build-select[data-weapon-id="${weaponId}"]`)
+        ?.addEventListener('change', e => {
+            state.buildState[weaponId].lastActiveBuildId = e.target.value;
+            saveBuildState(weaponId);
+            renderCalculator();
+        });
+
+    // Save build name
+    document.querySelector(`.save-btn[data-weapon-id="${weaponId}"]`)
+        ?.addEventListener('click', () => {
+            const payload = state.buildState[weaponId];
+            const name    = document.querySelector(`.build-name-input[data-weapon-id="${weaponId}"]`)?.value.trim() || 'Saved Build';
+            const b       = payload.builds.find(b => b.id === payload.lastActiveBuildId);
+            if (b) b.name = name;
+            saveBuildState(weaponId);
+            renderCalculator();
+        });
+
+    // New build (copies active)
+    document.querySelector(`.new-btn[data-weapon-id="${weaponId}"]`)
+        ?.addEventListener('click', () => {
+            const payload     = state.buildState[weaponId];
+            const activeBuild = getActiveBuild(weaponId);
+            const newBuild    = {
+                id:    `${weaponId}-${Date.now()}`,
+                name:  'New Build',
+                mods:  normalizeMods(activeBuild?.mods),
+                notes: ''
+            };
+            payload.builds.push(newBuild);
+            payload.lastActiveBuildId = newBuild.id;
+            saveBuildState(weaponId);
+            renderCalculator();
+        });
+
+    // Delete build
+    document.querySelector(`.delete-btn[data-weapon-id="${weaponId}"]`)
+        ?.addEventListener('click', () => {
+            const payload = state.buildState[weaponId];
+            if (payload.builds.length <= 1) return;
+            payload.builds = payload.builds.filter(b => b.id !== payload.lastActiveBuildId);
+            payload.lastActiveBuildId = payload.builds[0].id;
+            saveBuildState(weaponId);
+            renderCalculator();
+        });
+
+    // Mod slot search (filters the dropdown live)
+    document.querySelectorAll(`.mod-slot-search[data-weapon-id="${weaponId}"]`).forEach(input => {
+        input.addEventListener('input', e => {
+            const idx    = Number(e.target.dataset.slotIndex);
+            const select = document.querySelector(`.mod-slot-select[data-weapon-id="${weaponId}"][data-slot-index="${idx}"]`);
+            if (!select) return;
+            const q = e.target.value.trim().toLowerCase();
+            select.innerHTML = ['<option value="">Empty Slot</option>']
+                .concat(state.modNames
+                    .filter(nm => !q || nm.toLowerCase().includes(q))
+                    .map(nm => `<option value="${nm}" ${nm === select.value ? 'selected' : ''}>${nm}</option>`))
+                .join('');
+        });
+    });
+
+    // Mod slot select (triggers recalc)
+    document.querySelectorAll(`.mod-slot-select[data-weapon-id="${weaponId}"]`).forEach(select => {
+        select.addEventListener('change', e => {
+            const idx         = Number(e.target.dataset.slotIndex);
+            const activeBuild = getActiveBuild(weaponId);
+            if (!activeBuild) return;
+            if (e.target.dataset.isArcane === 'true') {
+                activeBuild.arcanes = normalizeArcanes(activeBuild.arcanes, state.weapons.find(w => w.id === weaponId));
+                activeBuild.arcanes[idx] = e.target.value;
+            } else {
+                activeBuild.mods = normalizeMods(activeBuild.mods);
+                activeBuild.mods[idx] = e.target.value;
+            }
+            saveBuildState(weaponId);
+            renderCalculator();
+        });
+    });
+}
+
+// ════════════════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════════════════
+function updateChapterNavigation() {
+    const currentFile  = window.location.pathname.split('/').pop() || 'Warframe_Meta_Weapons_Codex.html';
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === currentFile.toLowerCase());
+    const prevFile     = currentIndex > 0 ? guideSequence[currentIndex - 1] : null;
+    const nextFile     = currentIndex >= 0 && currentIndex < guideSequence.length - 1 ? guideSequence[currentIndex + 1] : null;
+
+    [['nav-prev', prevFile], ['nav-prev-top', prevFile], ['nav-next', nextFile], ['nav-next-top', nextFile]].forEach(([id, href]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (href) { el.classList.remove('disabled'); el.href = href; }
+        else      { el.classList.add('disabled'); el.removeAttribute('href'); }
+    });
+
+}
+
+// ════════════════════════════════════════════════════════════
+//  JUMP BUTTON
+// ════════════════════════════════════════════════════════════
+function initJumpButton() {
+    const btn   = document.getElementById('global-jump-btn');
+    const panel = document.getElementById('calculatorPanel');
+    if (!btn || !panel) return;
+
+    let atBottom = false;
+    const tick = () => {
+        const { scrollTop, scrollHeight, clientHeight } = panel;
+        if (scrollHeight <= clientHeight + 50) { btn.style.display = 'none'; return; }
+        btn.style.display = 'flex';
+        atBottom      = scrollTop > (scrollHeight - clientHeight) / 2;
+        btn.innerText = atBottom ? '&#9650;' : '&#9660;';
+        btn.title     = atBottom ? 'Jump to Top' : 'Jump to Bottom';
+    };
+
+    btn.addEventListener('click', () => panel.scrollTo({ top: atBottom ? 0 : panel.scrollHeight, behavior: 'smooth' }));
+    panel.addEventListener('scroll', tick);
+    setTimeout(tick, 120);
+}
+
+// ════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════
+function initData() {
+    // database_weapons.js and mod_database.js both use `const` at top level,
+    // so they are NOT properties of window. Access them as bare identifiers.
+    const rawDB = typeof RawWeaponDatabase !== 'undefined' ? [...RawWeaponDatabase] : [];
+    const curatedWeaponIds = rawDB.map(w => w.id);
+    
+    // Merge EncyclopediaDatabase into rawDB so all 800+ weapons can be customized
+    if (typeof EncyclopediaDatabase !== 'undefined') {
+        const existingNames = new Set(rawDB.map(w => w.name.toLowerCase()));
+        EncyclopediaDatabase.forEach(ew => {
+            if (!existingNames.has(ew.name.toLowerCase())) {
+                rawDB.push(ew);
+            }
+        });
+    }
+
+    state.weapons = rawDB
+        .map(normalizeWeapon)
+        .sort((a, b) => {
+            const order = { Primary: 1, Secondary: 2, Melee: 3 };
+            return ((order[a.slot] || 9) - (order[b.slot] || 9)) || a.name.localeCompare(b.name);
+        });
+
+    // Initialize My Armory
+    const savedArmory = window.safeStorage.getItem('wfcodex_myweapons_v2');
+    if (savedArmory) {
+        state.myWeapons = JSON.parse(savedArmory);
+    } else {
+        state.myWeapons = curatedWeaponIds;
+        saveArmory();
+    }
+
+    state.modNames = Object.keys(_modDB()).sort((a, b) => a.localeCompare(b));
+    state.weapons.forEach(ensureBuildState);
+}
+
+function saveArmory() {
+    window.safeStorage.setItem('wfcodex_myweapons_v2', JSON.stringify(state.myWeapons));
+}
+
+function removeWeaponFromArmory(weaponId) {
+    state.myWeapons = state.myWeapons.filter(id => id !== weaponId);
+    saveArmory();
+    
+    // If the removed weapon was selected, clear it or select first
+    if (state.selectedWeaponId === weaponId) {
+        autoSelectFirstWeapon();
+    } else {
+        renderSidebar();
+    }
+}
+
+// Auto-select the first weapon from the current tab
+function autoSelectFirstWeapon() {
+    let available = state.weapons.filter(w => w.slot === state.slotTab && state.myWeapons.includes(w.id));
+    if (state.variantTab === 'Standard') {
+        available = available.filter(w => !isPrime(w));
+    } else if (state.variantTab === 'Prime') {
+        available = available.filter(w => isPrime(w));
+    }
+    
+    if (available.length > 0) {
+        available.sort((a, b) => a.name.localeCompare(b.name));
+        selectWeapon(available[0].id);
+    } else {
+        // If no weapons in this tab, clear selection
+        const panel = document.getElementById('weaponPanel');
+        if (panel) panel.innerHTML = '<div style="padding:40px; text-align:center; color:#64748b;">No weapons found. Add some from the Master Database!</div>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initData();
+
+    // ── Tab clicks ──
+    document.querySelectorAll('.sidebar-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            state.slotTab = tab.dataset.slot;
+            state.categoryTab = 'All';
+            state.sidebarSearch = '';
+            const searchEl = document.getElementById('sidebarSearch');
+            if (searchEl) searchEl.value = '';
+            
+            if (document.getElementById('addWeaponOverlay').style.display === 'flex') {
+                renderAddWeaponList();
+            }
+            if (document.getElementById('encyclopediaOverlay').style.display === 'flex') {
+                renderEncyclopediaList();
+            }
+            
+            renderSidebar();
+            // Auto-select first weapon in the new tab
+            autoSelectFirstWeapon();
+        });
+    });
+
+    // ■ Variant Tab clicks ■
+    document.querySelectorAll('.variant-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            state.variantTab = tab.dataset.variant;
+            renderSidebar();
+            if (document.getElementById('addWeaponOverlay').style.display === 'flex') {
+                renderAddWeaponList();
+            }
+            if (document.getElementById('encyclopediaOverlay').style.display === 'flex') {
+                renderEncyclopediaList();
+            }
+            renderSidebar();
+            autoSelectFirstWeapon();
+        });
+    });
+
+    // ■ Initial render: show sidebar + auto-select first Primary weapon ■
+    renderSidebar();
+    autoSelectFirstWeapon();
+
+    initJumpButton();
+    updateChapterNavigation();
+
+    document.getElementById('sidebarSearch')?.addEventListener('input', e => {
+        state.sidebarSearch = e.target.value.trim();
+        renderSidebar();
+    });
+
+    document.getElementById('addWeaponSearch')?.addEventListener('input', () => {
+        renderAddWeaponList();
+    });
+
+    document.getElementById('addWeaponSearch')?.addEventListener('input', () => {
+        renderAddWeaponList();
+    });
+});
+</script>
+</body>
+</html>
+
+
+
+
+

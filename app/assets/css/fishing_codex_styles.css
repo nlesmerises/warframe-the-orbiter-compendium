@@ -1,0 +1,917 @@
+/* Fonts (Outfit, Space Grotesk) are bundled locally and loaded via the page link to assets/fonts/fonts.css — fully offline. */
+
+/* CSS Variables for Core UI Design Tokens */
+:root {
+  --font-title: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-app: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Color Palette - Unified Glassmorphism */
+  --bg-main: #060813;
+  --bg-card: rgba(15, 22, 42, 0.45);
+  --bg-card-hover: rgba(23, 33, 62, 0.75);
+  --bg-panel: rgba(10, 15, 30, 0.7);
+  --bg-input: rgba(8, 12, 24, 0.6);
+  
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(139, 92, 246, 0.15);
+
+  --text-primary: #cbd5e1;
+  --text-secondary: #94a3b8;
+  --text-dark: #64748b;
+
+  /* Neon Brand Colors */
+  --color-earth: hsl(176, 100%, 45%);
+  --color-venus: hsl(200, 100%, 65%);
+  --color-deimos: hsl(295, 80%, 62%);
+  --color-orokin: #ffab00;
+
+  /* Rarity Colors */
+  --rarity-common: hsl(210, 15%, 70%);
+  --rarity-uncommon: hsl(205, 90%, 60%);
+  --rarity-rare: #ffab00;
+
+  /* Polarity / Focus Types */
+  --pol-vazarin: hsl(210, 100%, 60%);
+  --pol-naramon: hsl(145, 80%, 45%);
+  --pol-madurai: hsl(355, 90%, 60%);
+  --pol-penjaga: hsl(265, 80%, 65%);
+  
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --glass-blur: blur(12px);
+}
+
+html, body, body *, button, input, select, textarea, label, table, th, td {
+  font-family: var(--font-app) !important;
+}
+
+.global-top-header > div[style*="top:60px"],
+.global-top-header > div[style*="top: 60px"] {
+  top: 70px !important;
+}
+
+.global-top-header .header-title,
+.global-top-header > div > span {
+  font-family: var(--font-app) !important;
+}
+
+/* Reset & Scrollbar */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(220, 15%, 20%);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(190, 100%, 50%);
+}
+
+/* Main Base Styles */
+body {
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.18) 0px, transparent 55%),
+    radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.12) 0px, transparent 55%),
+    radial-gradient(at 50% 50%, rgba(8, 12, 28, 0.9) 0px, transparent 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
+  zoom: 1;
+}
+
+/* Layout container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Header & Banner styling */
+.app-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 1.5rem;
+  position: relative;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.logo-symbol {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--color-orokin);
+  border-radius: 50%;
+  position: relative;
+  animation: logo-spin 6s linear infinite;
+}
+
+.logo-symbol::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 1px dashed var(--color-orokin);
+  border-radius: 50%;
+}
+
+@keyframes logo-spin {
+  100% { transform: rotate(360deg); }
+}
+
+.app-title {
+  font-family: var(--font-title);
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  text-shadow: 0 0 20px hsla(190, 100%, 50%, 0.2);
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--color-orokin) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+/* Region / Planet Tabs */
+.tabs-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.planet-tabs {
+  display: flex;
+  gap: 0.75rem;
+  background: var(--bg-panel);
+  padding: 0.5rem;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+}
+
+.tab-btn span {
+  font-size: 1.1rem;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  color: var(--bg-main);
+  background: var(--text-primary);
+  box-shadow: 0 4px 15px rgba(255,255,255,0.25);
+  font-weight: 700;
+}
+
+/* Planet-specific Active tab styling overrides */
+.tab-btn.active[data-tab="Earth"] {
+  background: var(--color-earth);
+  color: var(--bg-main);
+  box-shadow: 0 4px 15px hsla(176, 100%, 45%, 0.3);
+}
+.tab-btn.active[data-tab="Venus"] {
+  background: var(--color-venus);
+  color: var(--bg-main);
+  box-shadow: 0 4px 15px hsla(200, 100%, 65%, 0.3);
+}
+.tab-btn.active[data-tab="Deimos"] {
+  background: var(--color-deimos);
+  color: var(--bg-main);
+  box-shadow: 0 4px 15px hsla(295, 80%, 62%, 0.3);
+}
+.tab-btn.active[data-tab="BioLab"] {
+  background: var(--color-orokin);
+  color: var(--bg-main);
+  box-shadow: 0 4px 15px hsla(45, 100%, 50%, 0.3);
+}
+
+/* Search and Filters Layout */
+.control-bar {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  backdrop-filter: var(--glass-blur);
+}
+
+.search-box {
+  width: 100%;
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem 1rem 1rem 3rem;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  transition: var(--transition-smooth);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-orokin);
+  box-shadow: 0 0 12px hsla(45, 100%, 50%, 0.15);
+}
+
+/* Dynamic filters dropdown panel */
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+}
+
+.filter-group select {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-color: var(--color-orokin);
+}
+
+/* Fish Grid and Cards */
+.fish-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.fish-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: var(--transition-smooth);
+}
+
+.fish-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--color-orokin);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+}
+
+/* Rarity-specific card glows */
+.card-glow-common {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--rarity-common);
+}
+.card-glow-uncommon {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--rarity-uncommon);
+  box-shadow: 0 0 10px var(--rarity-uncommon);
+}
+.card-glow-rare {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: var(--rarity-rare);
+  box-shadow: 0 0 15px var(--rarity-rare);
+}
+
+.fish-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.fish-name-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fish-title {
+  font-family: var(--font-title);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.rarity-badge {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.rarity-common { color: var(--rarity-common); }
+.rarity-uncommon { color: var(--rarity-uncommon); }
+.rarity-rare { color: var(--rarity-rare); }
+
+.cycle-badges {
+  display: flex;
+  gap: 4px;
+}
+
+.cycle-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.cycle-day { background: hsl(45, 100%, 20%); color: hsl(45, 100%, 75%); }
+.cycle-night { background: hsl(260, 60%, 20%); color: hsl(260, 100%, 80%); }
+.cycle-warm { background: hsl(15, 80%, 20%); color: hsl(15, 100%, 75%); }
+.cycle-cold { background: hsl(200, 80%, 20%); color: hsl(200, 100%, 80%); }
+.cycle-fass { background: hsl(25, 80%, 20%); color: hsl(25, 100%, 75%); }
+.cycle-vome { background: hsl(190, 80%, 20%); color: hsl(190, 100%, 80%); }
+
+/* SVG fish illustration placeholder styling */
+.fish-avatar {
+  background: hsla(220, 15%, 5%, 0.5);
+  border-radius: 12px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+.fish-svg-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fish-svg-wrapper svg {
+  max-width: 100%;
+  max-height: 100%;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* Fish details lists */
+.fish-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  min-height: 40px;
+}
+
+.details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.detail-row .label {
+  color: var(--text-secondary);
+}
+
+.detail-row .value {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.spear-tag {
+  color: var(--color-orokin);
+  font-weight: 600;
+}
+
+/* Cutting yields subsection */
+.resource-block {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  padding: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.03);
+  margin-top: auto;
+}
+
+.resource-header {
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 4px;
+}
+
+.resource-yields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.yield-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.yield-icon {
+  font-size: 1rem;
+}
+
+.yield-desc {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+.yield-name {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.yield-qty {
+  color: var(--color-orokin);
+  font-weight: 600;
+}
+
+/* Ingredient Cross-Reference Badges */
+.badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.75rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  border: 1px dashed transparent;
+}
+
+.badge-mutagen {
+  background: hsla(295, 80%, 62%, 0.15);
+  color: var(--color-deimos);
+  border-color: hsla(295, 80%, 62%, 0.3);
+}
+.badge-mutagen:hover {
+  background: hsla(295, 80%, 62%, 0.25);
+}
+
+.badge-antigen {
+  background: hsla(45, 100%, 50%, 0.15);
+  color: var(--color-orokin);
+  border-color: hsla(45, 100%, 50%, 0.3);
+}
+.badge-antigen:hover {
+  background: hsla(45, 100%, 50%, 0.25);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Empty search result states */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary);
+  font-family: var(--font-title);
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px dashed var(--border-color);
+}
+
+/* Bio-Lab Companion section styling */
+.biolab-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.biolab-control-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.biolab-selector-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.biolab-selector-row label {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.biolab-selector-row select {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--color-orokin);
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Selector Grids */
+.lab-section-title {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lab-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.lab-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.lab-card:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.lab-card.selected {
+  background: hsla(210, 100%, 50%, 0.05);
+  border-color: var(--color-orokin);
+  box-shadow: 0 0 15px hsla(45, 100%, 50%, 0.1);
+}
+
+.lab-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 4px;
+}
+
+.lab-card-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.lab-card.selected .lab-card-title {
+  color: var(--color-orokin);
+}
+
+.lab-rank {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.lab-spec {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.lab-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.lab-cost {
+  font-size: 0.75rem;
+  color: var(--color-orokin);
+  font-weight: 600;
+}
+
+/* Polarity styling tags */
+.polarity-tag {
+  background: hsla(210, 100%, 50%, 0.15);
+  color: var(--pol-vazarin);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Results / Shopping List section */
+.shopping-summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.comp-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.preview-title {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-orokin);
+}
+
+.preview-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.preview-badge-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.resistance-tag {
+  background: hsla(145, 80%, 45%, 0.15);
+  color: var(--pol-naramon);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Two-column layout in Bio-Lab results */
+.ingredients-split-view {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .ingredients-split-view {
+    grid-template-columns: 1fr;
+  }
+}
+
+.materials-list h5, .companion-appearance-panel h5 {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+.materials-ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.material-li {
+  background: rgba(0,0,0,0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  transition: var(--transition-smooth);
+}
+
+.material-li:hover {
+  border-color: rgba(255,255,255,0.08);
+}
+
+.material-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.material-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.material-qty {
+  color: var(--color-orokin);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.material-sources {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.source-fish-tag {
+  color: var(--color-venus);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+.source-fish-tag:hover {
+  color: var(--text-primary);
+}
+
+.text-blue { color: var(--color-venus); }
+.text-orange { color: hsl(30, 90%, 55%); }
+
+/* Visual Mutation Descriptions styling */
+.mutation-box {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.mutation-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mutation-label {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--color-orokin);
+}
+
+.mutation-desc {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.lab-instruction-alert {
+  background: hsla(45, 100%, 50%, 0.05);
+  border: 1px solid hsla(45, 100%, 50%, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.alert-icon {
+  font-size: 1.1rem;
+}
+
+.alert-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Helper Animation class for focused search card */
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: var(--border-color);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  50% {
+    border-color: var(--color-orokin);
+    box-shadow: 0 0 25px hsla(45, 100%, 50%, 0.4);
+  }
+}
+
+.highlight-pulse {
+  animation: pulse-border 1.5s ease-in-out 2;
+}
+
+.hidden {
+  display: none !important;
+}

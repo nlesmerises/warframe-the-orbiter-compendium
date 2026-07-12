@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Void Relics Meta Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128142; Void Relics Meta Guide</h1>
+        <p class="subtitle">Which relics to crack &middot; Void Tier priority &middot; Efficient fissure missions &middot; Ducat value &middot; Relic refinement</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="section-overview"  style="border-left-color:#ffab00;"><div class="qi-tile-icon">&#128142;</div><h2 class="qi-tile-title">How Relics Work</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-tiers"                   style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">Relic Eras &amp; Tiers</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-refinement"              style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128259;</div><h2 class="qi-tile-title">Refinement</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-fissures"                style="border-left-color:#f87171;"><div class="qi-tile-icon">&#128307;</div><h2 class="qi-tile-title">Fissure Mission Selection</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-priority"                style="border-left-color:#34d399;"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">Which Relics to Run</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-ducats"                  style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#129689;</div><h2 class="qi-tile-title">Ducat Value</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-void-traces"             style="border-left-color:#60a5fa;"><div class="qi-tile-icon">&#128312;</div><h2 class="qi-tile-title">Void Traces</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <section class="category-section" id="section-overview">
+        <h2>&#128142; 1. How Relics Work</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">The Relic System</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Relics are consumable items containing 6 possible rewards (3 common, 2 uncommon, 1 rare)</li>
+                    <li>Run a Void Fissure mission with a relic equipped &mdash; complete the mission to crack it</li>
+                    <li>Collect 10 Reactant from Corrupted enemies during the mission to crack the relic</li>
+                    <li>In squads: all 4 players&rsquo; relics crack simultaneously &mdash; choose one reward from the pool of 4</li>
+                    <li>Squad sharing multiplies your effective reward pool &mdash; always run with a squad when targeting rare items</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Rarity Breakdown</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Drop Rates</span></div>
+                <ul class="list">
+                    <li><strong>Common (Bronze)</strong> &mdash; 3 items, 25.33% chance each at Intact</li>
+                    <li><strong>Uncommon (Silver)</strong> &mdash; 2 items, 11% chance each at Intact</li>
+                    <li><strong>Rare (Gold)</strong> &mdash; 1 item, 2% chance at Intact; up to 10% at Radiant</li>
+                    <li>Refinement increases rare drop chance significantly &mdash; always refine before targeting a rare</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-tiers">
+        <h2>&#128197; 2. Relic Eras &amp; Tiers</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Relic Eras</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Tiers</span></div>
+                <ul class="list">
+                    <li><strong>Axi</strong> &mdash; highest level; newest and most valuable Prime parts; run in level 40+ fissures</li>
+                    <li><strong>Neo</strong> &mdash; mid-tier; good mix of current and recent parts; run in level 30&ndash;40 fissures</li>
+                    <li><strong>Meso</strong> &mdash; older parts; useful for Ducat farming or completing older Prime sets; run in level 20&ndash;30 fissures</li>
+                    <li><strong>Lith</strong> &mdash; lowest era; oldest parts; primarily Ducat value; run in level 1&ndash;20 fissures</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Fissure Mission Levels</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Missions</span></div>
+                <ul class="list">
+                    <li>Lith: Capture/Exterminate at low level &mdash; fastest missions available</li>
+                    <li>Meso: Defense wave 5 or Capture at mid-level</li>
+                    <li>Neo: Interception or Defense wave 5 at higher levels</li>
+                    <li>Axi: Survival 5 min or Defense wave 5 at level 40+</li>
+                    <li>Requiem: special tier for Lich/Sister weapon parts &mdash; requires Requiem Relics</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-refinement">
+        <h2>&#128161; 3. Refinement</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Refinement Levels</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Mechanics</span></div>
+                <ul class="list">
+                    <li><strong>Intact</strong> &mdash; base state; 2% rare chance; costs 0 Void Traces</li>
+                    <li><strong>Exceptional</strong> &mdash; 4% rare chance; costs 25 Void Traces</li>
+                    <li><strong>Flawless</strong> &mdash; 6% rare chance; costs 50 Void Traces</li>
+                    <li><strong>Radiant</strong> &mdash; 10% rare chance; costs 100 Void Traces</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">When to Refine</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Strategy</span></div>
+                <ul class="list">
+                    <li>Always refine to <strong>Radiant</strong> when specifically targeting the rare drop</li>
+                    <li>Run Intact relics when farming common/uncommon items or Ducat fodder &mdash; save Traces</li>
+                    <li>Squad of 4 Radiants = 4&times; 10% chances to get the rare in a single mission</li>
+                    <li>Never refine relics you plan to sell or that contain only low-value items</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-fissures">
+        <h2>&#127919; 4. Fissure Mission Selection</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #f87171;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Fastest Mission Types</h3><span class="type-tag" style="background:rgba(248,113,113,0.18);color:#f87171;border:1px solid rgba(248,113,113,0.45);">Speed</span></div>
+                <ul class="list">
+                    <li><strong>Capture</strong> &mdash; fastest; complete in 90 seconds; best for Lith/Meso</li>
+                    <li><strong>Exterminate</strong> &mdash; 2&ndash;3 minutes; reliable Reactant collection</li>
+                    <li><strong>Defense (Wave 5 extract)</strong> &mdash; 5 waves then extract immediately; good for all tiers</li>
+                    <li><strong>Survival (5 min extract)</strong> &mdash; easy Reactant collection; standard for Axi</li>
+                    <li>Avoid: Interception, Mobile Defense &mdash; slower Reactant collection</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Reactant Tips</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Mechanics</span></div>
+                <ul class="list">
+                    <li>Corrupted enemies (yellow glowing) drop Reactant &mdash; 10 needed to crack the relic</li>
+                    <li>Do not rush ahead of Corrupted spawns &mdash; they need to reach you before you kill them</li>
+                    <li>In a squad: Reactant is per-player &mdash; each player must collect 10 individually</li>
+                    <li>Capture missions: complete the capture first, then kill Corrupted for Reactant</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-priority">
+        <h2>&#128200; 5. Which Relics to Run</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">High-Value Target Relics</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Priority</span></div>
+                <ul class="list">
+                    <li>Check Warframe.market for current Prime part prices &mdash; target relics with 50p+ rare items</li>
+                    <li>Newly vaulted Prime items spike in value immediately &mdash; crack their relics before they vault</li>
+                    <li>Newly unvaulted Prime items are cheapest during their unvault window &mdash; buy parts then</li>
+                    <li>Use the Warframe wiki Void Relic pages to see which relics contain specific parts</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Relic Rotation Strategy</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Strategy</span></div>
+                <ul class="list">
+                    <li>Focus on 1&ndash;2 target relics per session &mdash; spreading across many relics is inefficient</li>
+                    <li>Stock up on Radiants before a group session &mdash; refine in bulk at the Void Relic Refinement station</li>
+                    <li>Run Intact relics for Ducat farming &mdash; no Trace cost</li>
+                    <li>Sell surplus Prime parts on Warframe.market rather than converting to Ducats when prices are high</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Vaulted vs. Unvaulted</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Vault</span></div>
+                <ul class="list">
+                    <li><strong>Vaulted</strong> &mdash; relics no longer in the drop pool; parts only obtainable via trading</li>
+                    <li><strong>Unvaulted</strong> &mdash; temporarily returned to drop pool via Unvaulting event; farm during this window</li>
+                    <li>Track the vault cycle on the Warframe wiki for upcoming returns</li>
+                    <li>Vaulted parts command higher trade prices &mdash; check market before discarding</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-ducats">
+        <h2>&#128176; 6. Ducat Value</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Ducat Tiers</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Value</span></div>
+                <ul class="list">
+                    <li><strong>Common parts</strong> &mdash; 15 Ducats each at Baro Ki&rsquo;Teer kiosk</li>
+                    <li><strong>Uncommon parts</strong> &mdash; 45 Ducats each</li>
+                    <li><strong>Rare parts</strong> &mdash; 100 Ducats each</li>
+                    <li>Ducats are used exclusively with Baro Ki&rsquo;Teer for exclusive mods, weapons, and cosmetics</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">When to Convert vs. Sell</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Strategy</span></div>
+                <ul class="list">
+                    <li>Convert to Ducats when part&rsquo;s market value is below 10 Platinum &mdash; not worth listing</li>
+                    <li>Sell on Warframe.market when part value exceeds 15&ndash;20 Platinum</li>
+                    <li>Never convert rare parts to Ducats unless you have surplus &mdash; 100 Ducats &asymp; 10&ndash;15p at best</li>
+                    <li>Build a Ducat reserve of 2000&ndash;3000 before Baro visits to cover top-tier purchases</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-void-traces">
+        <h2>&#128312; 7. Void Traces</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Earning Traces</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Farming</span></div>
+                <ul class="list">
+                    <li>Earned by cracking relics &mdash; base amount plus bonus from any active Void Trace booster</li>
+                    <li>Cap: 3600 Void Traces maximum &mdash; stop earning when capped</li>
+                    <li>Farming Intact relics via fast Capture missions is the most efficient Trace/hour method</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Managing Your Reserve</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Strategy</span></div>
+                <ul class="list">
+                    <li>Keep 500&ndash;1000 Traces in reserve for rapid Radiant refinement when a valuable relic appears</li>
+                    <li>Do not hoard above 2000 &mdash; you lose potential Traces earned from missions</li>
+                    <li>Refine in bulk before squad sessions to maximize efficiency</li>
+                    <li>Void Trace boosters double traces earned per relic crack &mdash; use during active farming</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(targetId, true); }
+        });
+    });
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) { showSection(e.state.section, false); } else { showMenu(); }
+    });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

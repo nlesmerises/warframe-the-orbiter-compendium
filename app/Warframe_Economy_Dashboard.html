@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Economy &amp; Utility Dashboard</title>
+    <meta name="description" content="Central Hub for Farming Routes, Resets, Plat Values, Factions, and Disposal SOPs.">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css?v=6">
+    <style>
+/* Canonical back panel: glass container for the content area, matching the
+   reference codex page (Warframe_Mods_Database). Only adds the glass surface;
+   padding is left to dashboard.css so top-to-title spacing is unchanged. */
+.main-content {
+    background: linear-gradient(180deg, rgba(12, 16, 28, 0.94), rgba(9, 12, 22, 0.98));
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1.5px solid rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.7);
+}
+
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+
+
+
+
+
+#main-content { max-width: 1750px; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+
+/* Global Header & Navigation Capsule Styling */
+
+
+
+
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+    <!-- Animated background particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+        
+        <section class="view active" id="view-dashboard">
+            <header>
+                <h1>&#x1F4B0; Economy &amp; Utility</h1>
+                <p class="subtitle">Manage weekly merchant rotations, mod farms, syndicate standings, platinum trading, and inventory disposal SOPs</p>
+            </header>
+
+            <!-- Launcher Category Cards -->
+            <div class="category-grid">
+                <a href="Warframe_Vendor_Tracking_Guide.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #ffab00;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128197;</div>
+                    <h3>&#9203;&#xFE0F; Weekly Resets</h3>
+                    <div class="category-desc"><p>Track resets for Teshin, Baro Ki'Teer, Archon Hunts, and weekly merchant cycles.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Mod_Farming_Guide.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #22d3ee;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#9889;</div>
+                    <h3>&#127183; Core Mod Farm</h3>
+                    <div class="category-desc"><p>Farming routes for Orokin vaults, Nightmare missions, and critical core mods.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Rare_Mods_Value_Guide.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #a78bfa;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128203;</div>
+                    <h3>&#11088; Rare Mod Check</h3>
+                    <div class="category-desc"><p>Examine high-value trading prices, rarity lists, and market checkmarks.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Resource_Farming_Guide.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #34d399;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128230;</div>
+                    <h3>&#9935;&#xFE0F; Resources Directory</h3>
+                    <div class="category-desc"><p>Detailed farming locations for rare drop resources like Argon Crystals and Tellurium.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Endo_Farming_Volume.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #fb7185;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#127942;</div>
+                    <h3>&#128160; Endo Farms</h3>
+                    <div class="category-desc"><p>Vodyanoi Arena runs, Zariman bounties, and Ayatan Treasure liquidation configurations.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Platinum_Farming_Guide.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #60a5fa;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128176;</div>
+                    <h3>&#129689; Platinum Farming</h3>
+                    <div class="category-desc"><p>Fissure cracking strategies, prime-part trading values, and set market listings.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Currency_Farming_Codex.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #fb923c;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128181;</div>
+                    <h3>&#128176; Currency Codex</h3>
+                    <div class="category-desc"><p>Optimal farm routes for Index credit farms, Ducat liquidation, and open world tokens.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Syndicate_Farming_Guide.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #14b8a6;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#129309;</div>
+                    <h3>&#129309; Syndicate Codex</h3>
+                    <div class="category-desc"><p>Pledge matrix simulation sandbox to balance syndicate standing farms.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Combat_Mechanics.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #ffab00;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128681;</div>
+                    <h3>&#127757; Faction Codex</h3>
+                    <div class="category-desc"><p>Standing level checklists and rank-up guides for open-world and special factions.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Inventory_Cleanup_Guide.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #22d3ee;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128465;&#65039;</div>
+                    <h3>&#128230; Space Optimizer</h3>
+                    <div class="category-desc"><p>Identify safe-to-discard mastery items, weapons, and clean up duplicate items.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Weapons_Recipe_Ingredients.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #a78bfa;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128296;</div>
+                    <h3>&#128296; Foundry Recipes</h3>
+                    <div class="category-desc"><p>Trace weapon blueprint trees that require other weapons as crafting ingredients.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Disposal_Guidelines_SOP.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #34d399;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128203;</div>
+                    <h3>&#9851;&#xFE0F; Disposal SOP</h3>
+                    <div class="category-desc"><p>Rules and standard operating procedures for selling extra blueprints and obsolete items.</p></div>
+                    
+                </a>
+            
+                <a href="Warframe_Trading_Ledger.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #fb7185;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128176;</div>
+                    <h3>&#128210; Platinum Ledger</h3>
+                    <div class="category-desc"><p>Track your daily Platinum earnings, trading taxes, and ongoing market flips.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Syndicate_Manager.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #60a5fa;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#129309;</div>
+                    <h3>&#129309; Syndicate Hub</h3>
+                    <div class="category-desc"><p>Manage daily standing caps, rank progression, and medallion farming across all factions.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Foundry_Planner.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #fb923c;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128203;</div>
+                    <h3>&#127959;&#xFE0F; Foundry Planner</h3>
+                    <div class="category-desc"><p>Queue up upcoming blueprints and calculate total resource requirements to streamline your crafting.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Foundry_Farming_Guide.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #14b8a6;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#9874;</div>
+                    <h3>&#128296; Foundry Farming</h3>
+                    <div class="category-desc"><p>Detailed checklists for gathering required ingredients, base weapons, and open-world materials.</p></div>
+                    
+                </a>
+
+                <a href="Warframe_Incarnon_Tracker.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #ffab00;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#8987;</div>
+                    <h3>&#128260; Incarnon Tracker</h3>
+                    <div class="category-desc"><p>Track your Circuit progress, rotation schedules, and upcoming Genesis Adapter unlocks.</p></div>
+
+                </a>
+
+                <a href="Warframe_Relic_Tracker.html" class="category-card" style="text-decoration: none; color: inherit; border-left: 4px solid #22d3ee;">
+                    <div class="category-glow"></div>
+                    <div class="category-icon">&#128302;</div>
+                    <h3>&#128302; Relic Tracker</h3>
+                    <div class="category-desc"><p>Track your Void Relic inventory, refinement status, and prime part acquisition progress.</p></div>
+
+                </a>
+
+            </div>
+        </section>
+    </main>
+
+    <script src="assets/js/dashboard.js"></script>
+
+</body>
+</html>
+
+
+
+
+

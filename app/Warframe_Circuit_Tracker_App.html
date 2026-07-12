@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Incarnon Circuit Tracker</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        :root {
+            --border-color: #ff9800; /* Incarnon Orange */
+
+            --primary-accent: #ff9800;
+            --accent-gold: #ffab00;
+        }
+
+        body {
+            margin: 0;
+            padding: 110px 20px 120px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dashboard-panel {
+            width: 100%;
+            max-width: 1750px;
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 152, 0, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+
+        header {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin: 0;
+        }
+
+        .acquisition-guide {
+            margin: 0 0 35px;
+            padding: 24px;
+            border: 1px solid rgba(255, 152, 0, 0.4);
+            border-radius: 16px;
+            background: rgba(255, 152, 0, 0.07);
+        }
+
+        .acquisition-guide h2 {
+            margin: 0 0 14px;
+            color: #ffab00;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+        }
+
+        .acquisition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .acquisition-step {
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.65);
+            color: #cfd8dc;
+            line-height: 1.5;
+        }
+
+        .acquisition-step strong { color: #ffca55; }
+
+        .weapon-acquisition {
+            margin-top: 6px;
+            color: #cbd5e1;
+            font-size: 0.78rem;
+            line-height: 1.35;
+        }
+
+        .weapon-acquisition strong { color: #ffca55; }
+
+        /* Live Status Banner */
+        .live-status-banner {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 87, 34, 0.2));
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.15);
+        }
+
+        .live-status-banner h2 {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 2.5rem;
+            color: #fff;
+            margin: 0 0 10px 0;
+        }
+
+        .live-status-banner p {
+            font-size: 1.2rem;
+            color: #ffab00;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* Search Bar */
+        .search-container {
+            width: 100%;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #weapon-search {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: 2px solid rgba(255, 152, 0, 0.5);
+            background: rgba(14, 19, 29, 0.9);
+            color: #fff;
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        #weapon-search:focus {
+            border-color: #ff9800;
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+        }
+
+        /* Rotation Grid */
+        .rotation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .week-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .week-card:hover {
+            border-color: rgba(255, 152, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.1);
+        }
+
+        .week-card.active-week {
+            border: 2px solid #ff9800;
+            background: linear-gradient(180deg, rgba(255, 152, 0, 0.1), var(--card-bg));
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(255, 152, 0, 0.2);
+        }
+
+        .week-card.highlight-week::before {
+            content: '? Top Tier Week';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 171, 0, 0.2);
+            color: #ffab00;
+            border: 1px solid rgba(255, 171, 0, 0.4);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .week-header {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin: 0 0 5px 0;
+            border-bottom: 1px solid rgba(255, 152, 0, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .week-status {
+            font-size: 0.9rem;
+            color: #ffab00;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .weapon-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .weapon-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+        }
+
+        .weapon-item .name {
+            font-weight: 600;
+            color: #cfd8dc;
+        }
+
+        .weapon-item .type {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* Tier Colors */
+        .tier-S-plus { border-left-color: #e040fb; color: #e040fb; font-weight: bold; }
+        .tier-S { border-left-color: #ffab00; color: #ffab00; font-weight: bold; }
+        .tier-A { border-left-color: #00e676; }
+        .tier-B { border-left-color: #03a9f4; }
+        .tier-C { border-left-color: #9e9e9e; }
+
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Helminth_Synergy_App.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a id="nav-next-top" href="Warframe_Archon_Planner_App.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+
+
+
+
+    <div class="container" style="max-width:1750px; width:1750px;">
+        <header>
+            <h1>&#x1F300; Incarnon Circuit Tracker</h1>
+            <p class="subtitle">Track the rotation and follow the complete path from Steel Path Circuit reward to installed Incarnon Genesis.</p>
+        </header>
+
+        <section class="acquisition-guide">
+            <h2>&#x1F504; How to Unlock and Install Incarnon Genesis</h2>
+            <div class="acquisition-grid">
+                <div class="acquisition-step"><strong>Unlock Duviri:</strong> Complete The Duviri Paradox so the Circuit is available from the Duviri navigation screen.</div>
+                <div class="acquisition-step"><strong>Unlock Steel Path:</strong> Complete the required Star Chart nodes, speak with Teshin, and switch the Circuit to Steel Path difficulty.</div>
+                <div class="acquisition-step"><strong>Select Rewards:</strong> At the beginning of each weekly rotation, choose two of the five offered Incarnon Genesis adapters. They are earned through the Steel Path Circuit reward track.</div>
+                <div class="acquisition-step"><strong>Earn the Adapters:</strong> Play successive Circuit stages and reach the required reward tiers. The selected adapters are awarded separately as you progress.</div>
+                <div class="acquisition-step"><strong>Install at Cavalero:</strong> Own the compatible base weapon, visit Cavalero in the Chrysalith, select Evolve Incarnon Weapons, and provide the adapter plus the listed Duviri resources.</div>
+                <div class="acquisition-step"><strong>Finish Evolutions:</strong> Equip the weapon and complete each displayed evolution challenge. Return to the Incarnon menu to choose the unlocked perks.</div>
+            </div>
+        </section>
+
+        <div class="live-status-banner" id="live-status-banner">
+            <!-- Populated by JS -->
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="weapon-search" placeholder="Search for a weapon (e.g., 'Torid', 'Lex')...">
+        </div>
+
+        <div class="rotation-grid" id="rotation-grid">
+            <!-- Populated by JS -->
+        </div>
+
+        </div>
+
+        <!-- Duviri Decree Synergy Companion Panel -->
+        <div class="totals-panel" style="margin-top: 40px; border: 1px solid rgba(255, 152, 0, 0.4); background: linear-gradient(135deg, rgba(20, 27, 41, 0.9), rgba(10, 15, 25, 0.95)); padding: 30px; border-radius: 16px;">
+            <div class="totals-header" style="color: #ff9800; font-size: 1.8rem; border-bottom: 1px solid rgba(255, 152, 0, 0.2); padding-bottom: 10px; margin-bottom: 15px;">
+                &#127744; Duviri Decree Synergy Companion
+                <button class="reset-btn" id="btn-reset-decrees" style="background: rgba(255, 152, 0, 0.15); color: #ffab00; border-color: rgba(255, 152, 0, 0.4); cursor: pointer;">Clear Run</button>
+            </div>
+            
+            <p style="color: #94a3b8; font-size: 0.95rem; margin-top: -10px; margin-bottom: 25px;">
+                Select a meta synergy path to highlight recommended Decrees, or toggle Decrees manually to calculate your simulated active run stats.
+            </p>
+
+            <!-- Synergy Selector Buttons -->
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 25px;">
+                <button class="tab-btn btn-synergy-path" data-path="melee_crit" style="border-color: #e040fb; color: #e040fb; font-weight: bold; background: rgba(224, 64, 251, 0.05); padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all 0.2s;">&#9876;&#65039; Melee Crit Berserker</button>
+                <button class="tab-btn btn-synergy-path" data-path="frost_nuke" style="border-color: #00bcd4; color: #00bcd4; font-weight: bold; background: rgba(0, 188, 212, 0.05); padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all 0.2s;">&#10052;&#65039; Frost Status Nuke</button>
+                <button class="tab-btn btn-synergy-path" data-path="headshot_aoe" style="border-color: #ffab00; color: #ffab00; font-weight: bold; background: rgba(255, 171, 0, 0.05); padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all 0.2s;">&#127919; Headshot Bombardment</button>
+                <button class="tab-btn btn-synergy-path" data-path="quantity_scale" style="border-color: #00e676; color: #00e676; font-weight: bold; background: rgba(0, 230, 118, 0.05); padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all 0.2s;">&#127744; Quantity Speed Scaling</button>
+            </div>
+
+            <!-- Synergy Info Banner -->
+            <div id="synergy-banner" style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; margin-bottom: 25px; font-size: 0.9rem; color: #cbd5e0; display: none;">
+                <!-- Filled by JS -->
+            </div>
+
+            <div class="grid-2col" style="gap: 25px;">
+                <!-- Left: Decree Catalog Search & List -->
+                <div class="box" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="color: #ff9800; margin: 0;">&#x1F4DC; Decrees Directory</h4>
+                        <input type="text" id="decree-search" placeholder="Filter decrees..." style="width: 150px; padding: 4px 8px; font-size: 0.82rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.4); color: #fff; outline: none;">
+                    </div>
+                    
+                    <div id="decree-list-container" style="max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px;">
+                        <!-- Decrees filled dynamically by JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Simulated Run Stats Dashboard -->
+                <div class="box" style="background: rgba(255, 152, 0, 0.03); border: 1px solid rgba(255, 152, 0, 0.2); padding: 20px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; min-height: 300px;">
+                    <div>
+                        <h4 style="color: #ff9800; margin-top: 0; margin-bottom: 15px; border-bottom: 1px dashed rgba(255,152,0,0.2); padding-bottom: 6px;">&#x1F4CA; Simulated Run Stats</h4>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.95rem;">
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding-bottom: 6px;">
+                                <span>Active Decree Count:</span>
+                                <span id="stat-decrees-count" style="font-weight: bold; color: #fff;">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding-bottom: 6px;">
+                                <span>Melee Critical Chance:</span>
+                                <span id="stat-melee-crit" style="font-weight: bold; color: #e040fb;">+0%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding-bottom: 6px;">
+                                <span>Melee Fire / Attack Speed:</span>
+                                <span id="stat-atk-speed" style="font-weight: bold; color: #00e676;">+0%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding-bottom: 6px;">
+                                <span>Critical Damage vs Cold:</span>
+                                <span id="stat-cold-crit" style="font-weight: bold; color: #00bcd4;">+0%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding-bottom: 6px;">
+                                <span>Weapon Damage on Headshot:</span>
+                                <span id="stat-headshot-dmg" style="font-weight: bold; color: #ffab00;">+0%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding-bottom: 6px;">
+                                <span>Extra Movement Speed:</span>
+                                <span id="stat-move-speed" style="font-weight: bold; color: #fff;">+0%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.03); padding-bottom: 6px;">
+                                <span>Extra Armor from Quantity:</span>
+                                <span id="stat-armor-bonus" style="font-weight: bold; color: #fff;">+0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special passive triggers log -->
+                    <div style="margin-top: 20px;">
+                        <label style="display: block; font-size: 0.8rem; color: #ffab00; font-weight: bold; margin-bottom: 6px;">Active Special Passives:</label>
+                        <div id="stat-special-passives" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; font-size: 0.82rem; color: #cbd5e0; min-height: 45px; display: flex; flex-direction: column; gap: 4px; justify-content: center;">
+                            <span style="color: #94a3b8; font-style: italic; text-align: center;">No special passives active. Select Decrees to trigger passives.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Script -->
+    <script src="assets/js/circuit_data.js"></script>
+
+    <!-- Logic Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const liveStatusBanner = document.getElementById('live-status-banner');
+        const rotationGrid = document.getElementById('rotation-grid');
+        const searchInput = document.getElementById('weapon-search');
+
+        // Get Live Calculation
+        const timing = calculateCircuitRotation();
+        
+        // Update Banner
+        liveStatusBanner.innerHTML = `
+            <h2>Active Rotation: Week ${timing.currentWeek}</h2>
+            <div class="banner-note"><p>Resets in ${timing.daysUntilReset} days (Sunday 00:00 UTC)</p></div>
+        `;
+
+        // Render Grid Function
+        function renderGrid(filterQuery = "") {
+            rotationGrid.innerHTML = '';
+            
+            circuitRotation.forEach(rotation => {
+                // Filter Logic
+                const matchedWeapons = rotation.weapons.filter(w => 
+                    w.name.toLowerCase().includes(filterQuery.toLowerCase())
+                );
+
+                // If filtering and no weapons match this week, hide the week card
+                if (filterQuery && matchedWeapons.length === 0) return;
+
+                const card = document.createElement('div');
+                card.className = `week-card`;
+                
+                if (rotation.week === timing.currentWeek) {
+                    card.classList.add('active-week');
+                }
+                if (rotation.highlight) {
+                    card.classList.add('highlight-week');
+                }
+
+                let statusText = '';
+                if (rotation.week === timing.currentWeek) {
+                    statusText = 'Currently Active';
+                } else {
+                    // Calculate how many weeks away it is
+                    let diff = rotation.week - timing.currentWeek;
+                    if (diff < 0) diff += 7; // It wraps around
+                    statusText = `Available in ${diff} week(s)`;
+                }
+
+                // Build Weapon List HTML
+                const weaponsToRender = filterQuery ? matchedWeapons : rotation.weapons;
+                let weaponsHTML = '';
+                weaponsToRender.forEach(w => {
+                    let tierClass = `tier-${w.tier.replace('+', '-plus')}`;
+                    weaponsHTML += `
+                        <li class="weapon-item ${tierClass}">
+                            <div>
+                                <span class="name">${w.name}</span>
+                                <span class="type">(${w.type})</span>
+                                <div class="weapon-acquisition"><strong>Don't have the adapter?</strong> Select ${w.name} as a weekly Steel Path Circuit reward, earn its reward tier, then install it at Cavalero on a compatible ${w.name} weapon using the displayed Duviri resources.</div>
+                            </div>
+                            <span style="font-size: 0.8rem;">Tier ${w.tier}</span>
+                        </li>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <h3 class="week-header">Week ${rotation.week}</h3>
+                    <div class="week-status">${statusText}</div>
+                    <ul class="weapon-list">
+                        ${weaponsHTML}
+                    </ul>
+                `;
+                
+                rotationGrid.appendChild(card);
+            });
+            
+            if (rotationGrid.innerHTML === '') {
+                rotationGrid.innerHTML = `<p style="text-align: center; width: 100%; color: #94a3b8;">No Incarnon weapons found matching "${filterQuery}".</p>`;
+            }
+        }
+
+        // Initial Render
+        renderGrid();
+
+        // Search Listener
+        searchInput.addEventListener('input', (e) => {
+            renderGrid(e.target.value);
+        });
+
+        // Duviri Decree Synergy Companion Logic
+        const duviriDecrees = [
+            { id: "lodestar", name: "Lodestar", type: "Combat", desc: "Melee hits grant +10% Critical Chance.", tags: ["melee_crit"] },
+            { id: "scythe_wind", name: "Scything Wind", type: "Melee", desc: "Attacking increases attack speed by +10% for 3s.", tags: ["melee_crit", "quantity_scale"] },
+            { id: "smolder_strike", name: "Smoldering Strike", type: "Melee", desc: "Melee attacks deal +30% Heat damage.", tags: ["melee_crit"] },
+            { id: "majestic_strike", name: "Majestic Strike", type: "Melee", desc: "Melee attacks hit a second time for +50% damage.", tags: ["melee_crit"] },
+            { id: "cold_ruin", name: "Cold Ruin", type: "Combat", desc: "Deal +100% Critical Damage to Cold-status enemies.", tags: ["frost_nuke"] },
+            { id: "fierce_frost", name: "Fierce Frost", type: "Combat", desc: "Cold status deals damage over time and freezes enemies.", tags: ["frost_nuke"] },
+            { id: "luscinia", name: "Luscinia's Suffering", type: "Utility", desc: "Applies Cold status to all enemies within 15m.", tags: ["frost_nuke"] },
+            { id: "eyes", name: "Between the Eyes", type: "Combat", desc: "Headshots grant +150% damage for 3s.", tags: ["headshot_aoe", "frost_nuke"] },
+            { id: "bombast", name: "Bombast's Malice", type: "Combat", desc: "On headshot, 30% chance for a 10m radial blast.", tags: ["headshot_aoe"] },
+            { id: "duelist", name: "Duelist's Advantage", type: "Combat", desc: "First shot after reload deals +200% damage.", tags: ["headshot_aoe"] },
+            { id: "fleet", name: "Fleet-Footed", type: "Utility", desc: "Each active Decree increases move speed by +10%.", tags: ["quantity_scale", "headshot_aoe"] },
+            { id: "morale", name: "Morale Boost", type: "Defensive", desc: "Each active Decree increases armor by +20.", tags: ["quantity_scale"] },
+            { id: "tactician", name: "Tactician's Roll", type: "Defensive", desc: "Rolling restores 25% Shields and grants invincibility.", tags: ["quantity_scale"] },
+            { id: "ranger", name: "Ranger's Reload", type: "Combat", desc: "Rolling reloads equipped weapon.", tags: ["quantity_scale"] },
+            { id: "bombardment", name: "Irresistible Bombardment", type: "Combat", desc: "Shots increase fire rate by +10% for 3s.", tags: ["headshot_aoe"] },
+            { id: "momentum", name: "Deadly Momentum", type: "Combat", desc: "Movement increases damage (+1.5% per m/s).", tags: ["quantity_scale"] }
+        ];
+
+        let selectedDecrees = new Set();
+        let activePath = "";
+
+        const pathDescriptions = {
+            "melee_crit": "&#9876;&#65039; <strong>Melee Crit Berserker Synergy</strong>: Focuses on maximum attack speed, heat status stacking, and double-hitting melee sweeps. Proc heavy crits with Lodestar.",
+            "frost_nuke": "&#10052;&#65039; <strong>Frost Status Nuke Synergy</strong>: Freezes nearby targets automatically. Exploits frozen status to inflict massive critical damage multipliers.",
+            "headshot_aoe": "&#127919; <strong>Headshot Bombardment Synergy</strong>: Boosts weapon platform headshot rates and triggers explosive radial chain reactions on headshots.",
+            "quantity_scale": "&#127744; <strong>Quantity Speed Scaling Synergy</strong>: Amplifies utility and defense with every Decree you acquire. Gain massive movement speed and armor values."
+        };
+
+        function loadDecrees() {
+            const saved = safeStorage.getItem('codex_selected_decrees');
+            if (saved) {
+                try {
+                    const arr = JSON.parse(saved);
+                    selectedDecrees = new Set(arr);
+                } catch(e) {}
+            }
+            activePath = safeStorage.getItem('codex_active_synergy_path') || "";
+        }
+
+        function saveDecrees() {
+            safeStorage.setItem('codex_selected_decrees', JSON.stringify(Array.from(selectedDecrees)));
+            safeStorage.setItem('codex_active_synergy_path', activePath);
+        }
+
+        function renderDecrees(filterText = "") {
+            const container = document.getElementById('decree-list-container');
+            container.innerHTML = '';
+            
+            const filtered = duviriDecrees.filter(d => 
+                d.name.toLowerCase().includes(filterText.toLowerCase()) ||
+                d.desc.toLowerCase().includes(filterText.toLowerCase()) ||
+                d.type.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            filtered.forEach(d => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'weapon-item';
+                itemDiv.style.background = 'rgba(0, 0, 0, 0.25)';
+                itemDiv.style.borderLeft = `3px solid ${selectedDecrees.has(d.id) ? '#ff9800' : 'rgba(255,255,255,0.05)'}`;
+                itemDiv.style.padding = '10px 15px';
+                itemDiv.style.borderRadius = '8px';
+                itemDiv.style.display = 'flex';
+                itemDiv.style.justifyContent = 'space-between';
+                itemDiv.style.alignItems = 'center';
+                itemDiv.style.transition = 'all 0.2s';
+                
+                // Highlight if recommended in active path
+                let isRecommended = false;
+                if (activePath && d.tags.includes(activePath)) {
+                    isRecommended = true;
+                    itemDiv.style.borderColor = activePath === 'melee_crit' ? '#e040fb' : (activePath === 'frost_nuke' ? '#00bcd4' : (activePath === 'headshot_aoe' ? '#ffab00' : '#00e676'));
+                }
+
+                itemDiv.innerHTML = `
+                    <div style="flex: 1; padding-right: 15px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <strong style="color: #fff;">${d.name}</strong>
+                            <span class="type" style="font-size: 0.72rem; padding: 2px 6px; background: rgba(255,255,255,0.05); border-radius: 4px; color: #a0aec0;">${d.type}</span>
+                            ${isRecommended ? `<span style="font-size:0.65rem; font-weight:bold; color: #ffab00; border: 1px solid rgba(255,171,0,0.4); padding: 1px 4px; border-radius: 4px; background: rgba(255,171,0,0.05);">Recommended</span>` : ''}
+                        </div>
+                        <div style="font-size: 0.82rem; color: #cbd5e0; margin-top: 4px;">${d.desc}</div>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="decree-cb" data-id="${d.id}" ${selectedDecrees.has(d.id) ? 'checked' : ''} style="width: 18px; height: 18px; cursor: pointer; accent-color: #ff9800;">
+                    </div>
+                `;
+                
+                container.appendChild(itemDiv);
+            });
+
+            // Wire check box events
+            container.querySelectorAll('.decree-cb').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const id = e.target.dataset.id;
+                    if (e.target.checked) {
+                        selectedDecrees.add(id);
+                    } else {
+                        selectedDecrees.delete(id);
+                    }
+                    saveDecrees();
+                    renderDecrees(document.getElementById('decree-search').value);
+                    calculateStats();
+                });
+            });
+        }
+
+        function calculateStats() {
+            const count = selectedDecrees.size;
+            document.getElementById('stat-decrees-count').textContent = count;
+            
+            // Calculate active bonuses
+            let meleeCrit = 0;
+            let atkSpeed = 0;
+            let coldCrit = 0;
+            let headshotDmg = 0;
+            let moveSpeed = 0;
+            let armorBonus = 0;
+            let specialPassives = [];
+
+            if (selectedDecrees.has('lodestar')) meleeCrit += 10;
+            if (selectedDecrees.has('scythe_wind')) atkSpeed += 10;
+            if (selectedDecrees.has('cold_ruin')) coldCrit += 100;
+            if (selectedDecrees.has('eyes')) headshotDmg += 150;
+            if (selectedDecrees.has('fleet')) moveSpeed += count * 10;
+            if (selectedDecrees.has('morale')) armorBonus += count * 20;
+            if (selectedDecrees.has('bombardment')) atkSpeed += 10;
+
+            // Compile special passives text
+            if (selectedDecrees.has('majestic_strike')) specialPassives.push("&#9876;&#65039; <strong>Majestic Double Strike:</strong> Melee hits strike twice (+50% damage).");
+            if (selectedDecrees.has('fierce_frost')) specialPassives.push("&#10052;&#65039; <strong>Fierce Frostburn:</strong> Cold statuses deal Damage-over-Time and freeze.");
+            if (selectedDecrees.has('bombast')) specialPassives.push("&#128165; <strong>Bombast Explosion:</strong> Headshots have 30% chance for a 10m radial blast.");
+            if (selectedDecrees.has('tactician')) specialPassives.push("&#128737;&#65039; <strong>Tactician Shield:</strong> Roll restores 25% shields + 1s invincibility.");
+            if (selectedDecrees.has('ranger')) specialPassives.push("&#128260; <strong>Ranger Reload:</strong> Roll automatically reloads equipped weapon.");
+            if (selectedDecrees.has('momentum')) specialPassives.push("&#127939; <strong>Deadly Momentum:</strong> Movement boosts weapon damage (+1.5% per m/s).");
+            if (selectedDecrees.has('smolder_strike')) specialPassives.push("&#128293; <strong>Smoldering Strike:</strong> Melee attacks deal +30% Heat status damage.");
+            if (selectedDecrees.has('luscinia')) specialPassives.push("&#10052;&#65039; <strong>Luscinia Aura:</strong> Applies Cold status to all enemies within 15m.");
+
+            // Display numerical stats
+            document.getElementById('stat-melee-crit').textContent = `+${meleeCrit}%`;
+            document.getElementById('stat-atk-speed').textContent = `+${atkSpeed}%`;
+            document.getElementById('stat-cold-crit').textContent = `+${coldCrit}%`;
+            document.getElementById('stat-headshot-dmg').textContent = `+${headshotDmg}%`;
+            document.getElementById('stat-move-speed').textContent = `+${moveSpeed}%`;
+            document.getElementById('stat-armor-bonus').textContent = `+${armorBonus}`;
+
+            // Render special passives
+            const passivesBox = document.getElementById('stat-special-passives');
+            if (specialPassives.length === 0) {
+                passivesBox.innerHTML = `<span style="color: #94a3b8; font-style: italic; text-align: center;">No special passives active. Select Decrees to trigger passives.</span>`;
+            } else {
+                passivesBox.innerHTML = specialPassives.map(p => `<div style="border-left: 2.5px solid #ff9800; padding-left: 8px; margin-bottom: 4px;">${p}</div>`).join('');
+            }
+        }
+
+        // Synergy Path Buttons Handlers
+        document.querySelectorAll('.btn-synergy-path').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const path = btn.dataset.path;
+                
+                // Toggle active path class
+                document.querySelectorAll('.btn-synergy-path').forEach(b => {
+                    b.classList.remove('active');
+                    b.style.background = 'rgba(255,255,255,0.02)';
+                });
+
+                if (activePath === path) {
+                    // Turn off path
+                    activePath = "";
+                    document.getElementById('synergy-banner').style.display = 'none';
+                } else {
+                    activePath = path;
+                    btn.classList.add('active');
+                    // Style active button
+                    let color = path === 'melee_crit' ? '#e040fb' : (path === 'frost_nuke' ? '#00bcd4' : (path === 'headshot_aoe' ? '#ffab00' : '#00e676'));
+                    btn.style.background = color + '22'; // 22 is transparency
+                    
+                    const banner = document.getElementById('synergy-banner');
+                    banner.style.display = 'block';
+                    banner.style.borderLeft = `3px solid ${color}`;
+                    banner.innerHTML = pathDescriptions[path];
+                }
+                
+                saveDecrees();
+                renderDecrees(document.getElementById('decree-search').value);
+            });
+        });
+
+        // Search decree filter input event
+        document.getElementById('decree-search').addEventListener('input', (e) => {
+            renderDecrees(e.target.value);
+        });
+
+        // Clear run button
+        document.getElementById('btn-reset-decrees').addEventListener('click', () => {
+            selectedDecrees.clear();
+            activePath = "";
+            document.querySelectorAll('.btn-synergy-path').forEach(b => {
+                b.classList.remove('active');
+                b.style.background = 'rgba(255,255,255,0.02)';
+            });
+            document.getElementById('synergy-banner').style.display = 'none';
+            document.getElementById('decree-search').value = "";
+            saveDecrees();
+            renderDecrees();
+            calculateStats();
+        });
+
+        // Initialize decree companion
+        loadDecrees();
+        renderDecrees();
+        calculateStats();
+
+        // If a path was loaded, set the button style
+        if (activePath) {
+            const activeBtn = document.querySelector(`.btn-synergy-path[data-path="${activePath}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                let color = activePath === 'melee_crit' ? '#e040fb' : (activePath === 'frost_nuke' ? '#00bcd4' : (activePath === 'headshot_aoe' ? '#ffab00' : '#00e676'));
+                activeBtn.style.background = color + '22';
+                const banner = document.getElementById('synergy-banner');
+                banner.style.display = 'block';
+                banner.style.borderLeft = `3px solid ${color}`;
+                banner.innerHTML = pathDescriptions[activePath];
+            }
+        }
+    });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

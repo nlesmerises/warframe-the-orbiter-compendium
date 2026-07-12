@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/wf_backup_data.js"></script>
+    <script>
+    (function() {
+        try {
+            const testKey = '__storage_test__';
+            localStorage.setItem(testKey, testKey);
+            localStorage.removeItem(testKey);
+            const hasData = Object.keys(localStorage).some(k => k.startsWith('wf_') || k.startsWith('tracker_'));
+            if (!hasData && window.WF_BACKUP_DATA && Object.keys(window.WF_BACKUP_DATA).length > 0) {
+                for (const key in window.WF_BACKUP_DATA) {
+                    localStorage.setItem(key, window.WF_BACKUP_DATA[key]);
+                }
+            }
+        } catch(e) {
+            if (window.WF_BACKUP_DATA) {
+                window.__memory_restore_data__ = Object.assign({}, window.WF_BACKUP_DATA);
+            }
+        }
+    })();
+    </script>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Farming Codex</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css?v=6">
+    <link rel="stylesheet" href="assets/css/farming_codex_style.css?v=4">
+    <script>
+    window.onerror = function(msg, url, line, col, error) {
+        let errDiv = document.createElement('div');
+        errDiv.style.cssText = 'position:fixed; top:0; left:0; background:red; color:white; z-index:9999; padding:20px; font-size:20px;';
+        errDiv.innerHTML = 'ERROR: ' + msg + '<br>Line: ' + line + '<br>Col: ' + col;
+        document.body.prepend(errDiv);
+        return false;
+    };
+    </script>
+    <style>
+/* Canonical back panel: give the content area the glass container of the
+   reference codex page (Warframe_Mods_Database). Page-level rule overrides
+   the shared dashboard.css .main-content. */
+.main-content {
+    background: linear-gradient(180deg, rgba(12, 16, 28, 0.94), rgba(9, 12, 22, 0.98));
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1.5px solid rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.7);
+}
+#main-content {
+    max-width: 1750px !important;
+    width: 1750px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 3rem 2.5rem !important;
+}
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+
+
+
+
+
+
+
+
+
+
+
+#main-content { max-width: 1750px; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Endgame_Modes_Codex.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a id="nav-next-top" href="Warframe_Foundry_Planner.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+
+
+
+
+    <!-- Animated background particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+        <!-- SECTION 1: FARMING CODEX -->
+        <section id="section-codex" class="view active">
+            <header>
+                <h1>&#127806; Farming Codex</h1>
+                <p class="subtitle">Master checklist of standard, prime, and expansion Warframes</p>
+            </header>
+
+            <!-- Search and filters -->
+            <div class="controls-bar">
+                <div class="search-wrapper">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search by name, location, planet, boss...">
+                </div>
+                
+                <select id="category-select" class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="Assassination">Assassination (Bosses)</option>
+                    <option value="Dojo">Clan Dojo</option>
+                    <option value="Quest">Quest Rewards</option>
+                    <option value="Syndicate">Syndicates & Bounties</option>
+                    <option value="Special">Special Mission Modes</option>
+                </select>
+
+                <select id="completion-select" class="filter-select">
+                    <option value="all">All States</option>
+                    <option value="incomplete">Incomplete</option>
+                    <option value="completed">Acquired</option>
+                </select>
+            </div>
+
+            <!-- Dashboard stats and tabs -->
+            <div class="dashboard">
+                <div class="tabs">
+                    <button id="tab-standard" class="tab-btn active">Standard Warframes</button>
+                    <button id="tab-prime" class="tab-btn">Prime Warframes</button>
+                    <button id="tab-expansion" class="tab-btn">Expansion Warframes</button>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-val"><span id="acquired-count">0</span> / <span id="total-count">0</span></div>
+                        <div class="stat-label">Acquired</div>
+                        <div class="progress-bar-container">
+                            <div id="progress-bar-fill" class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warframe cards grid -->
+            <div id="card-grid" class="card-grid">
+                <!-- Injected dynamically via JS -->
+            </div>
+        </section>
+    </main>
+
+    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/farming_codex_app.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+

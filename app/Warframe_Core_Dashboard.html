@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Core Terminals Dashboard</title>
+    <meta name="description" content="Central Hub for Core Operational Terminals, Mod Databases, and Void Relics.">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css?v=6">
+    <style>
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        @media (max-width: 1100px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+/* Global Header & Navigation Capsule Styling */
+
+
+
+
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+</style>
+<style>
+/* ── Core Ops Hub: Main-Index card style ─────────────────────────────── */
+:root {
+    --card-bg-hub: rgba(15, 22, 42, 0.45);
+    --card-hover-bg-hub: rgba(23, 33, 62, 0.75);
+    --border-color-hub: rgba(255, 255, 255, 0.06);
+}
+
+.hub-page-center {
+    display: flex;
+    justify-content: center;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+main.main-content {
+    max-width: 1750px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 3rem 2.5rem !important;
+    box-sizing: border-box !important;
+    background: rgba(10, 15, 30, 0.7) !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: block !important;
+    overflow: visible !important;
+}
+
+.hub-section-header {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+.hub-section-header h2 {
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #89cff0;
+    -webkit-text-fill-color: #89cff0;
+    text-shadow: 0 0 30px rgba(137,207,240,0.3);
+    margin: 0 0 0.3rem 0;
+}
+.hub-section-header p {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.hub-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+@media (max-width: 1100px) { .hub-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 680px)  { .hub-grid { grid-template-columns: 1fr; } }
+
+.hub-card {
+    background: var(--card-bg-hub);
+    border: 1px solid var(--border-color-hub);
+    border-radius: 18px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    color: inherit;
+    box-sizing: border-box;
+}
+.hub-card:hover {
+    background: var(--card-hover-bg-hub);
+    border-color: rgba(255,255,255,0.15);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+    text-decoration: none;
+}
+.hub-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+    padding-right: 16px;
+    min-width: 0;
+}
+.hub-card h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-weight: 700;
+}
+.hub-card p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    line-height: 1.5;
+}
+.hub-open-link {
+    padding: 6px 14px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #c084fc;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    flex-shrink: 0;
+    margin-left: 12px;
+    transition: all 0.25s ease;
+}
+.hub-card:hover .hub-open-link { transform: scale(1.05); }
+
+/* Per-card accent colours */
+.hub-card-purple { border-left: 5px solid #8b5cf6 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(139,92,246,0.12); }
+.hub-card-purple h2 { color: #a78bfa !important; }
+.hub-card-purple p  { color: rgba(167,139,250,0.7) !important; }
+.hub-card-purple:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.55), 0 0 25px rgba(139,92,246,0.3) !important; }
+.hub-card-purple:hover .hub-open-link { background:#8b5cf6 !important; color:#fff !important; border-color:#8b5cf6 !important; box-shadow:0 0 12px rgba(139,92,246,0.5) !important; }
+
+.hub-card-magenta { border-left: 5px solid #e879f9 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(232,121,249,0.12); }
+.hub-card-magenta h2 { color: #e879f9 !important; }
+.hub-card-magenta p  { color: rgba(232,121,249,0.7) !important; }
+.hub-card-magenta:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.55), 0 0 25px rgba(232,121,249,0.3) !important; }
+.hub-card-magenta:hover .hub-open-link { background:#e879f9 !important; color:#060813 !important; border-color:#e879f9 !important; }
+
+.hub-card-gold { border-left: 5px solid #f59e0b !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(245,158,11,0.12); }
+.hub-card-gold h2 { color: #fbbf24 !important; }
+.hub-card-gold p  { color: rgba(251,191,36,0.7) !important; }
+.hub-card-gold:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.55), 0 0 25px rgba(245,158,11,0.3) !important; }
+.hub-card-gold:hover .hub-open-link { background:#f59e0b !important; color:#060813 !important; border-color:#f59e0b !important; }
+
+.hub-card-green { border-left: 5px solid #10b981 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(16,185,129,0.12); }
+.hub-card-green h2 { color: #34d399 !important; }
+.hub-card-green p  { color: rgba(52,211,153,0.7) !important; }
+.hub-card-green:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.55), 0 0 25px rgba(16,185,129,0.3) !important; }
+.hub-card-green:hover .hub-open-link { background:#10b981 !important; color:#060813 !important; border-color:#10b981 !important; }
+
+.hub-card-rose { border-left: 5px solid #f43f5e !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(244,63,94,0.12); }
+.hub-card-rose h2 { color: #fb7185 !important; }
+.hub-card-rose p  { color: rgba(251,113,133,0.7) !important; }
+.hub-card-rose:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.55), 0 0 25px rgba(244,63,94,0.3) !important; }
+.hub-card-rose:hover .hub-open-link { background:#f43f5e !important; color:#060813 !important; border-color:#f43f5e !important; }
+
+.hub-card-cyan { border-left: 5px solid #06b6d4 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(6,182,212,0.12); }
+.hub-card-cyan h2 { color: #67e8f9 !important; }
+.hub-card-cyan p  { color: rgba(103,232,249,0.7) !important; }
+.hub-card-cyan:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.55), 0 0 25px rgba(6,182,212,0.3) !important; }
+.hub-card-cyan:hover .hub-open-link { background:#06b6d4 !important; color:#060813 !important; border-color:#06b6d4 !important; }
+
+/* Global Header & Navigation Capsule Styling */
+
+
+
+
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+    <!-- Animated background particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+
+    <!-- Main Content -->
+    <div class="hub-page-center">
+    <main class="main-content" id="main-content">
+
+        <header>
+            <h1>&#x1F5A5;&#xFE0F; Core Terminals &amp; Hubs</h1>
+            <p class="subtitle">Access your orbiter dashboard, augment checklists, void relic locations, foundry tools, arsenal, and economy utilities</p>
+        </header>
+
+        <div class="hub-grid">
+
+            <a href="Warframe_Tenno_Foundry.html" class="hub-card hub-card-purple">
+                <div class="hub-card-info">
+                    <h2>&#x1FAA0; Tenno Foundry</h2>
+                    <div class="hub-card-desc"><p>Master farming dashboard, build tracker, and active daily/weekly progression goals.</p></div>
+                </div>
+                <span class="hub-open-link">Open &#8594;</span>
+            </a>
+
+            <a href="Warframe_Augment_Codex.html" class="hub-card hub-card-magenta">
+                <div class="hub-card-info">
+                    <h2>&#129516; Augments Codex</h2>
+                    <div class="hub-card-desc"><p>Cross-codex Warframe augment acquisition routes, syndicate sources, and farm checklists.</p></div>
+                </div>
+                <span class="hub-open-link">Open &#8594;</span>
+            </a>
+
+            <a href="Warframe_Arcane_Codex.html" class="hub-card hub-card-magenta">
+                <div class="hub-card-info">
+                    <h2>&#10024; Arcane Codex</h2>
+                    <div class="hub-card-desc"><p>How arcanes work, the rank 0&ndash;5 system, every slot, top Warframe/weapon arcanes, and farms.</p></div>
+                </div>
+                <span class="hub-open-link">Open &#8594;</span>
+            </a>
+
+            <a href="Warframe_Riven_Guide.html" class="hub-card hub-card-magenta">
+                <div class="hub-card-info">
+                    <h2>&#128290; Riven Mod Guide</h2>
+                    <div class="hub-card-desc"><p>Unveiling, disposition, Kuva rolling, grading, and the riven trading economy.</p></div>
+                </div>
+                <span class="hub-open-link">Open &#8594;</span>
+            </a>
+
+            <a href="Warframe_Relics_Database.html" class="hub-card hub-card-gold">
+                <div class="hub-card-info">
+                    <h2>&#x1F3FA; Void Relics</h2>
+                    <div class="hub-card-desc"><p>Central database mapping Prime part locations, drop probabilities, and void fissure missions.</p></div>
+                </div>
+                <span class="hub-open-link">Open &#8594;</span>
+            </a>
+
+            <a href="Warframe_Foundry_Farming_Guide.html" class="hub-card hub-card-green">
+                <div class="hub-card-info">
+                    <h2>&#x1F527; Foundry Hub</h2>
+                    <div class="hub-card-desc"><p>General crafting checklist mapping required components, resources, and level assembly times.</p></div>
+                </div>
+                <span class="hub-open-link">Open &#8594;</span>
+            </a>
+
+            <a href="Warframe_Arsenal_Dashboard.html" class="hub-card hub-card-rose">
+                <div class="hub-card-info">
+                    <h2>&#128737;&#65039; Arsenal &amp; Support</h2>
+                    <div class="hub-card-desc"><p>Track companions, support vehicles, active equipment projects, and Cambion Drift fishing.</p></div>
+                </div>
+                <span class="hub-open-link">Open &#8594;</span>
+            </a>
+
+            <a href="Warframe_Economy_Dashboard.html" class="hub-card hub-card-cyan">
+                <div class="hub-card-info">
+                    <h2>&#128176; Economy &amp; Utility</h2>
+                    <div class="hub-card-desc"><p>Vendor schedules, mods farming locations, syndicate standings, platinum trading, and inventory cleanups.</p></div>
+                </div>
+                <span class="hub-open-link">Open &#8594;</span>
+            </a>
+
+
+
+
+
+                </div>
+
+    </main>
+    </div>
+
+    <script src="assets/js/dashboard.js"></script>
+
+</body>
+</html>
+
+
+
+
+

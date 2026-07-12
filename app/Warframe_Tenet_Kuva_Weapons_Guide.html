@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Tenet &amp; Kuva Weapons Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+.card { background: rgba(15,23,42,0.7) !important; border-top: 1px solid rgba(255,255,255,0.08) !important; border-right: 1px solid rgba(255,255,255,0.08) !important; border-bottom: 1px solid rgba(255,255,255,0.08) !important; border-radius: 10px !important; padding: 18px 20px !important; text-align: left !important; margin-bottom: 0 !important; }
+.card h3 { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif !important; font-size:14px !important; color:#a8d8ea !important; margin:0 0 10px 0 !important; }
+.dashboard-grid { display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:16px !important; margin-bottom:28px !important; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128165; Tenet &amp; Kuva Weapons Guide</h1>
+        <p class="subtitle">Kuva Liches &middot; Sisters of Parvos &middot; elemental bonuses &middot; valence fusion &middot; top picks</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="overview" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">Overview</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="kuva-farming"  style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#129768;</div><h2 class="qi-tile-title">Kuva Weapon Farming</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="tenet-farming" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128165;</div><h2 class="qi-tile-title">Tenet Weapon Farming</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="elements"      style="border-left-color:#f5f5f5;"><div class="qi-tile-icon">&#9889;</div><h2 class="qi-tile-title">Elemental Bonuses</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="valence"       style="border-left-color:#a78bfa;"><div class="qi-tile-icon">&#128259;</div><h2 class="qi-tile-title">Valence Fusion</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="top-picks"     style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#127775;</div><h2 class="qi-tile-title">Top Picks</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. OVERVIEW -->
+    <section class="category-section" id="overview">
+        <h2>&#128203; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Are These Weapons?</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li><strong>Kuva weapons</strong> &mdash; obtained by vanquishing a <strong>Kuva Lich</strong>; Grineer faction; unique high-stat variants of existing weapons</li>
+                    <li><strong>Tenet weapons</strong> &mdash; obtained by vanquishing a <strong>Sister of Parvos</strong>; Corpus faction; unique variants with strong base stats</li>
+                    <li>Both weapon types have an <strong>elemental bonus</strong> (25&ndash;60%) that adds a flat damage percentage of a chosen element</li>
+                    <li>Both can be <strong>traded</strong> between players (with or without a Lich/Sister attached)</li>
+                    <li>Both have a max rank of 40 (5 additional Forma beyond rank 30); each rank-5 interval grants a bonus level and stat increase</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Why Farm Them?</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Kuva and Tenet weapons have <strong>higher base damage</strong> than their standard counterparts &mdash; in many cases by 50&ndash;100%</li>
+                    <li>The elemental bonus is permanent and stacks with mods, effectively giving a free 25&ndash;60% elemental damage mod slot</li>
+                    <li>Several are outright best-in-class weapons at MR 5+ (Kuva Bramma, Kuva Zarr, Tenet Arca Plasmor, etc.)</li>
+                    <li>Mastery Rank fodder &mdash; each unique weapon + element combo gives separate MR XP when leveled</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. KUVA WEAPON FARMING -->
+    <section class="category-section" id="kuva-farming">
+        <h2>&#128165; 2. Kuva Weapon Farming</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Step 1 &mdash; Spawn a Larvling</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Kuva Lich</span></div>
+                <ul class="list">
+                    <li>Go to any <strong>level 20+ Grineer mission</strong> (not Assassination, not Archwing)</li>
+                    <li>Kill enemies until a <strong>Kuva Larvling</strong> spawns &mdash; it will appear with a glowing tether; do not kill it yet</li>
+                    <li>Walk up to the Larvling to see a <strong>weapon preview</strong> floating above it &mdash; this shows which Kuva weapon it will become</li>
+                    <li>If you want a different weapon, <strong>leave the mission</strong> (abort, not extract) and try again; the weapon type is randomized each spawn</li>
+                    <li>Once you see the weapon you want, <strong>mercy kill</strong> the Larvling to create your Kuva Lich</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Step 2 &mdash; Hunt the Lich</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Kuva Lich</span></div>
+                <ul class="list">
+                    <li>Your Lich will now occupy a <strong>controlled planet</strong> &mdash; missions on that planet show a Lich symbol</li>
+                    <li>Run missions on the controlled planet to earn <strong>Murmur progress</strong> (kills reveal Requiem hints)</li>
+                    <li>Each Lich requires 3 correct <strong>Requiem mods</strong> in the right sequence to be vanquished or converted</li>
+                    <li>See the <a href="Warframe_Lich_Guide.html">Lich &amp; Sisters Guide</a> for full Requiem and Murmur farming details</li>
+                    <li>When you have all 3 Requiem mods identified, attempt a final confrontation on the Lich's planet</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Step 3 &mdash; Vanquish or Convert</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Kuva Lich</span></div>
+                <ul class="list">
+                    <li><strong>Vanquish</strong> &mdash; kills the Lich and gives you its weapon immediately</li>
+                    <li><strong>Convert</strong> &mdash; turns the Lich into an ally you can summon in missions (no weapon reward unless traded)</li>
+                    <li>Vanquish for the weapon; Convert only if you specifically want that Lich as an ally or for trading</li>
+                    <li>After vanquishing, the weapon appears in your Foundry &mdash; built and ready, no blueprint needed</li>
+                    <li>The elemental bonus (25&ndash;60%) and element type are fixed at Larvling spawn &mdash; you cannot change them afterward (only Valence Fusion can increase the %)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Kuva Weapon List</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Kuva Lich</span></div>
+                <ul class="list">
+                    <li>&#128293; <strong>Kuva Bramma</strong> &mdash; explosive bow; massive AoE; top AoE primary</li>
+                    <li>&#128293; <strong>Kuva Zarr</strong> &mdash; cannon/shotgun hybrid; devastating AoE</li>
+                    <li>&#128293; <strong>Kuva Nukor</strong> &mdash; beam secondary; chains to 5 enemies; best status secondary</li>
+                    <li>&#128293; <strong>Kuva Grattler</strong> &mdash; Archwing cannon; available in normal missions too</li>
+                    <li>&#128293; <strong>Kuva Chakkhurr</strong> &mdash; single-shot rifle; innate radiation; Eidolon utility</li>
+                    <li>&#128293; <strong>Kuva Kohm</strong> &mdash; shotgun with escalating fire rate; shreds with status</li>
+                    <li>&#128293; <strong>Kuva Quartakk</strong> / <strong>Kuva Karak</strong> / <strong>Kuva Hind</strong> / <strong>Kuva Tonkor</strong> &mdash; solid mid-tier picks</li>
+                    <li>&#128293; <strong>Kuva Ogris</strong> / <strong>Kuva Drakgoon</strong> / <strong>Kuva Ayanga</strong> &mdash; niche/fun options</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TENET WEAPON FARMING -->
+    <section class="category-section" id="tenet-farming">
+        <h2>&#128171; 3. Tenet Weapon Farming</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Step 1 &mdash; Spawn a Candidate</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Tenet</span></div>
+                <ul class="list">
+                    <li>Go to any <strong>level 20+ Corpus mission</strong> (not Railjack, not Archwing)</li>
+                    <li>Kill enemies until a <strong>Candidate</strong> spawns &mdash; a named Corpus Crewman with a tether</li>
+                    <li>Walk up to see the <strong>weapon preview</strong> &mdash; same mechanic as Kuva Larvlings</li>
+                    <li>Abort and retry if you want a different weapon type; mercy kill when you see the one you want</li>
+                    <li>Your Sister of Parvos is now created</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Step 2 &mdash; Hunt the Sister</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Tenet</span></div>
+                <ul class="list">
+                    <li>Same structure as Lich hunting &mdash; controlled planet, Murmur farming, 3 Requiem mods</li>
+                    <li>Sisters use <strong>Hound companions</strong> that must be defeated before the Sister can be confronted</li>
+                    <li>The Hound drops a unique mod when defeated &mdash; worth keeping; they are tradeable</li>
+                    <li>Sisters have different Requiem mods than Liches &mdash; <strong>Oull</strong> is the wildcard mod that works in any slot position</li>
+                    <li>See the <a href="Warframe_Lich_Guide.html">Lich &amp; Sisters Guide</a> for full progression details</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Step 3 &mdash; Vanquish or Convert</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Tenet</span></div>
+                <ul class="list">
+                    <li>Same choice as Lich &mdash; Vanquish for the weapon, Convert for an ally</li>
+                    <li>Converted Sisters can be traded; the receiver gets the Sister plus whatever Tenet weapon it holds</li>
+                    <li>Tenet weapons appear in the Foundry after vanquishing &mdash; no blueprint needed</li>
+                    <li>Unlike Kuva weapons, some Tenet weapons are <strong>also sold by Ergo Glast</strong> in Relay Void Trader rotations &mdash; check his stock before farming if you need one urgently</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Tenet Weapon List</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Tenet</span></div>
+                <ul class="list">
+                    <li>&#128171; <strong>Tenet Arca Plasmor</strong> &mdash; shotgun; wide beam; excellent status and neutral damage</li>
+                    <li>&#128171; <strong>Tenet Flux Rifle</strong> &mdash; rapid beam rifle; shreds armor with continuous fire</li>
+                    <li>&#128171; <strong>Tenet Diplos</strong> &mdash; auto-targeting secondary pistols; homing projectiles</li>
+                    <li>&#128171; <strong>Tenet Cycron</strong> &mdash; beam secondary; infinite punch-through disc; strong status</li>
+                    <li>&#128171; <strong>Tenet Plinx</strong> &mdash; hybrid full-auto / charged secondary; high burst</li>
+                    <li>&#128171; <strong>Tenet Exec</strong> &mdash; heavy blade melee; wide slash; strong with Blood Rush</li>
+                    <li>&#128171; <strong>Tenet Agendus</strong> &mdash; hammer + shield combo; unique Corpus aesthetic and playstyle</li>
+                    <li>&#128171; <strong>Tenet Spirex</strong> / <strong>Tenet Tetra</strong> / <strong>Tenet Livia</strong> &mdash; solid mid-tier picks</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. ELEMENTAL BONUSES -->
+    <section class="category-section" id="elements">
+        <h2>&#9889; 4. Elemental Bonuses</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #f5f5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How the Bonus Works</h3><span class="type-tag" style="background:rgba(245,245,245,0.15);color:#f5f5f5;border:1px solid rgba(245,245,245,0.3);">Elements</span></div>
+                <ul class="list">
+                    <li>Every Kuva and Tenet weapon has an <strong>elemental bonus</strong> ranging from <strong>25% to 60%</strong> of the weapon's total base damage</li>
+                    <li>The element is fixed by the Larvling/Candidate spawn &mdash; you see it in the preview before mercy killing</li>
+                    <li>The bonus is applied <strong>before mods</strong> &mdash; it is a permanent flat multiplier on base damage for that element</li>
+                    <li>A 60% bonus is roughly equivalent to a free max-rank elemental mod slot &mdash; very significant</li>
+                    <li>Element type matters more than bonus % for most weapons &mdash; choose your element first, then try to get 50%+ if possible</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #f5f5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Element Choice by Faction</h3><span class="type-tag" style="background:rgba(245,245,245,0.15);color:#f5f5f5;border:1px solid rgba(245,245,245,0.3);">Elements</span></div>
+                <ul class="list">
+                    <li><strong>Grineer</strong> &mdash; Radiation (combined) is best; use Heat if running Corrosive + Heat builds</li>
+                    <li><strong>Corpus</strong> &mdash; Magnetic + Toxin (combined) shreds shields + health; Toxin alone bypasses shields</li>
+                    <li><strong>Infested</strong> &mdash; Corrosive or Gas; Corrosive strips armor on Ancients, Gas AoE for clusters</li>
+                    <li><strong>General / all factions</strong> &mdash; <strong>Heat</strong> is the most flexible bonus element; applies to all factions and synergizes with Viral builds</li>
+                    <li><strong>Radiation</strong> &mdash; strong vs Grineer heavy units and Alloy Armor; also causes friendly fire between enemy factions (CC utility)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #f5f5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Best Element by Weapon Role</h3><span class="type-tag" style="background:rgba(245,245,245,0.15);color:#f5f5f5;border:1px solid rgba(245,245,245,0.3);">Elements</span></div>
+                <ul class="list">
+                    <li><strong>Status weapons</strong> (Kuva Nukor, Tenet Cycron) &mdash; Toxin; combine with Cold mod for Viral, or keep Toxin for direct health damage</li>
+                    <li><strong>Crit primaries</strong> (Kuva Bramma, Kuva Zarr) &mdash; Heat; pairs with Corrosive or Viral depending on target faction</li>
+                    <li><strong>Eidolon weapons</strong> (Kuva Chakkhurr) &mdash; Radiation; Eidolons are weak to Radiation on their body</li>
+                    <li><strong>Melee</strong> (Tenet Exec) &mdash; Heat or Radiation; Heat synergizes with Archon Vitality healing on status procs</li>
+                    <li><strong>Universal pick when unsure</strong> &mdash; Heat; it is never a bad choice and has the widest utility</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. VALENCE FUSION -->
+    <section class="category-section" id="valence">
+        <h2>&#9878;&#65039; 5. Valence Fusion</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Is Valence Fusion?</h3><span class="type-tag" style="background:rgba(167,139,250,0.2);color:#a78bfa;border:1px solid rgba(167,139,250,0.4);">Valence</span></div>
+                <ul class="list">
+                    <li>A system that lets you <strong>combine two copies</strong> of the same Kuva or Tenet weapon to increase the elemental bonus</li>
+                    <li>The resulting weapon takes the <strong>higher bonus % + 2%</strong> of the two copies (capped at 60%)</li>
+                    <li>You can also <strong>change the element type</strong> during fusion &mdash; keep the element of whichever copy you designate as the base</li>
+                    <li>The weapon consumed in the fusion is <strong>destroyed</strong> &mdash; make sure you no longer need it before fusing</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Fusion Strategy</h3><span class="type-tag" style="background:rgba(167,139,250,0.2);color:#a78bfa;border:1px solid rgba(167,139,250,0.4);">Valence</span></div>
+                <ul class="list">
+                    <li>Start with any copy; fuse duplicates until you reach <strong>58&ndash;60%</strong> for your final weapon</li>
+                    <li>Use low-bonus copies as sacrificial fodder to raise your keeper weapon's percentage</li>
+                    <li>If you get a better element on a new drop, you can swap elements via fusion &mdash; designate the new-element copy as the sacrifice to transfer its element to your high-% keeper</li>
+                    <li>Trading: you can buy 25% copies cheaply from other players, then fuse them into your keeper to climb toward 60%</li>
+                    <li>A 60% Heat Kuva Nukor + maxed status mods is one of the highest damage-per-second secondaries in the game</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Fusion Math</h3><span class="type-tag" style="background:rgba(167,139,250,0.2);color:#a78bfa;border:1px solid rgba(167,139,250,0.4);">Valence</span></div>
+                <ul class="list">
+                    <li>Example: 25% + 25% &rarr; 27% (higher of the two + 2%)</li>
+                    <li>Example: 27% + 30% &rarr; 32%</li>
+                    <li>Example: 50% + 45% &rarr; 52%</li>
+                    <li>Example: 56% + 52% &rarr; 58%</li>
+                    <li>Example: 58% + any% &rarr; 60% (cap)</li>
+                    <li>Reaching 60% from a 25% start takes roughly 10&ndash;15 total fusions depending on luck of drops</li>
+                    <li>Each fusion costs <strong>no resources</strong> &mdash; only the sacrificed weapon copy</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. TOP PICKS -->
+    <section class="category-section" id="top-picks">
+        <h2>&#127942; 6. Top Picks</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128293; Top Kuva Weapons</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Top Kuva</span></div>
+                <ul class="list">
+                    <li>&#128293; <strong>Kuva Nukor</strong> (Secondary) &mdash; best status secondary in the game; chains to 5 enemies; combine with Epitaph or Tenet Cycron for Viral primer</li>
+                    <li>&#128293; <strong>Kuva Bramma</strong> (Primary) &mdash; explosive cluster arrow; top AoE primary for Survival and Defense; watch for self-damage</li>
+                    <li>&#128293; <strong>Kuva Zarr</strong> (Primary) &mdash; cannon that fires shells or buckshot; AoE rivaling Bramma; slightly safer to use in tight spaces</li>
+                    <li>&#128293; <strong>Kuva Chakkhurr</strong> (Primary) &mdash; single-shot with innate Radiation; top Eidolon primary option</li>
+                    <li>&#128293; <strong>Kuva Kohm</strong> (Primary) &mdash; shotgun with stacking fire rate; devastating with max status builds; shreds Corrupted</li>
+                    <li>&#128293; <strong>Kuva Ogris</strong> (Primary) &mdash; rocket launcher with Nightwatch Napalm augment; strong fire/heat status output</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128171; Top Tenet Weapons</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Top Tenet</span></div>
+                <ul class="list">
+                    <li>&#128171; <strong>Tenet Arca Plasmor</strong> (Primary) &mdash; wide beam shotgun; high status; excellent for Corpus and mixed-faction missions</li>
+                    <li>&#128171; <strong>Tenet Cycron</strong> (Secondary) &mdash; status beam secondary; pairs with Kuva Nukor as a Viral primer combo</li>
+                    <li>&#128171; <strong>Tenet Flux Rifle</strong> (Primary) &mdash; continuous beam; extremely high armor strip rate with status stacking; strong on Steel Path</li>
+                    <li>&#128171; <strong>Tenet Diplos</strong> (Secondary) &mdash; auto-targeting homing pistols; excellent for high-mobility play where aiming is impractical</li>
+                    <li>&#128171; <strong>Tenet Exec</strong> (Melee) &mdash; heavy blade; wide AoE slam; Blood Rush + Weeping Wounds build is very strong</li>
+                    <li>&#128171; <strong>Tenet Agendus</strong> (Melee) &mdash; unique hammer/shield; heavy attack on shields; strong and fun playstyle</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Farming Priority</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Priority</span></div>
+                <ul class="list">
+                    <li><strong>Priority 1:</strong> Kuva Nukor &mdash; single biggest DPS upgrade for your secondary slot; essential for most meta builds</li>
+                    <li><strong>Priority 2:</strong> Kuva Bramma or Kuva Zarr &mdash; covers AoE primary slot; pick Zarr for tight spaces, Bramma for open tiles</li>
+                    <li><strong>Priority 3:</strong> Tenet Arca Plasmor &mdash; best Corpus-faction primary; replaces vanilla Arca in all content</li>
+                    <li><strong>Priority 4:</strong> Tenet Cycron &mdash; strong Viral primer for secondary if you use Nukor as DPS</li>
+                    <li><strong>After that:</strong> Farm any that fill gaps in your current loadouts; all are worthwhile for MR</li>
+                    <li>Tip: check Warframe.market for cheap 25&ndash;40% copies &mdash; buying rather than farming saves hours for less sought-after weapons</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Leveling to Rank 40</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Priority</span></div>
+                <ul class="list">
+                    <li>Kuva and Tenet weapons can be leveled to <strong>Rank 40</strong> (requires 5 additional Forma past Rank 30)</li>
+                    <li>Each extra rank-5 threshold gives a small base stat increase &mdash; worth doing for weapons you use often</li>
+                    <li>You do <strong>not</strong> need to take a weapon to Rank 40 to use it effectively &mdash; Rank 30 with good mods is sufficient for most content</li>
+                    <li>Best leveling location: <strong>Hydron (Sedna)</strong> Defense with an affinity booster active</li>
+                    <li>One full Hydron run (wave 20) with a booster can take a weapon from 0 to 30 in ~15 minutes</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

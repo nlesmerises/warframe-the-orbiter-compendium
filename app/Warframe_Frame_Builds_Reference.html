@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Frame Builds Reference</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#129520; Frame Builds Reference</h1>
+        <p class="subtitle">Top meta frames &middot; ability priorities &middot; mod loadouts &middot; best use cases</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="how-to-read" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128218;</div><h2 class="qi-tile-title">How to Read This Page</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="dps" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128293;</div><h2 class="qi-tile-title">DPS &amp; Nukers</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="support" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#129657;</div><h2 class="qi-tile-title">Support &amp; Buff</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="tank" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128737;</div><h2 class="qi-tile-title">Tank &amp; Sustain</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="utility" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#128065;</div><h2 class="qi-tile-title">Utility &amp; Stealth</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="specialist" style="border-left-color:#ffb74d;"><div class="qi-tile-icon">&#11088;</div><h2 class="qi-tile-title">Specialist &amp; Niche</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. HOW TO READ -->
+    <section class="category-section" id="how-to-read">
+        <h2>&#128218; 1. How to Read This Page</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Scope</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Covers the ~22 most-used meta and utility frames &mdash; not all 60+</li>
+                    <li>Each entry lists: <strong>Role</strong>, <strong>Key ability</strong>, <strong>Essential mods</strong>, <strong>Best use cases</strong>, and a short <strong>playstyle note</strong></li>
+                    <li>Builds assume a fully forma'd frame (5&ndash;7 Forma) optimized for endgame</li>
+                    <li>For full build math and modding guides see <a href="Warframe_Builds_Codex.html">Builds Codex</a> and <a href="Warframe_Mods_Database.html">Mods Database</a></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Universal Mod Slots</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li><strong>Aura</strong> &mdash; Steel Charge (more mod capacity), Brief Respite (shields on ability cast), or role-specific (Energy Siphon, Corrosive Projection)</li>
+                    <li><strong>Exilus</strong> &mdash; Rush (sprint speed), Cunning Drift (range), Power Drift (power strength), or Handspring (knockdown recovery)</li>
+                    <li><strong>Primed Continuity</strong> &mdash; always-on duration; almost all frames want this</li>
+                    <li><strong>Adaptation</strong> &mdash; strong on any frame that takes hits; damage resistance stacks on each type received</li>
+                    <li><strong>Archon mods</strong> &mdash; Archon Stretch (energy on ability cast), Archon Vitality (heat status heals), Archon Continuity (corrosive doubles duration) are all high value</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. DPS & NUKERS -->
+    <section class="category-section" id="dps">
+        <h2>&#128293; 2. DPS &amp; Nukers</h2>
+        <div class="dashboard-grid">
+
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127890; Saryn &mdash; Spore Nuker</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">DPS / Nuker</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> AoE DPS, Toxin/Viral spread; best-in-class for ESO and open tiles</li>
+                    <li><strong>Key ability:</strong> Spores (1) + Miasma (4) &mdash; pop spores to spread damage exponentially</li>
+                    <li><strong>Essential mods:</strong> Intensify / Transient Fortitude, Stretch, Continuity, Blind Rage (tempered), Hunter Adrenaline or Rage</li>
+                    <li><strong>Archon:</strong> Archon Continuity (Corrosive doubles Spore duration) is a major upgrade</li>
+                    <li><strong>Best for:</strong> ESO, Defense, Survival, open world exterminate, Steel Path tile clearing</li>
+                    <li><em>Playstyle:</em> Cast Spores on one enemy, kill it to spread, then Miasma to detonate when density is high. Molt (2) is a free shed + decoy. Range matters more than raw strength.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128251; Mesa &mdash; Gunslinger</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">DPS / Nuker</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Sustained ranged DPS; Peacemakers (4) make her a stationary turret with infinite ammo</li>
+                    <li><strong>Key ability:</strong> Peacemakers (4) &mdash; toggle; shoots all enemies in a cone automatically; extremely high DPS</li>
+                    <li><strong>Essential mods:</strong> Strength (Blind Rage + Intensify), Sharpshooter subsume or Shooting Gallery (3), Waltz augment (move while in 4)</li>
+                    <li><strong>Best for:</strong> Defense, Interception, Disruption, Assassination, Index point-denial</li>
+                    <li><em>Playstyle:</em> Ballistic Battery (1) charges a damage multiplier &mdash; cast before activating Peacemakers for burst. Shatter Shield (3) gives 95% damage reduction while active. Waltz augment is near-mandatory for mobile play.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127981; Equinox &mdash; Maim Nuker</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">DPS / Nuker</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> AoE damage storage and burst nuke in Night form; affinity farming support in Day form</li>
+                    <li><strong>Key ability:</strong> Maim (4 Night) &mdash; accumulates damage dealt to enemies, then releases it in a burst; Provoke (4 Day) &mdash; team ability strength buff</li>
+                    <li><strong>Essential mods:</strong> High strength (Blind Rage + Transient Fortitude), Stretch, Continuity, Peaceful Provocation augment</li>
+                    <li><strong>Best for:</strong> ESO (Maim nuke every wave), affinity farming (Provoke aura), Sanctuary Onslaught</li>
+                    <li><em>Playstyle:</em> In Night form, let Maim passively store damage from kills, then release for a massive nuke. Peaceful Provocation augment slows enemies in Night form. Swap to Day for Provoke buff when supporting.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127774; Nova &mdash; Slowva / Speedva</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">DPS / Nuker</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Crowd control + damage amplifier; Molecular Prime (4) is one of the game's strongest ability modifiers</li>
+                    <li><strong>Key ability:</strong> Molecular Prime (4) &mdash; primes all enemies; primed enemies take 2&times; damage and either slow (negative strength) or speed up (positive strength)</li>
+                    <li><strong>Slowva build:</strong> Negative strength (Overextended) + high range; enemies move at 25&ndash;50% speed</li>
+                    <li><strong>Speedva build:</strong> Positive strength, moderate range; enemies and allies move faster (use for farming speed)</li>
+                    <li><strong>Best for:</strong> Disruption, Defense, Arbitrations, The Index (Slowva), any mission where 2&times; damage multiplier matters</li>
+                    <li><em>Playstyle:</em> Keep Molecular Prime active at all times &mdash; it re-propagates on killed primed enemies. Null Star (1) grants damage reduction; Antimatter Drop (2) can nuke a tough target.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128165; Octavia &mdash; Immortal Buffbot</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">DPS / Nuker</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> AoE damage via Mallet (1); team-wide DPS buff via Amp (2); effectively invincible via Resonator + Metronome</li>
+                    <li><strong>Key ability:</strong> Mallet (1) absorbs incoming damage and redeals it as AoE; Metronome (3) grants buffs for dancing to the beat</li>
+                    <li><strong>Essential mods:</strong> High strength (Mallet damage scales with it), Continuity, moderate range, Resonator augment</li>
+                    <li><strong>Best for:</strong> ESO, Defense, Survival, Steel Path, any long endless run</li>
+                    <li><em>Playstyle:</em> Drop Mallet, use Resonator to pull enemies to it, let them kill themselves. Metronome grants invisibility, speed, and crit buffs for crouch-dancing to the beat. Near-impossible to kill if played correctly.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128052; Gauss &mdash; Speed &amp; DPS</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">DPS / Nuker</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Fast mobile DPS; fire/cold proc amplifier; strong for Disruption Demolyst interception</li>
+                    <li><strong>Key ability:</strong> Redline (4) &mdash; overcharges battery, boosts fire rate, reload, and ability power; Kinetic Plating (3) absorbs physical damage when battery is charged</li>
+                    <li><strong>Essential mods:</strong> High strength for Redline bonus, Continuity, Rush or Amalgam Serration for sprint speed</li>
+                    <li><strong>Best for:</strong> Disruption (intercept Demolysts), exterminate, any mission requiring fast traversal</li>
+                    <li><em>Playstyle:</em> Mach Rush (1) builds battery charge via sprinting. Keep Redline active for the full bonus. Thermal Sunder (2) applies heat + cold procs that synergize with weapons. Extremely energy-hungry &mdash; bring Energize or Zenurik.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. SUPPORT & BUFF -->
+    <section class="category-section" id="support">
+        <h2>&#128138; 3. Support &amp; Buff</h2>
+        <div class="dashboard-grid">
+
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#10084;&#65039; Trinity &mdash; Energy &amp; Healing</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Support</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Team energy source and healing; the original support frame</li>
+                    <li><strong>Key ability:</strong> Energy Vampire (2) &mdash; marks enemy; all team members hitting it restore energy; Blessing (4) &mdash; full team HP restore + 75% damage reduction</li>
+                    <li><strong>Essential mods:</strong> High efficiency (Fleeting Expertise), Continuity, range for EV radius; Vampire Leech augment optional</li>
+                    <li><strong>Best for:</strong> Defense, Survival, Eidolon hunts, any mission where the team needs energy sustain</li>
+                    <li><em>Playstyle:</em> Cast EV on high-value targets or bosses to give the team sustained energy. Blessing is a panic button &mdash; use it when teammates are low. Well of Life (1) adds extra healing via headshot kills.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128251; Wisp &mdash; Buff &amp; Utility</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Support</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Passive team buff via Reservoirs; strong solo DPS; innate invisibility in air</li>
+                    <li><strong>Key ability:</strong> Reservoirs (1) &mdash; place motes that buff the entire team; Sol Gate (4) &mdash; beam of pure solar damage</li>
+                    <li><strong>Mote priorities:</strong> Haste (speed + fire rate) and Vitality (HP + HP regen) motes are highest value; Shock mote for CC</li>
+                    <li><strong>Essential mods:</strong> High strength for mote effectiveness, Continuity, Stretch for mote radius</li>
+                    <li><strong>Best for:</strong> Defense (mote stacking), Eidolon hunts (Haste mote for operators), any squad that wants passive buffs</li>
+                    <li><em>Playstyle:</em> Place all three Reservoir types at the extraction/defense point. Wil-o-Wisp (2) is an invincibility dash. Breach Surge (3) multiplies projectile damage &mdash; synergizes with Sol Gate enormously.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128247; Harrow &mdash; Crit &amp; Energy Buffer</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Support</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Team crit chance + fire rate buff; strong solo sustain via headshots</li>
+                    <li><strong>Key ability:</strong> Covenant (4) &mdash; team invulnerability + crit chance bonus scaled by damage absorbed; Thurible (2) gives energy on kills</li>
+                    <li><strong>Essential mods:</strong> High strength for Covenant crit bonus, Continuity, Efficiency</li>
+                    <li><strong>Best for:</strong> Eidolon hunts (crit window), Steel Path squads, any team DPS frame that benefits from crit buffs</li>
+                    <li><em>Playstyle:</em> Cast Covenant to absorb incoming damage, then release &mdash; the burst gives the team a crit/fire rate window. Thurible (2) provides energy to the team per kill. Extremely powerful when timed with burst damage windows.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127775; Citrine &mdash; Healing &amp; Status</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Support</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Team healing, status spread, and crystal damage AoE; excellent survivability support</li>
+                    <li><strong>Key ability:</strong> Crystallize (3) &mdash; spreads crystal shards that proc status and deal damage; Preserving Shell (4) &mdash; regenerating shield bubble for teammates</li>
+                    <li><strong>Essential mods:</strong> Strength for healing and damage, range for crystal spread, Continuity</li>
+                    <li><strong>Best for:</strong> Defense, squads that need healing without Trinity's energy dependency, Steel Path survival</li>
+                    <li><em>Playstyle:</em> Fractured Blast (1) knocks enemies with crystal shards. Crystal Lining (2) is a scaling armor/shield buff. Drop Preserving Shell on the defense point and keep Crystallize active for sustained healing ticks on nearby allies.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. TANK & SUSTAIN -->
+    <section class="category-section" id="tank">
+        <h2>&#128737;&#65039; 4. Tank &amp; Sustain</h2>
+        <div class="dashboard-grid">
+
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#129396; Inaros &mdash; HP Juggernaut</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Tank</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Near-unkillable HP tank; no shields; relies on raw health and lifesteal</li>
+                    <li><strong>Key ability:</strong> Desiccation (1) &mdash; blind + finisher setup; Devour (2) &mdash; lifesteal from buried enemy; Sandstorm (3) &mdash; AoE lifesteal</li>
+                    <li><strong>Essential mods:</strong> Vitality (max HP), Adaptation, Hunter Adrenaline (HP drain &rarr; energy), Umbral mods (Intensify + Fiber + Vitality)</li>
+                    <li><strong>Best for:</strong> The Index (point carrying), solo endurance runs, any mission where not dying is the priority</li>
+                    <li><em>Playstyle:</em> Inaros Prime hits 7,000+ HP with Umbral mods. Revive downed teammates safely with your huge health pool. No energy-based defense &mdash; pure HP sustain is the game plan. Desiccation + melee finisher restores health.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128736;&#65039; Rhino &mdash; Iron-Skinned Bruiser</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Tank</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Iron Skin absorbs all damage for a duration; Roar is one of the best team damage buffs in the game</li>
+                    <li><strong>Key ability:</strong> Iron Skin (2) &mdash; overshield of health that blocks all damage; Roar (3) &mdash; team damage multiplier (~50% with high strength)</li>
+                    <li><strong>Essential mods:</strong> High strength for Iron Skin health pool and Roar multiplier; Continuity for Roar duration; Ironclad Charge augment for Iron Skin synergy</li>
+                    <li><strong>Best for:</strong> The Index, early Steel Path, Sorties, any mission where a team damage buff is wanted</li>
+                    <li><em>Playstyle:</em> Iron Skin up before engaging; Roar for the team. Rhino Stomp (4) is a powerful CC that freezes enemies in the air. Straightforward but extremely effective. Roar is often subsumed onto other frames via Helminth.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127774; Nidus &mdash; Mutation Stack Tank</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Tank</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Self-sustaining HP tank that gets stronger the more enemies are nearby; near-immortal at high stacks</li>
+                    <li><strong>Key ability:</strong> Virulence (1) &mdash; ground tendrils that deal damage and generate Mutation stacks; Parasitic Link (3) &mdash; HP link to an enemy; at 10+ stacks, revives from death once</li>
+                    <li><strong>Essential mods:</strong> Range for Virulence, Strength, Continuity; Undying augment reinforces the death-prevention passive</li>
+                    <li><strong>Best for:</strong> Defection, Infested-heavy missions, Defense, long endurance runs</li>
+                    <li><em>Playstyle:</em> Build stacks fast with Virulence &mdash; you need 15 stacks for maximum survivability. Larva (2) pulls enemies into a cluster for easy Virulence hits. At 15 stacks, health regenerates passively. Nidus is nearly impossible to kill in Infested missions.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128171; Revenant &mdash; Reave Tank</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Tank</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Immortal through Mesmer Skin; extremely fast Reave for Eidolon shield stripping</li>
+                    <li><strong>Key ability:</strong> Mesmer Skin (2) &mdash; stacks that each negate one hit and stun the attacker; Reave (3) &mdash; fast dash that strips shields/health from enemies</li>
+                    <li><strong>Essential mods:</strong> High strength for Mesmer Skin stack count and Reave damage, Continuity, Rolling Guard for gap between casts</li>
+                    <li><strong>Best for:</strong> Eidolon hunts (Reave for shield strip), Steel Path, any content where survivability matters more than DPS</li>
+                    <li><em>Playstyle:</em> Mesmer Skin at 10 stacks with high strength makes Revenant effectively untouchable &mdash; stunned attackers can't chain-kill you. Danse Macabre (4) is a spinning death beam. Reave is the fastest shield strip for Eidolons after Volt's shield removal.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. UTILITY & STEALTH -->
+    <section class="category-section" id="utility">
+        <h2>&#128373;&#65039; 5. Utility &amp; Stealth</h2>
+        <div class="dashboard-grid">
+
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128373;&#65039; Loki &mdash; Stealth &amp; CC</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Utility</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Indefinite invisibility; Radial Disarm removes all ranged weapons from enemies</li>
+                    <li><strong>Key ability:</strong> Invisibility (3) &mdash; true invisibility with high duration; Radial Disarm (4) &mdash; all nearby enemies lose guns, forcing melee only</li>
+                    <li><strong>Essential mods:</strong> Max duration (Primed Continuity + Narrow Minded), efficiency, Hushed Invisibility augment for silent weapons</li>
+                    <li><strong>Best for:</strong> Spy missions, Capture, solo stealth farming, Sortie weapon restriction missions</li>
+                    <li><em>Playstyle:</em> Stay invisible. Radial Disarm on Grineer makes them use slow melee &mdash; combined with Invisibility, Loki is ideal for solo Spy vaults. Decoy (2) creates a distraction. Very low power floor but nearly unlimited ceiling for experienced players.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127768; Ivara &mdash; Invisible Hunter</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Utility</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Continuous invisibility; strongest Spy frame; excellent loot frame with Prowl passive</li>
+                    <li><strong>Key ability:</strong> Prowl (3) &mdash; continuous invisibility while moving slowly; passive pickpocket from enemies; Artemis Bow (4) &mdash; powerful multishot bow</li>
+                    <li><strong>Essential mods:</strong> Max efficiency + duration for Prowl energy cost, Empowered Quiver augment, Artemis Bow mods</li>
+                    <li><strong>Best for:</strong> Spy missions (best frame), Arbitrations (invisible to Drones), solo farming, resource pickpocketing</li>
+                    <li><em>Playstyle:</em> Prowl pickpockets resources from enemies passively while invisible &mdash; excellent for rare resource farming. Quiver (1) arrows: Dashwire (zipline), Cloak (team invisibility bubble), Noise (lure distraction), Sleep. For Spy: enter Prowl, walk slowly through vault, never trigger alarms.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128128; Nekros &mdash; Loot Frame</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Utility</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Increases enemy drops via Desecrate; summons shadows for tanking and damage; best loot multiplier in the game</li>
+                    <li><strong>Key ability:</strong> Desecrate (3) &mdash; each killed enemy has an additional chance to drop loot; Shadows of the Dead (4) &mdash; summon copies of killed enemies to fight for you</li>
+                    <li><strong>Essential mods:</strong> Despoil augment (Desecrate costs HP instead of energy &mdash; pairs with Health Conversion), Continuity, Stretch, Equilibrium</li>
+                    <li><strong>Best for:</strong> Survival (Life Support drops), resource farming runs, Excavation power cells</li>
+                    <li><em>Playstyle:</em> Run Despoil + Health Conversion for near-free Desecrate &mdash; every corpse restores health and gives extra drops. Shadows tank hits and scale with Nekros's Power Strength. A Nekros in every resource farm squad is standard practice.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128049; Khora &mdash; CC &amp; Loot</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Utility</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Hard CC via Strangledome; strong whip DPS with Venari companion; Pilfering Strangledome doubles resource drops</li>
+                    <li><strong>Key ability:</strong> Strangledome (4) &mdash; web that suspends enemies and deals damage; Whipclaw (1) &mdash; powerful whip strike that chains to suspended enemies</li>
+                    <li><strong>Essential mods:</strong> Pilfering Strangledome augment (mandatory for farming), Strength for Whipclaw, range for Dome coverage</li>
+                    <li><strong>Best for:</strong> Survival (pairs with Nekros), Defense, ESO (CC + loot), resource farming</li>
+                    <li><em>Playstyle:</em> Drop Strangledome on a cluster of enemies; spam Whipclaw into suspended targets &mdash; damage chains to all enemies in the Dome. Pilfering + Nekros Desecrate is one of the highest loot density combos in the game. Venari (3) provides passive healing.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 6. SPECIALIST & NICHE -->
+    <section class="category-section" id="specialist">
+        <h2>&#9889; 6. Specialist &amp; Niche</h2>
+        <div class="dashboard-grid">
+
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#9889; Volt &mdash; Eidolon Specialist</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Specialist</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Best Eidolon hunt frame; Shield (3) amplifies crit damage through it; Speed (2) buffs the whole team</li>
+                    <li><strong>Key ability:</strong> Electric Shield (3) &mdash; deployable shield that doubles crit damage for shots fired through it; Speed (2) &mdash; team movement buff</li>
+                    <li><strong>Essential mods:</strong> High strength for Shield crit multiplier, Continuity, Capacitance augment (shields on shock kills), Rolling Guard</li>
+                    <li><strong>Best for:</strong> Eidolon Teralyst / Gantulyst / Hydrolyst hunts; any content where crit damage is the limiting factor</li>
+                    <li><em>Playstyle:</em> Deploy Shield facing the Eidolon limb; all operators and players firing through it receive double crit damage. Speed keeps the team mobile between limbs. Discharge (4) for clearing Vomvalysts.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128049; Wukong &mdash; Steel Path Solo</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Specialist</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Extremely tanky solo frame; defy passive prevents death; clone doubles DPS</li>
+                    <li><strong>Key ability:</strong> Defy (2) &mdash; passive death prevention (once per N seconds); Celestial Twin (1) &mdash; AI clone with same weapons that fights alongside you</li>
+                    <li><strong>Essential mods:</strong> Strength for Defy damage bonus, Continuity, Adaptation, Primed Flow</li>
+                    <li><strong>Best for:</strong> Solo Steel Path endurance, solo Assassination, any mission where dying is not an option</li>
+                    <li><em>Playstyle:</em> Defy periodically grants a large damage bonus after triggering. Clone handles additional DPS and draws aggro. Cloud Walker (3) provides brief invulnerability and healing. Simple, forgiving, and highly effective solo.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128051; Banshee &mdash; Crit Amplifier</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Specialist</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Sound Quake for endless AoE stagger; Sonar (2) creates weak-point multipliers on enemies for extreme damage spikes</li>
+                    <li><strong>Key ability:</strong> Sonar (2) &mdash; marks enemy body parts as weak points; shots to these spots deal 500%+ bonus damage; Sound Quake (4) &mdash; continuous AoE stagger</li>
+                    <li><strong>Essential mods:</strong> High strength for Sonar multiplier, Continuity, Resonance augment (Sonar spreads on headshot), Silence (3) for stagger</li>
+                    <li><strong>Best for:</strong> Boss farming, Sortie targets, high-health SP enemies where weak-point shots one-shot</li>
+                    <li><em>Playstyle:</em> Very fragile &mdash; needs careful play or a buddy. Sonar + headshots on marked spots shreds any enemy. Sound Quake with Resonance augment makes Sonar self-propagating. Not for beginners but devastating in the right hands.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127774; Titania &mdash; Pixie Flyer</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Specialist</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Razorwing (4) transforms into a tiny flying fairy with powerful pistols; immune to most ground hazards; fastest traversal frame</li>
+                    <li><strong>Key ability:</strong> Razorwing (4) &mdash; miniaturized flight form with Dex Pixia (powerful augmented pistols); Razorwing Blitz augment multiplies fire rate</li>
+                    <li><strong>Essential mods:</strong> High strength for Razorwing damage, Continuity, Razorwing Blitz augment, Dex Pixia weapon mods (Hollow Point, Primed Pistol Gambit)</li>
+                    <li><strong>Best for:</strong> Disruption (fast Demolyst interception), Assassination traversal, Elite Sanctuary Onslaught, Steel Path solo</li>
+                    <li><em>Playstyle:</em> Stay in Razorwing almost always &mdash; Dex Pixia with Blitz stacks is strong DPS. Spellbind (1) grants CC immunity to self and allies. Lantern (2) creates enemy decoys. Extremely mobile and surprisingly tanky in the air (smaller hitbox).</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128031; Grendel &mdash; Helminth Feeder</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Specialist</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Eats enemies whole; converts them into buffs and armor; Pulverize (4) is a rolling ball of destruction</li>
+                    <li><strong>Key ability:</strong> Feast (1) &mdash; swallows enemies alive; Nourish (2) &mdash; converts a swallowed enemy into energy/toxin damage/other buff; Pulverize (4) &mdash; ball form for traversal and damage</li>
+                    <li><strong>Essential mods:</strong> Strength for Nourish buff value, Continuity, Range for Feast grab radius, Constitution</li>
+                    <li><strong>Best for:</strong> Nourish is meta-subsumed via Helminth for its Toxin damage buff; Grendel himself excels in Disruption and crowd control scenarios</li>
+                    <li><em>Playstyle:</em> Nourish grants a Toxin damage buff to all weapons &mdash; widely used as a Helminth subsume on other frames. On Grendel: eat troublesome enemies (Nullifiers, Demolysts) mid-mission to neutralize them. Pulverize for fast travel between objectives.</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127774; Protea &mdash; Turret Utility</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Specialist</span></div>
+                <ul class="list">
+                    <li><strong>Role:</strong> Deployable turrets, grenades, and time-rewind passive; strong solo sustain; Dispensary gives ammo/energy/health</li>
+                    <li><strong>Key ability:</strong> Dispensary (3) &mdash; drops a device that regenerates energy, health orbs, and ammo indefinitely; Temporal Anchor (4) &mdash; rewind to a saved state if killed</li>
+                    <li><strong>Essential mods:</strong> High strength for turret damage and Dispensary output, Continuity, Stretch</li>
+                    <li><strong>Best for:</strong> Solo endless runs, any squad lacking energy sustain (Dispensary replaces Trinity in non-Eidolon content), Railjack support</li>
+                    <li><em>Playstyle:</em> Drop Dispensary wherever the team anchors &mdash; it continuously restores resources with no input needed. Shrapnel Vortex (2) turrets handle passive DPS. Temporal Anchor is a full death-prevention undo. Grenade Fan (1) provides both shield-restore and bleed procs.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

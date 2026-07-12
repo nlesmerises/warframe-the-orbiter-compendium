@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=9"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Endo Farming Volume</title>
+    <style>
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px !important; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+
+
+
+
+
+
+
+
+
+
+
+.container { max-width: 1750px; width: 100%; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+
+/* .task-item/.task-list/.task-content/.task-title/.task-desc are used by
+   all 8 checklist rows and their checkbox-persistence JS but had zero CSS
+   defined anywhere (page or shared theme) -- same bug class as Foundry
+   Operations Center. Rendered as bare browser bullets with no glass. */
+ul.task-list { list-style: none; padding-left: 0; margin: 0; }
+.task-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px; margin-bottom: 8px; border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,171,0,0.07), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,171,0,0.18); border-left: 3px solid rgba(255,171,0,0.5);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.22); transition: all 0.25s ease;
+}
+.task-item:hover {
+    background: linear-gradient(180deg, rgba(255,171,0,0.14), rgba(255,255,255,0.04));
+    border-color: rgba(255,171,0,0.4); border-left-color: #ffab00;
+    box-shadow: 0 6px 20px rgba(255,171,0,0.15); transform: translateY(-1px);
+}
+.task-item.completed {
+    border-color: rgba(46,204,113,0.35); border-left-color: #2ecc71;
+    background: linear-gradient(180deg, rgba(46,204,113,0.12), rgba(46,204,113,0.03));
+    box-shadow: 0 4px 14px rgba(46,204,113,0.1);
+}
+.task-item input[type="checkbox"] {
+    margin-top: 3px; width: 16px; height: 16px; cursor: pointer;
+    accent-color: #ffab00; flex-shrink: 0;
+}
+.task-content { display: flex; flex-direction: column; gap: 2px; }
+.task-title { font-weight: 700; color: #f8fafc; font-size: 0.92rem; }
+.task-desc { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Resource_Farming_Guide.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a id="nav-next-top" href="Warframe_Platinum_Farming_Guide.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+
+
+
+
+<div class="container" style="max-width:1750px; margin: 0 auto;">
+<header>
+    <h1>&#128160; Endo Farming Volume</h1>
+    <p class="subtitle">The ultimate guide to the most efficient Endo farms in the Origin System.</p>
+</header>
+
+<div class="toc no-print">
+    <div class="qi-grid">
+        <a href="#" class="qi-tile toc-toggle" data-section="section-tier1" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128293;</div><h2 class="qi-tile-title">Tier 1: Absolute Best</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-tier2" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#128200;</div><h2 class="qi-tile-title">Tier 2: High Yield</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-tier3" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128336;</div><h2 class="qi-tile-title">Tier 3: Passive/Weekly</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <button class="btn btn-red reset-btn" id="btn-clear-endo-checkmarks" style="background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #fca5a5; padding: 10px 24px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: all 0.25s ease;">Clear Checkmarks</button>
+    </div>
+</div>
+
+<div class="category-section" id="section-tier1">
+<div class="card" id="endo-card-tier1" style="border-left:6px solid #ef5350;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F947; Tier 1: The Absolute Best (Endgame Squads)</h3>
+                <span class="type-tag" style="background: rgba(239,83,80,0.2); color: #ef5350; border: 1px solid rgba(239,83,80,0.4);">Pre-Made Squad</span>
+            </div>
+            <ul class="task-list">
+                <li class="task-item">
+                    <input type="checkbox" id="farm-vodyanoi">
+                    <div class="task-content">
+                        <div class="task-title">Vodyanoi, Sedna (Rathuum Arena)</div>
+                        <div class="task-desc">
+                            <span class="highlight">~2,000 to 3,000 Endo per 2 minutes.</span> This is the undisputed king of raw Endo farming. You need a dedicated, pre-made squad: Nidus (to group enemies), Khora (Pilfering Strangledome), and 2x Nekros (Desecrate). Everyone must run purely Slash weapons (like Ripkas with Amalgam Ripkas True Steel) to dismember bodies and double the Desecrate drops. Mod drop chance boosters affect Endo drops here!
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        
+</div>
+<div class="category-section" id="section-tier2">
+<div class="card" id="endo-card-tier2" style="border-left:6px solid #4ade80;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0;">&#x1F948; Tier 2: The Best Solo / High-Yield Alternatives</h3>
+                <span class="type-tag" style="background: rgba(74,222,128,0.2); color: #4ade80; border: 1px solid rgba(74,222,128,0.4);">Solo Friendly</span>
+            </div>
+            <ul class="task-list">
+                <li class="task-item">
+                    <input type="checkbox" id="farm-bounties">
+                    <div class="task-content">
+                        <div class="task-title">Zariman & Cavia Bounties</div>
+                        <div class="task-desc">
+                            <span class="highlight">~3,000 to 4,000 Endo per run.</span> High-tier bounties on the Zariman Ten Zero and the Sanctum Anatomica often drop massive 3,000+ Endo bundles as their common or uncommon rewards. If a fast mission (like Exterminate) has Endo in its reward pool, spamming it repeatedly is incredibly fast and entirely soloable.
+                        </div>
+                    </div>
+                </li>
+                <li class="task-item">
+                    <input type="checkbox" id="farm-railjack">
+                    <div class="task-content">
+                        <div class="task-title">Railjack Skirmishes & Void Storms</div>
+                        <div class="task-desc">
+                            <span class="highlight">~1,500+ Endo per mission plus scrap.</span> Veil Proxima missions drop a ton of Endo naturally, but the real secret is the <span class="warning">Railjack Wreckage</span> you acquire. Scrapping unused guns and ship components from your Plexus yields massive amounts of Endo (225 Endo per Tier 3 scrap).
+                        </div>
+                    </div>
+                </li>
+                <li class="task-item">
+                    <input type="checkbox" id="farm-arbitration">
+                    <div class="task-content">
+                        <div class="task-title">Arbitrations (Endgame Survival/Defense)</div>
+                        <div class="task-desc">
+                            <span class="highlight">Varies by length.</span> Arbitrations heavily drop pure Endo and Ayatan Sculptures in their A, B, and C rotations. Furthermore, you can trade the Vitus Essence you earn at the Arbiters of Hexis for additional rare items or Kuva.
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        
+</div>
+<div class="category-section" id="section-tier3">
+<div class="card" id="endo-card-tier3" style="border-left:6px solid #42a5f5;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0;">Tier 3: Passive & Weekly Methods</h3>
+                <span class="type-tag" style="background: rgba(66,165,245,0.2); color: #42a5f5; border: 1px solid rgba(66,165,245,0.4);">Passive</span>
+            </div>
+            <ul class="task-list">
+                <li class="task-item">
+                    <input type="checkbox" id="farm-maroo">
+                    <div class="task-content">
+                        <div class="task-title">Maroo's Weekly Treasure Hunt</div>
+                        <div class="task-desc">
+                            Visit Maroo at Maroo's Bazaar (Mars) once a week for a guaranteed Ayatan Sculpture. Fill it with Ayatan Stars before dissolving it for maximum Endo output.
+                        </div>
+                    </div>
+                </li>
+                <li class="task-item">
+                    <input type="checkbox" id="farm-sorties">
+                    <div class="task-content">
+                        <div class="task-title">Daily Sorties</div>
+                        <div class="task-desc">
+                            Completing your 3 daily Sortie missions has a very high chance (28%) of dropping a 4,000 Endo bundle or an Ayatan Anasa Sculpture (worth 3,450 Endo when fully socketed).
+                        </div>
+                    </div>
+                </li>
+                <li class="task-item">
+                    <input type="checkbox" id="farm-duplicate-mods">
+                    <div class="task-content">
+                        <div class="task-title">Dissolving Duplicate Mods</div>
+                        <div class="task-desc">
+                            Go to your Mod Console, filter by "Duplicates," select all of your useless thousands of Vitality/Ammo Drum mods, and click "Dissolve into Endo." You will be shocked by how much Endo you are passively sitting on.
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div><!-- container -->
+
+<script>
+// Task item checkbox persistence and state restoration
+document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
+    
+    // Restore states
+    checkboxes.forEach(cb => {
+        if (!cb.id) return;
+        const saved = safeStorage.getItem(cb.id) === 'true';
+        cb.checked = saved;
+        const item = cb.closest('.task-item');
+        if (item) {
+            if (saved) {
+                item.classList.add('completed');
+                item.style.opacity = '0.5';
+            } else {
+                item.classList.remove('completed');
+                item.style.opacity = '1.0';
+            }
+        }
+        
+        // Bind change listener
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(cb.id, cb.checked ? 'true' : 'false');
+            const targetItem = cb.closest('.task-item');
+            if (targetItem) {
+                if (cb.checked) {
+                    targetItem.classList.add('completed');
+                    targetItem.style.opacity = '0.5';
+                } else {
+                    targetItem.classList.remove('completed');
+                    targetItem.style.opacity = '1.0';
+                }
+            }
+        });
+    });
+
+    const clearBtn = document.getElementById('btn-clear-endo-checkmarks');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            if (confirm("Are you sure you want to clear all checkmarks in this guide?")) {
+                const pageCheckboxes = document.querySelectorAll('.task-item input[type="checkbox"], .tracker-checkbox');
+                pageCheckboxes.forEach(cb => {
+                    cb.checked = false;
+                    if (cb.id) {
+                        safeStorage.setItem(cb.id, 'false');
+                    }
+                    // Trigger change event to update UI states
+                    cb.dispatchEvent(new Event('change'));
+                });
+            }
+        });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Select all headers that act as titles for items (now including .warframe-card)
+    const headers = document.querySelectorAll('.card h3, .warframe-card h3, .weapon-card h3, .planet-card h2, .category-card h2, .volume-card h2');
+    
+    headers.forEach((h, index) => {
+        if(h.querySelector('.tracker-container')) return;
+        
+        // Generate a unique ID based on the page and the header text
+        const safeTitle = h.innerText.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20);
+        const id = 'tracker_' + window.location.pathname.split('/').pop() + '_' + index + '_' + safeTitle;
+        
+        const container = document.createElement('label');
+        container.className = 'tracker-container';
+        
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'tracker-checkbox';
+        cb.id = id;
+        
+        // Find parent card to apply completion styling
+        const card = h.closest('.warframe-card, .weapon-card, .card, .volume-card');
+        
+        if(safeStorage.getItem(id) === 'true') {
+            cb.checked = true;
+            container.classList.add('completed');
+            if (card) {
+                card.style.opacity = '0.5';
+                card.style.transition = 'opacity 0.2s ease-in-out';
+            }
+        }
+        
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(id, e.target.checked ? 'true' : 'false');
+            if(e.target.checked) {
+                container.classList.add('completed');
+                if (card) {
+                    card.style.opacity = '0.5';
+                    card.style.transition = 'opacity 0.2s ease-in-out';
+                }
+            } else {
+                container.classList.remove('completed');
+                if (card) {
+                    card.style.opacity = '1.0';
+                }
+            }
+        });
+        
+        container.appendChild(cb);
+        container.appendChild(document.createTextNode('Done'));
+        
+        // Ensure the header flexes to push the checkbox to the right
+        h.style.display = 'flex';
+        h.style.justifyContent = 'space-between';
+        h.style.alignItems = 'center';
+        h.appendChild(container);
+    });
+});
+</script>
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
