@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Zariman Ten-Zero Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#9728;&#65039; Zariman Ten-Zero Guide</h1>
+        <p class="subtitle">Angels of the Zariman open world &middot; Void Cascade &middot; Void Flood &middot; Void Armageddon &middot; Holdfast syndicate</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="section-overview"><div class="qi-tile-icon">&#9728;&#65039;</div><h2 class="qi-tile-title">Overview</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-access"><div class="qi-tile-icon">&#128273;</div><h2 class="qi-tile-title">Access</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-syndicate"><div class="qi-tile-icon">&#128101;</div><h2 class="qi-tile-title">Holdfast Syndicate</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-missions"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">Mission Types</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-cascade"><div class="qi-tile-icon">&#128014;</div><h2 class="qi-tile-title">Void Cascade</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-enemies"><div class="qi-tile-icon">&#128123;</div><h2 class="qi-tile-title">Angels &amp; Enemies</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-rewards"><div class="qi-tile-icon">&#127942;</div><h2 class="qi-tile-title">Key Rewards</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <section class="category-section" id="section-overview">
+        <h2>&#9728;&#65039; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Is the Zariman?</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>A derelict Orokin colony ship lost in the Void &mdash; introduced in <strong>Angels of the Zariman</strong> update</li>
+                    <li>Open-world hub distinct from Plains, Fortuna, Deimos &mdash; set inside a drifting space vessel</li>
+                    <li>The ship where the original Tenno children were irradiated by the Void</li>
+                    <li>Features unique indoor/outdoor environments: Chrysalith (hub), Tileset missions, Void spaces</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Why Farm Here?</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Rewards</span></div>
+                <ul class="list">
+                    <li><strong>Arcane Energize, Arcane Guardian, Arcane Blessing</strong> &mdash; top-tier arcanes from Angels</li>
+                    <li>Unique Void weapons: Hespar, Verdilac, Bubonico blueprint variants</li>
+                    <li>Holdfast standing for exclusive mods, cosmetics, and Amp parts</li>
+                    <li>Voidplume resources for top-tier crafting</li>
+                    <li>Gyre Warframe components drop here</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-access">
+        <h2>&#128273; 2. Access</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Prerequisites</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Required</span></div>
+                <ul class="list">
+                    <li>Complete <strong>The New War</strong> quest</li>
+                    <li>Complete <strong>Angels of the Zariman</strong> quest (unlocks the hub and missions)</li>
+                    <li>Operator must be available &mdash; Void Mode used heavily here</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Getting There</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Navigation</span></div>
+                <ul class="list">
+                    <li>Navigate to <strong>Chrysalith</strong> (the Zariman hub relay) from the star chart</li>
+                    <li>Chrysalith functions like Cetus or Fortuna &mdash; pick up bounties, visit vendors</li>
+                    <li>Mission nodes depart from Chrysalith into the ship tileset or Void spaces</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-syndicate">
+        <h2>&#128101; 3. Holdfast Syndicate</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Earning Standing</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Standing</span></div>
+                <ul class="list">
+                    <li>Complete Zariman bounties and mission objectives</li>
+                    <li>Collect <strong>Voidplumes</strong> during missions &mdash; turn in to Quinn for bonus standing</li>
+                    <li>Daily standing cap applies (scales with Mastery Rank)</li>
+                    <li>Cap standing every session before logging off</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Quinn &mdash; Primary Vendor</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Vendor</span></div>
+                <ul class="list">
+                    <li>Sells Amp parts, mods, weapon blueprints, cosmetics at each rank</li>
+                    <li>Rank up: Fallen &rarr; Watcher &rarr; Vessel &rarr; Speaker &rarr; Instrument</li>
+                    <li>Higher ranks unlock Gyre blueprints and exclusive Zariman weapons</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Voidplumes</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Resource</span></div>
+                <ul class="list">
+                    <li>Collectible items found during missions in hidden spots</li>
+                    <li>4 tiers: Vane (low) &rarr; Quill &rarr; Crest &rarr; Flourish (high)</li>
+                    <li>Higher tiers give more standing per turn-in &mdash; prioritize Crest and Flourish</li>
+                    <li>Marked on minimap when Void Mode is active &mdash; use Operator to spot them</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-missions">
+        <h2>&#127919; 4. Mission Types</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Bounties (Chrysalith)</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Bounties</span></div>
+                <ul class="list">
+                    <li>5-tier bounties from Quinn &mdash; primary standing source</li>
+                    <li>Each bounty has 3 stages; completing all stages gives bonus rewards</li>
+                    <li>Higher tiers drop better arcanes and Voidplumes</li>
+                    <li>Rotate every few hours &mdash; refresh timing syncs with other open worlds</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Void Flood</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Mission</span></div>
+                <ul class="list">
+                    <li>Defend Vitoplast containers from Void Manifestations</li>
+                    <li>Collect Vitoplast scattered around the map to repair containers</li>
+                    <li>Operator Void Mode useful for navigating quickly between objectives</li>
+                    <li>Efficient standing and Voidplume source</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Void Armageddon</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Mission</span></div>
+                <ul class="list">
+                    <li>Defend Reliquary Drive nodes from endless enemy waves</li>
+                    <li>Survival-style: stay as long as possible for better rewards</li>
+                    <li>Angels of the Zariman (boss enemies) spawn at higher rotations</li>
+                    <li>Best arcane drop source at Rotation C+</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-cascade">
+        <h2>&#128014; 5. Void Cascade</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How It Works</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Mechanics</span></div>
+                <ul class="list">
+                    <li>Purge Exolizers from Void corruption before they expire</li>
+                    <li>Exolizers must be cleansed by standing in them with <strong>Operator Void Mode active</strong></li>
+                    <li>Cascades spawn more Exolizers as the mission progresses &mdash; manage multiple at once</li>
+                    <li>Failing to cleanse causes a cascade failure &mdash; resets the current chain</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Tips</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Strategy</span></div>
+                <ul class="list">
+                    <li>Bring a fast Warframe (Volt, Nova, Wisp) to cover ground quickly</li>
+                    <li>Squad of 4 is ideal &mdash; split between cleansing and enemy control</li>
+                    <li>Vazarin Focus gives Operator healing while cleansing &mdash; highly recommended</li>
+                    <li>Exolizer locations marked on minimap &mdash; learn the common spawn clusters</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-enemies">
+        <h2>&#128123; 6. Angels &amp; Enemies</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #f87171;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Angels of the Zariman (Boss)</h3><span class="type-tag" style="background:rgba(248,113,113,0.18);color:#f87171;border:1px solid rgba(248,113,113,0.45);">Boss</span></div>
+                <ul class="list">
+                    <li>Massive Void-corrupted Tenno entities &mdash; primary arcane source</li>
+                    <li>Weak point: the glowing Void core on their chest &mdash; shoot it to knock them down</li>
+                    <li>Destroy all 4 limb weak points before the core becomes vulnerable</li>
+                    <li>Use Operator Void Mode to avoid instant-kill beams</li>
+                    <li>Drop top-tier arcanes (Energize, Guardian, Blessing, etc.) at high quantities</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Void Manifestations</h3><span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Enemies</span></div>
+                <ul class="list">
+                    <li>Standard Zariman enemies &mdash; corrupted Grineer/Corpus hybrids</li>
+                    <li>Damage types: use <strong>Viral + Slash</strong> for flesh units</li>
+                    <li>Eximus variants spawn frequently &mdash; they have energy auras, kill them first</li>
+                    <li>Battalyst and Symbilyst: heavy units, use high-damage single-target weapons</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-rewards">
+        <h2>&#127942; 7. Key Rewards</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Top Arcanes (from Angels)</h3><span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Arcanes</span></div>
+                <ul class="list">
+                    <li><strong>Arcane Energize</strong> &mdash; energy on pickup, essential for energy-hungry builds</li>
+                    <li><strong>Arcane Guardian</strong> &mdash; armor buff on damage taken, top survival arcane</li>
+                    <li><strong>Arcane Blessing</strong> &mdash; max health buff on pickup</li>
+                    <li><strong>Arcane Avenger</strong> &mdash; critical chance on damage taken</li>
+                    <li>All drop at all ranks (R0) &mdash; farm 21&times; per arcane to max (R5)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">From Quinn (Standing)</h3><span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Vendor</span></div>
+                <ul class="list">
+                    <li>Gyre Warframe blueprints (Neuroptics, Chassis, Systems)</li>
+                    <li>Amp parts: Prism, Scaffold, Brace components exclusive to Zariman</li>
+                    <li>Unique Zariman weapons: Hespar, Verdilac</li>
+                    <li>Exclusive cosmetics: ephemeras, syandanas, armor</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Voidplume Resources</h3><span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Resource</span></div>
+                <ul class="list">
+                    <li>Used in Zariman weapon and Gyre crafting recipes</li>
+                    <li>Also turned in directly for standing</li>
+                    <li>Farm during bounties &mdash; activate Operator Void Mode to detect them</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(targetId, true); }
+        });
+    });
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) { showSection(e.state.section, false); } else { showMenu(); }
+    });
+});
+</script>
+
+</body>
+</html>
+

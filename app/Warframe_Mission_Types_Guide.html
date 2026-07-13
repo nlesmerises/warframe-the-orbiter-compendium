@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Mission Types Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+    </div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#127919; Mission Types Guide</h1>
+        <p class="subtitle">Disruption &middot; Elite Sanctuary Onslaught &middot; The Index &middot; Sorties &middot; and more</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="disruption" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128308;</div><h2 class="qi-tile-title">Disruption</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="eso" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#127981;</div><h2 class="qi-tile-title">Elite Sanctuary Onslaught</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="index" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128176;</div><h2 class="qi-tile-title">The Index</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="sorties" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#9876;&#65039;</div><h2 class="qi-tile-title">Sorties</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="other" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">Other Notable Types</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="rewards" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#127942;</div><h2 class="qi-tile-title">Reward Summary</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. DISRUPTION -->
+    <section class="category-section" id="disruption">
+        <h2>&#128308; 1. Disruption</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How It Works</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Disruption</span></div>
+                <ul class="list">
+                    <li>Defend four <strong>Conduit</strong> terminals spread across the map &mdash; each conduit is activated by inserting a <strong>Demolyst key</strong></li>
+                    <li>Killing enemies drops Demolyst keys; pick one up and carry it to an active conduit to start the sequence</li>
+                    <li>Once a conduit is active, a <strong>Demolyst</strong> enemy spawns &mdash; a heavily armored unit on a countdown that will destroy the conduit if it reaches it</li>
+                    <li>Kill the Demolyst before it reaches the conduit to <strong>protect</strong> it; if it detonates, the conduit is lost for that round</li>
+                    <li>Complete a round by resolving all four conduits (protected or lost). Lost conduits trigger negative effects (see below). Repeat rounds for better rotation rewards</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Demolyst Modifiers (Conduit Lost)</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Disruption</span></div>
+                <ul class="list">
+                    <li><strong>Malicious Spread</strong> &mdash; rapidly spreads Infestation across the tile; deal 50% reduced damage in infected zones</li>
+                    <li><strong>Electromagnetic Disturbance</strong> &mdash; disables abilities for the entire team for ~30 seconds</li>
+                    <li><strong>Energy Drain</strong> &mdash; rapidly drains all energy to zero</li>
+                    <li><strong>Marked for Death</strong> &mdash; random player is hunted by a powerful assassination target</li>
+                    <li>You can still complete the mission with some conduits lost &mdash; but aim for all 4 protected per round for best rewards</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Build Recommendations</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Disruption</span></div>
+                <ul class="list">
+                    <li>Demolysts are <strong>immune to crowd control</strong> &mdash; no freezing, no sleep, no knockdown</li>
+                    <li>They have high armor &mdash; use <strong>Corrosive + Heat</strong> or <strong>Viral + Slash</strong> for fast kills</li>
+                    <li>Speed is everything: Gauss, Volt, Wisp (Haste mote) or Titania all help intercept Demolysts quickly</li>
+                    <li>Strong single-target DPS frames (Mesa, Saryn, Khora) work well for killing Demolysts before they close</li>
+                    <li>Bring energy restores or Energize arcane &mdash; keeping abilities active between rounds matters</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Key Disruption Nodes &amp; Rewards</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Disruption</span></div>
+                <ul class="list">
+                    <li><strong>Olympus, Mars</strong> &mdash; earliest access; early Disruption rewards</li>
+                    <li><strong>Kappa, Sedna</strong> &mdash; high-level; Harrow Neuroptics, Systems, Chassis</li>
+                    <li><strong>Ur, Uranus</strong> &mdash; Gauss Neuroptics, Chassis, Systems</li>
+                    <li><strong>Ganymede, Jupiter</strong> &mdash; Atlas Neuroptics, Chassis, Systems</li>
+                    <li><strong>Lua Disruption</strong> &mdash; Acrithis vendor bounties; Lua-specific arcanes</li>
+                    <li><strong>Rotation C</strong> (4 conduits protected &times; 2 rounds) gives the rarest drops &mdash; target this for Warframe parts</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. ESO -->
+    <section class="category-section" id="eso">
+        <h2>&#127377; 2. Elite Sanctuary Onslaught (ESO)</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How It Works</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">ESO</span></div>
+                <ul class="list">
+                    <li>Wave-based survival variant hosted by <strong>Cephalon Simaris</strong> &mdash; accessed via the Syndicate terminal on any Relay</li>
+                    <li>Kill enemies to fill the <strong>Efficiency meter</strong>; if Efficiency drops to zero the mission ends</li>
+                    <li>Each zone lasts 2.5 minutes; portals open at the end &mdash; enter to advance to the next zone</li>
+                    <li>Enemies scale rapidly &mdash; by zone 4&ndash;6 they are far above standard star chart levels</li>
+                    <li>8 zones total; most players extract at zone 4 (Rotation B) or zone 8 (Rotation D) for best reward value</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Standard Sanctuary Onslaught vs ESO</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">ESO</span></div>
+                <ul class="list">
+                    <li><strong>Sanctuary Onslaught (SO)</strong> &mdash; normal difficulty; accessible earlier; good for leveling and Khora farming</li>
+                    <li><strong>Elite Sanctuary Onslaught (ESO)</strong> &mdash; requires MR 8+; enemies start at level 90+; much harder but better rewards</li>
+                    <li>Both award <strong>Simaris Standing</strong> and use the same zone/efficiency structure</li>
+                    <li>ESO is the primary source of <strong>Khora</strong> parts (SO also drops them but at lower rates)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Build Recommendations</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">ESO</span></div>
+                <ul class="list">
+                    <li>AoE clear is king &mdash; Saryn (Spores + Miasma), Mesa (Peacemakers), Octavia (Mallet), Equinox (Maim)</li>
+                    <li><strong>Efficiency</strong> is maintained by kill rate &mdash; slow kills = failing efficiency; bring your highest-DPS build</li>
+                    <li>Adaptation + high EHP recommended from Zone 4 onward &mdash; enemies hit hard</li>
+                    <li>Energy sustain is critical: Zenurik school, Energize arcane, or Arcane Energize all viable</li>
+                    <li>Avoid frames with slow kill setups &mdash; the efficiency drain waits for no one</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Rewards</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">ESO</span></div>
+                <ul class="list">
+                    <li><strong>Khora</strong> Neuroptics (Zone 1), Chassis (Zone 2), Systems (Zone 3), Blueprint (Zone 4)</li>
+                    <li><strong>Simaris Standing</strong> &mdash; significant amount per zone; useful for Simaris store (Augment mods, Simulacrum)</li>
+                    <li>Rotation C/D: Riven Slivers, Forma Blueprints, Endo bundles</li>
+                    <li>Weekly Simaris standing cap is generous &mdash; ESO fills it faster than scanning</li>
+                    <li>Simulacrum key (practice room) purchasable from Simaris after earning enough standing</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. THE INDEX -->
+    <section class="category-section" id="index">
+        <h2>&#128178; 3. The Index</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How It Works</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">The Index</span></div>
+                <ul class="list">
+                    <li>A gladiatorial arena on Neptune hosted by Nef Anyo &mdash; PvE gambling mode for <strong>Credits</strong></li>
+                    <li>Your team bets Credits (Low: 30k, Medium: 70k, High: 105k) at the start</li>
+                    <li>Kill enemies to collect <strong>Index Points</strong> (a score token) &mdash; deliver them to the goal post to score</li>
+                    <li>First team to reach the point threshold wins; your wager is returned plus profit</li>
+                    <li>You carry a personal debt when holding Index Points &mdash; the more you carry, the more damage you take</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Credit Returns</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">The Index</span></div>
+                <ul class="list">
+                    <li><strong>Low Risk</strong> &mdash; bet 30,000 Cr, win ~75,000 Cr (net ~45k)</li>
+                    <li><strong>Medium Risk</strong> &mdash; bet 70,000 Cr, win ~175,000 Cr (net ~105k)</li>
+                    <li><strong>High Risk</strong> &mdash; bet 105,000 Cr, win ~265,000 Cr (net ~160k)</li>
+                    <li>With a <strong>Credit Booster</strong> active: all returns double &mdash; High Risk nets ~320k per run</li>
+                    <li>Fastest credit farm in the game with a good team; 3&ndash;4 min runs at High Risk</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Build Recommendations</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">The Index</span></div>
+                <ul class="list">
+                    <li>Enemies apply <strong>Robotic</strong> resistances &mdash; Radiation + Puncture or Corrosive are most effective</li>
+                    <li><strong>Nekros</strong> (with Despoil) is a strong pick &mdash; Desecrate adds extra looting without energy cost</li>
+                    <li><strong>Nova</strong> (Molecular Prime) slows enemies and multiplies damage &mdash; great for point denial</li>
+                    <li><strong>Rhino</strong> &mdash; Iron Skin absorbs the debt damage penalty; comfortable tanking with points</li>
+                    <li><strong>Mesa</strong> or any high-DPS frame shreds the arena quickly at High Risk</li>
+                    <li>Carry as many points as you can safely hold before banking &mdash; fewer trips = faster runs</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Tips &amp; Tricks</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">The Index</span></div>
+                <ul class="list">
+                    <li>The enemy team also scores &mdash; killing their point-carriers before they bank is just as important as scoring yourself</li>
+                    <li>A dedicated point-carrier with high EHP (Inaros, Rhino) can hold 20+ points at once</li>
+                    <li>Solo runs are viable &mdash; AI opponents and slower pacing make it manageable but slower</li>
+                    <li>The Index is not affected by Resource or Affinity boosters &mdash; only Credit Booster matters here</li>
+                    <li>Best time investment for raw credits outside of Arbitration credit caches</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SORTIES -->
+    <section class="category-section" id="sorties">
+        <h2>&#9889; 4. Sorties</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How It Works</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Sorties</span></div>
+                <ul class="list">
+                    <li>Three daily missions that must be completed in sequence &mdash; each mission has a <strong>condition modifier</strong> that adds challenge</li>
+                    <li>Missions rotate daily at reset (same time as Nightwave); requires completion of <strong>The War Within</strong> to unlock</li>
+                    <li>Enemy level: 50&ndash;100 in the first two missions; level 80&ndash;100 in the third</li>
+                    <li>Each mission has one of ~20 possible condition modifiers (Eximus Stronghold, Augmented Enemy Armor, Energy Reduction, etc.)</li>
+                    <li>One reward per day &mdash; you cannot replay for a different reward on the same day</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Common Sortie Conditions</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Sorties</span></div>
+                <ul class="list">
+                    <li><strong>Eximus Stronghold</strong> &mdash; unusually high density of Eximus units; bring high AoE DPS</li>
+                    <li><strong>Augmented Enemy Armor</strong> &mdash; all enemies have 2&times; base armor; use Armor Strip (Corrosive, Terrify, Roar)</li>
+                    <li><strong>Augmented Enemy Shields</strong> &mdash; Corpus only; use Magnetic or Toxin bypass</li>
+                    <li><strong>Energy Reduction</strong> &mdash; abilities cost 2&times; energy; bring Zenurik or Energize</li>
+                    <li><strong>Assault Rifle Only / Shotgun Only</strong> &mdash; weapon restriction; keep meta options in each category</li>
+                    <li><strong>Low Gravity</strong> &mdash; movement floats; can be fun or annoying depending on your frame</li>
+                    <li><strong>Sniper Rifle Only</strong> &mdash; Rubico Prime or Lanka shine here</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Reward Pool</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Sorties</span></div>
+                <ul class="list">
+                    <li><strong>Riven Mods</strong> (unrolled) &mdash; most common high-value reward; ~45% chance</li>
+                    <li><strong>Kuva</strong> (3,000&ndash;4,000 per reward) &mdash; consistent Riven reroll currency</li>
+                    <li><strong>Exilus Adapter Blueprint</strong> &mdash; moderate value; needed for Exilus slots</li>
+                    <li><strong>Nitain Extract</strong> &mdash; occasional; used in several Warframe blueprints</li>
+                    <li><strong>Ayatan Anasa Sculpture</strong> &mdash; moderate Endo value when filled</li>
+                    <li><strong>Legendary Core</strong> (rare) &mdash; instantly maxes any mod; extremely rare</li>
+                    <li><strong>3-Day / 7-Day Boosters</strong> &mdash; Affinity, Credit, Resource; decent value</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Tips</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Sorties</span></div>
+                <ul class="list">
+                    <li>Do Sorties every day &mdash; Riven accumulation over weeks is significant passive value</li>
+                    <li>If you get a weapon-restriction condition, make sure you have a good build for that type before starting</li>
+                    <li>Squad up &mdash; Sorties are designed for four players and go much faster with a team</li>
+                    <li>Sorties are now superseded by <strong>Archon Hunts</strong> for top-tier daily rewards &mdash; but Sorties remain the best source of Riven Mods</li>
+                    <li>Forma Blueprint reward is intentionally common filler &mdash; discard or use freely</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. OTHER NOTABLE TYPES -->
+    <section class="category-section" id="other">
+        <h2>&#127381; 5. Other Notable Mission Types</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128737;&#65039; Defense</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Other Missions</span></div>
+                <ul class="list">
+                    <li>Protect a Cryopod (or Operative) for wave-based rounds; extract every 5 waves</li>
+                    <li>Rewards rotate on a 5-wave (A/B/C) cycle &mdash; stay for Rotation C (wave 10, 20, etc.) for best drops</li>
+                    <li><strong>Hydron, Sedna</strong> &mdash; fastest affinity farm in the game; bring a booster and an XP-sharing frame (Trinity, Equinox)</li>
+                    <li><strong>Mot, Void</strong> &mdash; Steel Path Defense for high-level drops and Steel Essence</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#9201;&#65039; Survival</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Other Missions</span></div>
+                <ul class="list">
+                    <li>Stay alive while Life Support drops &mdash; Life Support capsules spawn from killed enemies and on the floor</li>
+                    <li>Extract every 5 minutes; stay longer for Rotation C (20 min) and D (40 min) rewards</li>
+                    <li><strong>Mot, Void</strong> &mdash; top Steel Path Survival node; Steel Essence + rare mods</li>
+                    <li>Nekros (Desecrate) dramatically increases Life Support drops from enemies &mdash; bring one per squad</li>
+                    <li>Khora (Pilfering Strangledome) doubles resource drops and complements Nekros</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128296; Excavation</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Other Missions</span></div>
+                <ul class="list">
+                    <li>Protect excavators while they dig for <strong>Cryotic</strong> &mdash; each excavator yields 100 Cryotic when complete</li>
+                    <li>Power cells drop from enemies and must be manually carried to power depleted excavators</li>
+                    <li>Rotation rewards cycle every 200 Cryotic extracted</li>
+                    <li><strong>Hieracon, Pluto</strong> &mdash; top Excavation node for Cryotic farming and Forma Blueprint drops</li>
+                    <li>Cryotic is required for several weapon and Warframe blueprints (Gram, Dakra, etc.)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128170; Interception</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Other Missions</span></div>
+                <ul class="list">
+                    <li>Capture and hold four towers against enemy capture; maintain 50%+ control to earn points</li>
+                    <li>Rotation rewards every full capture cycle; stay for Rotation C for best drops</li>
+                    <li>AoE frames (Saryn, Mesa) work well &mdash; spread across towers or rotate fast</li>
+                    <li><strong>Xini, Eris</strong> &mdash; top Interception node; Mutagen Samples and Corrupted mods</li>
+                    <li><strong>Cerberus, Pluto</strong> &mdash; Corrupted mod farm alongside Void Fissures</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128202; Spy</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Other Missions</span></div>
+                <ul class="list">
+                    <li>Hack three vault consoles without triggering alarms &mdash; each failed vault locks its console for the rest of the mission</li>
+                    <li>Rotation rewards require successfully hacking 1, 2, or all 3 vaults (A/B/C)</li>
+                    <li>All 3 vaults hacked without alarms = Rotation C reward</li>
+                    <li>Warframe recommendations: Ivara (invisibility + no hacking sound), Loki, Ash</li>
+                    <li><strong>Kappa, Sedna</strong> &mdash; Corrupted mods; <strong>Lua Spy</strong> &mdash; Aura mods (Rifle Amp, Energy Siphon, etc.)</li>
+                    <li><strong>Gabii, Ceres</strong> and <strong>Hieracon, Pluto</strong> &mdash; good mid-game Spy nodes</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128165; Kuva Flood &amp; Kuva Siphon</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Other Missions</span></div>
+                <ul class="list">
+                    <li><strong>Kuva Siphon</strong> &mdash; standard mission; destroy 4 braid segments to kill the Siphon; rewards 550&ndash;700 Kuva</li>
+                    <li><strong>Kuva Flood</strong> &mdash; harder variant with level 80&ndash;100 enemies; rewards 1,200 Kuva</li>
+                    <li>Run these whenever active on the star chart &mdash; Kuva is always needed for Riven rerolling</li>
+                    <li>Bring a Kuva Larvling frame to attempt a <strong>Kuva Lich</strong> spawn after completing (see Lich guide)</li>
+                    <li>Queen's Targeter (Naramon focus passive) helps track the Siphon cloud during the mission</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. REWARD SUMMARY -->
+    <section class="category-section" id="rewards">
+        <h2>&#127942; 6. Reward Summary</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">At-a-Glance: Best Mission for Each Goal</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>&#128178; <strong>Credits fast</strong> &mdash; The Index (High Risk)</li>
+                    <li>&#127775; <strong>Affinity / leveling</strong> &mdash; Defense at Hydron (Sedna)</li>
+                    <li>&#128296; <strong>Cryotic</strong> &mdash; Excavation at Hieracon (Pluto)</li>
+                    <li>&#128202; <strong>Aura mods</strong> &mdash; Spy at Lua (Pavlov)</li>
+                    <li>&#128202; <strong>Corrupted mods</strong> &mdash; Spy at Kappa (Sedna) or Void Fissures</li>
+                    <li>&#127775; <strong>Riven Mods</strong> &mdash; Daily Sortie</li>
+                    <li>&#128296; <strong>Kuva</strong> &mdash; Kuva Flood (daily); Sorties (occasional)</li>
+                    <li>&#127919; <strong>Khora</strong> &mdash; Elite Sanctuary Onslaught (zones 1&ndash;4)</li>
+                    <li>&#128308; <strong>Harrow</strong> &mdash; Disruption at Kappa (Sedna)</li>
+                    <li>&#128308; <strong>Gauss</strong> &mdash; Disruption at Ur (Uranus)</li>
+                    <li>&#9889; <strong>Archon Shards</strong> &mdash; Archon Hunt (weekly) or Netracell (weekly)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Daily &amp; Weekly Mission Checklist</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>&#9989; <strong>Sortie</strong> &mdash; 1 per day; always worth it for Rivens</li>
+                    <li>&#9989; <strong>Archon Hunt</strong> &mdash; 1 per week; Archon Shards + Archon mods</li>
+                    <li>&#9989; <strong>Netracell</strong> &mdash; up to 5 per week; Teal/Amber/Violet Archon Shards</li>
+                    <li>&#9989; <strong>ESO</strong> &mdash; weekly Simaris standing cap; Khora parts if still needed</li>
+                    <li>&#9989; <strong>Index</strong> &mdash; as needed for Credit top-ups before big crafting sessions</li>
+                    <li>&#9989; <strong>Kuva Flood</strong> &mdash; whenever active; fast Kuva for Riven rerolls</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

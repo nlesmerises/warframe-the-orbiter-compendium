@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Damage Types &amp; Status Effects</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        body { padding-top: 154.6px !important; }
+        .card {
+            background: rgba(15, 23, 42, 0.7) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 10px !important;
+            padding: 18px 20px !important;
+            text-align: left !important;
+        }
+        .card h3 {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif !important;
+            font-size: 14px !important;
+            color: #a8d8ea !important;
+            margin: 0 0 10px 0 !important;
+            text-align: left !important;
+        }
+        .card h4 { font-size: 13px !important; margin: 0 0 6px 0 !important; }
+        .dashboard-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 16px !important;
+            margin-bottom: 28px !important;
+        }
+        .box {
+            background: rgba(15, 23, 42, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.07) !important;
+            border-left: 3px solid #ffab00;
+            border-radius: 8px !important;
+            padding: 14px 16px !important;
+        }
+        .grid-2col {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 14px !important;
+            margin-bottom: 14px !important;
+        }
+        h2 {
+            color: #a8d8ea !important;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif !important;
+            font-size: 15px !important;
+            margin: 28px 0 12px 0 !important;
+        }
+        .qi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 24px 0 32px;
+        }
+        .qi-tile-full { grid-column: 1 / -1; }
+        .qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+        .qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+        .qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+        .qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+        .qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+        .qi-tile:hover .qi-tile-title { color: #ffd740; }
+        @keyframes qiFadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+    <header>
+        <h1>&#9889; Damage Types &amp; Status Effects</h1>
+        <p class="subtitle">Physical types &middot; Elemental combinations &middot; Status procs &middot; Faction weaknesses</p>
+    </header>
+
+    <!-- TILE HUB -->
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="physical" style="border-left-color:#9e9e9e;"><div class="qi-tile-icon">&#129405;</div><h2 class="qi-tile-title">Physical Damage Types</h2><p class="qi-tile-desc">Impact, Puncture, and Slash — what each does and which enemy types they counter best.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="elemental" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128293;</div><h2 class="qi-tile-title">Base Elemental Types</h2><p class="qi-tile-desc">Heat, Cold, Electric, and Toxin — the four base elements and their status procs.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="combined" style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#9879;&#65039;</div><h2 class="qi-tile-title">Combined Elements</h2><p class="qi-tile-desc">Combine two base elements by equipping their mods together. Mod slot order determines which pairs combine first.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="faction" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128202;</div><h2 class="qi-tile-title">Faction Weaknesses</h2><p class="qi-tile-desc">Grineer, Corpus, Infested, and Sentient — the optimal damage types for each enemy faction.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="armor" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128737;&#65039;</div><h2 class="qi-tile-title">Health &amp; Armor Types</h2><p class="qi-tile-desc">Each enemy body part has a health/armor type with specific elemental modifiers — effective and penalized elements per type.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="status" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128203;</div><h2 class="qi-tile-title">Status Effects</h2><p class="qi-tile-desc">What each status proc does on trigger, including damage-over-time, CC, and armor-strip interactions.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="sentients" style="border-left-color:#ffe082;"><div class="qi-tile-icon">&#128300;</div><h2 class="qi-tile-title">Sentients</h2><p class="qi-tile-desc">Sentient adaptation mechanics and how to deal consistent damage to a target that resists everything you hit it with.</p></a>
+        </div>
+    </div>
+
+    <!-- SECTION 1: PHYSICAL -->
+    <section class="category-section" id="physical">
+        <h2>&#129405; 1. Physical Damage Types</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #9e9e9e;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128308; Impact</h3>
+                    <span class="type-tag" style="background:rgba(158,158,158,0.2);color:#9e9e9e;border:1px solid rgba(158,158,158,0.4);">Physical</span>
+                </div>
+                <ul class="list">
+                    <li>Status proc: <strong>Stagger / Knockback</strong> &mdash; interrupts enemy attacks</li>
+                    <li>+25% damage vs. Shields</li>
+                    <li>Strong against: Corpus shields</li>
+                    <li>Weak against: Fossilized (Infested)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #80deea;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128994; Puncture</h3>
+                    <span class="type-tag" style="background:rgba(128,222,234,0.2);color:#80deea;border:1px solid rgba(128,222,234,0.4);">Physical</span>
+                </div>
+                <ul class="list">
+                    <li>Status proc: <strong>Weakened</strong> &mdash; target deals 30% less damage</li>
+                    <li>+25% damage vs. Armor</li>
+                    <li>Strong against: Ferrite Armor (Grineer), Fossilized</li>
+                    <li>Weak against: Robotic (Corpus machines)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffa726;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128993; Slash</h3>
+                    <span class="type-tag" style="background:rgba(255,167,38,0.2);color:#ffa726;border:1px solid rgba(255,167,38,0.4);">Physical</span>
+                </div>
+                <ul class="list">
+                    <li>Status proc: <strong>Bleed</strong> &mdash; True damage DoT, ignores armor completely</li>
+                    <li>35% of hit damage &times; 6 ticks over 6 seconds</li>
+                    <li>Strong against: Flesh, Cloned Flesh</li>
+                    <li><strong>Best physical type for sustained DPS</strong> &mdash; pairs perfectly with Viral</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: ELEMENTAL -->
+    <section class="category-section" id="elemental">
+        <h2>&#128293; 2. Base Elemental Types</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128293; Heat</h3>
+                    <span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Elemental</span>
+                </div>
+                <ul class="list">
+                    <li>Status proc: <strong>Burn</strong> &mdash; DoT + panic animation (enemy stops shooting)</li>
+                    <li>Also strips up to 50% armor over multiple procs</li>
+                    <li>Strong against: Infested, Cloned Flesh</li>
+                    <li>Pairs extremely well with Corrosive</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#10052;&#65039; Cold</h3>
+                    <span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Elemental</span>
+                </div>
+                <ul class="list">
+                    <li>Status proc: <strong>Freeze</strong> &mdash; enemy movement and attack speed -50%</li>
+                    <li>+25% vs. Alloy Armor, +25% vs. Shields</li>
+                    <li>Strong against: Alloy Armor (Grineer heavies), Corpus shields</li>
+                    <li>Weak against: Infested entirely</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #fff176;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#9889; Electric</h3>
+                    <span class="type-tag" style="background:rgba(255,241,118,0.2);color:#fff176;border:1px solid rgba(255,241,118,0.4);">Elemental</span>
+                </div>
+                <ul class="list">
+                    <li>Status proc: <strong>Electrocute</strong> &mdash; arcs to 3 nearby enemies (AoE stun)</li>
+                    <li>+25% vs. Machinery, +25% vs. Robotic</li>
+                    <li>Strong against: Corpus robots, MOAs, drones</li>
+                    <li>Good crowd control value in dense groups</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#9763;&#65039; Toxin</h3>
+                    <span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Elemental</span>
+                </div>
+                <ul class="list">
+                    <li>Status proc: <strong>Poison</strong> &mdash; DoT that <em>bypasses Shields entirely</em></li>
+                    <li>+50% vs. Flesh, +25% vs. Infested flesh types</li>
+                    <li>Strong against: Corpus (ignores shields), Flesh</li>
+                    <li>Weak against: Robotic, Infested Sinew</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: COMBINED -->
+    <section class="category-section" id="combined">
+        <h2>&#9879;&#65039; 3. Combined Elements</h2>
+        <div class="card" style="border-left:6px solid #ce93d8;">
+            <p style="margin-bottom:18px;">Combine two base elements by equipping their mods together. The in-game Arsenal shows the resulting combination. <strong>Order of mods determines which pairs combine first</strong> &mdash; slot them intentionally.</p>
+            <div class="grid-2col">
+                <div class="box" style="border-left-color:#818cf8;">
+                    <h4 style="color:#818cf8;">&#127744; Corrosive (Electric + Toxin)</h4>
+                    <p><strong>Status:</strong> Strips 25% armor per proc &mdash; stacks to 80% at 4 procs. Permanent until death.<br><strong>Best against:</strong> Grineer (Ferrite Armor), Corrupted. The backbone of armor-stripping builds.</p>
+                </div>
+                <div class="box" style="border-left-color:#a78bfa;">
+                    <h4 style="color:#a78bfa;">&#129412; Viral (Cold + Toxin)</h4>
+                    <p><strong>Status:</strong> Reduces target max Health by 50% per stack &mdash; stacks to -325% at 6 procs.<br><strong>Best against:</strong> Everything. Combined with Slash bleed (true damage), this is the current dominant meta combination.</p>
+                </div>
+            </div>
+            <div class="grid-2col">
+                <div class="box" style="border-left-color:#f472b6;">
+                    <h4 style="color:#f472b6;">&#129522; Magnetic (Cold + Electric)</h4>
+                    <p><strong>Status:</strong> Reduces max Shields by 75% and drains current Shields.<br><strong>Best against:</strong> Corpus shielded units. Essential for high-level Corpus content.</p>
+                </div>
+                <div class="box" style="border-left-color:#fb923c;">
+                    <h4 style="color:#fb923c;">&#9762;&#65039; Radiation (Heat + Electric)</h4>
+                    <p><strong>Status:</strong> Confusion &mdash; enemies attack their own allies for 12 seconds.<br><strong>Best against:</strong> Alloy Armor (Grineer heavies), Sentient cores, Eidolons. Chaos proc is strong CC.</p>
+                </div>
+            </div>
+            <div class="grid-2col">
+                <div class="box" style="border-left-color:#4ade80;">
+                    <h4 style="color:#4ade80;">&#9729;&#65039; Gas (Heat + Toxin)</h4>
+                    <p><strong>Status:</strong> Creates a cloud that procs Toxin on all enemies in range.<br><strong>Best against:</strong> Grouped Infested, dense crowds. AoE poison clouds scale with proc count.</p>
+                </div>
+                <div class="box" style="border-left-color:#fbbf24;">
+                    <h4 style="color:#fbbf24;">&#128165; Blast (Heat + Cold)</h4>
+                    <p><strong>Status:</strong> Knockdown in an area around the target.<br>Moderate utility &mdash; useful for crowd control but outclassed by other combos for raw damage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: FACTION -->
+    <section class="category-section" id="faction">
+        <h2>&#128202; 4. Faction Weaknesses &mdash; Quick Reference</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128308; Grineer</h3>
+                    <span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Faction</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Primary:</strong> Corrosive + Heat (strips Ferrite Armor + bonus DoT)</li>
+                    <li><strong>Meta:</strong> Viral + Slash (bleeds bypass remaining armor)</li>
+                    <li>Heavy units with Alloy Armor: Radiation instead of Corrosive</li>
+                    <li><strong>Avoid:</strong> Magnetic, Blast against armored units</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128309; Corpus</h3>
+                    <span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Faction</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Primary:</strong> Magnetic + Toxin (destroys shields, Toxin bypasses them)</li>
+                    <li>Robots and MOAs: Corrosive for Robotic health type</li>
+                    <li>Pure Toxin secondaries bypass shields entirely on direct hits</li>
+                    <li><strong>Avoid:</strong> relying solely on Impact (shields regenerate)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128994; Infested</h3>
+                    <span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Faction</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Primary:</strong> Viral + Heat or Corrosive + Heat</li>
+                    <li>Gas + Slash = strong AoE clear for dense groups</li>
+                    <li>Ancient Healers: Radiation (confusion breaks their aura link)</li>
+                    <li><strong>Avoid:</strong> Cold, Electric (low effectiveness on Infested flesh)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128995; Corrupted (Void)</h3>
+                    <span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Faction</span>
+                </div>
+                <ul class="list">
+                    <li>Mixed Grineer and Corpus unit types &mdash; varies by enemy</li>
+                    <li><strong>Primary:</strong> Corrosive + Cold (covers both armor types)</li>
+                    <li>Radiation on Alloy-armored Corrupted heavy units</li>
+                    <li>Viral + Slash as universal fallback on all unit types</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: ARMOR -->
+    <section class="category-section" id="armor">
+        <h2>&#128737;&#65039; 5. Health &amp; Armor Type Reference</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Each enemy body part has a health/armor type that has specific elemental modifiers. This table lists effective elements (&#x2191; bonus) and weak elements (&#x2193; penalty) for each type.</p>
+        <div class="card" style="border-left:6px solid #42a5f5;padding:0;overflow:hidden;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Health/Armor Type</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Common Enemies</th>
+                        <th style="padding:9px 14px;text-align:left;color:#4ade80;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Effective Against</th>
+                        <th style="padding:9px 14px;text-align:left;color:#f87171;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Weak Against (avoid)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Flesh</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Grineer infantry, Corpus agents</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Slash, Toxin, Heat, Gas</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Impact, Cold, Electric</td></tr>
+                    <tr><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Cloned Flesh</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Heavy Grineer, bosses</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Slash, Heat, Gas</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Impact, Cold</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Ferrite Armor</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Standard Grineer infantry</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Corrosive, Puncture</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Slash, Blast, Radiation</td></tr>
+                    <tr><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Alloy Armor</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Grineer heavies, Corrupted heavies</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Radiation, Cold, Puncture</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Toxin, Magnetic</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Shields</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">All shielded Corpus, Tenno</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Magnetic, Impact, Cold</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Toxin (bypasses), Puncture</td></tr>
+                    <tr><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Robotic</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">MOAs, Ospreys, Corpus machines</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Electricity, Corrosive</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Toxin, Slash</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Infested Flesh</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Standard Infested</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Heat, Slash, Gas</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Cold, Electric, Blast</td></tr>
+                    <tr><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Fossilized</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Ancients, Elite Infested</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Corrosive, Puncture, Slash</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Impact, Blast</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Infested Sinew</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Ancients (weak spot)</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Puncture, Radiation</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Slash, Toxin</td></tr>
+                    <tr><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Machinery</td><td style="padding:8px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Grineer tech, Defense targets</td><td style="padding:8px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Electricity, Blast, Puncture</td><td style="padding:8px 14px;color:#f87171;border-bottom:1px solid rgba(255,255,255,0.04);">Toxin, Slash</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:8px 14px;color:#e2e8f0;font-weight:600;">Sentient</td><td style="padding:8px 14px;color:#9fb0c4;">Eidolons, Sentient units</td><td style="padding:8px 14px;color:#4ade80;">Radiation (after shield strip)</td><td style="padding:8px 14px;color:#f87171;">Adapts to most damage types over time</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SECTION 6: STATUS -->
+    <section class="category-section" id="status">
+        <h2>&#128203; 6. Status Effects Quick Reference</h2>
+        <div class="card" style="border-left:6px solid #ffd700;padding:0;overflow:hidden;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Element</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Status Effect</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Effect Description</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Stack Behavior</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ef9a9a;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Impact</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Stagger</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Interrupts enemy action, knockdown at higher stacks</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Refreshes duration</td></tr>
+                    <tr><td style="padding:7px 14px;color:#a5d6a7;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Puncture</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Weakened</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Target deals 30% less damage</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Refreshes; doesn&rsquo;t stack damage reduction</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffcc80;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Slash</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Bleed</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">True damage DoT (ignores armor); 35% hit &times; 6 ticks over 6s</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Full stacks &mdash; each proc is independent</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ff8a65;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Heat</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Burn</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">DoT + panic animation; strips up to 50% armor at 10 procs</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Stacks armor reduction (10 procs = 50%)</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#81d4fa;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Cold</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Freeze</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Enemy movement and attack speed &minus;50%</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Refreshes; 4 procs = full stop briefly</td></tr>
+                    <tr><td style="padding:7px 14px;color:#fff176;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Electric</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Electrocute</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Arcs to 3 nearby enemies, stuns all hit</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Refreshes; chain damage stacks separately</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#a5d6a7;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Toxin</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Poison</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">DoT that bypasses Shields entirely</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Full stacks &mdash; each proc is independent</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ce93d8;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Viral</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Viral Weakness</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Reduces max HP &mdash; 50% at 1 stack, up to &minus;325% at 6 stacks</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Stacks 6x &mdash; 6 procs = max multiplier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#818cf8;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Corrosive</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Corroded</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Strips 25% armor per stack; permanent until enemy death</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Stacks 4x &mdash; 4 procs = 80% armor removed</td></tr>
+                    <tr><td style="padding:7px 14px;color:#f48fb1;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Magnetic</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Magnetized</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Reduces max Shields by 75%, drains current Shields</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Refreshes; cap is 75% reduction</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab91;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Radiation</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Confusion</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Enemy attacks allies for 12 seconds</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Refreshes duration</td></tr>
+                    <tr><td style="padding:7px 14px;color:#80cbc4;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Gas</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Gas Cloud</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">AoE Toxin DoT cloud around the procced enemy</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">Each proc adds a cloud; stacks independently</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffd54f;font-weight:600;">Blast</td><td style="padding:7px 14px;color:#e2e8f0;">Knockdown</td><td style="padding:7px 14px;color:#9fb0c4;">Knocks down the target and nearby enemies</td><td style="padding:7px 14px;color:#9fb0c4;">Refreshes duration</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SECTION 7: SENTIENTS -->
+    <section class="category-section" id="sentients">
+        <h2>&#128300; 7. Sentients</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffe082;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128221; Adaptation Mechanic</h3>
+                    <span class="type-tag" style="background:rgba(255,224,130,0.2);color:#ffe082;border:1px solid rgba(255,224,130,0.4);">Sentients</span>
+                </div>
+                <ul class="list">
+                    <li>Sentients gain <strong>90% resistance</strong> to any damage type they are hit with repeatedly</li>
+                    <li>Adaptation resets when the Sentient is knocked into a downed state</li>
+                    <li>Void damage from <strong>Operator Amps</strong> permanently breaks their adaptation for a window</li>
+                    <li>Always have at least 2&ndash;3 damage types on your build to cycle when they adapt</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffe082;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#9889; Eidolon-Specific Strategy</h3>
+                    <span class="type-tag" style="background:rgba(255,224,130,0.2);color:#ffe082;border:1px solid rgba(255,224,130,0.4);">Sentients</span>
+                </div>
+                <ul class="list">
+                    <li>Eidolon Teralyst/Gantulyst/Hydrolyst have <strong>Sentient shields</strong> &mdash; strip with Operator Void beam first</li>
+                    <li>Synovias (glowing joints) exposed only after shield phase &mdash; use high-crit weapons</li>
+                    <li><strong>Radiation</strong> is the primary damage type after shield removal (bonus vs. Alloy Armor body)</li>
+                    <li>Chroma&rsquo;s Vex Armor + Roar, or Volt Shields = standard Eidolon support/DPS setup</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffe082;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128683; Murmur / Thrax (Zariman)</h3>
+                    <span class="type-tag" style="background:rgba(255,224,130,0.2);color:#ffe082;border:1px solid rgba(255,224,130,0.4);">Sentients</span>
+                </div>
+                <ul class="list">
+                    <li>Void damage from Operator Amps is highly effective &mdash; strips Thrax energy tether</li>
+                    <li>Thrax Plasm units must be killed with Void damage or they will revive</li>
+                    <li>Standard elementals work on their physical health after tether is broken</li>
+                    <li>Radiation recommended for confusion in tight corridors during Void missions</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffe082;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">&#128202; Armor Scaling Reference</h3>
+                    <span class="type-tag" style="background:rgba(255,224,130,0.2);color:#ffe082;border:1px solid rgba(255,224,130,0.4);">Sentients</span>
+                </div>
+                <ul class="list">
+                    <li>At <strong>Level 100</strong>: Grineer Lancer has ~11,000 effective HP (accounting for armor)</li>
+                    <li>At <strong>Level 165</strong> (Steel Path baseline): effective HP scales past 30,000&ndash;50,000 range</li>
+                    <li><strong>Corrosive (80% strip) + Heat (50% strip)</strong> together can reduce armor by 90%+</li>
+                    <li>Viral &times; 3.25 multiplier + armor-stripped target = highest practical damage output</li>
+                    <li>Armor formula: EHP = HP &times; (1 + Armor / 300) &mdash; armor past 3,000 yields diminishing returns</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) {
+            target.style.display = 'block';
+            requestAnimationFrame(() => target.classList.add('qi-fade-in'));
+        }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+        showSection(hash, false);
+    }
+
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) {
+                showMenu();
+                history.pushState({ section: null }, '', location.pathname + location.search);
+            } else {
+                showSection(targetId, true);
+            }
+        });
+    });
+
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) {
+            showSection(e.state.section, false);
+        } else {
+            showMenu();
+        }
+    });
+
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+<script src="assets/js/nav_sequence.js"></script>
+</body>
+</html>

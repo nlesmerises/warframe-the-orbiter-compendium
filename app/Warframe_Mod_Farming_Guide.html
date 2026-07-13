@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <title>Warframe: The Orbiter Compendium &mdash; Core Mod Acquisition Guide</title>
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+.mod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-top: 14px; }
+.mod-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px; }
+.mod-item h4 { margin: 0 0 4px; color: #ffab00; font-size: 0.95rem; }
+.mod-item p { margin: 0; color: #94a3b8; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-prev-top" href="Warframe_Mods_Database.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Prev Chapter</span></a>
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+        <a id="nav-next-top" href="Warframe_Rare_Mods_Value_Guide.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#127183; Core Mod Acquisition Guide</h1>
+        <p class="subtitle">Where to farm the essential meta mods &middot; Corrupted &middot; Nightmare &middot; Primed &middot; Galvanized &middot; Augments</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="section-corrupted" style="border-left-color:#ffb74d;"><div class="qi-tile-icon">&#128302;</div><h2 class="qi-tile-title">Corrupted Mods</h2><p class="qi-tile-desc">Massive stat buffs with penalties. Farm Orokin Vaults on Deimos using Dragon Keys from your Clan Dojo.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-nightmare"  style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128128;</div><h2 class="qi-tile-title">Nightmare Mods</h2><p class="qi-tile-desc">Two positive stats each. Drop from Nightmare Missions (red swirling nodes that appear once you clear every node on a planet).</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-aura"       style="border-left-color:#ce93d8;"><div class="qi-tile-icon">&#128251;</div><h2 class="qi-tile-title">Aura Mods</h2><p class="qi-tile-desc">Increase mod capacity and grant team-wide buffs. Purchased from the Nightwave Store using Nightwave Creds. Store rotates weekly.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-primed"     style="border-left-color:#ffe082;"><div class="qi-tile-icon">&#11088;</div><h2 class="qi-tile-title">Primed Mods</h2><p class="qi-tile-desc">Upgraded versions with 10 ranks. Purchased from Baro Ki’Teer every two weeks using Ducats + Credits. Some are login milestone rewards.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-set"        style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#127757;</div><h2 class="qi-tile-title">Open World Set Mods</h2><p class="qi-tile-desc">Grant a set bonus when equipped together. Farmed from Bounties in Cetus, Fortuna, or the Necralisk.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-galvanized" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#9878;&#65039;</div><h2 class="qi-tile-title">Galvanized &amp; Arbitrations</h2><p class="qi-tile-desc">Endgame mods from the Arbiters of Hexis using Vitus Essence. Complete the full Star Chart to unlock Arbitration missions.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-augments"   style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128737;&#65039;</div><h2 class="qi-tile-title">Warframe Augments</h2><p class="qi-tile-desc">Change how a Warframe ability works. Purchased from Syndicate Consoles for 25,000 Standing at maximum rank.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-rare"       style="border-left-color:#ffa726;"><div class="qi-tile-icon">&#127922;</div><h2 class="qi-tile-title">Notable Rare Drops</h2><p class="qi-tile-desc">A few crucial mods drop from very specific enemies with low drop rates.</p></a>
+        </div>
+    </div>
+
+    <section class="category-section" id="section-corrupted">
+        <h2>&#128302; 1. Corrupted Mods (Orokin Vaults)</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How to Farm</h3><span class="type-tag" style="background:rgba(255,183,77,0.18);color:#ffb74d;border:1px solid rgba(255,183,77,0.45);">Source</span></div>
+                <p style="color:#94a3b8;margin-bottom:12px;">These mods offer a massive buff to one stat and a penalty to another. Equip Dragon Keys (blueprints from your Clan Dojo) and open the hidden vaults inside <strong>Deimos missions</strong> (Horend, Phlegyas).</p>
+                <div class="mod-grid">
+                    <div class="mod-item"><h4>&#127183; Blind Rage</h4><p>+Strength, -Efficiency</p></div>
+                    <div class="mod-item"><h4>&#127183; Transient Fortitude</h4><p>+Strength, -Duration</p></div>
+                    <div class="mod-item"><h4>&#127183; Narrow Minded</h4><p>+Duration, -Range</p></div>
+                    <div class="mod-item"><h4>&#127183; Fleeting Expertise</h4><p>+Efficiency, -Duration</p></div>
+                    <div class="mod-item"><h4>&#127183; Overextended</h4><p>+Range, -Strength</p></div>
+                    <div class="mod-item"><h4>&#127183; Critical Delay</h4><p>+Crit Chance, -Fire Rate (Rifles)</p></div>
+                    <div class="mod-item"><h4>&#127183; Heavy Caliber</h4><p>+Damage, -Accuracy (Rifles)</p></div>
+                    <div class="mod-item"><h4>&#127183; Spoiled Strike</h4><p>+Damage, -Attack Speed (Melee)</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-nightmare">
+        <h2>&#128128; 2. Nightmare Mods</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How to Farm</h3><span class="type-tag" style="background:rgba(239,83,80,0.18);color:#ef5350;border:1px solid rgba(239,83,80,0.45);">Source</span></div>
+                <p style="color:#94a3b8;margin-bottom:12px;">Two positive stats each. Drop from Nightmare Missions (red swirling nodes that appear once you clear every node on a planet).</p>
+                <div class="mod-grid">
+                    <div class="mod-item"><h4>&#127183; Lethal Torrent</h4><p>+Fire Rate, +Multishot (Pistol) &mdash; Tier 3</p></div>
+                    <div class="mod-item"><h4>&#127183; Constitution</h4><p>+Duration, +Knockdown Recovery &mdash; Tier 3</p></div>
+                    <div class="mod-item"><h4>&#127183; Animal Instinct</h4><p>+Loot Radar, +Enemy Radar (Companion) &mdash; Tier 2/3</p></div>
+                    <div class="mod-item"><h4>&#127183; Blaze</h4><p>+Damage, +Heat Damage (Shotgun) &mdash; Tier 1</p></div>
+                    <div class="mod-item"><h4>&#127183; Vigor</h4><p>+Health, +Shields &mdash; Tier 1</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-aura">
+        <h2>&#128251; 3. Aura Mods (Nightwave)</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How to Farm</h3><span class="type-tag" style="background:rgba(206,147,216,0.18);color:#ce93d8;border:1px solid rgba(206,147,216,0.45);">Source</span></div>
+                <p style="color:#94a3b8;margin-bottom:12px;">Auras increase mod capacity and grant team-wide buffs. Almost exclusively purchased from the <strong>Nightwave Store</strong> (Nora&rsquo;s Mix) using Nightwave Creds. Store rotates weekly.</p>
+                <div class="mod-grid">
+                    <div class="mod-item"><h4>&#127183; Corrosive Projection</h4><p>Strips enemy armor (Nightwave Store)</p></div>
+                    <div class="mod-item"><h4>&#127183; Energy Siphon</h4><p>Passive Energy regen (Nightwave Store)</p></div>
+                    <div class="mod-item"><h4>&#127183; Steel Charge</h4><p>+Melee Damage (Nightwave Store)</p></div>
+                    <div class="mod-item"><h4>&#127183; Growing Power</h4><p>+Ability Strength on status proc (Silver Grove Specters, Earth)</p></div>
+                    <div class="mod-item"><h4>&#127183; Brief Respite</h4><p>Convert Energy spent to Shields (Silver Grove Specters, Earth)</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-primed">
+        <h2>&#11088; 4. Primed Mods</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffe082;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Baro Ki&rsquo;Teer</h3><span class="type-tag" style="background:rgba(255,224,130,0.18);color:#ffe082;border:1px solid rgba(255,224,130,0.45);">Void Trader</span></div>
+                <p style="color:#94a3b8;margin-bottom:12px;">Upgraded versions with 10 ranks. Purchased from <strong>Baro Ki&rsquo;Teer</strong> every two weeks using Ducats + Credits. Some are login milestone rewards.</p>
+                <div class="mod-grid">
+                    <div class="mod-item"><h4>&#127183; Primed Continuity</h4><p>+55% Duration (Baro Ki&rsquo;Teer)</p></div>
+                    <div class="mod-item"><h4>&#127183; Primed Flow</h4><p>Massive Energy pool (Baro Ki&rsquo;Teer)</p></div>
+                    <div class="mod-item"><h4>&#127183; Primed Reach</h4><p>+3m Melee Range (Baro Ki&rsquo;Teer)</p></div>
+                    <div class="mod-item"><h4>&#127183; Primed Fury / Shred / Vigor</h4><p>Login Milestones (Day 200, 400, etc.)</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-set">
+        <h2>&#127757; 5. Open World Set Mods</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Bounty Rewards</h3><span class="type-tag" style="background:rgba(74,222,128,0.18);color:#4ade80;border:1px solid rgba(74,222,128,0.45);">Source</span></div>
+                <p style="color:#94a3b8;margin-bottom:12px;">Mods that grant a set bonus when equipped together. Farmed from Bounties in Cetus, Fortuna, or the Necralisk.</p>
+                <div class="mod-grid">
+                    <div class="mod-item"><h4>&#127183; Augur Message / Secrets / Reach</h4><p>Converts energy to shields &mdash; <strong>Cetus Bounties</strong></p></div>
+                    <div class="mod-item"><h4>&#127183; Hunter Munitions</h4><p>Forces Slash procs on crits &mdash; <strong>Ghoul Purge Bounties</strong></p></div>
+                    <div class="mod-item"><h4>&#127183; Blood Rush / Weeping Wounds</h4><p>Combo scales Crit/Status &mdash; <strong>Deimos Bounties</strong></p></div>
+                    <div class="mod-item"><h4>&#127183; Gladiator Might / Vice</h4><p>Combo scales Crit Chance &mdash; <strong>Cetus Bounties</strong></p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-galvanized">
+        <h2>&#9878;&#65039; 6. Galvanized &amp; Rolling Guard (Arbitrations)</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Vitus Essence Store</h3><span class="type-tag" style="background:rgba(66,165,245,0.18);color:#42a5f5;border:1px solid rgba(66,165,245,0.45);">Source</span></div>
+                <p style="color:#94a3b8;margin-bottom:12px;">Endgame mods purchased from the Arbiters of Hexis in the Relay using Vitus Essence. Complete the full Star Chart to unlock Arbitration missions.</p>
+                <div class="mod-grid">
+                    <div class="mod-item"><h4>&#127183; Galvanized Chamber / Hell</h4><p>Stacking Multishot on kill</p></div>
+                    <div class="mod-item"><h4>&#127183; Galvanized Aptitude / Savvy</h4><p>Stacking Damage/Status on kill</p></div>
+                    <div class="mod-item"><h4>&#127183; Rolling Guard</h4><p>Dodging grants 3s Invincibility</p></div>
+                    <div class="mod-item"><h4>&#127183; Adaptation</h4><p>Builds 90% resistance to damage taken (drops directly in Arbitration missions)</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-augments">
+        <h2>&#128737;&#65039; 7. Warframe Augments</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Syndicate Consoles</h3><span class="type-tag" style="background:rgba(255,215,0,0.18);color:#ffd700;border:1px solid rgba(255,215,0,0.45);">Source</span></div>
+                <p style="color:#94a3b8;margin-bottom:12px;">Mods that change how a Warframe ability works (e.g., Mesa&rsquo;s Waltz, Path of Statues). Purchased from <strong>Syndicate Consoles</strong> in your Orbiter for 25,000 Standing at maximum rank.</p>
+                <div class="mod-grid">
+                    <div class="mod-item"><h4>&#127183; All Augment Mods</h4><p>Available via Steel Meridian, Arbiters of Hexis, Cephalon Suda, Perrin Sequence, Red Veil, or New Loka</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-rare">
+        <h2>&#127922; 8. Notable Rare Enemy Drops</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffa726;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Enemy Drops</h3><span class="type-tag" style="background:rgba(255,167,38,0.18);color:#ffa726;border:1px solid rgba(255,167,38,0.45);">Source</span></div>
+                <p style="color:#94a3b8;margin-bottom:12px;">A few crucial mods drop from very specific enemies with low drop rates.</p>
+                <div class="mod-grid">
+                    <div class="mod-item"><h4>&#127183; Condition Overload</h4><p>+Damage per status type &mdash; Deimos Jugulus (Cambion Drift) or Drekar Strike Commanders (Uranus)</p></div>
+                    <div class="mod-item"><h4>&#127183; Bite (Kubrow/Kavat)</h4><p>Massive Pet Crit &mdash; Feral Kubrows (Earth) or Drahk Masters</p></div>
+                    <div class="mod-item"><h4>&#127183; Berserker Fury</h4><p>Attack Speed on kill &mdash; Corrupted Ancients (The Void)</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(targetId, true); }
+        });
+    });
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) { showSection(e.state.section, false); } else { showMenu(); }
+    });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

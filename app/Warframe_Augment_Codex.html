@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Augments Database</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        :root {
+            --border-color: #1f2a3e;
+
+            --primary-accent: #3949ab;
+            --accent-gold: #ffab00;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .database-panel {
+            width: 100%;
+            max-width: 1750px;
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* .search-input width/padding/border/font: see global rule in codex_glass_theme.css */
+
+        .search-input:focus {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.2);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .warframe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 25px;
+        }
+
+        .warframe-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .warframe-card:hover {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border-color: rgba(255, 171, 0, 0.4);
+            background: var(--card-hover-bg);
+        }
+
+        .warframe-header {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin: 0 0 20px 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .warframe-icon {
+            font-size: 2rem;
+            margin-right: 12px;
+            opacity: 0.9;
+        }
+
+        .augment-item {
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid var(--primary-accent);
+        }
+
+        .augment-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .augment-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .augment-effect {
+            font-size: 0.95rem;
+            color: #b0bec5;
+            line-height: 1.5;
+            margin: 0 0 12px 0;
+        }
+
+        .augment-farm {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #81c784;
+            display: inline-block;
+            background: rgba(129, 199, 132, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(129, 199, 132, 0.2);
+        }
+
+        .syndicate-badge {
+            margin-right: 5px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px;
+            font-size: 1.2rem;
+            color: #94a3b8;
+            grid-column: 1 / -1;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .nav-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 171, 0, 0.1);
+            color: #ffab00;
+            border: 1px solid rgba(255, 171, 0, 0.3);
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 171, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 171, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .warframe-grid { grid-template-columns: 1fr; }
+            .database-panel { padding: 20px; }
+        }
+
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+.page-shell {
+    width: min(1750px, calc(100vw - 48px));
+    margin: 0 auto 40px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    padding: 36px 40px 40px;
+    box-sizing: border-box;
+}
+
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+<div class="container" style="max-width:1750px; width:1750px;">
+<header>
+    <h1>&#x1F6E1;&#xFE0F; Warframe Augment Codex</h1>
+    <p class="subtitle">Complete database of Warframe-specific augment mods & farming locations</p>
+</header>
+
+
+    <div class="database-panel" style="max-width:none; padding: 0; background: transparent; border: none; box-shadow: none;">
+    <script src="assets/js/mod_data.js"></script>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="augment-search" placeholder="Search by Warframe, Augment Name, or Syndicate...">
+        </div>
+
+        <div class="warframe-grid" id="augment-grid">
+            <!-- Warframe cards will be injected here -->
+            <div class="no-results" style="grid-column: 1 / -1;">
+                <div style="font-size: 40px; margin-bottom: 15px;">&#x23F3;</div>
+                Compiling Augment Database...
+            </div>
+        </div>
+
+        </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('augment-grid');
+            const searchInput = document.getElementById('augment-search');
+            
+            let allAugments = [];
+            let groupedAugments = {};
+
+            const MISSING_AUGMENTS = [
+                {
+                    name: "Fatal Teleport",
+                    compatName: "Ash",
+                    uniqueName: "Augment",
+                    levelStats: [{stats: ["Teleport Augment: Teleport will perform a Finisher on the target, dealing 200% extra Damage. 50% Energy cost is refunded on a kill."]}],
+                    drops: [{location: "Red Veil"}, {location: "Arbiters of Hexis"}]
+                },
+                {
+                    name: "Repelling Bastille",
+                    compatName: "Vauban",
+                    uniqueName: "Augment",
+                    levelStats: [{stats: ["Bastille Augment: Enemies repelled within the Bastille have a 100% chance to be repelled every 4s. Vortex's duration is increased by 100% of its maximum duration for each additional Bastille thrown into it."]}],
+                    drops: [{location: "Cephalon Suda"}, {location: "The Perrin Sequence"}]
+                }
+            ];
+
+            function extractEffect(mod) {
+                if (mod.levelStats && mod.levelStats.length > 0) {
+                    return mod.levelStats[mod.levelStats.length - 1].stats.join(', ');
+                }
+                return mod.description || 'Unknown effect';
+            }
+
+            function extractFarm(mod) {
+                if (mod.drops && mod.drops.length > 0) {
+                    // Extract unique syndicates
+                    const syndicates = new Set();
+                    mod.drops.forEach(d => {
+                        if (d.location) {
+                            let loc = d.location.split(',')[0].trim();
+                            if (loc === "Perrin Sequence") loc = "The Perrin Sequence";
+                            syndicates.add(loc);
+                        }
+                    });
+                    if (syndicates.size > 0) return Array.from(syndicates).join(' / ');
+                }
+                return 'Nightwave / PvP / Special';
+            }
+
+            function renderGrid(query = '') {
+                grid.innerHTML = '';
+                query = query.toLowerCase().trim();
+
+                const warframes = Object.keys(groupedAugments).sort();
+                let renderedCount = 0;
+
+                warframes.forEach(wf => {
+                    const augments = groupedAugments[wf];
+                    
+                    // Filter augments inside this warframe
+                    const filteredAugments = augments.filter(mod => {
+                        if (query === '') return true;
+                        if (wf.toLowerCase().includes(query)) return true;
+                        if (mod.name.toLowerCase().includes(query)) return true;
+                        const effect = extractEffect(mod).toLowerCase();
+                        if (effect.includes(query)) return true;
+                        const farm = extractFarm(mod).toLowerCase();
+                        if (farm.includes(query)) return true;
+                        return false;
+                    });
+
+                    if (filteredAugments.length > 0) {
+                        renderedCount++;
+                        
+                        const card = document.createElement('div');
+                        card.className = 'warframe-card';
+                        
+                        let cardHTML = `<h2 class="warframe-header"><span class="warframe-icon">&#x1F9BE;</span> ${wf}</h2>`;
+                        
+                        filteredAugments.forEach(mod => {
+                            const farm = extractFarm(mod);
+                            let syndicateBadges = '';
+                            if (farm.includes('Red Veil')) syndicateBadges += '&#x1F525; ';
+                            if (farm.includes('Steel Meridian')) syndicateBadges += '&#x2694;&#xFE0F; ';
+                            if (farm.includes('Arbiters of Hexis')) syndicateBadges += '&#x2696;&#xFE0F; ';
+                            if (farm.includes('Cephalon Suda')) syndicateBadges += '&#x1F4BE; ';
+                            if (farm.includes('Perrin Sequence')) syndicateBadges += '&#x1F4B0; ';
+                            if (farm.includes('New Loka')) syndicateBadges += '&#x1F33F; ';
+                            if (farm.includes('Conclave')) syndicateBadges += '&#x2694;&#xFE0F; ';
+
+                            cardHTML += `
+                                <div class="augment-item">
+                                    <h3 class="augment-name">${mod.name}</h3>
+                                    <p class="augment-effect">${extractEffect(mod)}</p>
+                                    <div class="augment-farm"><span class="syndicate-badge">${syndicateBadges}</span>${farm}</div>
+                                </div>
+                            `;
+                        });
+                        
+                        card.innerHTML = cardHTML;
+                        grid.appendChild(card);
+                    }
+                });
+
+                if (renderedCount === 0) {
+                    grid.innerHTML = `
+                        <div class="no-results">
+                            &#x1F50D; No augments found matching "${query}". Try searching by Warframe, Mod Name, or Syndicate.
+                        </div>
+                    `;
+                }
+            }
+
+            Promise.resolve({ json: () => Promise.resolve(allModsData) })
+                .then(res => res.json())
+                .then(data => {
+                    allAugments = data.filter(mod => mod.uniqueName && (mod.uniqueName.includes('Augment') || mod.uniqueName.includes('pvpvariant')));
+                    allAugments = allAugments.concat(MISSING_AUGMENTS);
+                    
+                    // Deduplicate
+                    const seen = new Set();
+                    const deduplicated = [];
+                    allAugments.forEach(mod => {
+                        if (!seen.has(mod.name)) {
+                            seen.add(mod.name);
+                            deduplicated.push(mod);
+                        }
+                    });
+                    allAugments = deduplicated;
+
+                    // Group by Warframe
+                    allAugments.forEach(mod => {
+                        let wf = mod.compatName || 'General';
+                        // Fix generic compat names sometimes found in conclave augments
+                        if (wf === 'PVP_WARFRAME') wf = 'Conclave / Universal';
+                        
+                        if (!groupedAugments[wf]) {
+                            groupedAugments[wf] = [];
+                        }
+                        groupedAugments[wf].push(mod);
+                    });
+
+                    // Sort augments inside each warframe alphabetically
+                    Object.keys(groupedAugments).forEach(wf => {
+                        groupedAugments[wf].sort((a, b) => a.name.localeCompare(b.name));
+                    });
+
+                    renderGrid();
+                })
+                .catch(err => {
+                    console.error("Failed to load mods database:", err);
+                    grid.innerHTML = `<div class="no-results">&#x274C; Error loading augment database.</div>`;
+                });
+
+            searchInput.addEventListener('input', (e) => {
+                renderGrid(e.target.value);
+            });
+        });
+    </script>
+
+</div> <!-- Close page-shell -->
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

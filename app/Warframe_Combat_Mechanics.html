@@ -1,0 +1,1447 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Combat Factions</title>
+    <meta name="description" content="The ultimate Warframe faction standing guide. Learn the most efficient methods to farm standing for every syndicate and faction.">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+:root {
+    --border-subtle: rgba(255,255,255,0.06);
+    --bg-card: rgba(15, 22, 42, 0.45);
+    --bg-card-hover: rgba(23, 33, 62, 0.75);
+    --bg-glass: rgba(255, 255, 255, 0.03);
+    --bg-glass-hover: rgba(255, 255, 255, 0.06);
+    --accent-prime: #8b5cf6;
+    --accent-prime-dim: rgba(139, 92, 246, 0.15);
+    --accent-gold: #f59e0b;
+    --accent-gold-dim: rgba(245, 158, 11, 0.15);
+    --accent-red: #f43f5e;
+    --accent-red-dim: rgba(244, 63, 94, 0.15);
+    --accent-green: #10b981;
+    --accent-green-dim: rgba(16, 185, 129, 0.15);
+    --accent-orange: #f59e0b;
+    --accent-orange-dim: rgba(245, 158, 11, 0.15);
+    --steel-meridian: #d4453a;
+    --arbiters: #3a8fd4;
+    --suda: #00c8ff;
+    --perrin: #9b59b6;
+    --red-veil: #c0392b;
+    --new-loka: #27ae60;
+    --ostron: #e67e22;
+    --solaris: #f39c12;
+    --entrati: #8e44ad;
+    --holdfasts: #1abc9c;
+    --cavia: #2ecc71;
+    --simaris: #e74c3c;
+    --quills: #3498db;
+    --vox-solaris: #e67e22;
+    --necraloid: #6c3483;
+    --kahl: #7f8c8d;
+    --hex: #c0392b;
+    --ventkids: #f1c40f;
+    --nightwave: #9b59b6;
+    --text-primary: #e8eaf0;
+    --text-secondary: #8a8fa8;
+    --text-muted: #555a70;
+    --border-accent: rgba(0, 232, 252, 0.25);
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --shadow-hover: 0 8px 50px rgba(0, 232, 252, 0.15);
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+.category-section { display: none; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+
+
+
+
+
+
+
+#main-content { max-width: 1750px; margin-left: auto; margin-right: auto; box-sizing: border-box; }
+
+/* .faction-card/.faction-header/.faction-icon/.rank-table/.card-footer/
+   .embedded-cap/.stat-control-card had zero CSS anywhere -- dashboard.css
+   covers most of this page's cards but never accounted for these. */
+.card-footer {
+    display: flex; justify-content: space-between; margin-top: 12px;
+    padding-top: 10px; border-top: 1px solid var(--border-subtle);
+    font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;
+}
+.faction-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px; margin-top: 20px;
+}
+.faction-card {
+    background: var(--bg-card); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg); padding: 24px; transition: all var(--transition-smooth);
+}
+.faction-card:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+.faction-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.faction-icon { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; }
+.rank-table-wrap { overflow-x: auto; margin-top: 12px; }
+.rank-table { width: 100%; border-collapse: collapse; }
+.rank-table th, .rank-table td {
+    padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.85rem;
+}
+.rank-table th { color: var(--accent-gold); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+.rank-table td { color: var(--text-secondary); }
+.embedded-cap { width: 100%; justify-content: space-between; }
+.stat-control-card { display: flex; flex-direction: column; gap: 8px; text-align: left; align-items: flex-start; }
+
+/* "Contained" standard (rules/compendium-layout-standard.md) — default
+   (not hover-only) colored left-border accent on landing tiles, plus the
+   shared strategy-note info-panel pattern for section intros. */
+.category-card { border-left-width: 4px; border-left-style: solid; }
+.strategy-note {
+    margin: 16px 0 24px; padding: 16px 20px; border-radius: 12px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-left: 4px solid var(--note-accent, var(--accent-gold, #ffab00));
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px;
+}
+.strategy-note-full { grid-column: 1 / -1; }
+.strategy-note-label {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.7px; color: var(--note-accent, var(--accent-gold, #ffab00));
+    margin-bottom: 4px;
+}
+.strategy-note-value { font-size: 0.82rem; color: #b0c4d8; line-height: 1.55; }
+.strategy-note-value strong { color: #e2e8f0; }
+.strategy-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 0.7rem; font-weight: 700; margin: 2px 3px 2px 0;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    color: #e2e8f0;
+}
+.faction-card .quick-facts { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Syndicate_Farming_Guide.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a><a id="nav-next-top" href="Warframe_Endgame_Systems_Codex.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#x2694;&#xFE0F; Combat &amp; Factions</h1>
+        <p class="subtitle">Damage types &middot; Status effects &middot; Core syndicates &middot; Open world &middot; Specialist factions &middot; Standing guides</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="section-damage" style="border-left-color:#ff3366;"><div class="qi-tile-icon">&#128293;</div><h2 class="qi-tile-title">Damage Types &amp; Status</h2><p class="qi-tile-desc">Viral, Slash, Heat, Corrosive — how status effects interact with armor, shields, and health.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-core" style="border-left-color:#a78bfa;"><div class="qi-tile-icon">&#129309;</div><h2 class="qi-tile-title">Core Syndicates</h2><p class="qi-tile-desc">The six main factions with alliance/enemy relationships. Missions, medallions, and sigils.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-openworld" style="border-left-color:#34d399;"><div class="qi-tile-icon">&#127757;</div><h2 class="qi-tile-title">Open World Factions</h2><p class="qi-tile-desc">Neutral factions tied to open-world hubs. Bounties, mining, fishing, and conservation.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-specialist" style="border-left-color:#22d3ee;"><div class="qi-tile-icon">&#127919;</div><h2 class="qi-tile-title">Specialist Factions</h2><p class="qi-tile-desc">Scanning, Eidolons, Toroids, weekly missions — unique factions with specialized methods.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-ranks" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128202;</div><h2 class="qi-tile-title">Rank Requirements</h2><p class="qi-tile-desc">Core syndicate standing thresholds, cumulative costs, and daily cap timeline.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-tips" style="border-left-color:#ffa726;"><div class="qi-tile-icon">&#9889;</div><h2 class="qi-tile-title">Universal Standing Tips</h2><p class="qi-tile-desc">Daily cap formula, medallion tricks, token systems, and efficiency strategies.</p></a>
+        </div>
+    </div>
+
+    <!-- DAMAGE TYPES SECTION -->
+    <section class="category-section" id="section-damage">
+        <h2>&#128293; Damage Types &amp; Status Effects</h2>
+
+            <div class="strategy-note" style="--note-accent: #ff3366;">
+                <div class="strategy-note-full">
+                    <div class="strategy-note-label">Core Concept</div>
+                    <div class="strategy-note-value">Status effects interact with enemy health layers — armor, shields, and base health, each with its own vulnerabilities.</div>
+                </div>
+                <div class="strategy-note-full">
+                    <div class="strategy-note-label">The Meta Formula</div>
+                    <div class="strategy-note-value"><strong>Prime, strip, kill.</strong> Amplify damage to the health pool (Viral), remove the defensive layer in the way (Corrosive for armor, Cold/Magnetic for shields), then deliver a kill condition that bypasses what's left (Slash True Damage).</div>
+                </div>
+                <div>
+                    <div class="strategy-note-label">Core Pairing</div>
+                    <div class="strategy-note-value"><span class="strategy-tag">Viral + Slash</span> the standard endgame formula — prime with Viral, let Slash bleeds finish the kill.</div>
+                </div>
+                <div>
+                    <div class="strategy-note-label">Melee Note</div>
+                    <div class="strategy-note-value">Condition Overload multiplies melee damage per <strong>unique</strong> status type on the target — stack variety, not just one type.</div>
+                </div>
+            </div>
+
+            <div class="faction-grid">
+                <div class="faction-card">
+                    <div class="faction-header">
+                        <img src="assets/status/slash.png" alt="Slash" class="faction-icon" onerror="this.style.display='none'">
+                        <h3>&#129405; Slash &#8212; The Kill Condition</h3>
+                    </div>
+                    <div class="quick-facts"><span class="strategy-tag">True Damage — bypasses armor/shields</span><span class="strategy-tag">35% base dmg/tick over 6s</span><span class="strategy-tag">Pairs with Viral</span></div>
+                    <p>The undisputed king of damage at high enemy levels — armor scaling gets astronomical on Steel Path, so True Damage is often the only reliable kill path. Stack via <em>Virulent Scourge</em> or <em>Primed Fever Strike</em> on high status-chance weapons.</p>
+                </div>
+
+                <div class="faction-card">
+                    <div class="faction-header">
+                        <img src="assets/status/viral.png" alt="Viral" class="faction-icon" onerror="this.style.display='none'">
+                        <h3>&#129440; Viral &#8212; The Force Multiplier</h3>
+                    </div>
+                    <div class="quick-facts"><span class="strategy-tag">Toxin + Cold</span><span class="strategy-tag">3.25× health damage at 10 stacks</span><span class="strategy-tag">Amplifies Slash bleed</span></div>
+                    <p>The premier primer status. Prime the target with Viral stacks, then let Slash bleeds do the heavy lifting — the two are inseparable in meta builds.</p>
+                </div>
+
+                <div class="faction-card">
+                    <div class="faction-header">
+                        <img src="assets/status/corrosive.png" alt="Corrosive" class="faction-icon" onerror="this.style.display='none'">
+                        <h3>&#9879;&#xFE0F; Corrosive &#8212; The Armor Stripper</h3>
+                    </div>
+                    <div class="quick-facts"><span class="strategy-tag">Toxin + Electricity</span><span class="strategy-tag">80% armor removal at 10 stacks</span><span class="strategy-tag">Permanent, doesn't decay</span></div>
+                    <p>Against heavily armored Grineer Lancers, Corrupted Heavy Gunners, and Steel Path Bombards, Corrosive stripping is the difference between tickling them and deleting them. Unlike Heat, stacks persist until the enemy dies.</p>
+                </div>
+
+                <div class="faction-card">
+                    <div class="faction-header">
+                        <img src="assets/status/heat.png" alt="Heat" class="faction-icon" onerror="this.style.display='none'">
+                        <h3>&#128293; Heat &#8212; The All-Rounder</h3>
+                    </div>
+                    <div class="quick-facts"><span class="strategy-tag">50% of current armor/proc</span><span class="strategy-tag">DoT + panic (interrupts enemy)</span><span class="strategy-tag">Best vs. Infested</span></div>
+                    <p>Versatile and infinitely stackable. Shines against the Infested (no armor to worry about) and is a core piece of Condition Overload melee builds.</p>
+                </div>
+
+                <div class="faction-card">
+                    <div class="faction-header">
+                        <h3>&#10052;&#xFE0F; Cold &#8212; The Shield Shredder</h3>
+                    </div>
+                    <div class="quick-facts"><span class="strategy-tag">+25% shield dmg/stack (5 max)</span><span class="strategy-tag">Slows movement + attack rate</span><span class="strategy-tag">Half of Viral (Cold+Toxin)</span></div>
+                    <p>The only status that directly weakens Corpus shields — the shield-layer equivalent of Corrosive. Essential against Sisters of Parvos and shielded Steel Path heavies.</p>
+                </div>
+
+                <div class="faction-card">
+                    <div class="faction-header">
+                        <h3>&#9762;&#xFE0F; Radiation &#8212; The Confusion Tool</h3>
+                    </div>
+                    <div class="quick-facts"><span class="strategy-tag">Heat + Electricity</span><span class="strategy-tag">Enemies attack each other</span><span class="strategy-tag">Mandatory vs. Acolytes/Sentients</span></div>
+                    <p>Converts the battlefield into controlled chaos. In dense Steel Path tilesets, one proc on a heavy unit can neutralize an entire room while Slash/Viral do the actual killing under cover.</p>
+                </div>
+
+                <div class="faction-card">
+                    <div class="faction-header">
+                        <h3>&#129517; Magnetic &#8212; The Corpus Counter</h3>
+                    </div>
+                    <div class="quick-facts"><span class="strategy-tag">Cold + Electricity</span><span class="strategy-tag">-75% max shield capacity/stack</span><span class="strategy-tag">Pairs with Viral</span></div>
+                    <p>Collapses the Corpus shield layer before your main damage connects. Stack on Nullifiers and Shield Ospreys, then Viral handles the residual health.</p>
+                </div>
+            </div>
+        </section>
+    
+
+        <!-- CORE SYNDICATES SECTION -->
+        <section class="category-section" id="section-core">
+            <h2>&#129309; Core Syndicates</h2>
+            <div class="strategy-note" style="--note-accent: #a78bfa; grid-template-columns: 1fr;">
+                <div class="strategy-note-full">
+                    <div class="strategy-note-label">Core Concept</div>
+                    <div class="strategy-note-value">The six main factions with alliance &amp; enemy relationships. <span class="strategy-tag">Maintain 4 at once</span></div>
+                </div>
+            </div>
+
+            <!-- Alliance Chart -->
+            <div class="alliance-chart">
+                <h3>&#128506;&#xFE0F; Alliance / Opposition Map</h3>
+                <div class="alliance-visual">
+                    <div class="alliance-group left-group">
+                        <div class="alliance-member steel-meridian-bg" data-faction="steel-meridian">Steel Meridian</div>
+                        <div class="alliance-connector">↕ Allied</div>
+                        <div class="alliance-member arbiters-bg" data-faction="arbiters">Arbiters of Hexis</div>
+                        <div class="alliance-connector">↕ Allied</div>
+                        <div class="alliance-member suda-bg" data-faction="suda">Cephalon Suda</div>
+                    </div>
+                    <div class="vs-divider">
+                        <span>&#9876;&#65039; VS &#9876;&#65039;</span>
+                    </div>
+                    <div class="alliance-group right-group">
+                        <div class="alliance-member perrin-bg" data-faction="perrin">Perrin Sequence</div>
+                        <div class="alliance-connector">↕ Allied</div>
+                        <div class="alliance-member red-veil-bg" data-faction="red-veil">Red Veil</div>
+                        <div class="alliance-connector">↕ Allied</div>
+                        <div class="alliance-member new-loka-bg" data-faction="new-loka">New Loka</div>
+                    </div>
+                </div>
+                <p class="alliance-note">&#x1F4A1; <strong>Pro Tip:</strong> Pledge to one side and you can maintain 4 positive factions. The best combos are <strong>Steel Meridian + Red Veil</strong> or <strong>Cephalon Suda + New Loka</strong>. All rewards are tradeable - get enemy faction items from other players!</p>
+            </div>
+
+            <!-- All Core Syndicate Method (Shared) -->
+            <div class="alliance-chart" style="text-align:left;">
+                <h3>&#127919; Universal Medallion Hunting Build (Works for All 6)</h3>
+                <div class="method-rank">
+                    <span class="rank-badge best">BUILD</span>
+                    <div>
+                        <strong>Xaku / Limbo / Equinox</strong>
+                        <p>These frames can break containers through walls, revealing hidden medallions. Combine with max loot radar for fastest runs.</p>
+                    </div>
+                </div>
+                <div class="build-box" style="margin-top:12px;">
+                    <span class="build-tag">Frame</span> Xaku (The Vast Untime) / Limbo (Cataclysm) / Equinox (Maim)
+                    <span class="build-tag">Mods</span> Loot Detector + Thief's Wit + Animal Instinct (on companion)
+                    <span class="build-tag">Gear</span> Orokin Eye (Parallax Landing Craft) - highlights medallions
+                    <span class="build-tag">Method</span> Run Syndicate Alert missions &#8594; collect all 8 medallions &#8594; turn in at Relay (bypasses daily cap!)
+                </div>
+            </div>
+
+            <!-- Faction Detail Cards -->
+            <div class="faction-grid" id="core-faction-grid">
+
+                <!-- Steel Meridian -->
+                <div class="faction-detail-card" id="faction-steel-meridian">
+                    <div class="faction-banner steel-meridian-banner">
+                        <div class="faction-sigil">&#128737;&#65039;</div>
+                        <h3>&#9876;&#xFE0F; Steel Meridian</h3>
+                        <span class="faction-motto">"Protecting the weak"</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Method</h4>
+                            <ol>
+                                <li><strong>Pledge</strong> to Steel Meridian at the Syndicate console in your Orbiter</li>
+                                <li><strong>Equip their highest-rank sigil</strong> to earn passive standing from all missions</li>
+                                <li><strong>Run Syndicate Alert missions</strong> - collect all 8 medallions per run</li>
+                                <li><strong>Turn in medallions</strong> at any Relay for bonus standing (bypasses daily cap!)</li>
+                                <li>Focus on <strong>Capture & Exterminate</strong> Syndicate missions for fastest clears</li>
+                            </ol>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Vaykor Hek</strong> - Powerful shotgun with syndicate proc (healing burst), one of the best syndicate weapons</li>
+                                <li><strong>Vaykor Marelok</strong> - Solid secondary pistol with Justice proc</li>
+                                <li><strong>Augment Mods</strong> - Scattered Justice (Hek), Iron Shrapnel (Rhino), Ironclad Charge (Rhino)</li>
+                                <li><strong>Large Team Energy Restore</strong> - Reusable blueprint, essential for hard content</li>
+                                <li><strong>Relic Packs</strong> - Good platinum sink for fissure farming</li>
+                            </ul>
+                        </div>
+                        <div class="faction-relations">
+                            <span class="relation allied">&#10003; Allied: <span class="faction-link" data-faction="arbiters">Arbiters of Hexis</span> (+50%)</span>
+                            <span class="relation supported">&#10003; Supports: <span class="faction-link" data-faction="red-veil">Red Veil</span> (+50%)</span>
+                            <span class="relation opposed">✕ Opposed: <span class="faction-link" data-faction="new-loka">New Loka</span> (-50%)</span>
+                            <span class="relation enemy">✕ Enemy: <span class="faction-link" data-faction="perrin">Perrin Sequence</span> (-100%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Arbiters of Hexis -->
+                <div class="faction-detail-card" id="faction-arbiters">
+                    <div class="faction-banner arbiters-banner">
+                        <div class="faction-sigil">&#9878;&#65039;</div>
+                        <h3>&#9878;&#xFE0F; Arbiters of Hexis</h3>
+                        <span class="faction-motto">"Truth through discipline"</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Method</h4>
+                            <ol>
+                                <li><strong>Pledge</strong> to Arbiters at the Syndicate console</li>
+                                <li><strong>Equip their highest sigil</strong> for max passive standing from missions</li>
+                                <li><strong>Run Syndicate Alert missions</strong> - hunt all 8 medallions per mission</li>
+                                <li>Focus on <strong>Exterminate / Capture</strong> mission types for speed</li>
+                                <li>Pair with <strong>Cephalon Suda</strong> for dual progress (allied factions)</li>
+                            </ol>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Telos Boltace</strong> - Melee tonfa with a powerful slide attack and Truth proc</li>
+                                <li><strong>Telos Akbolto</strong> - Strong dual secondaries with high crit potential</li>
+                                <li><strong>Augment Mods</strong> - Despoil (Nekros, one of the best augments in the game), Total Eclipse (Mirage)</li>
+                                <li><strong>Large Team Health Restore</strong> - Reusable blueprint for survivability</li>
+                                <li><strong>Relic Packs</strong> - Useful for farming Prime parts</li>
+                            </ul>
+                        </div>
+                        <div class="faction-relations">
+                            <span class="relation allied">&#10003; Allied: <span class="faction-link" data-faction="suda">Cephalon Suda</span> (+50%)</span>
+                            <span class="relation supported">&#10003; Supports: <span class="faction-link" data-faction="steel-meridian">Steel Meridian</span> (+50%)</span>
+                            <span class="relation opposed">✕ Opposed: <span class="faction-link" data-faction="red-veil">Red Veil</span> (-50%)</span>
+                            <span class="relation enemy">✕ Enemy: <span class="faction-link" data-faction="new-loka">New Loka</span> (-100%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cephalon Suda -->
+                <div class="faction-detail-card" id="faction-suda">
+                    <div class="faction-banner suda-banner">
+                        <div class="faction-sigil">&#x1F536;</div>
+                        <h3>&#128302; Cephalon Suda</h3>
+                        <span class="faction-motto">"Limitless knowledge"</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Method</h4>
+                            <ol>
+                                <li><strong>Pledge</strong> to Cephalon Suda at the Syndicate console</li>
+                                <li><strong>Equip highest sigil</strong> and run missions for passive gains</li>
+                                <li><strong>Syndicate Alerts</strong> for medallion farming - hunt all 8</li>
+                                <li>Pairs with <strong>Arbiters of Hexis</strong> for dual progress</li>
+                                <li>Best combined with <strong>New Loka via Red Veil</strong> to maintain 4 syndicates</li>
+                            </ol>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Synoid Gammacor</strong> - Classic energy-restoring beam secondary, great for Entropy proc</li>
+                                <li><strong>Synoid Simulor</strong> - Unique AOE primary, fun and effective for crowd control</li>
+                                <li><strong>Augment Mods</strong> - Chromatic Blade (Excalibur), Resonance (Banshee), Pilfering Strangledome (Khora)</li>
+                                <li><strong>Large Team Ammo Restore</strong> - Reusable blueprint</li>
+                                <li><strong>Captura Scenes</strong> - Unique environments for screenshots</li>
+                            </ul>
+                        </div>
+                        <div class="faction-relations">
+                            <span class="relation allied">&#10003; Allied: <span class="faction-link" data-faction="arbiters">Arbiters of Hexis</span> (+50%)</span>
+                            <span class="relation supported">&#10003; Supports: - </span>
+                            <span class="relation opposed">✕ Opposed: <span class="faction-link" data-faction="perrin">Perrin Sequence</span> (-50%)</span>
+                            <span class="relation enemy">✕ Enemy: <span class="faction-link" data-faction="red-veil">Red Veil</span> (-100%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Perrin Sequence -->
+                <div class="faction-detail-card" id="faction-perrin">
+                    <div class="faction-banner perrin-banner">
+                        <div class="faction-sigil">&#128176;</div>
+                        <h3>&#128188; The Perrin Sequence</h3>
+                        <span class="faction-motto">"Profit through prosperity"</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Method</h4>
+                            <ol>
+                                <li><strong>Pledge</strong> to Perrin Sequence at the Syndicate console</li>
+                                <li><strong>Equip their highest sigil</strong> for passive standing</li>
+                                <li><strong>Run Syndicate Alerts</strong> - collect all 8 medallions</li>
+                                <li>Great paired with <strong>New Loka</strong> for dual progress (allied factions)</li>
+                                <li>Can also gain standing alongside <strong>Red Veil</strong> as a supporter</li>
+                            </ol>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Secura Dual Cestra</strong> - Dual secondaries with Sequence proc (energy restore)</li>
+                                <li><strong>Secura Lecta</strong> - Whip that doubles credit drops, great for credit farming!</li>
+                                <li><strong>Augment Mods</strong> - Peaceful Provocation (Equinox), Safeguard Switch (Nezha)</li>
+                                <li><strong>Large Team Shield Restore</strong> - Reusable blueprint</li>
+                                <li><strong>Relic Packs</strong> - Trade standing for Prime relic bundles</li>
+                            </ul>
+                        </div>
+                        <div class="faction-relations">
+                            <span class="relation allied">&#10003; Allied: <span class="faction-link" data-faction="new-loka">New Loka</span> (+50%)</span>
+                            <span class="relation supported">&#10003; Supports: <span class="faction-link" data-faction="red-veil">Red Veil</span> (+50%)</span>
+                            <span class="relation opposed">✕ Opposed: <span class="faction-link" data-faction="suda">Cephalon Suda</span> (-50%)</span>
+                            <span class="relation enemy">✕ Enemy: <span class="faction-link" data-faction="steel-meridian">Steel Meridian</span> (-100%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Red Veil -->
+                <div class="faction-detail-card" id="faction-red-veil">
+                    <div class="faction-banner red-veil-banner">
+                        <div class="faction-sigil">&#x1F5E1;&#xFE0F;</div>
+                        <h3>&#129405; Red Veil</h3>
+                        <span class="faction-motto">"Cleanse with fire"</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Method</h4>
+                            <ol>
+                                <li><strong>Pledge</strong> to Red Veil at the Syndicate console</li>
+                                <li><strong>Equip their highest sigil</strong> for passive standing</li>
+                                <li><strong>Run Syndicate Alerts</strong> - hunt all 8 medallions each run</li>
+                                <li>Pairs extremely well with <strong>Steel Meridian</strong> for dual progress</li>
+                                <li>Also supports <strong>New Loka + Perrin Sequence</strong> indirectly - enabling 4-faction setups</li>
+                            </ol>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Rakta Cernos</strong> - Fast-firing bow with Blight proc (energy burst + speed buff)</li>
+                                <li><strong>Rakta Dark Dagger</strong> - Melee dagger with Radiation proc, useful for stealth builds</li>
+                                <li><strong>Augment Mods</strong> - Despoil trades for platinum, Smoke Shadow (Ash), Blood Altar augments</li>
+                                <li><strong>Large Team Energy Restore</strong> - Reusable blueprint</li>
+                                <li><strong>Relic Packs</strong> - Standing &#8594; relics &#8594; prime parts &#8594; platinum pipeline</li>
+                            </ul>
+                        </div>
+                        <div class="faction-relations">
+                            <span class="relation allied">&#10003; Allied: <span class="faction-link" data-faction="new-loka">New Loka</span> (+50%)</span>
+                            <span class="relation supported">&#10003; Supports: <span class="faction-link" data-faction="steel-meridian">Steel Meridian</span> (+50%)</span>
+                            <span class="relation opposed">✕ Opposed: Arbiters of Hexis (-50%)</span>
+                            <span class="relation enemy">✕ Enemy: <span class="faction-link" data-faction="suda">Cephalon Suda</span> (-100%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Loka -->
+                <div class="faction-detail-card" id="faction-new-loka">
+                    <div class="faction-banner new-loka-banner">
+                        <div class="faction-sigil">&#x1F33F;</div>
+                        <h3>&#127807; New Loka</h3>
+                        <span class="faction-motto">"Purity of form"</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Method</h4>
+                            <ol>
+                                <li><strong>Pledge</strong> to New Loka at the Syndicate console</li>
+                                <li><strong>Equip their highest sigil</strong> for passive standing gains</li>
+                                <li><strong>Run Syndicate Alerts</strong> - collect all 8 medallions each run</li>
+                                <li>Pairs perfectly with <strong>Perrin Sequence</strong> for dual progress</li>
+                                <li>Also supports <strong>Red Veil</strong> - allowing a 3-faction positive setup</li>
+                            </ol>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Sancti Tigris</strong> - Powerful duplex shotgun with Purity proc (healing burst)</li>
+                                <li><strong>Sancti Magistar</strong> - Healing mace with unique support mechanics</li>
+                                <li><strong>Augment Mods</strong> - Pilfering Swarm (Hydroid), Regenerative Molt (Saryn), Mending Splint (Wisp)</li>
+                                <li><strong>Ancient Healer Specter</strong> - Extremely useful summon for damage reduction</li>
+                                <li><strong>Relic Packs</strong> - Quick platinum farming pipeline</li>
+                            </ul>
+                        </div>
+                        <div class="faction-relations">
+                            <span class="relation allied">&#10003; Allied: <span class="faction-link" data-faction="perrin">Perrin Sequence</span> (+50%)</span>
+                            <span class="relation supported">&#10003; Supports: <span class="faction-link" data-faction="red-veil">Red Veil</span> (+50%)</span>
+                            <span class="relation opposed">✕ Opposed: <span class="faction-link" data-faction="steel-meridian">Steel Meridian</span> (-50%)</span>
+                            <span class="relation enemy">✕ Enemy: <span class="faction-link" data-faction="arbiters">Arbiters of Hexis</span> (-100%)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPEN WORLD SECTION -->
+        <section class="category-section" id="section-openworld">
+            <h2>&#127757; Open World Factions</h2>
+            <div class="strategy-note" style="--note-accent: #34d399; grid-template-columns: 1fr;">
+                <div class="strategy-note-full">
+                    <div class="strategy-note-label">Core Concept</div>
+                    <div class="strategy-note-value">Neutral factions, no alliance conflicts. <span class="strategy-tag">Bounties</span> <span class="strategy-tag">Conservation</span> <span class="strategy-tag">Resources</span></div>
+                </div>
+            </div>
+
+            <!-- Priority Guide -->
+            <div class="alliance-chart" style="text-align:left;">
+                <h3>&#128203; Recommended Priority Order</h3>
+                <div class="method-rank">
+                    <span class="rank-badge best">1ST</span>
+                    <div>
+                        <strong><span class="faction-link" data-faction="entrati">Entrati (Deimos)</span></strong>
+                        <p>Unlocks the Helminth system - the single biggest power boost in the game. Essential for endgame build diversity.</p>
+                    </div>
+                </div>
+                <div class="method-rank">
+                    <span class="rank-badge best">2ND</span>
+                    <div>
+                        <strong><span class="faction-link" data-faction="holdfasts">Holdfasts (Zariman)</span></strong>
+                        <p>Incarnon weapons and powerful Arcanes. Some of the strongest gear in the game is gated behind Holdfast ranks.</p>
+                    </div>
+                </div>
+                <div class="method-rank">
+                    <span class="rank-badge good">3RD</span>
+                    <div>
+                        <strong><span class="faction-link" data-faction="cavia">Cavia (Sanctum Anatomica)</span></strong>
+                        <p>Key for endgame melee builds. Melee Arcanes (like Melee Influence) are meta for maximizing damage.</p>
+                    </div>
+                </div>
+                <div class="method-rank">
+                    <span class="rank-badge alt">4TH</span>
+                    <div>
+                        <strong><span class="faction-link" data-faction="ostron">Ostron</span> & <span class="faction-link" data-faction="solaris">Solaris United</span></strong>
+                        <p>Important for early-to-mid-game: Zaws (custom melee), Kitguns (custom secondaries), and unlocking The Quills / Vox Solaris.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faction-grid" id="openworld-faction-grid">
+
+                <!-- Ostron -->
+                <div class="faction-detail-card" id="faction-ostron">
+                    <div class="faction-banner ostron-banner">
+                        <div class="faction-sigil">&#x1F305;</div>
+                        <h3>&#127907; Ostron (Cetus)</h3>
+                        <span class="faction-motto">Plains of Eidolon - Earth</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Bounties (Konzu)</strong>
+                                    <p>Run highest-tier bounties you can handle. Each completion gives large standing chunks. Fast with a good squad. Steel Path bounties give even more.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Animal Conservation (Ivara)</strong>
+                                    <p>Use Tranq Rifle + Ivara's sleep arrow in Plains. Capture rare animals (Vasca Kavat, rare birds) for high standing per catch. Relaxed, solo-friendly, no combat required.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Fishing & Mining</strong>
+                                    <p>Turn in fish to Fisher Hai-Luk or gems/ore to Old Man Suumbaat for standing. Doubles as resource gathering. Resource Booster doubles yields.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Zaws</strong> - Custom-built melee weapons. Some of the strongest melee in the game with the right parts</li>
+                                <li><strong>Cetus Arcanes</strong> - Magus Elevate, Virtuos Strike, useful Operator arcanes</li>
+                                <li><strong>Mining/Fishing gear upgrades</strong> - Better cutters and spears unlock higher-tier resources</li>
+                                <li><strong>Companion Mods</strong> - Tek Assault, Tek Enhance for Kavat builds</li>
+                                <li><strong>Gara Blueprint</strong> - Available from bounty rewards</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Higher bounty tiers give disproportionately more standing</li>
+                                <li>Resource Booster doubles fish/mining yields</li>
+                                <li>Night bounties give Eidolon-related bonus rewards</li>
+                                <li>Reaching max Ostron rank unlocks access to <strong>The Quills</strong> content</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Solaris United -->
+                <div class="faction-detail-card" id="faction-solaris">
+                    <div class="faction-banner solaris-banner">
+                        <div class="faction-sigil">&#9881;&#65039;</div>
+                        <h3>&#127981; Solaris United (Fortuna)</h3>
+                        <span class="faction-motto">Orb Vallis - Venus</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Ticker's Debt-Bonds</strong>
+                                    <p>Buy Debt-Bonds from Ticker (costs credits + resources) and turn them in for standing. Fastest method if you have spare credits. Stock rotates daily - check for cheap deals!</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Animal Conservation (Ivara)</strong>
+                                    <p>Capture Kubrodon (highest value) using pheromones. Sleep with Ivara &#8594; Tranq. Perfect/Rare captures give 2-5x more standing. Very efficient per capture.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Bounties (Eudico)</strong>
+                                    <p>Standard bounty farming from Eudico. Reliable standing and also drops Debt-Bonds + part rewards. Steel Path for extra gains.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Kitguns</strong> - Custom-built secondaries/primaries. Catchmoon, Tombfinger, Gaze are all excellent. Some of the best secondaries in the game</li>
+                                <li><strong>MOA Companions</strong> - Build your own robot companion with unique precepts</li>
+                                <li><strong>Garuda Blueprint</strong> - Warframe available from bounty rewards</li>
+                                <li><strong>Companion Mods</strong> - Synth Reflex, Synth Fiber, Synth Deconstruct (meta companion mod set)</li>
+                                <li><strong>Mining/Fishing gear</strong> - Advanced Sunpoint Plasma Drill is essential for all open worlds</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Ticker's stock rotates - check daily for cheap Debt-Bond deals</li>
+                                <li>Rare/Perfect animal captures give 2-5x more standing</li>
+                                <li>Orb Vallis bounties also drop Debt-Bonds as rewards</li>
+                                <li>Ranking up unlocks access to <strong>Vox Solaris</strong> (Little Duck's back room)</li>
+                                <li>The <strong>Sunpoint Plasma Drill</strong> has built-in radar - buy it early, use it everywhere</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entrati -->
+                <div class="faction-detail-card" id="faction-entrati">
+                    <div class="faction-banner entrati-banner">
+                        <div class="faction-sigil">&#x1F9A0;</div>
+                        <h3>&#129514; Entrati (Necralisk)</h3>
+                        <span class="faction-motto">Cambion Drift - Deimos</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Mother Bounties &#8594; Token System</strong>
+                                    <p>Run bounties from Mother to earn tokens. Trade tokens to Grandmother for standing. Tokens can be <strong>stockpiled indefinitely</strong> - effectively bypasses daily cap storage! Farm tokens on weekends, turn in daily.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Family Tokens (Father/Daughter/Son/Otak)</strong>
+                                    <p>Complete tasks for each family member to earn their specific tokens. Father = resources, Daughter = fish, Son = conservation, Otak = mining. Then trade at Grandmother for standing.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Conservation (Son)</strong>
+                                    <p>Capture Deimos wildlife using Tranq Rifle. Trade perfect captures to Son for his tokens, then convert at Grandmother. Good for solo play.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Helminth Segment</strong> - Rank 3 (Associate). THE most important reward - lets you swap abilities between Warframes. Absolute game-changer.</li>
+                                <li><strong>Xaku Blueprint</strong> - Unique Warframe with powerful abilities</li>
+                                <li><strong>Deimos Kitguns</strong> - Additional Kitgun parts with unique mechanics</li>
+                                <li><strong>Vulpaphyla/Predasite Companions</strong> - Infested pets, Panzer Vulpaphyla is one of the best companions in the game</li>
+                                <li><strong>Necramech Mods</strong> - Essential for Voidrig/Bonewidow optimization</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>The token system is unique - <strong>stockpile tokens, turn in at your pace</strong></li>
+                                <li>Grandmother converts ANY family token &#8594; Entrati standing</li>
+                                <li>Required for Helminth Segment (Rank 3 Associate) - prioritize this!</li>
+                                <li>Son sells <strong>Helminth Invigoration Segment</strong> at higher ranks for weekly buffs</li>
+                                <li>Panzer Vulpaphyla is arguably the best companion - get it from Son</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Holdfasts -->
+                <div class="faction-detail-card" id="faction-holdfasts">
+                    <div class="faction-banner holdfasts-banner">
+                        <div class="faction-sigil">✦</div>
+                        <h3>&#9889; The Holdfasts (Zariman)</h3>
+                        <span class="faction-motto">Zariman Ten Zero</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Zariman Bounties - Extermination (Quinn)</strong>
+                                    <p>Run bounties from Quinn. <strong>Extermination</strong> is the fastest mission type for pure standing/hour. Void Flood is also fast. Steel Path gives boosted rewards.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Void Angel Hunting</strong>
+                                    <p>Defeating Void Angels during Zariman missions gives significant bonus standing on top of bounty rewards. Higher tiers drop Archon Shards too.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Void Cascade / Flood</strong>
+                                    <p>These mission types are longer but offer more total standing per run. Good if you enjoy the gameplay loop and want resources alongside standing.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Incarnon Weapon Adapters</strong> - Transform base weapons into Incarnon forms, some of the strongest weapons in the game</li>
+                                <li><strong>Gyre Blueprint</strong> - Powerful electric-themed Warframe from bounties</li>
+                                <li><strong>Zariman Arcanes</strong> - Powerful Warframe and Operator arcanes (Eternal, Emergence)</li>
+                                <li><strong>Evolved Amp Parts</strong> - Superior Amp components compared to Quills/Vox Solaris</li>
+                                <li><strong>Focus Lens Blueprints</strong> - For Operator progression</li>
+                                <li><strong>Archon Shards</strong> - Dropped by Void Angels, permanent Warframe stat boosts</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Steel Path Zariman bounties give significantly increased rewards</li>
+                                <li>Void Angels drop Archon Shards at higher tiers - always kill them</li>
+                                <li>Extermination is fastest for pure standing/hour</li>
+                                <li>Zariman Amp parts are <strong>better than Quills/Vox Solaris amps</strong> - skip old amp grind</li>
+                                <li>Incarnon weapons are current endgame meta - prioritize adapters</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cavia -->
+                <div class="faction-detail-card" id="faction-cavia">
+                    <div class="faction-banner cavia-banner">
+                        <div class="faction-sigil">&#129514;</div>
+                        <h3>&#128300; Cavia (Sanctum Anatomica)</h3>
+                        <span class="faction-motto">Deimos - Requires "Whispers in the Walls" quest</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Cavia Bounties (Highest Tier)</strong>
+                                    <p>Complete bounties in the Sanctum Anatomica. Higher tiers give significantly more standing. Fast mission types like Extermination are ideal.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Alchemy Missions</strong>
+                                    <p>Run Alchemy mission type for both standing and rare resource drops. Longer per run but more total standing + bonus loot.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Deep Archimedea (Weekly)</strong>
+                                    <p>Complete the weekly Deep Archimedea challenge for a large standing bonus that resets each week. Also drops rare rewards.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Melee Arcanes</strong> - Melee Influence and others are <strong>current meta</strong> for maximizing melee weapon damage</li>
+                                <li><strong>Qorvex Blueprint</strong> - Unique Warframe with powerful radiation abilities, available from bounties</li>
+                                <li><strong>New Arcanes</strong> - Several powerful arcanes unique to this syndicate</li>
+                                <li><strong>Onos Blueprints</strong> - Endgame weapon components</li>
+                                <li><strong>Cavia Cosmetics</strong> - Unique syandanas and armor sets</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Must complete <strong>"Whispers in the Walls"</strong> quest to access this faction</li>
+                                <li>Deep Archimedea weekly resets give large bonus standing</li>
+                                <li>Melee Arcanes from Cavia are <strong>best-in-slot for melee builds</strong> - high priority</li>
+                                <li>Has a "pity" system - buy specific Warframe/weapon parts directly with standing instead of relying on RNG drops</li>
+                                <li>Steel Path versions give boosted rewards</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPECIALIST SECTION -->
+        <section class="category-section" id="section-specialist">
+            <h2>&#127919; Specialist Factions</h2>
+            <div class="strategy-note" style="--note-accent: #ffa726; grid-template-columns: 1fr;">
+                <div class="strategy-note-full">
+                    <div class="strategy-note-label">Core Concept</div>
+                    <div class="strategy-note-value">Unique factions with specialized standing methods. All neutral — no alliance conflicts.</div>
+                </div>
+            </div>
+
+            <!-- Priority Guide -->
+            <div class="alliance-chart" style="text-align:left;">
+                <h3>&#128203; Recommended Priority Order</h3>
+                <div class="method-rank">
+                    <span class="rank-badge best">1ST</span>
+                    <div>
+                        <strong><span class="faction-link" data-faction="simaris">Cephalon Simaris</span></strong>
+                        <p>Get Scanner Widgets first - they make ALL future scanning easier. Simulacrum Key is essential for build testing.</p>
+                    </div>
+                </div>
+                <div class="method-rank">
+                    <span class="rank-badge best">2ND</span>
+                    <div>
+                        <strong><span class="faction-link" data-faction="necraloid">Necraloid</span></strong>
+                        <p>Required for Necramech (Voidrig/Bonewidow) - mandatory for certain story quests and endgame content.</p>
+                    </div>
+                </div>
+                <div class="method-rank">
+                    <span class="rank-badge good">3RD</span>
+                    <div>
+                        <strong><span class="faction-link" data-faction="kahl">Kahl's Garrison</span></strong>
+                        <p>Weekly missions for Archon Shards - the most impactful power increase per time invested.</p>
+                    </div>
+                </div>
+                <div class="method-rank">
+                    <span class="rank-badge alt">4TH</span>
+                    <div>
+                        <strong><span class="faction-link" data-faction="quills">Quills</span> / <span class="faction-link" data-faction="vox-solaris">Vox Solaris</span> / <span class="faction-link" data-faction="ventkids">Ventkids</span> / <span class="faction-link" data-faction="hex">The Hex</span> / <span class="faction-link" data-faction="nightwave">Nightwave</span></strong>
+                        <p>Treat as passive grinds. Zariman Amp parts have replaced Quills/Vox for best amps. Ventkids is mostly mastery fodder.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faction-grid" id="specialist-faction-grid">
+
+                <!-- Cephalon Simaris -->
+                <div class="faction-detail-card" id="faction-simaris">
+                    <div class="faction-banner simaris-banner">
+                        <div class="faction-sigil">&#x1F50D;</div>
+                        <h3>&#128225; Cephalon Simaris</h3>
+                        <span class="faction-motto">Any Relay - Sanctuary</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Stealth Scanning - Hits cap in ~5 minutes!</strong>
+                                    <p>Use <strong>Ivara or Loki</strong> (invisible) in Plains of Eidolon on <strong>Steel Path</strong>. Fly high in Archwing, enable "Enemy Highlights" in display settings, scan enemies from above. Stealth scans give massive bonus standing. The fastest standing farm in the entire game.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Daily Synthesis Target</strong>
+                                    <p>Always accept the daily target from Simaris before doing anything else. Bonus standing does <strong>NOT count toward daily cap</strong> - it's free extra standing every day.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Sanctuary Onslaught</strong>
+                                    <p>Running SO/ESO gives passive Simaris standing while also farming focus, relics, and Warframe parts (Khora from SO, Braton/Lato Vandal from ESO).</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting (Buy These First!)</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Sol-Battery Widget</strong> - Unlimited Synthesis Scanner charges forever. Buy this FIRST.</li>
+                                <li><strong>Cross-Matrix Widget</strong> - Chance to double scans. Essential QoL.</li>
+                                <li><strong>Vector-Thread Widget</strong> - Faster scanning speed.</li>
+                                <li><strong>Simulacrum Key</strong> - Unlocks the Simulacrum, essential for build testing and DPS checks.</li>
+                                <li><strong>Health Conversion</strong> - Meta mod for armor-stacking frames (Nekros, Inaros).</li>
+                                <li><strong>Energy Conversion</strong> - +50% power strength on next ability cast. Great for nuke builds.</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Get ALL three Scanner Widgets before anything else - they're permanent upgrades</li>
+                                <li>Stealth scans give 2x standing compared to alerted scans</li>
+                                <li>Health Conversion and Energy Conversion sell well on trade for platinum</li>
+                                <li>Simulacrum lets you spawn any scanned enemy to test builds against</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Quills -->
+                <div class="faction-detail-card" id="faction-quills">
+                    <div class="faction-banner quills-banner">
+                        <div class="faction-sigil">&#x1F441;&#xFE0F;</div>
+                        <h3>&#127769; The Quills</h3>
+                        <span class="faction-motto">Cetus - Operator Room (enter in Operator mode)</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Eidolon Hunts (Tridolon)</strong>
+                                    <p>Hunt Teralyst &#8594; Gantulyst &#8594; Hydrolyst at night in the Plains. Trade Sentient Cores to Onkko: Brilliant Shards = 25,000, Radiant Shards = massive standing. One full Tridolon can nearly cap you.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Teralyst Only (Solo-Friendly)</strong>
+                                    <p>If you can't do full Tridolons, just farm the basic Teralyst. Easier, soloable, still gives decent cores. Multiple runs per night cycle.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Vomvalyst Farming</strong>
+                                    <p>Kill Vomvalysts at night for Intact Sentient Cores (500 standing each). Much easier but much slower. Good for absolute beginners.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Amp Parts (Prisms/Scaffolds/Braces)</strong> - Build better Amps for Operator combat. Note: Zariman amps are now superior, so don't over-invest here.</li>
+                                <li><strong>Virtuos Arcanes</strong> - Amp arcanes that boost Operator damage. Niche but useful for Eidolons.</li>
+                                <li><strong>Magus Arcanes</strong> - Operator arcanes like Magus Elevate (instant health on transference). Very useful.</li>
+                                <li><strong>Cetus Wisps</strong> - Can be purchased here, needed for many crafting recipes.</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Enter The Quills room by switching to <strong>Operator mode</strong> near the Cetus door</li>
+                                <li>Narmer Isoplasts (from Narmer bounties) can also be traded for Quills standing</li>
+                                <li>Zariman Amps are now better - don't grind Quills extensively just for amps</li>
+                                <li>Eidolon Hunts are also a great source of Focus and Arcane Energize</li>
+                                <li>Recommended frames for Eidolons: Volt, Trinity, Harrow, Chroma/Rhino</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vox Solaris -->
+                <div class="faction-detail-card" id="faction-vox-solaris">
+                    <div class="faction-banner vox-solaris-banner">
+                        <div class="faction-sigil">&#128295;</div>
+                        <h3>&#127759; Vox Solaris</h3>
+                        <span class="faction-motto">Fortuna - Little Duck's Back Room</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Exploiter Orb Boss Fight</strong>
+                                    <p>Run the Exploiter Orb boss (start from Deck 12 in Fortuna). Drops Lazulite Toroids worth massive standing + rare resources. One of the best standing/hour in the game. Repeatable.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Toroid Farming (AFK-able)</strong>
+                                    <p>Farm Toroids at specific locations: Spaceport (Vega), Enrichment Labs (Calda), Temple of Profit (Sola). Use Nekros + Hydroid/Khora for boosted drops. Trade Toroids to Little Duck.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Profit-Taker Orb Boss</strong>
+                                    <p>Faster than Exploiter but harder and requires max Solaris United rank. Drops Toroids and credits. Speed-runners can clear in under 5 minutes.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Amp Parts</strong> - Alternative Amp components. Note: Zariman amps are now better for most builds.</li>
+                                <li><strong>Baruuk Blueprint</strong> - Powerful pacifist Warframe, requires Vox Solaris rank</li>
+                                <li><strong>Operator Arcanes</strong> - Magus Lockdown, Magus Repair (niche but useful)</li>
+                                <li><strong>Hildryn Blueprint</strong> - Shield-based Warframe, very tanky</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Narmer Isoplasts (from Narmer bounties) can also be traded for Vox Solaris standing</li>
+                                <li>Exploiter Orb also drops Hildryn parts - double value per run</li>
+                                <li>Nekros + Smeeta Kavat + Resource Booster = maximum Toroid drops</li>
+                                <li>Most Vox Solaris Arcanes are outclassed now - only grind this if you need specific items</li>
+                                <li>Requires Solaris United Old Mate rank to access Little Duck's back room</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Necraloid -->
+                <div class="faction-detail-card" id="faction-necraloid">
+                    <div class="faction-banner necraloid-banner">
+                        <div class="faction-sigil">&#128128;</div>
+                        <h3>&#128128; Necraloid</h3>
+                        <span class="faction-motto">Necralisk - Talk to Loid</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Isolation Vault Bounties</strong>
+                                    <p>Run Iso Vault bounties on Deimos from Mother. Collect Orokin Orientation Matrices and Activation Matrices. Trade to Loid. Bring <strong>Nekros</strong> for boosted matrix drops.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Chained Iso Vaults (Tier 2 & 3)</strong>
+                                    <p>After completing Tier 1, chain into Tier 2 and 3 Iso Vaults in the same session for more matrices and rare drops (Necramech parts, Damaged mods).</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Orphix Missions</strong>
+                                    <p>Some mission types drop matrices as rewards. Less efficient than Iso Vaults but available if you want variety.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Necramech Blueprints (Voidrig)</strong> - MANDATORY for certain story quests (The New War) and endgame content. Priority #1.</li>
+                                <li><strong>Necramech Blueprints (Bonewidow)</strong> - Second Necramech, melee-focused. Good for mastery.</li>
+                                <li><strong>Necramech Mods</strong> - Essential mods for your Necramech builds</li>
+                                <li><strong>Cortege</strong> - Archgun usable by Necramechs, powerful flame weapon</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Nekros</strong> is highly recommended - Desecrate increases matrix drop rates significantly</li>
+                                <li>Voidrig Necramech is required for <strong>The New War</strong> quest - build it early</li>
+                                <li>Chain all 3 tiers of Iso Vaults for maximum efficiency per session</li>
+                                <li>Damaged Necramech mods drop from Iso Vault enemies - these sell well on trade</li>
+                                <li>You need Entrati standing alongside Necraloid - do both at the same time on Deimos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kahl's Garrison -->
+                <div class="faction-detail-card" id="faction-kahl">
+                    <div class="faction-banner kahl-banner">
+                        <div class="faction-sigil">&#x1FAB6;</div>
+                        <h3>&#129686; Kahl&#39;s Garrison</h3>
+                        <span class="faction-motto">Weekly Break Narmer Missions</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Weekly Break Narmer Mission + ALL Side Objectives</strong>
+                                    <p>Complete Kahl's weekly mission with <strong>every optional objective completed</strong>. Side objectives give massive bonus standing. Use a guide for objective locations the first time. Resets every week.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Repeat Missions for Missed Objectives</strong>
+                                    <p>If you missed side objectives, you can replay the mission to complete them. Standing is awarded per objective, not per completion.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Archon Shards</strong> - MAIN REASON to do this. Permanent stat boosts for your Warframe. Extremely powerful endgame progression.</li>
+                                <li><strong>Styanax Blueprint</strong> - Warframe available from Kahl's shop (Chipper)</li>
+                                <li><strong>Archon Mods</strong> - Powerful unique mods (Archon Stretch, Archon Vitality, etc.)</li>
+                                <li><strong>Kahl Cosmetics</strong> - Unique armor and syandana sets</li>
+                                <li><strong>Weapon Blueprints</strong> - Several unique weapons from Chipper's shop</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Side objectives give <strong>significantly more standing</strong> than just completing the mission</li>
+                                <li>Stock (currency) earned is spent at <strong>Chipper's shop</strong> in the Drifter's Camp</li>
+                                <li><strong>Weekly cap</strong> - no need to grind daily, just complete once per week</li>
+                                <li>Archon Shards are the <strong>most impactful endgame power increase</strong> per time invested</li>
+                                <li>Use YouTube guides for side objective locations until you memorize them</li>
+                                <li>Requires completion of <strong>"Veilbreaker"</strong> quest to access</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Hex -->
+                <div class="faction-detail-card" id="faction-hex">
+                    <div class="faction-banner hex-banner">
+                        <div class="faction-sigil">&#x1F3AD;</div>
+                        <h3>&#10024; The Hex</h3>
+                        <span class="faction-motto">Steel Path Endgame Content</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Steel Path Bounties</strong>
+                                    <p>Run the specific Steel Path bounties associated with The Hex. High standing rewards per completion. Often tied to Coda/Lich content. Bring endgame-ready builds.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Netracell Missions</strong>
+                                    <p>Complete weekly Netracell missions for Hex standing alongside other rewards. These rotate and provide good standing chunks.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Hex-exclusive Mods</strong> - Powerful endgame mods only available from this faction</li>
+                                <li><strong>Steel Path Cosmetics</strong> - Unique visual rewards showing endgame mastery</li>
+                                <li><strong>Tauforged Archon Shards</strong> - Enhanced versions of Archon Shards with doubled stat bonuses</li>
+                                <li><strong>Incarnon Genesis Adapters</strong> - Additional Incarnon weapon transformations</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Requires <strong>Steel Path unlocked</strong> - complete all Star Chart nodes first</li>
+                                <li>Bring fully modded endgame builds - Steel Path enemies are significantly tougher</li>
+                                <li>Tauforged Archon Shards are the ultimate endgame chase - 2x stats of normal shards</li>
+                                <li>Pair with other Steel Path activities for multi-faction progress</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ventkids -->
+                <div class="faction-detail-card" id="faction-ventkids">
+                    <div class="faction-banner ventkids-banner">
+                        <div class="faction-sigil">&#x1F6F9;</div>
+                        <h3>&#128747; Ventkids</h3>
+                        <span class="faction-motto">Fortuna - Vent Hideout</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>K-Drive Tricks - The Pearl Grinding Spot</strong>
+                                    <p>Ride your K-Drive in the Orb Vallis. Go to <strong>The Pearl</strong> (the large pipe near Fortuna entrance) and chain grinds + flips for massive trick combos. Score multipliers stack - one good combo can give huge standing.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>K-Drive Races</strong>
+                                    <p>Complete K-Drive race courses scattered around Orb Vallis. Decent standing per race, and they're short. Good for variety.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Free Roam Tricks</strong>
+                                    <p>Just ride around Orb Vallis doing tricks on any surface. Slower but zero-effort. Listen to music and vibe.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>K-Drive Parts</strong> - Mostly mastery fodder (MR points). Build all 4 boards for mastery.</li>
+                                <li><strong>K-Drive Mods</strong> - Maglocks and Inertia Dampeners are the only widely useful ones</li>
+                                <li><strong>K-Drive Skins</strong> - Cosmetic customization for your board</li>
+                                <li><strong>Mastery Rank XP</strong> - Each K-Drive gives 6,000 MR. Worth building for MR progression.</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Generally considered <strong>lowest priority</strong> - only grind for mastery or if you enjoy K-Drives</li>
+                                <li>The Pearl pipe is the fastest standing spot - long rail for continuous grinds</li>
+                                <li>Trick multipliers are key - chain tricks without landing for bigger scores</li>
+                                <li>Archwing is faster for traveling, but K-Drive is needed for Ventkids standing</li>
+                                <li>You get a free starter K-Drive board from the Fortuna quest line</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nightwave -->
+                <div class="faction-detail-card" id="faction-nightwave">
+                    <div class="faction-banner nightwave-banner">
+                        <div class="faction-sigil">&#128251;</div>
+                        <h3>&#128251; Nightwave</h3>
+                        <span class="faction-motto">Nora Night - Orbiter Radio</span>
+                    </div>
+                    <div class="faction-body">
+                        <div class="method-section">
+                            <h4>&#128640; Fastest Standing Methods</h4>
+                            <div class="method-rank">
+                                <span class="rank-badge best">BEST</span>
+                                <div>
+                                    <strong>Elite Weekly Acts (7,000 standing each)</strong>
+                                    <p>Complete all Elite Weekly challenges first - they give the most standing per act. Examples: Complete a Sortie, Kill a Profit-Taker, complete 3 Nightmare missions.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge good">GOOD</span>
+                                <div>
+                                    <strong>Regular Weekly Acts (4,500 standing each)</strong>
+                                    <p>Complete all regular weekly acts next. Usually easier tasks like: Kill 150 enemies with a specific element, complete X bounties, gild a modular item.</p>
+                                </div>
+                            </div>
+                            <div class="method-rank">
+                                <span class="rank-badge alt">ALT</span>
+                                <div>
+                                    <strong>Daily Acts (1,000 standing each)</strong>
+                                    <p>Small daily tasks. Quick to complete but lowest standing. Do them if you're already online, don't stress about missing them.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#127942; Key Rewards Worth Getting</h4>
+                            <ul class="pro-tips-list">
+                                <li><strong>Nightwave Creds</strong> - Spend on: Nitain Extract (essential crafting material), Orokin Catalysts/Reactors ("Potatoes"), Aura Mods, Alternate Helmets</li>
+                                <li><strong>Nitain Extract</strong> - Almost impossible to get elsewhere. Buy with Nightwave Creds. Always stock up.</li>
+                                <li><strong>Orokin Catalysts/Reactors</strong> - "Blue/Gold Potatoes". Double mod capacity on weapons/Warframes.</li>
+                                <li><strong>Umbra Forma</strong> - Appears at high ranks. Lets you put Umbral polarity on any slot. Extremely rare and valuable.</li>
+                                <li><strong>Exclusive Cosmetics</strong> - Armor sets, syandanas, weapon skins from each season's track.</li>
+                                <li><strong>Kuva</strong> - Buy with excess Nightwave Creds for Riven mod rolling.</li>
+                            </ul>
+                        </div>
+                        <div class="method-section">
+                            <h4>&#x1F4A1; Pro Tips</h4>
+                            <ul class="pro-tips-list">
+                                <li>Weekly acts give 4,500 standing each, Elite Weeklies give 7,000 each</li>
+                                <li>Missed weeks CAN be recovered - old acts roll into the current week's pool</li>
+                                <li><strong>Nitain Extract</strong> should be your #1 Cred purchase - you'll always need more</li>
+                                <li>After Rank 30 (max), you earn bonus Nightwave Creds per rank - infinite value</li>
+                                <li>No daily cap - Nightwave standing is purely act-based, complete at your pace</li>
+                                <li>Nightwave seasons run for months - you don't need to rush</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RANK REQUIREMENTS SECTION -->
+        <section class="category-section" id="section-ranks">
+            <h2>&#128202; Rank Requirements</h2>
+            <div class="strategy-note" style="--note-accent: #38bdf8; grid-template-columns: 1fr;">
+                <div class="strategy-note-full">
+                    <div class="strategy-note-label">Core Concept</div>
+                    <div class="strategy-note-value">Core syndicate standing thresholds, cumulative costs, and daily cap timeline.</div>
+                </div>
+            </div>
+
+            <div class="rank-table-wrap">
+                <table class="rank-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Standing Needed</th>
+                            <th>Cumulative</th>
+                            <th>Days @ MR15</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Rank 1</td><td>22,000</td><td>22,000</td><td>~2 days</td></tr>
+                        <tr><td>Rank 2</td><td>44,000</td><td>66,000</td><td>~4 days</td></tr>
+                        <tr><td>Rank 3</td><td>70,000</td><td>136,000</td><td>~9 days</td></tr>
+                        <tr><td>Rank 4</td><td>99,000</td><td>235,000</td><td>~15 days</td></tr>
+                        <tr><td>Rank 5 (Max)</td><td>132,000</td><td>367,000</td><td>~23 days</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="strategy-note" style="--note-accent: #ffd700; grid-template-columns: 1fr;">
+                <div class="strategy-note-full">
+                    <div class="strategy-note-label">Note</div>
+                    <div class="strategy-note-value"><strong>Standing is consumed</strong> when ranking up. Each rank also requires a one-time sacrifice of credits + resources (Forma, Orokin Reactors, Prime parts, etc).</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UNIVERSAL STANDING TIPS SECTION -->
+        <section class="category-section" id="section-tips">
+            <h2>&#9889; Universal Standing Tips</h2>
+            <div class="strategy-note" style="--note-accent: #34d399; grid-template-columns: 1fr;">
+                <div class="strategy-note-full">
+                    <div class="strategy-note-label">Core Concept</div>
+                    <div class="strategy-note-value">Daily cap formula, medallion tricks, token systems, and efficiency strategies.</div>
+                </div>
+            </div>
+
+            <div class="strategy-note" style="--note-accent: #ffa726;">
+                <div>
+                    <div class="strategy-note-label">&#128202; Daily Cap Formula</div>
+                    <div class="strategy-note-value">Your daily cap = <strong>1,000 + (MR &times; 1,000)</strong>. Higher Mastery Rank = more standing per day.</div>
+                </div>
+                <div>
+                    <div class="strategy-note-label">&#127885; Medallions Bypass Cap</div>
+                    <div class="strategy-note-value">Syndicate medallions do <strong>NOT</strong> count toward your daily limit. Farm them for unlimited bonus standing.</div>
+                </div>
+                <div>
+                    <div class="strategy-note-label">&#129689; Token Systems</div>
+                    <div class="strategy-note-value">Entrati tokens can be stockpiled and turned in later, letting you bank standing beyond the daily cap.</div>
+                </div>
+                <div>
+                    <div class="strategy-note-label">&#128081; Steel Path Bonus</div>
+                    <div class="strategy-note-value">Many activities give more standing or better rewards when done on Steel Path difficulty.</div>
+                </div>
+                <div>
+                    <div class="strategy-note-label">&#128177; Trading Saves Time</div>
+                    <div class="strategy-note-value">All syndicate rewards are <strong>tradeable</strong>. If you need a mod from an enemy faction, just trade with another player for platinum.</div>
+                </div>
+                <div>
+                    <div class="strategy-note-label">&#128204; Pick 4 Core Syndicates</div>
+                    <div class="strategy-note-value">You can maintain <strong>4 of 6</strong> core syndicates positive simultaneously. Best combos: <span class="strategy-tag">Steel Meridian + Red Veil</span> <span class="strategy-tag">Suda + New Loka</span></div>
+                </div>
+                <div>
+                    <div class="strategy-note-label">&#128225; Loot Radar Stacking</div>
+                    <div class="strategy-note-value">Stack <span class="strategy-tag">Loot Detector</span> <span class="strategy-tag">Thief's Wit</span> <span class="strategy-tag">Animal Instinct</span> for maximum radar range when hunting medallions.</div>
+                </div>
+                <div>
+                    <div class="strategy-note-label">&#128161; Don&#39;t Burn Out</div>
+                    <div class="strategy-note-value">Focus on <strong>1-2 factions</strong> at a time. Hit daily cap &#8594; move on. Consistency beats marathon grinding sessions.</div>
+                </div>
+            </div>
+        </section>
+
+</div><!-- /.container -->
+
+<script>
+document.querySelectorAll('.toc-toggle').forEach(function(tile) {
+    tile.addEventListener('click', function(e) {
+        e.preventDefault();
+        var id = this.getAttribute('data-section');
+        var sec = document.getElementById(id);
+        if (!sec) return;
+        var toc = document.querySelector('.toc');
+        var isOpen = sec.style.display === 'block';
+        document.querySelectorAll('.category-section').forEach(function(s) { s.style.display = 'none'; });
+        if (!isOpen) {
+            sec.style.display = 'block';
+            toc.style.display = 'none';
+            sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            toc.style.display = '';
+        }
+    });
+});
+document.querySelectorAll('.category-section').forEach(function(sec) {
+    var btn = document.createElement('button');
+    btn.textContent = '← Back to Menu';
+    btn.className = 'back-to-menu';
+    btn.style.cssText = 'margin-bottom:20px;padding:8px 18px;border-radius:8px;border:1px solid rgba(255,171,0,0.3);background:rgba(15,22,42,0.6);color:#ffab00;cursor:pointer;font-family:Inter,sans-serif;font-size:0.85rem;font-weight:600;transition:all 0.2s;';
+    btn.addEventListener('click', function() {
+        sec.style.display = 'none';
+        document.querySelector('.toc').style.display = '';
+        document.querySelector('.toc').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    sec.insertBefore(btn, sec.firstChild);
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Site Map</title>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; padding: 110px 20px 60px; }
+        .map-wrap { max-width: 1750px; margin: 0 auto; padding: 3rem 0 1.5rem; }
+        .map-title { text-align: left; color: #89cff0; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; font-size: 2rem; margin: 0 0 6px; border-bottom: none !important; }
+        .map-sub { text-align: left; color: #94a3b8; margin: 0 0 30px; font-size: 0.95rem; letter-spacing: 1.5px; text-transform: uppercase; }
+        .map-hub { display: block; width: max-content; max-width: 90%; margin: 0 auto; text-decoration: none;
+            background: rgba(45,212,191,0.10); border: 1.5px solid #2dd4bf; color: #2dd4bf;
+            border-radius: 12px; padding: 14px 28px; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-weight: 700;
+            font-size: 1.15rem; text-align: center; box-shadow: 0 6px 24px rgba(45,212,191,0.18); transition: all 0.2s; }
+        .map-hub:hover { background: rgba(45,212,191,0.20); transform: translateY(-2px); }
+        .map-stem { width: 2px; height: 28px; background: linear-gradient(#2dd4bf, rgba(45,212,191,0.2)); margin: 0 auto; }
+        .map-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 4px; }
+        .map-cat { background: rgba(15,22,42,0.6); border: 1px solid rgba(255,255,255,0.10); border-top: 3px solid #2dd4bf;
+            border-radius: 12px; padding: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .map-cat h2 { margin: 0 0 14px; font-size: 1.1rem; color: #ffab00; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            letter-spacing: 1px; border: none; padding: 0; display: flex; align-items: center; gap: 8px; }
+        .map-nodes { display: flex; flex-direction: column; gap: 8px; }
+        .map-node { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #e2e8f0;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+            padding: 9px 12px; font-size: 0.92rem; transition: all 0.15s; }
+        .map-node:hover { background: rgba(45,212,191,0.10); border-color: #2dd4bf; color: #2dd4bf; transform: translateX(3px); }
+        .map-flag { flex-shrink: 0; min-width: 26px; height: 20px; line-height: 20px; text-align: center; font-size: 0.72rem;
+            font-weight: 700; border-radius: 5px; background: rgba(45,212,191,0.15); color: #2dd4bf; border: 1px solid rgba(45,212,191,0.35); }
+        .map-legend { text-align: center; color: #64748b; font-size: 0.85rem; margin-top: 26px; }
+    
+body { padding-top: 154.6px !important; padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER (Home + Settings; the Site Map button is added by common.js) -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+
+</div>
+<div class="container" style="max-width:1750px;">
+    <header>
+        <h1>&#128214; The Orbiter Compendium &mdash; Site Map</h1>
+        <p class="subtitle">Every page in the Compendium, grouped by area &mdash; click any block to jump there</p>
+    </header>
+    <a class="map-hub" href="../!Warframe_Master_Index.html">🪠 Command Center (Home)</a>
+    <div class="map-stem"></div>
+    <div id="map-grid" class="map-grid"></div>
+    <p class="map-legend">A teal number badge shows a page's position in the guided reading flow.</p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var OVERRIDES = {
+    "!Warframe_Master_Index.html": "Command Center",
+    "Warframe_System_Settings.html": "Settings",
+    "Warframe_Site_Map.html": "Site Map",
+    "Warframe_Drop_Tables.html": "Drop Tables",
+    "Warframe_Active_Projects_Farming_Hub.html": "Active Projects Hub",
+    "Warframe_Weapons_Recipe_Ingredients.html": "Weapon Recipes",
+    "Warframe_Disposal_Guidelines_SOP.html": "Disposal Guidelines",
+    "Warframe_Reset_Checklist.html": "Weekly Reset Checklist",
+    "Warframe_Lich_Guide.html": "Lich & Sisters",
+    "Warframe_Companions_Vehicles_Codex.html": "Companions & Vehicles",
+    "Warframe_Necramech_Codex.html": "Necramech",
+    "Warframe_Kahl_Veilbreaker_Codex.html": "Kahl & Veilbreaker",
+    "Warframe_Tennokai_Melee_Codex.html": "Tennokai Melee",
+    "README.html": "Documentation",
+    "Release_Notes.html": "Release Notes",
+    "License_Agreement.html": "License Agreement"
+  };
+  function friendly(f) {
+    if (OVERRIDES[f]) return OVERRIDES[f];
+    return f.replace(/^!/, "").replace(/^Warframe_/, "").replace(/\.html$/, "").replace(/_/g, " ");
+  }
+  var CATEGORIES = [
+    { icon: "🚀", title: "Getting Started", pages: ["Warframe_Orbiter_Codex.html","Warframe_Progression_Guide.html","Warframe_Mastery_Rank_Guide.html","Warframe_Quest_Codex.html","Warframe_Start_Here.html","Warframe_Tenno_Path.html","Warframe_Tenno_Path_Expansion.html","Warframe_Tenno_Path_Endgame.html"] },
+    { icon: "🪠", title: "Hubs & Dashboards", pages: ["Warframe_Core_Codex_Hub.html","Warframe_Core_Dashboard.html","Warframe_Dashboard.html","Warframe_Arsenal_Dashboard.html","Warframe_Economy_Dashboard.html","Warframe_Endgame_Dashboard.html","Warframe_Systems_Dashboard.html","Warframe_Live_Network_Hub.html","Warframe_Active_Projects_Farming_Hub.html"] },
+    { icon: "⚔️", title: "Arsenal", pages: ["Warframe_Meta_Weapons_Codex.html","Warframe_Weapon_Build_Customizer.html","Warframe_Weapons_Recipe_Ingredients.html","Warframe_Frame_Builds_Reference.html","Warframe_Builds_Codex.html","Warframe_Tennokai_Melee_Codex.html","Warframe_Companions_Vehicles_Codex.html","Warframe_Incarnon_Tracker.html"] },
+    { icon: "🧹", title: "Mods & Arcanes", pages: ["Warframe_Mods_Database.html","Warframe_Mod_Farming_Guide.html","Warframe_Rare_Mods_Value_Guide.html","Warframe_Augment_Codex.html","Warframe_Arcane_Codex.html","Warframe_Riven_Guide.html"] },
+    { icon: "🌱", title: "Farming & Economy", pages: ["Warframe_Resource_Farming_Guide.html","Warframe_Endo_Farming_Volume.html","Warframe_Platinum_Farming_Guide.html","Warframe_Currency_Farming_Codex.html","Warframe_Foundry_Farming_Guide.html","Warframe_Foundry_Planner.html","Warframe_Tenno_Foundry.html","Warframe_Vendor_Tracking_Guide.html","Warframe_Trading_Ledger.html","Warframe_Syndicate_Farming_Guide.html","Warframe_Syndicate_Manager.html","Warframe_Relics_Database.html","Warframe_Relic_Tracker.html","Warframe_Void_Relics_Meta_Guide.html","Warframe_Tenet_Kuva_Weapons_Guide.html","Warframe_Fishing_Companion_Codex.html","Warframe_Conservation_Codex.html"] },
+    { icon: "💥", title: "Combat & Mechanics", pages: ["Warframe_Combat_Mechanics.html","Warframe_Damage_Guide.html","Warframe_Status_Effects_Guide.html","Warframe_Mechanics_Focus_Guide.html","Warframe_Amp_Operator_Guide.html","Warframe_Helminth_Synergy_App.html"] },
+    { icon: "🏆", title: "Endgame & Activities", pages: ["Warframe_Endgame_Systems_Codex.html","Warframe_Endgame_Modes_Codex.html","Warframe_Steel_Path_Audit.html","Warframe_Mission_Types_Guide.html","Warframe_Arbitrations_Guide.html","Warframe_Profit_Taker_Guide.html","Warframe_Conclave_Guide.html","Warframe_Duviri_Codex.html","Warframe_Circuit_Tracker_App.html","Warframe_Archon_Planner_App.html","Warframe_Railjack_Codex.html","Warframe_Necramech_Codex.html","Warframe_Kahl_Veilbreaker_Codex.html","Warframe_Lich_Guide.html","Warframe_Eidolon_Hunt_Guide.html","Warframe_Deep_Archimedea_Guide.html","Warframe_Open_Worlds_Guide.html","Warframe_Zariman_Guide.html","Warframe_Albrecht_Labs_Guide.html","Warframe_1999_Hollvania_Guide.html","Warframe_Seasonal_Events_Guide.html","Warframe_Nightwave_Guide.html"] },
+    { icon: "🧹", title: "Tools & Maintenance", pages: ["Warframe_Inventory_Cleanup_Guide.html","Warframe_Disposal_Guidelines_SOP.html","Warframe_Reset_Checklist.html","Warframe_Farming_Codex_App.html","Warframe_Drop_Tables.html"] },
+    { icon: "⚙️", title: "System & Reference", pages: ["Warframe_System_Settings.html","Warframe_Site_Map.html","README.html","Release_Notes.html","License_Agreement.html"] }
+  ];
+  var flow = Array.isArray(window.GUIDE_SEQUENCE) ? window.GUIDE_SEQUENCE : [];
+  var grid = document.getElementById("map-grid");
+  CATEGORIES.forEach(function (cat) {
+    var card = document.createElement("div");
+    card.className = "map-cat";
+    var h = document.createElement("h2");
+    h.textContent = cat.icon + "  " + cat.title;
+    card.appendChild(h);
+    var nodes = document.createElement("div");
+    nodes.className = "map-nodes";
+    cat.pages.forEach(function (p) {
+      var a = document.createElement("a");
+      a.className = "map-node";
+      a.href = ({"README.html":1,"Release_Notes.html":1,"License_Agreement.html":1}[p] ? "docs/" + p : p);
+      var pos = flow.indexOf(p);
+      if (pos !== -1) {
+        var flag = document.createElement("span");
+        flag.className = "map-flag";
+        flag.textContent = "#" + (pos + 1);
+        a.appendChild(flag);
+      }
+      var label = document.createElement("span");
+      label.textContent = friendly(p);
+      a.appendChild(label);
+      nodes.appendChild(a);
+    });
+    card.appendChild(nodes);
+    grid.appendChild(card);
+  });
+})();
+</script>
+</body>
+</html>
+
+
+
+
+

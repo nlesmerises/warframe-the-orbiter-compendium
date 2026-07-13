@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Companions & Vehicles</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+    :root {
+      --bg-dark: #14181f;
+      --color-primary: #d35400; /* Deimos Orange */
+      --color-accent: #f39c12; /* Infested Gold */
+      --color-green: #2ecc71;
+      --text-primary: #ecf0f1;
+      --text-secondary: #95a5a6;
+      --border-glow: rgba(211, 84, 0, 0.2);
+    }
+
+    body { padding-top: 154.6px !important; }
+    .qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+    .qi-tile-full { grid-column: 1 / -1; }
+    .qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+    .qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+    .qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+    .qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+    .qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+    .qi-tile:hover .qi-tile-title { color: #ffd740; }
+    @keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+
+    .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    @media (max-width: 1200px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 680px)  { .card-grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: rgba(15,22,42,0.45);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 20px 22px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover { background: rgba(23,33,62,0.75); box-shadow: 0 10px 30px rgba(0,0,0,0.4); transform: translateY(-2px); }
+
+    .card .type-tag {
+      font-size: 0.7rem;
+      background: rgba(211, 84, 0, 0.15);
+      color: var(--color-accent);
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid var(--border-glow);
+    }
+
+    .grid-2col { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 15px; }
+    @media (min-width: 768px) { .grid-2col { grid-template-columns: 1fr 1fr; } }
+
+    .box {
+      background: var(--bg-dark);
+      padding: 15px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .box h4 {
+      margin-top: 0;
+      color: var(--color-accent);
+      font-size: 0.95rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    ul.mod-list { padding-left: 20px; margin: 0; font-size: 0.85rem; color: var(--text-secondary); }
+    ul.mod-list li { margin-bottom: 6px; }
+    ul.mod-list li strong { color: var(--text-primary); }
+
+    .card-tracker-cb { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--text-secondary); position: absolute; top: 18px; right: 20px; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Tennokai_Melee_Codex.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a><a id="nav-next-top" href="Warframe_Fishing_Companion_Codex.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128062; Companions &amp; Vehicles</h1>
+        <p class="subtitle">Necralisk Bio-Lab Assembler &middot; Meta Pets &middot; Sentinels &middot; Mechs &middot; Archwings</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="section-pets" style="border-left-color:#2ecc71;"><div class="qi-tile-icon">&#128062;</div><h2 class="qi-tile-title">Pets &amp; Sentinels</h2><p class="qi-tile-desc">Acquired in the Cambion Drift (Deimos). Spreads Viral spores automatically to target groups. When it dies, it goes into a larva form and respawns 30 seconds later.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-vehicles" style="border-left-color:#3498db;"><div class="qi-tile-icon">&#128640;</div><h2 class="qi-tile-title">Vehicles</h2><p class="qi-tile-desc">Heavy weapons platform essential for Open World bounties and endgame Orphix fields. Trivializes heavy target battles.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-comparison" style="border-left-color:#f39c12;"><div class="qi-tile-icon">&#128202;</div><h2 class="qi-tile-title">Companion Type Comparison</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-top-picks" style="border-left-color:#d35400;"><div class="qi-tile-icon">&#127942;</div><h2 class="qi-tile-title">Top Companions by Role</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-necramech" style="border-left-color:#e74c3c;"><div class="qi-tile-icon">&#129470;</div><h2 class="qi-tile-title">Necramech Comparison</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-archwing" style="border-left-color:#a78bfa;"><div class="qi-tile-icon">&#128760;</div><h2 class="qi-tile-title">Archwing Quick Reference</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. PETS & SENTINELS -->
+    <section class="category-section" id="section-pets">
+        <h2>&#128062; 1. Pets &amp; Sentinels</h2>
+        <div class="card-grid">
+            <!-- Panzer Vulpaphyla -->
+            <div class="card" id="card-panzer" style="border-left:6px solid #2ecc71;">
+                <label class="card-tracker-cb" id="lbl-panzer">
+                    <input type="checkbox" id="chk-panzer" onchange="toggleCardAcquired('panzer')"> Owned
+                </label>
+                <h3>&#129418; Panzer Vulpaphyla</h3>
+                <span class="type-tag">Immortal Viral Pet</span>
+                <p style="font-size:0.88rem; color:var(--text-secondary); margin-top:10px;">
+                    Acquired in the Cambion Drift (Deimos). Spreads Viral spores automatically to target groups. When it dies, it goes into a larva form and respawns 30 seconds later.
+                </p>
+                <div class="grid-2col">
+                    <div class="box">
+                        <h4>&#127183; Core Mods</h4>
+                        <ul class="mod-list">
+                            <li><strong>Viral Quills (Mandatory):</strong> Viral spores on hit.</li>
+                            <li><strong>Panzer Devolution (Mandatory):</strong> Immortality link.</li>
+                            <li>Fetch (Loot Vacuum)</li>
+                            <li>Animal Instinct (Radar)</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>&#128279; Build Synergies</h4>
+                        <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">
+                            Because the Panzer handles Viral propagation across the room, you can free up weapon mod slots to build for pure Corrosive/Heat or raw physical scaling.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smeeta Kavat -->
+            <div class="card" id="card-smeeta" style="border-left:6px solid #2ecc71;">
+                <label class="card-tracker-cb" id="lbl-smeeta">
+                    <input type="checkbox" id="chk-smeeta" onchange="toggleCardAcquired('smeeta')"> Owned
+                </label>
+                <h3>&#128049; Smeeta Kavat</h3>
+                <span class="type-tag">Loot Multiplier</span>
+                <p style="font-size:0.88rem; color:var(--text-secondary); margin-top:10px;">
+                    Bred in the Incubator. Extremely valuable pet for grinding resources, Void Traces, and Steel Path resources because of its Charm multiplier.
+                </p>
+                <div class="grid-2col">
+                    <div class="box">
+                        <h4>&#127183; Core Mods</h4>
+                        <ul class="mod-list">
+                            <li><strong>Charm (Mandatory):</strong> Grants double resource buffs.</li>
+                            <li>Tek Enhance (Extends buff durations)</li>
+                            <li>Fetch (Vacuum)</li>
+                            <li>Animal Instinct (Radar)</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>&#128203; Playstyle Rule</h4>
+                        <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">
+                            Equip when harvesting resources. When the Charm affinity icon is active on your dashboard, claim high-value nodes or crystals immediately to double outputs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carrier Prime -->
+            <div class="card" id="card-carrier" style="border-left:6px solid #2ecc71;">
+                <label class="card-tracker-cb" id="lbl-carrier">
+                    <input type="checkbox" id="chk-carrier" onchange="toggleCardAcquired('carrier')"> Owned
+                </label>
+                <h3>&#129302; Carrier Prime</h3>
+                <span class="type-tag">Ammo Conversion</span>
+                <p style="font-size:0.88rem; color:var(--text-secondary); margin-top:10px;">
+                    Sentinel providing massive utility to explosive armaments, weapon platforms with high fire rates, and general ammo-hungry gear.
+                </p>
+                <div class="grid-2col">
+                    <div class="box">
+                        <h4>&#127183; Core Mods</h4>
+                        <ul class="mod-list">
+                            <li><strong>Ammo Case (Mandatory):</strong> Universal ammo conversion.</li>
+                            <li><strong>Looter:</strong> Automatically shoots storage boxes.</li>
+                            <li>Vacuum &amp; Guardian</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>&#128279; Synergy Option</h4>
+                        <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">
+                            Equip with Primed Firestorm setups to guarantee constant ammo regeneration. Best for weapons with low ammo pool reserves.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. VEHICLES -->
+    <section class="category-section" id="section-vehicles">
+        <h2>&#128640; 2. Vehicles</h2>
+        <div class="card-grid">
+            <!-- Voidrig -->
+            <div class="card" id="card-voidrig" style="border-left:6px solid #3498db;">
+                <label class="card-tracker-cb" id="lbl-voidrig">
+                    <input type="checkbox" id="chk-voidrig" onchange="toggleCardAcquired('voidrig')"> Owned
+                </label>
+                <h3>&#129470; Voidrig Necramech</h3>
+                <span class="type-tag">Necramech Nuke</span>
+                <p style="font-size:0.88rem; color:var(--text-secondary); margin-top:10px;">
+                    Heavy weapons platform essential for Open World bounties and endgame Orphix fields. Trivializes heavy target battles.
+                </p>
+                <div class="grid-2col">
+                    <div class="box">
+                        <h4>&#127183; Core Mods</h4>
+                        <ul class="mod-list">
+                            <li>Vitality &amp; Fiber (Reinforcements)</li>
+                            <li>Streamline &amp; Flow (Energy scaling)</li>
+                            <li>Repair (Incidental healing)</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>&#128299; Arquebex Cannons</h4>
+                        <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">
+                            Activating Guard Mode pulls out dual artillery cannons. Mod them for Corrosive/Heat with massive critical damage mods to deal millions of DPS.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amesha -->
+            <div class="card" id="card-amesha" style="border-left:6px solid #3498db;">
+                <label class="card-tracker-cb" id="lbl-amesha">
+                    <input type="checkbox" id="chk-amesha" onchange="toggleCardAcquired('amesha')"> Owned
+                </label>
+                <h3>&#128760; Amesha Archwing</h3>
+                <span class="type-tag">Immortal Support</span>
+                <p style="font-size:0.88rem; color:var(--text-secondary); margin-top:10px;">
+                    The absolute top-tier Archwing utility. Provides total invincibility, friendly healing zones, and converts incoming damage into energy.
+                </p>
+                <div class="grid-2col">
+                    <div class="box">
+                        <h4>&#127183; Core Mods</h4>
+                        <ul class="mod-list">
+                            <li>System Reroute (Efficiency - Key)</li>
+                            <li>Enhanced Durability (Max Health)</li>
+                            <li>Argon Plating (Armor rating)</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4>&#128260; Ability Loop</h4>
+                        <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">
+                            Cast 1 to shield against direct hits. Place 2 on static defense items to heal. Use 4 when low on energy to sponge damage and refill energy immediately.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. COMPANION TYPE COMPARISON -->
+    <section class="category-section" id="section-comparison">
+        <h2>&#128202; 3. Companion Type Comparison</h2>
+        <div class="card" style="padding:0;overflow:hidden;margin-bottom:1.5rem;border-left:6px solid #f39c12;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead><tr style="background:rgba(255,255,255,0.05);">
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Type</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Examples</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Key Strength</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Best For</th>
+                </tr></thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Sentinel</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Carrier Prime, Helios Prime</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Passive precepts (auto-loot, codex scan), easy to ignore</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">QoL — ammo, scanning, vacuum</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Kavat</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Smeeta, Adarza, Vasca</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Charm buff (Smeeta), crit buff (Adarza) — high ceiling, RNG-based</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Farming (Smeeta), Eidolons (Adarza)</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Kubrow</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Huras, Sahasa, Raksa</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Active melee attacks, stealth assist (Huras cloaks you)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Stealth (Huras), looting (Sahasa)</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Vulpaphyla</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Panzer, Crescent, Sly</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Revives as larva on death — immortal with correct mods</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Deimos content, Viral spreading (Panzer)</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Predasite</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Medjay, Pharaoh, Vizier</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Also immortal; strong support precepts (heal allies, shield)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Tank builds, Deimos progression</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;">MOA Companion</td><td style="padding:7px 14px;color:#9fb0c4;">Moa chassis variants</td><td style="padding:7px 14px;color:#9fb0c4;">Modular robot; can CC, debuff, or support based on precept mods</td><td style="padding:7px 14px;color:#9fb0c4;">Corpus-style utility builds</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 4. TOP COMPANIONS BY ROLE -->
+    <section class="category-section" id="section-top-picks">
+        <h2>&#127942; 4. Top Companions by Role</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:1.5rem;">
+            <div class="card" style="border-left:6px solid #d35400;">
+                <h3>&#127775; Best for Farming</h3>
+                <ul class="list">
+                    <li><strong>Smeeta Kavat</strong> &mdash; Charm proc can double resource drops, double affinity, or replicate pickups</li>
+                    <li><strong>Carrier Prime</strong> &mdash; Vacuum + Ammo Case keeps ammo topped off passively</li>
+                    <li><strong>Sahasa Kubrow</strong> &mdash; Dig precept uncovers buried loot on the ground</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #d35400;">
+                <h3>&#127919; Best for Combat</h3>
+                <ul class="list">
+                    <li><strong>Panzer Vulpaphyla</strong> &mdash; Viral Quills applies Viral to nearby enemies passively</li>
+                    <li><strong>Adarza Kavat</strong> &mdash; Cat&rsquo;s Eye gives +60% crit chance to you on proc</li>
+                    <li><strong>Helios Prime</strong> &mdash; Investigator auto-scans codex entries while you fight</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #d35400;">
+                <h3>&#128737;&#65039; Best for Survival</h3>
+                <ul class="list">
+                    <li><strong>Panzer Vulpaphyla</strong> &mdash; Immortal via larva revive loop; best endgame companion</li>
+                    <li><strong>Raksa Kubrow</strong> &mdash; Howl repels enemies + shield restore on command</li>
+                    <li><strong>Medjay Predasite</strong> &mdash; Immune to death loop; ancient-like revive mechanic</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. NECRAMECH COMPARISON -->
+    <section class="category-section" id="section-necramech">
+        <h2>&#129470; 5. Necramech Comparison: Voidrig vs Bonewidow</h2>
+        <div class="card" style="padding:0;overflow:hidden;margin-bottom:1.5rem;border-left:6px solid #e74c3c;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead><tr style="background:rgba(255,255,255,0.05);">
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Attribute</th>
+                    <th style="padding:9px 14px;text-align:left;color:#81d4fa;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Voidrig</th>
+                    <th style="padding:9px 14px;text-align:left;color:#f48fb1;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Bonewidow</th>
+                </tr></thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Role</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">DPS / Artillery</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Tank / Melee</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Signature Weapon</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Arquebex (heavy cannon) — absurd DPS</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Ironbride (melee sword) — wide cleave</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Survival</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Storm Shroud (energy shield)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Shield Maiden (block damage with shield)</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Best Content</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Deep Archimedea Mech segment, Isolation Vaults</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Dense enemy waves, Deimos open world roaming</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;">Recommendation</td><td style="padding:7px 14px;color:#4ade80;">Build this first — Arquebex is irreplaceable</td><td style="padding:7px 14px;color:#9fb0c4;">Good second Mech for variety</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 6. ARCHWING QUICK REFERENCE -->
+    <section class="category-section" id="section-archwing">
+        <h2>&#128760; 6. Archwing Quick Reference</h2>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:1.5rem;">
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <h3>&#128640; Archwing Comparison</h3>
+                <table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-top:8px;">
+                    <thead><tr><th style="padding:5px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Archwing</th><th style="padding:5px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Strength</th><th style="padding:5px 10px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.06);">Best For</th></tr></thead>
+                    <tbody>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Amesha</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Team heals, damage reflect, CC</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Railjack support</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Itzal</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Blink teleport, pull enemies</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Speed &amp; mobility</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Elytron</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Nuke mines, AoE burst</td><td style="padding:5px 10px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Archwing combat DPS</td></tr>
+                        <tr><td style="padding:5px 10px;color:#e2e8f0;">Odonata Prime</td><td style="padding:5px 10px;color:#9fb0c4;">Balanced — shield + beam</td><td style="padding:5px 10px;color:#9fb0c4;">General use starter</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <h3>&#128204; K-Drive vs Archwing</h3>
+                <ul class="list">
+                    <li><strong>K-Drive:</strong> Hover board for open worlds — earns Ventkids standing, no combat use</li>
+                    <li><strong>Archwing:</strong> Used in space missions, Railjack, and open world flight (Plains, Vallis, Deimos)</li>
+                    <li>Archwing Launcher (gear slot) deploys Archwing in open worlds</li>
+                    <li>Mods for Archwings come from Archwing missions and Railjack rewards</li>
+                    <li>Amesha is the strongest pick for almost all Railjack content</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+const COMPANION_OWNED_KEY = 'codex_companions_owned';
+
+function loadCompanionOwned() {
+    try {
+        return JSON.parse(safeStorage.getItem(COMPANION_OWNED_KEY)) || {};
+    } catch (e) {
+        return {};
+    }
+}
+
+function toggleCardAcquired(id) {
+    const cb = document.getElementById('chk-' + id);
+    if (!cb) return;
+    const owned = loadCompanionOwned();
+    owned[id] = cb.checked;
+    safeStorage.setItem(COMPANION_OWNED_KEY, JSON.stringify(owned));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Restore companion "Owned" checkbox state
+    (function restoreCompanionOwned() {
+        const owned = loadCompanionOwned();
+        Object.keys(owned).forEach((id) => {
+            const cb = document.getElementById('chk-' + id);
+            if (cb) cb.checked = !!owned[id];
+        });
+    })();
+
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

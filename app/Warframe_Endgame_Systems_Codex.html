@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <title>Warframe: The Orbiter Compendium &mdash; Endgame Systems</title>
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+.unlock-step { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:6px; }
+.unlock-step.completed { background:rgba(74,222,128,0.08); }
+.unlock-step.completed label { color:#4ade80 !important; text-decoration:line-through; }
+.subsume-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:8px; margin-top:12px; }
+.subsume-item { display:flex; align-items:center; gap:8px; padding:8px 10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:6px; }
+.subsume-item.subsumed { background:rgba(171,71,188,0.1); border-color:rgba(171,71,188,0.3); }
+.subsume-item.subsumed label { color:#ce93d8 !important; }
+.subsume-ability { color:#9fb0c4; font-size:0.85em; }
+.shard-crimson { color:#ef5350; font-weight:600; }
+.shard-amber { color:#ffca28; font-weight:600; }
+.shard-azure { color:#42a5f5; font-weight:600; }
+.shard-emerald { color:#66bb6a; font-weight:600; }
+.shard-topaz { color:#ffa726; font-weight:600; }
+.shard-violet { color:#ab47bc; font-weight:600; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128293; Endgame Systems Codex</h1>
+        <p class="subtitle">The Helminth, Archon Shards, and Incarnon Genesis</p>
+    </header>
+
+    <div style="background: rgba(244,63,94,0.10); padding: 15px; border-radius: 6px; border-left: 4px solid #f43f5e; margin-bottom: 20px; color: #e2e8f0;">
+        <strong>Note:</strong> These are the three ultimate power-creep systems in Warframe. They are designed to take a "good" build and completely break the math of the game, turning you into an unstoppable god.
+    </div>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="section-helminth" style="border-left-color:#00acc1;"><div class="qi-tile-icon">&#129516;</div><h2 class="qi-tile-title">The Helminth System</h2><p class="qi-tile-desc">Acquired from Son in the Necralisk (Deimos). You feed standard (non-Prime) Warframes to the infested mouth in your Orbiter. It destroys the frame, but permanently unlocks one sp...</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-helminth-ref" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#129516;</div><h2 class="qi-tile-title">Ability Quick Reference</h2><p class="qi-tile-desc">Most sought-after subsumed abilities for replacing weak Warframe skills. Subsuming a Warframe feeds it to Helminth and permanently unlocks that ability for others.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-shards" style="border-left-color:#a78bfa;"><div class="qi-tile-icon">&#128142;</div><h2 class="qi-tile-title">Archon Shards</h2><p class="qi-tile-desc">Acquired from Weekly Archon Hunts (after The New War) and Netracells. You can implant up to 5 of these shards directly into a Warframe. They provide massive, permanent stat boos...</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-incarnon" style="border-left-color:#ff7043;"><div class="qi-tile-icon">&#128260;</div><h2 class="qi-tile-title">Incarnon Genesis</h2><p class="qi-tile-desc">Acquired in the Steel Path Duviri Circuit. This system allows you to take incredibly old, weak, &quot;mastery fodder&quot; weapons (like the Braton, Lex, or Skana) and fuse them with Void...</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-incarnon-list" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128260;</div><h2 class="qi-tile-title">Adapter List</h2><p class="qi-tile-desc">Cavalero (Zariman) offers 5 adapters per week on rotation. Each adapter can only be applied once per weapon copy. Weapons gain an Incarnon Form (alt-fire) and an Evolution upgra...</p></a>
+        </div>
+    </div>
+
+    <!-- 1. THE HELMINTH SYSTEM -->
+    <section class="category-section" id="section-helminth">
+        <h2>&#129516; 1. The Helminth System (Ability Swapping)</h2>
+        <div class="card" style="border-left: 5px solid #00acc1;">
+            <p>Acquired from Son in the Necralisk (Deimos). You feed standard (non-Prime) Warframes to the infested mouth in your Orbiter. It destroys the frame, but permanently unlocks one specific ability from that frame, allowing you to paste it onto any other Warframe you own.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card" style="border-left: 5px solid #00acc1;">
+                <h3 style="color: #5eead4; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 10px; margin-bottom: 15px;">Helminth Unlock Walkthrough &amp; Checklist</h3>
+                <p style="font-size: 0.95em; color: #94a3b8; margin-bottom: 15px;">
+                    Follow these steps to unlock the Helminth system in your Orbiter. Check off each milestone as you complete it:
+                </p>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+                    <li class="unlock-step">
+                        <input type="checkbox" class="unlock-checkbox" id="helminth_step_mr8">
+                        <label for="helminth_step_mr8"><strong>Mastery Rank 8 Reached:</strong> Check your profile under the Escape Menu. The blueprint cannot be purchased below MR8.</label>
+                    </li>
+                    <li class="unlock-step">
+                        <input type="checkbox" class="unlock-checkbox" id="helminth_step_entrati3">
+                        <label for="helminth_step_entrati3"><strong>Entrati Syndicate Rank 3 (Associate) Reached:</strong> Complete bounties for Mother in the Necralisk, Deimos, and use tokens to rank up.</label>
+                    </li>
+                    <li class="unlock-step">
+                        <input type="checkbox" class="unlock-checkbox" id="helminth_step_blueprint">
+                        <label for="helminth_step_blueprint"><strong>Purchase Segment Blueprint:</strong> Visit Son in the Necralisk and spend 15,000 Entrati standing to buy the blueprint.</label>
+                    </li>
+                    <li class="unlock-step" style="background: rgba(45,212,191,0.08); padding: 12px; border-radius: 8px; border: 1px solid rgba(45,212,191,0.30); display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                        <span style="font-weight: bold; color: #5eead4; font-size: 0.95em;">Gather Crafting Materials:</span>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; width:100%;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" class="unlock-checkbox" id="helminth_mat_credits">
+                                <label for="helminth_mat_credits" style="font-size: 0.88em;">50,000 Credits</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" class="unlock-checkbox" id="helminth_mat_ganglion">
+                                <label for="helminth_mat_ganglion" style="font-size: 0.88em;">15 Ganglion (Deimos Polyps)</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" class="unlock-checkbox" id="helminth_mat_pustulite">
+                                <label for="helminth_mat_pustulite" style="font-size: 0.88em;">120 Pustulite (Deimos Bulbs)</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" class="unlock-checkbox" id="helminth_mat_adramal">
+                                <label for="helminth_mat_adramal" style="font-size: 0.88em;">20 Adramal Alloy (Otak Smelting)</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" class="unlock-checkbox" id="helminth_mat_raptor">
+                                <label for="helminth_mat_raptor" style="font-size: 0.88em;">5 Purple Raptor Wings (Cave Fishing)</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="unlock-step">
+                        <input type="checkbox" class="unlock-checkbox" id="helminth_step_foundry">
+                        <label for="helminth_step_foundry"><strong>Craft Segment:</strong> Construct the segment in your Orbiter's Foundry (takes 24 hours to craft).</label>
+                    </li>
+                    <li class="unlock-step">
+                        <input type="checkbox" class="unlock-checkbox" id="helminth_step_install">
+                        <label for="helminth_step_install"><strong>Install in Orbiter:</strong> Claim it from the Foundry, walk to the Infested Room door on the back-left, and sit in the chair to install.</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>&#127942; The Top 5 Subsumed Abilities to Unlock First</h3>
+                <div class="grid-2col">
+                    <div class="box">
+                        <h4>&#128081; 1. Roar (From Rhino)</h4>
+                        <p>The ultimate universal damage buff. It acts as a faction damage multiplier, meaning it double-dips on status effects like Slash bleeds and Heat burns. Slap this on any frame that lacks a damage buff.</p>
+                    </div>
+                    <div class="box">
+                        <h4>&#128154; 2. Nourish (From Grendel)</h4>
+                        <p>Arguably the most broken ability in the game. It heals you, adds massive Viral damage to all your weapons, and acts as an Energy Multiplier (energy orbs give you 3x to 4x as much energy). It solves energy economy issues on any frame.</p>
+                    </div>
+                </div>
+                <div class="grid-2col">
+                    <div class="box">
+                        <h4>&#127763; 3. Gloom (From Sevagoth)</h4>
+                        <p>Creates a massive aura around you. Enemies inside are slowed by up to 95% (almost completely frozen in time), and any damage you deal to them instantly heals you. Slap this on Garuda or Nekros to become immortal.</p>
+                    </div>
+                    <div class="box">
+                        <h4>&#128737;&#65039; 4. Pillage (From Hildryn)</h4>
+                        <p>The best armor-strip and survival tool. It fires a massive ring that strips enemy armor/shields and returns it to you as Overshields. It also cleanses status effects from you. Incredible on Mesa or Volt.</p>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 20px;">
+                    <h4>&#128128; 5. Terrify (From Nekros)</h4>
+                    <p>A cheaper, easier alternative to Pillage for stripping armor. It scares enemies away while instantly removing their armor. If you use the "Creeping Terrify" augment, they are also massively slowed.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="border-left: 5px solid #ab47bc; margin-top:20px;">
+            <h3 style="color: #ce93d8; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 10px; margin-bottom: 15px;">&#128202; Helminth Subsumption Tracker</h3>
+            <p style="font-size: 0.95em; color: #cbd5e0; margin-bottom: 20px;">
+                Feed standard (non-Prime) Warframes to the Helminth in your Orbiter to permanently unlock their signature ability.
+                Once you check a Warframe off as <strong>Subsumed</strong>, you can safely sell that standard copy from your inventory to free up slots!
+            </p>
+            <div style="margin-bottom: 20px; max-width: 350px;">
+                <input type="text" id="helminth-search" placeholder="Search Warframe or ability (e.g. 'Roar', 'Rhino')..." style="width: 100%; box-sizing: border-box; padding: 10px 14px; border-radius: 20px; border: 1.5px solid rgba(171,71,188,0.3); background: rgba(255,255,255,0.03); color:#e2e8f0; outline: none; font-size: 0.9em; transition: all 0.2s;">
+            </div>
+            <div class="subsume-grid">
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_ash"><label class="subsume-label" for="subsume_ash">Ash <span class="subsume-ability">(Shuriken)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_atlas"><label class="subsume-label" for="subsume_atlas">Atlas <span class="subsume-ability">(Petrify)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_banshee"><label class="subsume-label" for="subsume_banshee">Banshee <span class="subsume-ability">(Silence)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_baruuk"><label class="subsume-label" for="subsume_baruuk">Baruuk <span class="subsume-ability">(Lull)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_caliban"><label class="subsume-label" for="subsume_caliban">Caliban <span class="subsume-ability">(Sentient Wrath)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_chroma"><label class="subsume-label" for="subsume_chroma">Chroma <span class="subsume-ability">(Elemental Ward)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_citrine"><label class="subsume-label" for="subsume_citrine">Citrine <span class="subsume-ability">(Fractured Blast)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_dagath"><label class="subsume-label" for="subsume_dagath">Dagath <span class="subsume-ability">(Wyrd Scythes)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_dante"><label class="subsume-label" for="subsume_dante">Dante <span class="subsume-ability">(Light Verse)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_ember"><label class="subsume-label" for="subsume_ember">Ember <span class="subsume-ability">(Fire Blast)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_equinox"><label class="subsume-label" for="subsume_equinox">Equinox <span class="subsume-ability">(Rest &amp; Rage)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_excalibur"><label class="subsume-label" for="subsume_excalibur">Excalibur <span class="subsume-ability">(Radial Blind)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_frost"><label class="subsume-label" for="subsume_frost">Frost <span class="subsume-ability">(Ice Wave)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_gara"><label class="subsume-label" for="subsume_gara">Gara <span class="subsume-ability">(Spectrorage)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_garuda"><label class="subsume-label" for="subsume_garuda">Garuda <span class="subsume-ability">(Blood Altar)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_gauss"><label class="subsume-label" for="subsume_gauss">Gauss <span class="subsume-ability">(Thermal Smash)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_grendel"><label class="subsume-label" for="subsume_grendel">Grendel <span class="subsume-ability">(Nourish)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_gyre"><label class="subsume-label" for="subsume_gyre">Gyre <span class="subsume-ability">(Coil Horizon)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_harrow"><label class="subsume-label" for="subsume_harrow">Harrow <span class="subsume-ability">(Condemn)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_hildryn"><label class="subsume-label" for="subsume_hildryn">Hildryn <span class="subsume-ability">(Pillage)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_hydroid"><label class="subsume-label" for="subsume_hydroid">Hydroid <span class="subsume-ability">(Tempest Barrage)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_inaros"><label class="subsume-label" for="subsume_inaros">Inaros <span class="subsume-ability">(Desiccation)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_ivara"><label class="subsume-label" for="subsume_ivara">Ivara <span class="subsume-ability">(Quiver)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_khora"><label class="subsume-label" for="subsume_khora">Khora <span class="subsume-ability">(Ensnare)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_kullervo"><label class="subsume-label" for="subsume_kullervo">Kullervo <span class="subsume-ability">(Wrathful Advance)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_lavos"><label class="subsume-label" for="subsume_lavos">Lavos <span class="subsume-ability">(Vial Rush)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_limbo"><label class="subsume-label" for="subsume_limbo">Limbo <span class="subsume-ability">(Banish)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_loki"><label class="subsume-label" for="subsume_loki">Loki <span class="subsume-ability">(Decoy)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_mag"><label class="subsume-label" for="subsume_mag">Mag <span class="subsume-ability">(Pull)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_mesa"><label class="subsume-label" for="subsume_mesa">Mesa <span class="subsume-ability">(Shooting Gallery)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_mirage"><label class="subsume-label" for="subsume_mirage">Mirage <span class="subsume-ability">(Eclipse)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_nekros"><label class="subsume-label" for="subsume_nekros">Nekros <span class="subsume-ability">(Terrify)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_nezha"><label class="subsume-label" for="subsume_nezha">Nezha <span class="subsume-ability">(Fire Walker)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_nidus"><label class="subsume-label" for="subsume_nidus">Nidus <span class="subsume-ability">(Larva)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_nova"><label class="subsume-label" for="subsume_nova">Nova <span class="subsume-ability">(Null Star)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_nyx"><label class="subsume-label" for="subsume_nyx">Nyx <span class="subsume-ability">(Mind Control)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_oberon"><label class="subsume-label" for="subsume_oberon">Oberon <span class="subsume-ability">(Smite)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_octavia"><label class="subsume-label" for="subsume_octavia">Octavia <span class="subsume-ability">(Resonator)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_protea"><label class="subsume-label" for="subsume_protea">Protea <span class="subsume-ability">(Dispensary)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_qorvex"><label class="subsume-label" for="subsume_qorvex">Qorvex <span class="subsume-ability">(Chirinka Pillar)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_revenant"><label class="subsume-label" for="subsume_revenant">Revenant <span class="subsume-ability">(Reave)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_rhino"><label class="subsume-label" for="subsume_rhino">Rhino <span class="subsume-ability">(Roar)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_saryn"><label class="subsume-label" for="subsume_saryn">Saryn <span class="subsume-ability">(Molt)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_sevagoth"><label class="subsume-label" for="subsume_sevagoth">Sevagoth <span class="subsume-ability">(Gloom)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_styanax"><label class="subsume-label" for="subsume_styanax">Styanax <span class="subsume-ability">(Tharros Strike)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_titania"><label class="subsume-label" for="subsume_titania">Titania <span class="subsume-ability">(Spellbind)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_trinity"><label class="subsume-label" for="subsume_trinity">Trinity <span class="subsume-ability">(Well of Life)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_valkyr"><label class="subsume-label" for="subsume_valkyr">Valkyr <span class="subsume-ability">(Warcry)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_vauban"><label class="subsume-label" for="subsume_vauban">Vauban <span class="subsume-ability">(Tesla Nervos)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_volt"><label class="subsume-label" for="subsume_volt">Volt <span class="subsume-ability">(Shock)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_voruna"><label class="subsume-label" for="subsume_voruna">Voruna <span class="subsume-ability">(Lycath's Hunt)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_wisp"><label class="subsume-label" for="subsume_wisp">Wisp <span class="subsume-ability">(Wil-O-Wisp)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_wukong"><label class="subsume-label" for="subsume_wukong">Wukong <span class="subsume-ability">(Defy)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_yareli"><label class="subsume-label" for="subsume_yareli">Yareli <span class="subsume-ability">(Aquablades)</span></label></div>
+                <div class="subsume-item"><input type="checkbox" class="subsume-checkbox" id="subsume_zephyr"><label class="subsume-label" for="subsume_zephyr">Zephyr <span class="subsume-ability">(Airburst)</span></label></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. HELMINTH ABILITY QUICK REFERENCE -->
+    <section class="category-section" id="section-helminth-ref">
+        <h2>&#129516; 2. Helminth Ability Quick Reference</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Most sought-after subsumed abilities for replacing weak Warframe skills. Subsuming a Warframe feeds it to Helminth and permanently unlocks that ability for others.</p>
+        <div class="card" style="padding:0;overflow:hidden;margin-bottom:1.5rem;border-left:6px solid #4ade80;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead><tr style="background:rgba(255,255,255,0.05);">
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Ability</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Source Frame</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Effect</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Tier</th>
+                </tr></thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Roar</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Rhino</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Team damage buff &mdash; scales with Strength; best universal DPS ability</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">&#11088; S-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Nourish</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Grendel</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Viral aura on enemies hit + energy regen for team; two buffs in one</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">&#11088; S-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Dispensary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Protea</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Drops Health, Energy, and Ammo orbs on a timer &mdash; self-sustaining loop</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">&#11088; S-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Eclipse</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Mirage</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">+200% damage in light or 75% DR in shadow &mdash; variable but strong</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">A-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Gloom</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Sevagoth</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Slows enemies in range + lifesteal on kills; passive defense and sustain</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">A-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Pillage</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Hildryn</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Strips enemy armor and shields; restores your shields &mdash; dual utility</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">A-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Resonator</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Octavia</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Deploys a rolling CC ball that lures and charms enemies</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">B-Tier (niche)</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;">Fire Blast</td><td style="padding:7px 14px;color:#9fb0c4;">Ember</td><td style="padding:7px 14px;color:#9fb0c4;">Strips 75% armor via Heat procs in an area; strong for Steel Path</td><td style="padding:7px 14px;color:#9fb0c4;">B-Tier</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 3. ARCHON SHARDS -->
+    <section class="category-section" id="section-shards">
+        <h2>&#128142; 3. Archon Shards (Permanent Stat Implants)</h2>
+        <div class="card" style="border-left:6px solid #a78bfa;">
+            <p>Acquired from Weekly Archon Hunts (after The New War) and Netracells. You can implant up to 5 of these shards directly into a Warframe. They provide massive, permanent stat boosts that do not consume any Mod Capacity.</p>
+        </div>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <h3>&#128160; Primary Shards</h3>
+                <ul class="list">
+                    <li><span class="shard-crimson">Crimson Shard (Red):</span> Used primarily for <strong>+Ability Strength</strong>, <strong>+Ability Duration</strong>, or <strong>+Melee Critical Damage</strong>. Slapping 5 Crimson Shards for Ability Strength onto a frame saves you from having to use Blind Rage!</li>
+                    <li><span class="shard-amber">Amber Shard (Yellow):</span> Used primarily for <strong>+Casting Speed</strong>. A single Amber Shard on frames with long, locked animations (like Nekros' Terrify or Harrow's abilities) is an absolute game-changer. Also great for +Energy Orb Effectiveness.</li>
+                    <li><span class="shard-azure">Azure Shard (Blue):</span> Used primarily for <strong>+Armor</strong> or <strong>+Health</strong>. Great for beefing up squishy frames without wasting a mod slot on Vitality.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <h3>&#10024; Fused (Coalescent) Shards</h3>
+                <div class="card-note">
+                    <p>You can fuse two primary shards together in the Helminth to create specialized secondary colors.</p>
+                </div>
+                <ul class="list">
+                    <li><span class="shard-emerald">Emerald Shard (Green = Yellow + Blue):</span> <strong>The Armor Stripper.</strong> The most popular effect is "+Max Stacks of Corrosive Status." If you put 2 Emerald Shards on a frame, Corrosive status can now fully strip 100% of an enemy's armor (normally capped at 80%). This makes Saryn and Hydroid god-tier.</li>
+                    <li><span class="shard-topaz">Topaz Shard (Orange = Red + Yellow):</span> Popular for <strong>+Secondary Critical Chance</strong> upon killing enemies with Heat damage. Incredible on Mesa's Peacemakers.</li>
+                    <li><span class="shard-violet">Violet Shard (Purple = Red + Blue):</span> Popular for <strong>+Melee Critical Damage</strong> (doubled if your energy pool is over 500). Incredible for Kullervo and Atlas.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. INCARNON GENESIS -->
+    <section class="category-section" id="section-incarnon">
+        <h2>&#128260; 4. Incarnon Genesis (The Duviri Circuit)</h2>
+        <div class="card" style="border-left:6px solid #ff7043;">
+            <p>Acquired in the Steel Path Duviri Circuit. This system allows you to take incredibly old, weak, "mastery fodder" weapons (like the Braton, Lex, or Skana) and fuse them with Void energy, turning them into the strongest weapons in the game.</p>
+        </div>
+        <div class="card" style="border-left:6px solid #ff7043;">
+            <h3>&#128203; How it Works</h3>
+            <div class="card-note">
+                <p>You select a weapon adapter from the weekly Circuit reward path. You attach it to the weapon at Cavalero in the Chrysalith (Zariman). As you complete challenges with the weapon, you unlock an evolutionary skill tree that adds massive base stats (like +20% flat Critical Chance).</p>
+            </div>
+            <div class="box">
+                <h4>&#128299; The Best Incarnon Genesis Weapons to Farm:</h4>
+                <ul class="list">
+                    <li><strong>Torid:</strong> Turns a poison gas launcher into a chaining red-crit lightning beam. (The best primary in the game).</li>
+                    <li><strong>Lex / Dual Toxocyst:</strong> Turns simple pistols into massive, ricocheting pocket-shotguns or bullet hoses.</li>
+                    <li><strong>Ceramic Dagger / Magistar:</strong> These are used almost exclusively as "Stat Sticks" for Atlas and Khora, because their Incarnon perks grant massive flat Critical Chance and Melee Damage buffs that apply to Warframe abilities.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. INCARNON GENESIS ADAPTER LIST -->
+    <section class="category-section" id="section-incarnon-list">
+        <h2>&#128260; 5. Incarnon Genesis Adapter List</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Cavalero (Zariman) offers 5 adapters per week on rotation. Each adapter can only be applied once per weapon copy. Weapons gain an Incarnon Form (alt-fire) and an Evolution upgrade tree.</p>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ffd700;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead><tr style="background:rgba(255,255,255,0.05);">
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Weapon</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Type</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Incarnon Strength</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Tier</th>
+                </tr></thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Lex</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Secondary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Explosive burst mode; becomes one of best secondaries in game</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">S-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Torid</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Primary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Giant toxic cloud AoE on alt-fire; top-tier Toxin damage</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">S-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Felarx</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Primary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Shotgun with highest base damage in game after Incarnon</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">S-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Laetum</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Secondary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Void projectile fan on alt-fire; excellent single-target DPS</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">S-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Phenmor</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Primary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Charge rifle, becomes devastating sniper in Incarnon form</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">S-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Braton</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Primary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Transforms starter rifle into endgame weapon with evolution perks</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">A-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Boltor</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Primary</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Bolt rifle with AoE Incarnon mode; Slash proc machine</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">A-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Hate</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Melee</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Scythe &mdash; Incarnon heavy attack destroys groups</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">A-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;font-weight:600;">Dokrahm</td><td style="padding:7px 14px;color:#9fb0c4;">Melee</td><td style="padding:7px 14px;color:#9fb0c4;">Heavy scythe &mdash; best Incarnon melee for heavy attack builds</td><td style="padding:7px 14px;color:#4ade80;">S-Tier (melee)</td></tr>
+                </tbody>
+            </table>
+            <div style="padding:12px 14px;background:rgba(255,255,255,0.02);font-size:0.8rem;color:#9fb0c4;border-top:1px solid rgba(255,255,255,0.06);">
+                <strong style="color:#e2e8f0;">Duviri Circuit:</strong> Incarnon Genesis Adapters also drop from completing the Duviri Circuit &mdash; a procedurally-generated weekly circuit that pools randomly selected adapters. Check the Circuit weekly for adapters not yet in Cavalero&rsquo;s rotation.
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const headers = document.querySelectorAll('.card h3, .warframe-card h3, .weapon-card h3, .planet-card h2, .category-card h2, .volume-card h2');
+    headers.forEach((h, index) => {
+        if(h.querySelector('.tracker-container')) return;
+        const safeTitle = h.innerText.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20);
+        const id = 'tracker_' + window.location.pathname.split('/').pop() + '_' + index + '_' + safeTitle;
+        const container = document.createElement('label');
+        container.className = 'tracker-container';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'tracker-checkbox';
+        cb.id = id;
+        const card = h.closest('.warframe-card, .weapon-card, .card, .volume-card');
+        if(safeStorage.getItem(id) === 'true') {
+            cb.checked = true;
+            container.classList.add('completed');
+            if (card) { card.style.opacity = '0.5'; card.style.transition = 'opacity 0.2s ease-in-out'; }
+        }
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(id, e.target.checked);
+            if(e.target.checked) {
+                container.classList.add('completed');
+                if (card) { card.style.opacity = '0.5'; card.style.transition = 'opacity 0.2s ease-in-out'; }
+            } else {
+                container.classList.remove('completed');
+                if (card) { card.style.opacity = '1.0'; }
+            }
+        });
+        container.appendChild(cb);
+        container.appendChild(document.createTextNode('Done'));
+        h.style.display = 'flex';
+        h.style.justifyContent = 'space-between';
+        h.style.alignItems = 'center';
+        h.appendChild(container);
+    });
+});
+</script>
+
+<!-- HELMINTH SUBSUMPTION SCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('.subsume-checkbox');
+    checkboxes.forEach(cb => {
+        const id = cb.id;
+        const item = cb.closest('.subsume-item');
+        if (safeStorage.getItem(id) === 'true') { cb.checked = true; item.classList.add('subsumed'); }
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(id, e.target.checked);
+            if (e.target.checked) { item.classList.add('subsumed'); } else { item.classList.remove('subsumed'); }
+        });
+    });
+
+    const unlockCheckboxes = document.querySelectorAll('.unlock-checkbox');
+    unlockCheckboxes.forEach(cb => {
+        const id = cb.id;
+        const step = cb.closest('.unlock-step') || cb.parentElement;
+        if (safeStorage.getItem(id) === 'true') { cb.checked = true; if (step) step.classList.add('completed'); }
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(id, e.target.checked);
+            if (e.target.checked) { if (step) step.classList.add('completed'); } else { if (step) step.classList.remove('completed'); }
+        });
+    });
+
+    const searchInput = document.getElementById('helminth-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase().trim();
+            const items = document.querySelectorAll('.subsume-item');
+            items.forEach(item => {
+                const labelEl = item.querySelector('.subsume-label');
+                if (!labelEl) return;
+                const label = labelEl.textContent.toLowerCase();
+                item.style.display = label.includes(query) ? 'flex' : 'none';
+            });
+        });
+    }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

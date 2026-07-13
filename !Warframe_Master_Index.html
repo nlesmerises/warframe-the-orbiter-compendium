@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="app/assets/js/common.js?v=19"></script>
+    <script src="app/assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Master Console</title>
+    <link rel="stylesheet" href="app/assets/fonts/fonts.css">
+    <style>
+        :root {
+            --bg-color: #060813;
+            --panel-bg: rgba(10, 15, 30, 0.7);
+            --card-bg: rgba(15, 22, 42, 0.45);
+            --card-hover-bg: rgba(23, 33, 62, 0.75);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-color: #cbd5e1;
+            
+            --primary-accent: #8b5cf6; /* Neon Purple */
+            --accent-gold: #f59e0b; /* Amber Gold */
+            --glow-green: #10b981; /* Emerald */
+            --glass-backdrop: blur(25px);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.18) 0px, transparent 55%),
+                radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.12) 0px, transparent 55%),
+                radial-gradient(at 50% 50%, rgba(8, 12, 28, 0.9) 0px, transparent 100%);
+            background-attachment: fixed;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 154.6px 1.5rem 40px 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Photo background filling the empty margin space around the panel.
+           Unsplash-licensed nebula photo (free to use, no attribution required). */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background-image: url('app/assets/img/master_index_nebula_bg.avif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .dashboard-panel {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* THE SINGLE UNIFIED DASHBOARD PANEL */
+        .dashboard-panel {
+            width: 100%;
+            max-width: 1750px;
+            background-color: var(--panel-bg);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.8), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 0 40px rgba(139, 92, 246, 0.03);
+            box-sizing: border-box;
+            background-image: radial-gradient(at 50% 0%, rgba(245, 158, 11, 0.04) 0px, transparent 65%);
+        }
+
+        header {
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        header h1 {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #93c5fd;
+            font-weight: 800;
+            font-size: 2rem;
+            margin: 0 0 0.4rem 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #93c5fd 0%, #bfdbfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(147, 197, 253, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .galaxy-icon {
+            width: 1.5em;
+            height: 1.5em;
+            flex-shrink: 0;
+        }
+
+        header p.subtitle {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 1.15rem;
+            color: #94a3b8;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #94a3b8, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .settings-box {
+            background: rgba(8, 11, 22, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 20px;
+            display: none;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .settings-box h3 {
+            margin-top: 0;
+            color: var(--accent-gold);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .settings-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .settings-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            cursor: pointer;
+        }
+
+        .settings-option input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--accent-gold);
+        }
+
+        
+        
+        
+        
+
+
+        /* SEARCH BAR */
+        .search-section {
+            margin-bottom: 2.2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(8, 12, 24, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 15px 28px;
+            color: #fff;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.2), inset 0 2px 8px rgba(0,0,0,0.3);
+            background: rgba(12, 18, 36, 0.8);
+        }
+
+        /* CATEGORY TABS */
+        .tabs-section {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 18px;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #94a3b8;
+            padding: 9px 20px;
+            border-radius: 20px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary-accent) 0%, #7c3aed 100%);
+            color: #fff;
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
+        }
+
+        /* 3-COLUMN CENTRAL GRID */
+        .index-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        @media (max-width: 1100px) { .index-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 680px) { .index-grid { grid-template-columns: 1fr; } }
+
+        .volume-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            cursor: pointer;
+            box-sizing: border-box;
+            -webkit-user-drag: none;
+            user-drag: none;
+            user-select: none;
+        }
+
+        .volume-card:hover {
+            background: var(--card-hover-bg);
+            border-color: rgba(255, 255, 255, 0.15);
+            
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+            padding-right: 20px;
+            min-width: 0;
+        }
+
+        .volume-card h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        .volume-card p {
+            margin: 0;
+            font-size: 0.88rem;
+            color: #94a3b8;
+            line-height: 1.5;
+            max-width: 100%;
+        }
+
+        .open-link {
+            padding: 7px 15px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: #c084fc;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            font-family: 'Outfit', sans-serif;
+            flex-shrink: 0;
+            margin-left: 15px;
+        }
+
+        .open-link:hover {
+            background: var(--primary-accent);
+            color: white;
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* PREMIUM LEFT-BORDER ACCENTS & GLOWS FOR CATEGORIES */
+
+        /* CARD TITLE & DESCRIPTION COLORS — match left border accent */
+        .card-mods h2    { color: #a78bfa !important; }
+        .card-mods p     { color: rgba(167, 139, 250, 0.65) !important; }
+
+        .card-frames h2  { color: #e879f9 !important; }
+        .card-frames p   { color: rgba(232, 121, 249, 0.65) !important; }
+
+        .card-ops h2     { color: #fb7185 !important; }
+        .card-ops p      { color: rgba(251, 113, 133, 0.65) !important; }
+
+        .card-system h2  { color: #34d399 !important; }
+        .card-system p   { color: rgba(52, 211, 153, 0.65) !important; }
+
+        .card-relics h2  { color: #fbbf24 !important; }
+        .card-relics p   { color: rgba(251, 191, 36, 0.65) !important; }
+
+        .card-network h2 { color: #60a5fa !important; }
+        .card-network p  { color: rgba(96, 165, 250, 0.65) !important; }
+
+        /* 1. Core Operations Hub — Purple */
+        .card-mods {
+            border-left: 5px solid #8b5cf6 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(139, 92, 246, 0.12);
+        }
+        .card-mods:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            border-left-color: #a78bfa !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 25px rgba(139, 92, 246, 0.3);
+        }
+
+        /* 2. Warframe Compendium — Magenta */
+        .card-frames {
+            border-left: 5px solid #e879f9 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(232, 121, 249, 0.12);
+        }
+        .card-frames:hover {
+            border-color: rgba(232, 121, 249, 0.4);
+            border-left-color: #f0abfc !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 25px rgba(232, 121, 249, 0.3);
+        }
+
+        /* 3. Reset Operations — Rose Red */
+        .card-ops {
+            border-left: 5px solid #f43f5e !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(244, 63, 94, 0.12);
+        }
+        .card-ops:hover {
+            border-color: rgba(244, 63, 94, 0.4);
+            border-left-color: #fb7185 !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 25px rgba(244, 63, 94, 0.3);
+        }
+
+        /* 4. Systems & Progress — Emerald Green */
+        .card-system {
+            border-left: 5px solid #10b981 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(16, 185, 129, 0.12);
+        }
+        .card-system:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            border-left-color: #34d399 !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 25px rgba(16, 185, 129, 0.3);
+        }
+
+        /* 5. Endgame Operations — Amber Gold */
+        .card-gear, .card-economy, .card-house, .card-relics {
+            border-left: 5px solid #f59e0b !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(245, 158, 11, 0.12);
+        }
+        .card-gear:hover, .card-economy:hover, .card-house:hover, .card-relics:hover {
+            border-color: rgba(245, 158, 11, 0.4);
+            border-left-color: #fbbf24 !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 25px rgba(245, 158, 11, 0.3);
+        }
+
+        /* 6. Live Network Hub — Electric Blue */
+        .card-network {
+            border-left: 5px solid #3b82f6 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(59, 130, 246, 0.12);
+        }
+        .card-network:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            border-left-color: #60a5fa !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 25px rgba(59, 130, 246, 0.3);
+        }
+
+        /* PREMIUM OPEN LINK HOVER OVERRIDES */
+        .card-gear:hover .open-link,
+        .card-economy:hover .open-link,
+        .card-house:hover .open-link,
+        .card-relics:hover .open-link {
+            background: var(--accent-gold) !important;
+            color: #060813 !important;
+            border-color: var(--accent-gold) !important;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.5) !important;
+        }
+
+        .card-system:hover .open-link {
+            background: var(--glow-green) !important;
+            color: #060813 !important;
+            border-color: var(--glow-green) !important;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.5) !important;
+        }
+
+        .card-ops:hover .open-link {
+            background: #f43f5e !important;
+            color: #060813 !important;
+            border-color: #f43f5e !important;
+            box-shadow: 0 0 12px rgba(244, 63, 94, 0.5) !important;
+        }
+
+        /* TENNO PATH — full-width banner card spanning all 3 columns */
+        .card-tenno-path {
+            grid-column: 1 / -1;
+        }
+        .card-tenno-path .card-info {
+            flex-direction: row;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+        }
+        .card-tenno-path .tp-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-right: 32px;
+        }
+        .card-tenno-path .tp-chapters {
+            display: flex;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+        .card-tenno-path .tp-chapter {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            border-radius: 12px;
+            padding: 14px 24px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            min-width: 160px;
+            text-align: center;
+        }
+        .card-tenno-path .tp-chapter:hover {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+        .card-tenno-path .tp-chapter-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #fbbf24;
+            font-family: 'Outfit', sans-serif;
+        }
+        .card-tenno-path .tp-chapter-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* CHECKBOX DONE TRACKERS */
+        .tracker-container {
+            display: inline-flex;
+            align-items: center;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 2px 7px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-weight: 500;
+            color: #94a3b8;
+            margin-left: 8px;
+            transition: all 0.2s ease;
+        }
+        .tracker-checkbox { margin-right: 4px; cursor: pointer; width: 12px; height: 12px; accent-color: var(--glow-green); }
+        .tracker-container.completed { 
+            background: rgba(16, 185, 129, 0.15); 
+            border-color: rgba(16, 185, 129, 0.3); 
+            color: #34d399;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+        }
+
+        /* INDIVIDUAL WARFRAME CHECKLIST GRID */
+        .volume-card.card-frames-checklist {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+        .volume-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .warframe-list-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-top: 5px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 10px;
+        }
+        .warframe-checkbox-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.01);
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+        .warframe-checkbox-item:hover {
+            background: rgba(245, 158, 11, 0.08);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #fff;
+        }
+        /* Custom checkbox style */
+        .warframe-checkbox-item input[type="checkbox"],
+        .tracker-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            outline: none;
+            background-color: rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.25s ease;
+        }
+
+        .warframe-checkbox-item input[type="checkbox"]:checked,
+        .tracker-checkbox:checked {
+            background-color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        .warframe-checkbox-item input[type="checkbox"].wf-cb-own:checked {
+            background-color: var(--primary-accent);
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 10px var(--primary-accent);
+        }
+
+        .warframe-checkbox-item input[type="checkbox"].wf-cb-lvl:checked {
+            background-color: var(--glow-green);
+            border-color: var(--glow-green);
+            box-shadow: 0 0 10px var(--glow-green);
+        }
+
+        .warframe-checkbox-item input[type="checkbox"]::after,
+        .tracker-checkbox::after {
+            content: '\2B50';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: #060813;
+            font-size: 10px;
+            font-weight: 900;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .warframe-checkbox-item input[type="checkbox"]:checked::after,
+        .tracker-checkbox:checked::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .warframe-checkbox-item.completed {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.25);
+            color: #34d399;
+        }
+        .warframe-checkbox-item.owned-only {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: rgba(139, 92, 246, 0.25);
+            color: #c084fc;
+        }
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 50px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">🏠</a>
+    <a href="app/Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">⚙️</a>
+    <!-- Backup Manager button removed: it duplicated the Settings cog (both open Settings). -->
+
+</div>
+
+<!-- App title below nav bar -->
+<div style="position:fixed; top:70px; left:20px; z-index:9999; pointer-events:none; user-select:none;">
+</div>
+
+<style>
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 50px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+
+/* Floating Navigation Capsule */
+.navigation-capsule {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.94) !important; backdrop-filter: blur(12px) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.2) !important; border-radius: 40px !important;
+    padding: 16px 40px !important; box-shadow: 0 10px 35px rgba(0,0,0,0.6) !important;
+    display: flex !important; align-items: center !important; gap: 24px !important; z-index: 10000 !important;
+    font-family: 'Inter', sans-serif !important; font-size: 18px !important; white-space: nowrap !important;
+    transition: all 0.3s ease !important;
+}
+.navigation-capsule:hover {
+    border-color: rgba(255, 171, 0, 0.5) !important;
+    box-shadow: 0 12px 40px rgba(255, 171, 0, 0.25), 0 10px 35px rgba(0,0,0,0.6) !important;
+    transform: translateX(-50%) !important;
+}
+.nav-btn-link {
+    color: #fff !important; text-decoration: none !important; font-weight: 700 !important; cursor: pointer !important;
+    transition: all 0.2s ease-in-out !important;
+    font-size: 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+.nav-btn-link:hover { color: #ffab00 !important; transform: scale(1.2) !important; text-shadow: 0 0 12px rgba(255, 171, 0, 0.8) !important; }
+.nav-btn-link.disabled { opacity: 0.3 !important; pointer-events: none !important; }
+.nav-sep { color: rgba(255, 255, 255, 0.3) !important; font-weight: bold !important; font-size: 18px !important; }
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '▲';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '▼';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+        const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+
+
+
+
+
+    <!-- THE SINGLE CONSOLE PANEL CONTAINER -->
+    <div class="dashboard-panel">
+        
+        <header>
+            <h1><svg class="galaxy-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <radialGradient id="galaxyCore" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#fff7d6"/>
+                        <stop offset="35%" stop-color="#ffe9a8"/>
+                        <stop offset="100%" stop-color="#93c5fd" stop-opacity="0"/>
+                    </radialGradient>
+                </defs>
+                <g fill="none" stroke="#93c5fd" stroke-width="2.2" stroke-linecap="round" opacity="0.85">
+                    <path d="M50,50 C 70,45 82,30 74,16 C 68,6 52,4 42,12"/>
+                    <path d="M50,50 C 30,55 18,70 26,84 C 32,94 48,96 58,88"/>
+                    <path d="M50,50 C 66,58 84,56 90,42 C 94,32 88,18 76,14"/>
+                    <path d="M50,50 C 34,42 16,44 10,58 C 6,68 12,82 24,86"/>
+                </g>
+                <circle cx="50" cy="50" r="26" fill="url(#galaxyCore)"/>
+                <circle cx="50" cy="50" r="4.5" fill="#fff7d6"/>
+                <circle cx="30" cy="24" r="1.4" fill="#ffffff" opacity="0.9"/>
+                <circle cx="78" cy="30" r="1.1" fill="#ffffff" opacity="0.8"/>
+                <circle cx="20" cy="66" r="1.2" fill="#ffffff" opacity="0.8"/>
+                <circle cx="70" cy="76" r="1" fill="#ffffff" opacity="0.7"/>
+                <circle cx="86" cy="60" r="1.1" fill="#ffffff" opacity="0.75"/>
+            </svg> Tenno Command Center</h1>
+            <p class="subtitle">Master Console</p>
+            
+            <!-- SUNDAY RESET BANNER -->
+<div id="sunday-reset-banner" style="display: none; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.5); color: #c4b5fd; padding: 12px 20px; border-radius: 8px; margin: 15px auto 0; max-width: 600px; text-align: center; font-weight: 500; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2); animation: pulse-purple 2s infinite;">
+    &#x1F55C; <strong>Weekly Reset Detected!</strong> New Archon Hunts, Kahl Missions, and Teshin Rewards are available!
+</div>
+<style>
+    @keyframes pulse-purple {
+        0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date().getDay(); // 0 is Sunday, 1 is Monday
+    if (today === 0 || today === 1) { // Show on Sunday and Monday
+        const banner = document.getElementById('sunday-reset-banner');
+        if (banner) {
+            banner.style.display = 'block';
+        }
+    }
+});
+</script>
+<!-- 7-DAY BACKUP REMINDER BANNER -->
+            <div id="backup-reminder" style="display: none; background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(220, 38, 38, 0.5); color: #fca5a5; padding: 12px 20px; border-radius: 8px; margin: 15px auto 0; max-width: 600px; text-align: center; font-weight: 500; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.2); animation: pulse 2s infinite;">
+                ⚠️ It has been over 7 days since your last Data Backup! Please click the Settings button and export your progress.
+            </div>
+            <style>
+                @keyframes pulse {
+                    0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+                    70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+                    100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+                }
+            
+
+
+
+
+
+
+
+
+
+
+
+</style>
+        </header>
+
+        
+
+        <!-- CATEGORIZED CENTRAL HUB DASHBOARDS -->
+        <div class="index-grid no-print" id="dashboard-container">
+            
+            <!-- Core Operations Hub Dashboard -->
+            <a href="app/Warframe_Core_Dashboard.html" class="volume-card card-mods" draggable="false" style="text-decoration: none; color: inherit;">
+                <div class="card-info">
+                    <h2>🪐 Core Operations Hub</h2>
+                    <div class="volume-card-desc"><p>Central Hub for Tenno Foundry, Augments, Void Relics, Foundry, Arsenal, and Economy tools.</p></div>
+                </div>
+            </a>
+
+            <!-- Warframe Compendium -->
+            <a href="app/Warframe_Core_Codex_Hub.html" class="volume-card card-frames" draggable="false" style="text-decoration: none; color: inherit;">
+                <div class="card-info">
+                    <h2>📚 Warframe Compendium</h2>
+                    <div class="volume-card-desc"><p>Central hub for Warframe Builds Codex, Meta Weapons Database, Mods Database, and Warframe Compendium.</p></div>
+                </div>
+            </a>
+
+            <!-- Endgame Operations Dashboard -->
+            <a href="app/Warframe_Endgame_Dashboard.html" class="volume-card card-relics" draggable="false" style="text-decoration: none; color: inherit;">
+                <div class="card-info">
+                    <h2>🧠 Endgame Operations</h2>
+                    <div class="volume-card-desc"><p>Helminth, Archon Shards, Incarnon, Tennokai, Steel Path, Arbitrations, and advanced reference tools.</p></div>
+                </div>
+            </a>
+
+            <!-- Systems & Progress Dashboard -->
+            <a href="app/Warframe_Systems_Dashboard.html" class="volume-card card-system" draggable="false" style="text-decoration: none; color: inherit;">
+                <div class="card-info">
+                    <h2>🌌 Systems &amp; Progress</h2>
+                    <div class="volume-card-desc"><p>Progression roadmap, Mastery Rank planning, Operator and Focus mechanics, Railjack, and Necramech development.</p></div>
+                </div>
+            </a>
+
+            <!-- Live Network Hub -->
+            <a href="app/Warframe_Live_Network_Hub.html" class="volume-card card-network" draggable="false" style="text-decoration: none; color: inherit;">
+                <div class="card-info">
+                    <h2>&#127760; Live Network Hub</h2>
+                    <div class="volume-card-desc"><p>Live internet feed linking directly to the Warframe.market economy and the World State API trackers.</p></div>
+                </div>
+            </a>
+
+            <!-- Reset Operations Checklist -->
+            <a href="app/Warframe_Reset_Checklist.html" class="volume-card card-ops" draggable="false" style="text-decoration: none; color: inherit;">
+                <div class="card-info">
+                    <h2>&#9201;&#65039; Reset Operations</h2>
+                    <div class="volume-card-desc"><p>Guided Daily and Weekly checklist with requirements, locations, rewards, UTC reset tracking, and local backup/restore.</p></div>
+                </div>
+            </a>
+
+            <!-- Tenno Path Separator -->
+            <div style="grid-column: 1 / -1; display: flex; align-items: center; gap: 18px; margin: 8px 0 4px;">
+                <div style="flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(251,191,36,0.35), transparent);"></div>
+                <a href="app/Warframe_Start_Here.html#what-is-warframe" style="font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #fbbf24; white-space: nowrap; text-decoration: none; padding: 5px 16px; border-radius: 20px; border: 1px solid rgba(251,191,36,0.55); background: rgba(251,191,36,0.1); transition: all 0.2s ease;" onmouseover="this.style.background='rgba(251,191,36,0.22)';this.style.borderColor='rgba(251,191,36,0.9)';this.style.color='#fff';" onmouseout="this.style.background='rgba(251,191,36,0.1)';this.style.borderColor='rgba(251,191,36,0.55)';this.style.color='#fbbf24';">New to Warframe? &mdash; Start Here</a>
+                <div style="flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(251,191,36,0.35), transparent);"></div>
+            </div>
+
+            <!-- Tenno Path Progression Guide -->
+            <div class="volume-card card-relics card-tenno-path" style="cursor: default;">
+                <div class="card-info">
+                    <div class="tp-main">
+                        <h2>🗺️ The Tenno Path — MR 1 to 30 Progression Guide</h2>
+                        <div class="volume-card-desc"><p>New Tenno or returning after a break? Step-by-step guide through the entire game — where to go, what to build, and what to unlock at every Mastery Rank. Fully linked into the Compendium.</p></div>
+                    </div>
+                    <div class="tp-chapters">
+                        <a href="app/Warframe_Tenno_Path.html" class="tp-chapter" style="text-decoration: none;">
+                            <span class="tp-chapter-label">MR 1–10</span>
+                            <span class="tp-chapter-name">⚔️ Foundation</span>
+                        </a>
+                        <a href="app/Warframe_Tenno_Path_Expansion.html" class="tp-chapter" style="text-decoration: none;">
+                            <span class="tp-chapter-label">MR 11–20</span>
+                            <span class="tp-chapter-name">🌌 Expansion</span>
+                        </a>
+                        <a href="app/Warframe_Tenno_Path_Endgame.html" class="tp-chapter" style="text-decoration: none;">
+                            <span class="tp-chapter-label">MR 21–30</span>
+                            <span class="tp-chapter-name">🔥 Endgame</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div> <!-- end of dashboard-panel -->
+
+</body>
+</html>

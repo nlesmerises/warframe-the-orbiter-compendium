@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Eidolon Hunt Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile {
+    display: flex !important; flex-direction: column; align-items: flex-start; text-align: left;
+    min-height: 110px; padding: 20px 22px !important; border-radius: 14px;
+    text-decoration: none !important; color: inherit;
+    background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease;
+}
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#127769; Eidolon Hunt Guide</h1>
+        <p class="subtitle">Teralyst &middot; Garuda &middot; Hydrolyst &mdash; Night-cycle endgame for Arcanes, Focus, and Sentient Cores</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="section-eidolons" style="border-left-color:#4ade80;">
+                <div class="qi-tile-icon">&#127769;</div>
+                <h2 class="qi-tile-title">The Three Eidolons</h2>
+                <p class="qi-tile-desc">Teralyst, Garuda, and Hydrolyst: what each fight adds over the last, from entry-level to hardest.</p>
+            </a>
+            <a class="qi-tile toc-toggle" data-section="section-requirements" style="border-left-color:#42a5f5;">
+                <div class="qi-tile-icon">&#128203;</div>
+                <h2 class="qi-tile-title">Pre-Hunt Requirements</h2>
+                <p class="qi-tile-desc">Amp setup, Eidolon Lures, Operator/Focus school, and the Warframes worth bringing.</p>
+            </a>
+            <a class="qi-tile toc-toggle" data-section="section-sequence" style="border-left-color:#ef5350;">
+                <div class="qi-tile-icon">&#9876;&#65039;</div>
+                <h2 class="qi-tile-title">Fight Sequence</h2>
+                <p class="qi-tile-desc">Phase-by-phase: shield break, Synovia destruction, final collapse, and Hydrolyst's storm phase.</p>
+            </a>
+            <a class="qi-tile toc-toggle" data-section="section-rewards" style="border-left-color:#ffd700;">
+                <div class="qi-tile-icon">&#127942;</div>
+                <h2 class="qi-tile-title">Rewards</h2>
+                <p class="qi-tile-desc">Sentient Cores, Arcane drops, and Focus point payouts from a clean capture.</p>
+            </a>
+            <a class="qi-tile toc-toggle" data-section="section-drop-table" style="border-left-color:#ce93d8;">
+                <div class="qi-tile-icon">&#127922;</div>
+                <h2 class="qi-tile-title">Arcane Drop Table</h2>
+                <p class="qi-tile-desc">Full per-Eidolon arcane drop odds for planning which fights to farm.</p>
+            </a>
+            <a class="qi-tile toc-toggle" data-section="section-amp-guide" style="border-left-color:#ffb74d;">
+                <div class="qi-tile-icon">&#128300;</div>
+                <h2 class="qi-tile-title">Amp Naming &amp; Tiers</h2>
+                <p class="qi-tile-desc">Starter Mote to recommended x77 builds, Void Strike technique, and night-cycle timing.</p>
+            </a>
+            <a class="qi-tile toc-toggle" data-section="section-quills" style="border-left-color:#81d4fa;">
+                <div class="qi-tile-icon">&#127769;</div>
+                <h2 class="qi-tile-title">Quills Rank Reference</h2>
+                <p class="qi-tile-desc">Rank thresholds and standing requirements for Quills reputation progression.</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- 1. THE THREE EIDOLONS -->
+    <section class="category-section" id="section-eidolons">
+        <h2>&#127769; 1. The Three Eidolons</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Teralyst (Terry)</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Entry</span></div>
+                <ul class="list">
+                    <li>Entry-level Eidolon &mdash; 4 synovias (limbs) to destroy</li>
+                    <li>Drops: Intact Sentient Cores, low-tier Arcanes</li>
+                    <li><strong>Capture</strong> (do not kill) to unlock Garuda</li>
+                    <li>Required squad: Amp + Void Operator to break Void shield</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Garuda (Garry)</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Mid</span></div>
+                <ul class="list">
+                    <li>Mid-tier &mdash; 6 synovias</li>
+                    <li>Drops: Exceptional Sentient Cores, better Arcanes</li>
+                    <li>Requires 2&times; charged Eidolon Lures from the Terry fight</li>
+                    <li>Must capture Terry first in the same night cycle</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Hydrolyst (Harry)</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Hardest</span></div>
+                <ul class="list">
+                    <li>Hardest &mdash; 6 synovias + AoE storm phases</li>
+                    <li>Drops: Flawless/Perfect Sentient Cores, top Arcanes</li>
+                    <li>Requires 3&times; charged lures from the Garuda fight</li>
+                    <li>Storm phase: lightning strikes entire map &mdash; stay stacked on lures</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. PRE-HUNT REQUIREMENTS -->
+    <section class="category-section" id="section-requirements">
+        <h2>&#128203; 2. Pre-Hunt Requirements</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Amp Setup</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Gear</span></div>
+                <ul class="list">
+                    <li>Mote Amp (starter) is too slow &mdash; upgrade at Quills in Cetus</li>
+                    <li>Minimum viable: 223 Amp configuration</li>
+                    <li>Recommended: 177 or x77 for consistent shield breaks</li>
+                    <li>Only Operator Amp shots can break the Void shield &mdash; weapons cannot</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Eidolon Lures</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Gear</span></div>
+                <ul class="list">
+                    <li>Blue glowing creatures found near water on the Plains</li>
+                    <li>Charge each lure by killing 5 Vomvalysts near it</li>
+                    <li>Terry: 2 charged lures to capture | 1 to kill</li>
+                    <li>Garry: 2 lures | Harry: 3 lures &mdash; lures prevent teleport on capture</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Operator / Focus School</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Gear</span></div>
+                <ul class="list">
+                    <li>Void Mode + Void Blast strips Eidolon Void shield</li>
+                    <li><strong>Madurai &mdash; Void Strike:</strong> charge in Void Mode then fire Amp for massive burst</li>
+                    <li>Magus Lockdown (Operator Arcane): CC Vomvalysts during lure-charging</li>
+                    <li>Zenurik or Unairu as secondary school options</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Recommended Warframes</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Gear</span></div>
+                <ul class="list">
+                    <li><strong>Chroma:</strong> Vex Armor + Effigy for team damage amplification</li>
+                    <li><strong>Trinity:</strong> Blessing for team heals and energy sustain</li>
+                    <li><strong>Volt:</strong> Electric Shield doubles Amp damage through the bubble</li>
+                    <li><strong>Harrow:</strong> Covenant gives team invincibility + crit bonus</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. FIGHT SEQUENCE -->
+    <section class="category-section" id="section-sequence">
+        <h2>&#9876;&#65039; 3. Fight Sequence</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Phase: Shield Break</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Phase</span></div>
+                <p style="color:#94a3b8;">Fire Void Strike Amp shot at the Eidolon after charging in Void Mode. Only Operator Amp shots work &mdash; weapons deal zero damage to the Void shield. Each shield phase must be broken before limbs can be damaged.</p>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Phase: Synovia Destruction</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Phase</span></div>
+                <p style="color:#94a3b8;">Shoot the glowing synovias with your Warframe weapons. Destroy one at a time &mdash; the Eidolon regens its shield after each limb falls. Pick up the dropped shard before the next phase starts.</p>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Phase: Final Collapse</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Phase</span></div>
+                <p style="color:#94a3b8;">After all synovias are destroyed the Eidolon collapses. Quickly shoot the glowing core on its chest to capture it. Capture always gives better rewards than killing. Charged lures must be within range or it teleports away.</p>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Hydrolyst: Storm Phase</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Phase</span></div>
+                <p style="color:#94a3b8;">Between synovia phases Harry spawns a massive lightning storm across the Plains. Stand next to your charged lures &mdash; they absorb the lightning and protect players nearby. Spread out lures evenly around the squad.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. REWARDS -->
+    <section class="category-section" id="section-rewards">
+        <h2>&#127942; 4. Rewards</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Sentient Cores</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li><strong>Intact Core</strong> &mdash; Terry kill/capture &#8594; trade to Quills for standing</li>
+                    <li><strong>Exceptional Core</strong> &mdash; Garuda capture</li>
+                    <li><strong>Flawless Core</strong> &mdash; Hydrolyst capture</li>
+                    <li><strong>Perfect Core</strong> &mdash; Hydrolyst capture (rare) &mdash; highest Quills standing value</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Arcane Drops</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>Every Eidolon capture/kill drops Arcanes</li>
+                    <li>Higher Eidolons drop rarer, more powerful Arcanes</li>
+                    <li>Top drops: Arcane Energize, Arcane Grace, Arcane Guardian</li>
+                    <li>Rank Arcanes: combine 5 copies of same rank to upgrade to next rank</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Focus Points</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>Best Focus-per-hour farm in the game during a night cycle</li>
+                    <li>Equip Focus Lens on Warframe and weapons matching your school</li>
+                    <li>Void Strike Amp shots grant bonus Focus on the kill</li>
+                    <li>Experienced squad can run 5&ndash;6 Tridolons per night (50 min cycle)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. ARCANE DROP TABLE -->
+    <section class="category-section" id="section-drop-table">
+        <h2>&#127922; 5. Arcane Drop Table</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Capture always gives better reward rolls than killing. All drops are subject to rotation RNG &mdash; higher Eidolons have better drop tables.</p>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #ce93d8;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Arcane</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Source</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Effect (Max Rank)</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Tier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ce93d8;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Energize</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Hydrolyst capture</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">60% chance on Energy pickup: restore 150 Energy to nearby allies</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">S-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#ce93d8;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Grace</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Hydrolyst capture</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">9% chance on taking damage: regenerate 4% Health/s for 9s</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">S-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ce93d8;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Guardian</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Hydrolyst capture</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">9% chance on taking damage: +900 Armor for 20s</td><td style="padding:7px 14px;color:#4ade80;border-bottom:1px solid rgba(255,255,255,0.04);">S-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#fff176;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Velocity</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Gantulyst/Hydrolyst</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">60% chance on Crit Hit: +60% Fire Rate (Pistols)</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">A-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#fff176;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Avenger</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Hydrolyst</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">21% chance on taking damage: +45% Crit Chance for 12s</td><td style="padding:7px 14px;color:#fff176;border-bottom:1px solid rgba(255,255,255,0.04);">A-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#80cbc4;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Strike</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Teralyst</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">60% chance on Melee Hit: +40% Attack Speed for 9s</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">B-Tier</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#80cbc4;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Momentum</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Teralyst</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">60% chance on Sniper Hit: +100% Reload Speed for 6s</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">B-Tier</td></tr>
+                    <tr><td style="padding:7px 14px;color:#80cbc4;font-weight:600;">Arcane Warmth</td><td style="padding:7px 14px;color:#9fb0c4;">Teralyst</td><td style="padding:7px 14px;color:#9fb0c4;">60% chance on Cold Damage: +360 Health/s for 9s</td><td style="padding:7px 14px;color:#9fb0c4;">B-Tier</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 6. AMP NAMING SYSTEM & TIER GUIDE -->
+    <section class="category-section" id="section-amp-guide">
+        <h2>&#128300; 6. Amp Naming System &amp; Tier Guide</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Amps are named by three digits: Prism &ndash; Scaffold &ndash; Brace (e.g. "177"). Each component is ranked 1&ndash;7 (Mote=0, Amps from Quills/Vox Solaris rank 1&ndash;7).</p>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Starter Amp: Mote (000)</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Amps</span></div>
+                <ul class="list">
+                    <li>Default Amp from completing Saya&rsquo;s Vigil quest</li>
+                    <li>Very low damage &mdash; struggles to break Eidolon shields efficiently</li>
+                    <li>Acceptable for Teralyst only in a pinch</li>
+                    <li>Upgrade immediately at Quills in Cetus as your first priority</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Recommended Amp: x77</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Amps</span></div>
+                <ul class="list">
+                    <li><strong>Prism:</strong> Any (x = your choice) &mdash; Raplak (1) for sniping, Shwaak (2) for AoE</li>
+                    <li><strong>Scaffold 7:</strong> Klamora &mdash; sustained beam that melts Vomvalysts fast for lure charging</li>
+                    <li><strong>Brace 7:</strong> Certus &mdash; +20% Amp Crit Chance; best all-purpose brace</li>
+                    <li>177 or 277 covers all Eidolon content comfortably</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Void Strike Technique</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Amps</span></div>
+                <ul class="list">
+                    <li>Enter Void Mode (Operator void form) and hold still &mdash; charges accumulate per second</li>
+                    <li>Each second in Void Mode adds 5 stacks (cap: 12 stacks for &#215;6.25 multiplier)</li>
+                    <li>Exit Void Mode and fire your Amp immediately &mdash; first shot consumes all stacks</li>
+                    <li>With Madurai&rsquo;s Void Strike passive, one shot can remove an Eidolon shield instantly</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Night Cycle Timing</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Amps</span></div>
+                <ul class="list">
+                    <li>Plains night cycle lasts approximately <strong>50 minutes</strong> real time</li>
+                    <li>Day cycle is roughly 100 minutes &mdash; no Eidolons spawn during day</li>
+                    <li>Cycle resets independent of login &mdash; check in-game Plains timer in Navigation</li>
+                    <li>Experienced Tridolon squad can clear all 3 Eidolons in ~10&ndash;15 minutes</li>
+                    <li>Beginners should target 1&ndash;2 Eidolons per night until mechanics are comfortable</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. QUILLS RANK REFERENCE -->
+    <section class="category-section" id="section-quills">
+        <h2>&#127769; 7. Quills Rank Reference</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Quills standing is earned via Sentient Cores from Eidolons. Ranks unlock higher-tier Amp components and Operator cosmetics.</p>
+        <div class="card" style="padding:0;overflow:hidden;border-left:6px solid #81d4fa;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                <thead>
+                    <tr style="background:rgba(255,255,255,0.05);">
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Rank</th>
+                        <th style="padding:9px 14px;text-align:right;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Standing</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Unlocks</th>
+                        <th style="padding:9px 14px;text-align:left;color:#718096;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);">Core Used</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Unranked</td><td style="padding:7px 14px;color:#81d4fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">0</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Basic Amp parts (tier 1&ndash;2)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Intact Cores</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Kin</td><td style="padding:7px 14px;color:#81d4fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">2,500</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Amp tier 3&ndash;4 components</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Intact + Exceptional</td></tr>
+                    <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Saya</td><td style="padding:7px 14px;color:#81d4fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">10,000</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Amp tier 5&ndash;6, Operator cosmetics</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Exceptional + Flawless</td></tr>
+                    <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Quill</td><td style="padding:7px 14px;color:#81d4fa;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">22,000</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Amp tier 7 (top-tier components)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Flawless + Perfect</td></tr>
+                </tbody>
+            </table>
+            <div style="padding:12px 14px;background:rgba(255,255,255,0.02);font-size:0.8rem;color:#9fb0c4;border-top:1px solid rgba(255,255,255,0.06);">
+                <strong style="color:#e2e8f0;">Core values (approximate):</strong> &nbsp;Intact = 100 standing &nbsp;|&nbsp; Exceptional = 500 &nbsp;|&nbsp; Flawless = 1,500 &nbsp;|&nbsp; Perfect = 3,500
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

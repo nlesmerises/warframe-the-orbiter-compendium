@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Reset Operations</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        /* Vertically center per standing order */
+        body {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-height: 100vh !important;
+            padding: 110px 1.5rem 2rem !important;
+            box-sizing: border-box !important;
+        }
+        .reset-dashboard {
+            width: 100%;
+            max-width: 1750px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            /* Canonical back panel (matches reference Warframe_Mods_Database). */
+            background: linear-gradient(180deg, rgba(12, 16, 28, 0.94), rgba(9, 12, 22, 0.98));
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border: 1.5px solid rgba(255, 255, 255, 0.10);
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.7);
+            box-sizing: border-box;
+        }
+        .header-panel {
+            grid-column: 1 / -1;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            text-align: left;
+        }
+        .timer-text {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 24px;
+            color: #e2e8f0;
+            font-weight: bold;
+        }
+        .timer-highlight { color: #ff3366; }
+        .reset-time-note {
+            color: #94a3b8;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-top: 5px;
+        }
+        .tracker-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .tracker-action {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 7px;
+            color: #e2e8f0;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 13px;
+        }
+        .tracker-action:hover {
+            background: rgba(255,171,0,0.1);
+            border-color: rgba(255,171,0,0.55);
+            color: #ffcc66;
+        }
+        .tracker-action.daily-action:hover {
+            background: rgba(0,232,252,0.08);
+            border-color: rgba(0,232,252,0.55);
+            color: #67f4ff;
+        }
+        .backup-modal {
+            align-items: center;
+            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.76);
+            bottom: 0;
+            display: none;
+            justify-content: center;
+            left: 0;
+            padding: 20px;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 20000;
+        }
+        .backup-dialog {
+            background: rgba(15,23,42,0.98);
+            border: 1px solid #10b981;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(16,185,129,0.2);
+            max-width: 620px;
+            padding: 38px;
+            text-align: center;
+            width: 100%;
+        }
+        .backup-dialog h3 {
+            color: #10b981;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 30px;
+            margin: 0 0 14px;
+        }
+        .backup-dialog p {
+            color: #cbd5e1;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.55;
+        }
+        .backup-choice {
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 18px;
+            width: 100%;
+        }
+
+        .checklist-panel {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+            padding: 30px;
+        }
+        .checklist-panel h2 {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            color: #fff;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .daily-border { border-bottom-color: #00e8fc !important; }
+        .weekly-border { border-bottom-color: #ffab00 !important; }
+        
+        .task-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            align-items: start;
+        }
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 16px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .task-item:hover { background: rgba(255,255,255,0.05); }
+        .task-text {
+            flex-grow: 1;
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+            font-size: 16px;
+        }
+        .task-desc {
+            display: block;
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 5px;
+            line-height: 1.45;
+        }
+        .task-guide {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 14px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .guide-entry {
+            color: #cbd5e1;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+        .guide-label {
+            display: block;
+            color: #ffab00;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+        .daily-guide .guide-label { color: #00e8fc; }
+        .completion-count {
+            color: #94a3b8;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 17px;
+            white-space: nowrap;
+        }
+
+        /* Custom Cyber Checkbox */
+        .cyber-checkbox {
+            appearance: none; width: 24px; height: 24px;
+            background: rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 6px; cursor: pointer; position: relative;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .cyber-checkbox:checked {
+            background: #ff3366; border-color: #ff3366;
+            box-shadow: 0 0 15px rgba(255,51,102,0.5);
+        }
+        .cyber-checkbox:checked::after {
+            content: '\2713'; position: absolute; color: #fff; font-size: 16px;
+            font-weight: bold; top: 1px; left: 5px;
+        }
+        .daily-check:checked { background: #00e8fc; border-color: #00e8fc; box-shadow: 0 0 15px rgba(0,232,252,0.5); }
+        .weekly-check:checked { background: #ffab00; border-color: #ffab00; box-shadow: 0 0 15px rgba(255,171,0,0.5); }
+    
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+
+@media (max-width: 800px) {
+    .reset-dashboard {
+        grid-template-columns: 1fr;
+        margin-left: 14px;
+        margin-right: 14px;
+        gap: 18px;
+    }
+    .checklist-panel { padding: 20px; }
+    .task-guide { grid-template-columns: 1fr; }
+}
+
+body { padding-top: 154.6px !important; }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+    <div class="reset-dashboard">
+        <header>
+            <h1>&#9201;&#65039; Operations Reset Tracker</h1>
+            <p class="subtitle">Checkboxes automatically clear themselves when the game servers reset</p>
+        </header>
+        <div class="header-panel">
+            <div class="timer-text" id="dailyTimer">Daily Reset in: <span class="timer-highlight">Loading...</span></div>
+            <div class="timer-text" id="weeklyTimer">Weekly Reset in: <span class="timer-highlight" style="color: #ffab00;">Loading...</span></div>
+            <div class="reset-time-note" id="resetTimeNote">Warframe resets are calculated from UTC server time.</div>
+            <div class="tracker-actions no-print">
+                <button class="tracker-action daily-action" type="button" onclick="requestManualReset('daily')">Reset Daily Checks</button>
+                <button class="tracker-action" type="button" onclick="requestManualReset('weekly')">Reset Weekly Checks</button>
+                <button class="tracker-action" type="button" onclick="openBackupPanel()">Backup / Restore</button>
+            </div>
+        </div>
+
+        <!-- Daily Tasks -->
+        <div class="checklist-panel">
+            <h2 class="daily-border">&#x2600;&#xFE0F; Daily Operations <span class="completion-count" id="dailyCount">0/0 complete</span></h2>
+            <div class="task-list" id="dailyTasks">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- Weekly Tasks -->
+        <div class="checklist-panel">
+            <h2 class="weekly-border">&#x1F5D3;&#xFE0F; Weekly Operations <span class="completion-count" id="weeklyCount">0/0 complete</span></h2>
+            <div class="task-list" id="weeklyTasks">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <div id="reset-backup-modal" class="backup-modal no-print" role="dialog" aria-modal="true" aria-labelledby="backup-title">
+        <div class="backup-dialog">
+            <h3 id="backup-title">&#x1F4BE; Checklist Data Management</h3>
+            <p>Download this page&rsquo;s checked items to a local backup file, or restore them from an earlier Reset Checklist backup.</p>
+            <div style="display:flex; flex-direction:column; gap:15px; margin-top:24px;">
+                <button class="backup-choice" type="button" onclick="exportResetChecklist()" style="background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.4);">&#x1F4E4; Export Backup</button>
+                <button class="backup-choice" type="button" onclick="document.getElementById('reset-backup-input').click()" style="background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.4);">&#x1F4E5; Load Backup</button>
+                <input type="file" id="reset-backup-input" accept=".json,application/json" style="display:none;" onchange="importResetChecklist(event)">
+            </div>
+            <button type="button" onclick="closeBackupPanel()" style="margin-top:26px; background:transparent; color:#94a3b8; border:0; cursor:pointer; text-decoration:underline; font-size:16px;">Close Panel</button>
+        </div>
+    </div>
+
+    <!-- Floating Navigation Capsule -->
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+        });
+
+        const dailyData = [
+            {
+                id: 'daily_sorties', title: 'Sortie Mission', desc: 'Complete the three linked high-level missions for one daily reward.',
+                how: 'Finish all three missions in order. Mission modifiers change each day.',
+                where: 'Navigation &gt; Alerts &gt; Sortie.',
+                need: 'The War Within completed and a Rank 30 Warframe.',
+                reward: 'One reward from the Sortie table, including Endo, Kuva, Rivens, Boosters, or an Ayatan Sculpture.'
+            },
+            {
+                id: 'daily_syndicate', title: 'Syndicate Standing Cap', desc: 'Earn standing for the factions and vendors you are currently advancing.',
+                how: 'Run pledged Syndicate missions, collect Medallions, or complete the appropriate bounties and activities.',
+                where: 'Orbiter Syndicate console, Relays, open-world hubs, and faction-specific vendors.',
+                need: 'Membership or access to the chosen faction. The daily cap depends on Mastery Rank.',
+                reward: 'Standing used for faction ranks, weapons, mods, cosmetics, relic packs, and other offerings.'
+            },
+            {
+                id: 'daily_simaris', title: 'Simaris Synthesis Target', desc: 'Complete Cephalon Simaris&rsquo;s daily target for a large Standing payout.',
+                how: 'Accept a target, equip the Synthesis Scanner, locate the marked enemy, and scan its highlighted points without killing it.',
+                where: 'Speak with Cephalon Simaris in any Relay, then run missions where the target can spawn.',
+                need: 'Synthesis Scanner charges from Simaris; Kinetic Siphon Traps are recommended.',
+                reward: 'Cephalon Simaris Standing for scanners, widgets, mods, blueprints, and quest-related items.'
+            },
+            {
+                id: 'daily_focus', title: 'Focus Cap', desc: 'Build Focus for Operator schools until reaching the daily Focus limit.',
+                how: 'Collect Convergence Orbs while using Lens-equipped gear, or run Focus-heavy activities such as Sanctuary Onslaught.',
+                where: 'Regular missions, Sanctuary Onslaught, and other Operator or Eidolon activities.',
+                need: 'The Second Dream completed, a Focus school unlocked, and a Lens installed for normal Focus gains.',
+                reward: 'Focus points used to unlock and improve Way-Bound and school abilities.'
+            },
+            {
+                id: 'daily_tribute', title: 'Login Tribute', desc: 'Claim the reward offered for logging in that day.',
+                how: 'Log in and choose a reward if the Tribute screen presents multiple options.',
+                where: 'Appears automatically after entering the game following the daily reset.',
+                need: 'No mission requirement; simply log in after the new daily reset.',
+                reward: 'Credits, resources, boosters, discounts, relics, and milestone rewards based on total login days.'
+            },
+            {
+                id: 'daily_nightwave', title: 'Nightwave Daily Act', desc: 'Complete the currently available Daily Act before it expires.',
+                how: 'Open Nightwave, review the Daily Act objective, and complete its stated requirement.',
+                where: 'Navigation screen &gt; Nightwave banner.',
+                need: 'Access to the mission, enemy, or system named by the current Act.',
+                reward: 'Nightwave Standing toward seasonal ranks and Cred rewards.'
+            }
+        ];
+
+        const weeklyData = [
+            {
+                id: 'weekly_archon', title: 'Archon Hunt', desc: 'Complete the three-mission hunt and defeat the week&rsquo;s Archon.',
+                how: 'Complete all three missions in sequence. The final mission contains the Archon confrontation.',
+                where: 'Navigation &gt; Alerts &gt; Archon Hunt.',
+                need: 'Veilbreaker completed and sufficiently durable endgame equipment.',
+                reward: 'A guaranteed Archon Shard plus additional mission rewards.'
+            },
+            {
+                id: 'weekly_netracell', title: 'Netracells', desc: 'Use the available weekly Search Pulses to recover high-value rewards.',
+                how: 'Take all required Keyglyphs, locate the Netracell, reduce security by killing enemies inside the marked zone, then open the vault.',
+                where: 'Sanctum Anatomica on Deimos; speak with Tagfer to begin.',
+                need: 'Whispers in the Walls completed and a strong loadout capable of handling high-level enemies and Keyglyph penalties.',
+                reward: 'Endgame rewards that may include Archon Shards, Melee Arcanes, and Melee Arcane Adapters.'
+            },
+            {
+                id: 'weekly_kahl', title: 'Kahl&rsquo;s Garrison', desc: 'Complete Kahl&rsquo;s current Break Narmer mission and its optional challenges.',
+                how: 'Launch the mission as Kahl, finish its main objective, and complete listed challenges for additional Stock.',
+                where: 'Kahl&rsquo;s Garrison camp after installing the segment in the Drifter&rsquo;s Camp.',
+                need: 'Veilbreaker completed and Kahl&rsquo;s Garrison unlocked.',
+                reward: 'Stock for Chipper&rsquo;s offerings and progress toward Garrison ranks.'
+            },
+            {
+                id: 'weekly_circuit', title: 'Steel Path Duviri Circuit', desc: 'Advance through the weekly reward path for selected Incarnon Genesis Adapters.',
+                how: 'Choose the weekly reward paths, then complete consecutive Circuit stages to earn tier progress.',
+                where: 'Navigation &gt; Duviri &gt; The Circuit; select Steel Path.',
+                need: 'The Duviri Paradox completed, Steel Path unlocked, and access to the Steel Path Circuit.',
+                reward: 'Incarnon Genesis Adapters and the other rewards shown on the weekly Circuit track.'
+            },
+            {
+                id: 'weekly_ayatan', title: 'Maroo&rsquo;s Ayatan Hunt', desc: 'Complete a timed treasure room to recover an Ayatan Sculpture.',
+                how: 'Accept Maroo&rsquo;s mission, locate the challenge room, activate it, and reach the treasure before the door closes.',
+                where: 'Speak with Maroo at Maroo&rsquo;s Bazaar on Mars.',
+                need: 'Access to Maroo&rsquo;s Bazaar; a mobile Warframe makes the obstacle course easier.',
+                reward: 'One Ayatan Sculpture that can be socketed with Stars and exchanged for Endo.'
+            },
+            {
+                id: 'weekly_teshin', title: 'Teshin&rsquo;s Steel Path Honors', desc: 'Review the rotating weekly offering before it changes.',
+                how: 'Earn Steel Essence in Steel Path missions, then purchase the desired weekly or evergreen offering.',
+                where: 'Speak with Teshin in any Relay and open Steel Path Honors.',
+                need: 'Steel Path unlocked and enough Steel Essence for the selected purchase.',
+                reward: 'A rotating reward such as Kuva, a Riven-related item, an Umbra Forma Blueprint, or another scheduled offering.'
+            },
+            {
+                id: 'weekly_archimedea', title: 'Deep Archimedea / Elite Deep Archimedea', desc: 'Complete the weekly Entrati endgame challenge with selected restrictions.',
+                how: 'Choose the displayed loadout and personal modifiers, then complete the three missions in sequence. Enable every required modifier to qualify for Elite rewards.',
+                where: 'Sanctum Anatomica on Deimos; access Deep Archimedea through Necraloid.',
+                need: 'The required Sanctum progression, endgame-capable equipment, and suitable choices from the week&rsquo;s restricted loadout.',
+                reward: 'Research points unlock weekly reward tiers containing high-value Entrati endgame rewards.'
+            },
+            {
+                id: 'weekly_nightwave', title: 'Nightwave Weekly and Elite Weekly Acts', desc: 'Complete the current weekly objectives and recover missed Acts when available.',
+                how: 'Review every Weekly and Elite Weekly Act, then complete each listed objective before the series ends.',
+                where: 'Navigation screen &gt; Nightwave banner.',
+                need: 'Access to the activities named by each Act; some objectives require later story or Star Chart progress.',
+                reward: 'Nightwave Standing for seasonal ranks, Creds, cosmetics, upgrade items, and other rank rewards.'
+            }
+        ];
+
+        function renderTasks(containerId, data, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            data.forEach(task => {
+                const isChecked = safeStorage.getItem(task.id) === 'true' ? 'checked' : '';
+                const checkboxClass = type === 'daily' ? 'daily-check' : 'weekly-check';
+                
+                container.innerHTML += `
+                    <div class="task-item">
+                        <input type="checkbox" class="cyber-checkbox ${checkboxClass}" id="${task.id}" ${isChecked}>
+                        <div class="task-text">
+                            <label for="${task.id}" style="cursor:pointer;">${task.title}</label>
+                            <span class="task-desc">${task.desc}</span>
+                            <div class="task-guide ${type === 'daily' ? 'daily-guide' : ''}">
+                                <div class="guide-entry"><span class="guide-label">How</span>${task.how}</div>
+                                <div class="guide-entry"><span class="guide-label">Where</span>${task.where}</div>
+                                <div class="guide-entry"><span class="guide-label">What You Need</span>${task.need}</div>
+                                <div class="guide-entry"><span class="guide-label">Reward</span>${task.reward}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Add Listeners
+            container.querySelectorAll('input').forEach(box => {
+                box.addEventListener('change', (e) => {
+                    safeStorage.setItem(e.target.id, e.target.checked);
+                    updateCompletionCounts();
+                });
+            });
+        }
+
+        function updateCompletionCounts() {
+            const updateCount = (type, data) => {
+                const complete = data.filter(task => document.getElementById(task.id)?.checked).length;
+                const target = document.getElementById(`${type}Count`);
+                if (target) target.textContent = `${complete}/${data.length} complete`;
+            };
+            updateCount('daily', dailyData);
+            updateCount('weekly', weeklyData);
+        }
+
+        // --- Time Math & Auto Reset Logic ---
+        
+        function getDailyPeriod(date) {
+            return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
+        }
+
+        function getWeeklyPeriod(date) {
+            const resetStart = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0));
+            resetStart.setUTCDate(resetStart.getUTCDate() - resetStart.getUTCDay());
+            return getDailyPeriod(resetStart);
+        }
+
+        function getNextResetTimes(now) {
+            const nextDaily = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+            let daysUntilSunday = (7 - now.getUTCDay()) % 7;
+            if (daysUntilSunday === 0) daysUntilSunday = 7;
+            const nextWeekly = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilSunday, 0, 0, 0));
+            return { nextDaily, nextWeekly };
+        }
+
+        function updateTimers() {
+            const now = new Date();
+            const { nextDaily, nextWeekly } = getNextResetTimes(now);
+            const diffDaily = nextDaily - now;
+            
+            const dH = Math.floor(diffDaily / (1000 * 60 * 60));
+            const dM = Math.floor((diffDaily % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('dailyTimer').innerHTML = `Daily Reset in: <span class="timer-highlight">${dH}h ${dM}m</span>`;
+
+            const diffWeekly = nextWeekly - now;
+            
+            const wD = Math.floor(diffWeekly / (1000 * 60 * 60 * 24));
+            const wH = Math.floor((diffWeekly % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('weeklyTimer').innerHTML = `Weekly Reset in: <span class="timer-highlight" style="color: #ffab00;">${wD}d ${wH}h</span>`;
+            document.getElementById('resetTimeNote').textContent =
+                `Next daily: ${nextDaily.toLocaleString()} (${nextDaily.toISOString().replace('.000Z', 'Z')}) | ` +
+                `Next weekly: ${nextWeekly.toLocaleString()} (${nextWeekly.toISOString().replace('.000Z', 'Z')})`;
+
+            checkAutomatedResets(now);
+        }
+
+        function checkAutomatedResets(now) {
+            const currentDailyPeriod = getDailyPeriod(now);
+            const currentWeeklyPeriod = getWeeklyPeriod(now);
+            const savedDailyPeriod = safeStorage.getItem('reset_checklist_daily_period');
+            const savedWeeklyPeriod = safeStorage.getItem('reset_checklist_weekly_period');
+            const lastVisit = safeStorage.getItem('last_visit_time');
+
+            if (savedDailyPeriod && savedDailyPeriod !== currentDailyPeriod) {
+                forceReset('daily');
+            } else if (!savedDailyPeriod && lastVisit && getDailyPeriod(new Date(Number(lastVisit))) !== currentDailyPeriod) {
+                forceReset('daily');
+            }
+
+            if (savedWeeklyPeriod && savedWeeklyPeriod !== currentWeeklyPeriod) {
+                forceReset('weekly');
+            } else if (!savedWeeklyPeriod && lastVisit && getWeeklyPeriod(new Date(Number(lastVisit))) !== currentWeeklyPeriod) {
+                forceReset('weekly');
+            }
+
+            safeStorage.setItem('reset_checklist_daily_period', currentDailyPeriod);
+            safeStorage.setItem('reset_checklist_weekly_period', currentWeeklyPeriod);
+            safeStorage.setItem('last_visit_time', now.getTime());
+        }
+
+        function forceReset(type) {
+            const data = type === 'daily' ? dailyData : weeklyData;
+            data.forEach(task => {
+                safeStorage.setItem(task.id, 'false');
+                const checkbox = document.getElementById(task.id);
+                if (checkbox) checkbox.checked = false;
+            });
+            updateCompletionCounts();
+        }
+
+        function requestManualReset(type) {
+            const label = type === 'daily' ? 'daily' : 'weekly';
+            if (window.confirm(`Clear every ${label} checklist item?`)) {
+                forceReset(type);
+            }
+        }
+
+        function openBackupPanel() {
+            document.getElementById('reset-backup-modal').style.display = 'flex';
+        }
+
+        function closeBackupPanel() {
+            document.getElementById('reset-backup-modal').style.display = 'none';
+            document.getElementById('reset-backup-input').value = '';
+        }
+
+        function getResetChecklistKeys() {
+            return [
+                ...dailyData.map(task => task.id),
+                ...weeklyData.map(task => task.id),
+                'reset_checklist_daily_period',
+                'reset_checklist_weekly_period',
+                'last_visit_time'
+            ];
+        }
+
+        function exportResetChecklist() {
+            const values = {};
+            getResetChecklistKeys().forEach(key => {
+                const value = safeStorage.getItem(key);
+                if (value !== null) values[key] = value;
+            });
+
+            const payload = {
+                schema: 'warframe-reset-checklist-backup-v1',
+                createdAt: new Date().toISOString(),
+                values
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `Warframe_Reset_Checklist_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+            closeBackupPanel();
+        }
+
+        function importResetChecklist(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    const payload = JSON.parse(reader.result);
+                    if (!payload || payload.schema !== 'warframe-reset-checklist-backup-v1' || typeof payload.values !== 'object') {
+                        throw new Error('Unsupported backup file format.');
+                    }
+
+                    const allowedKeys = new Set(getResetChecklistKeys());
+                    allowedKeys.forEach(key => safeStorage.removeItem(key));
+                    Object.entries(payload.values).forEach(([key, value]) => {
+                        if (allowedKeys.has(key)) safeStorage.setItem(key, String(value));
+                    });
+
+                    alert(`Checklist restored successfully from ${file.name}.`);
+                    location.reload();
+                } catch (error) {
+                    alert('ERROR: This is not a valid Reset Checklist backup file.');
+                    event.target.value = '';
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        document.getElementById('reset-backup-modal').addEventListener('click', event => {
+            if (event.target.id === 'reset-backup-modal') closeBackupPanel();
+        });
+
+        // Initialize
+        renderTasks('dailyTasks', dailyData, 'daily');
+        renderTasks('weeklyTasks', weeklyData, 'weekly');
+        updateCompletionCounts();
+        updateTimers();
+        setInterval(updateTimers, 60000); // Update every minute
+    </script>
+
+</body>
+</html>
+
+
+
+
+

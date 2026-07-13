@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/wf_backup_data.js"></script>
+    <script>
+    // Seed localStorage from backup if this page has no saved data yet
+    (function() {
+        try {
+            const testKey = '__storage_test__';
+            localStorage.setItem(testKey, testKey);
+            localStorage.removeItem(testKey);
+            // Seed localStorage only if empty &mdash; after that it persists automatically
+            const hasData = Object.keys(localStorage).some(k => k.startsWith('wf_') || k.startsWith('tracker_'));
+            if (!hasData && window.WF_BACKUP_DATA && Object.keys(window.WF_BACKUP_DATA).length > 0) {
+                for (const key in window.WF_BACKUP_DATA) {
+                    localStorage.setItem(key, window.WF_BACKUP_DATA[key]);
+                }
+            }
+        } catch(e) {
+            // If localStorage unavailable, set __memory_restore_data__ for safeStorage fallback
+            if (window.WF_BACKUP_DATA) {
+                window.__memory_restore_data__ = Object.assign({}, window.WF_BACKUP_DATA);
+            }
+        }
+    })();
+    </script>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Tenno Foundry</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css?v=6">
+    <link rel="stylesheet" href="assets/css/farming_codex_style.css?v=4">
+    <style>
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+
+/* 5-column card grid */
+#card-grid.card-grid { grid-template-columns: repeat(5, 1fr); }
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Fishing_Companion_Codex.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a><a id="nav-next-top" href="Warframe_Foundry_Farming_Guide.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpUp = document.getElementById('jump-up');
+    const jumpDn = document.getElementById('jump-dn');
+    if (jumpUp && jumpDn) {
+        jumpUp.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        jumpDn.addEventListener('click', () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollTop <= 20) {
+                jumpUp.style.display = 'none';
+            } else {
+                jumpUp.style.display = 'flex';
+            }
+            
+            if (scrollTop + clientHeight >= scrollHeight - 20) {
+                jumpDn.style.display = 'none';
+            } else {
+                jumpDn.style.display = 'flex';
+            }
+        };
+        
+        window.addEventListener('scroll', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === currentFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (prevEl && nextEl) {
+        if (currentIndex !== -1) {
+            if (currentIndex > 0) {
+                prevEl.href = guideSequence[currentIndex - 1];
+                if (prevTopEl) {
+                    prevTopEl.href = guideSequence[currentIndex - 1];
+                    prevTopEl.classList.remove('disabled');
+                }
+            } else {
+                prevEl.classList.add('disabled');
+                if (prevTopEl) prevTopEl.classList.add('disabled');
+            }
+            if (currentIndex < guideSequence.length - 1) {
+                nextEl.href = guideSequence[currentIndex + 1];
+                if (nextTopEl) {
+                    nextTopEl.href = guideSequence[currentIndex + 1];
+                    nextTopEl.classList.remove('disabled');
+                }
+            } else {
+                nextEl.classList.add('disabled');
+                if (nextTopEl) nextTopEl.classList.add('disabled');
+            }
+        } else {
+            prevEl.classList.add('disabled');
+            nextEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+
+
+
+
+  <!-- Hidden nav buttons required by warframe_data.js -->
+  <div style="display: none !important;">
+    <button id="nav-codex"></button>
+    <button id="nav-builds"></button>
+    <button id="nav-mods"></button>
+  </div>
+
+  <div class="container" style="max-width: 1750px; width: 1750px; padding: 3rem 2.5rem; margin: 0 auto; background: rgba(10,15,30,0.7); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; box-shadow: 0 30px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);">
+  <header>
+    <h1>&#x2692;&#xFE0F; TENNO FOUNDRY</h1>
+    <p class="subtitle">Unified Codex &amp; Build Repository</p>
+  </header>
+    <div class="tabs" style="margin-bottom: 20px;">
+      <button id="tab-standard" class="tab-btn active">Standard Warframes</button>
+      <button id="tab-prime" class="tab-btn">Prime Warframes</button>
+      <button id="tab-expansion" class="tab-btn">Expansion Warframes</button>
+    </div>
+
+    <!-- SECTION 1: FARMING CODEX -->
+    <div id="section-codex" class="hub-section active">
+
+      <!-- Dashboard stats and tabs -->
+      <div class="dashboard">
+        <div class="controls-bar" style="flex:1; display:flex; align-items:center; gap:10px; min-width:0; background:none; border:none; border-radius:0; padding:0; margin:0; backdrop-filter:none; -webkit-backdrop-filter:none;">
+          <div class="search-wrapper" style="flex:1; min-width:0;">
+            <input type="text" id="search-input" class="search-input" placeholder="Search by name, location, planet, boss...">
+          </div>
+          <select id="category-select" class="filter-select">
+            <option value="all">All Categories</option>
+            <option value="Assassination">Assassination (Bosses)</option>
+            <option value="Dojo">Clan Dojo</option>
+            <option value="Quest">Quest Rewards</option>
+            <option value="Syndicate">Syndicates &amp; Bounties</option>
+            <option value="Special">Special Mission Modes</option>
+          </select>
+          <select id="completion-select" class="filter-select">
+            <option value="all">All States</option>
+            <option value="incomplete">Incomplete</option>
+            <option value="completed">Acquired</option>
+          </select>
+        </div>
+        
+        <div class="stats-container">
+          <div class="stat-item">
+            <div class="stat-val"><span id="acquired-count">0</span> / <span id="total-count">0</span></div>
+            <div class="stat-label">Acquired</div>
+            <div class="progress-bar-container">
+              <div id="progress-bar-fill" class="progress-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warframe cards grid -->
+      <div id="card-grid" class="card-grid">
+        <!-- Injected dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- SECTION 2: ATLAS PRIME BUILD -->
+    <div id="section-builds" class="hub-section">
+      <div class="build-header-tag">
+        <h2>&#128081; Atlas Prime: One-Punch Overlord</h2>
+        <span class="version-badge">Koumei & the Five Fates Update | 5 Formas</span>
+      </div>
+
+      <div class="build-layout">
+        <!-- Main Mod Configuration Panels -->
+        <div class="build-content">
+          
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">&#x2699;&#xFE0F; Warframe Modding Setup</h3>
+              <span class="version-tag">Rubble Heap Invulnerability Build</span>
+            </div>
+            
+            <p class="panel-desc">
+              This build is fully optimized around <strong>Landslide</strong> (Atlas's 1st ability) utilizing the <strong>Rubble Heap</strong> augment. By keeping rubble stacks above 1,400, your Landslide deals 2x damage, moves 2x faster, and costs <strong>zero energy</strong>, turning you into a scaling invulnerable punch machine.
+            </p>
+
+            <div class="mod-grid">
+              <!-- Mods -->
+              <div class="mod-card prime">
+                <div class="mod-header">
+                  <span class="mod-title">Primed Flow</span>
+                  <span class="mod-cost">14</span>
+                </div>
+                <p class="mod-desc">+185% Energy Max</p>
+                <div class="mod-footer"><span>Rank 10</span><span class="mod-polarity">Naramon</span></div>
+              </div>
+
+              <div class="mod-card prime">
+                <div class="mod-header">
+                  <span class="mod-title">Primed Continuity</span>
+                  <span class="mod-cost">14</span>
+                </div>
+                <p class="mod-desc">+55% Ability Duration</p>
+                <div class="mod-footer"><span>Rank 10</span><span class="mod-polarity">Madurai</span></div>
+              </div>
+
+              <div class="mod-card umbral">
+                <div class="mod-header">
+                  <span class="mod-title">Umbral Intensify</span>
+                  <span class="mod-cost">16</span>
+                </div>
+                <p class="mod-desc">+44% Ability Strength</p>
+                <div class="mod-footer"><span>Rank 10</span><span class="mod-polarity">Umbra</span></div>
+              </div>
+
+              <div class="mod-card augment">
+                <div class="mod-header">
+                  <span class="mod-title">Rubble Heap</span>
+                  <span class="mod-cost">9</span>
+                </div>
+                <p class="mod-desc">Landslide: 2x Dmg & Speed at 1400+ Rubble</p>
+                <div class="mod-footer"><span>Rank 3</span><span class="mod-polarity">Zenurik</span></div>
+              </div>
+
+              <div class="mod-card">
+                <div class="mod-header">
+                  <span class="mod-title">Blind Rage</span>
+                  <span class="mod-cost">16</span>
+                </div>
+                <p class="mod-desc">+99% Ability Strength<br>-55% Efficiency</p>
+                <div class="mod-footer"><span>Rank 10</span><span class="mod-polarity">Madurai</span></div>
+              </div>
+
+              <div class="mod-card">
+                <div class="mod-header">
+                  <span class="mod-title">Transient Fortitude</span>
+                  <span class="mod-cost">16</span>
+                </div>
+                <p class="mod-desc">+55% Ability Strength<br>-27.5% Duration</p>
+                <div class="mod-footer"><span>Rank 10</span><span class="mod-polarity">Madurai</span></div>
+              </div>
+
+              <div class="mod-card">
+                <div class="mod-header">
+                  <span class="mod-title">Stretch</span>
+                  <span class="mod-cost">9</span>
+                </div>
+                <p class="mod-desc">+45% Ability Range</p>
+                <div class="mod-footer"><span>Rank 5</span><span class="mod-polarity">Naramon</span></div>
+              </div>
+
+              <div class="mod-card">
+                <div class="mod-header">
+                  <span class="mod-title">Rolling Guard</span>
+                  <span class="mod-cost">12</span>
+                </div>
+                <p class="mod-desc">On Dodge: Invincible for 3s. Cleanses Status.</p>
+                <div class="mod-footer"><span>Rank 10</span><span class="mod-polarity">Vazarin</span></div>
+              </div>
+            </div>
+
+            <!-- Aura & Exilus -->
+            <div class="aura-exilus-grid">
+              <div class="info-card">
+                <div class="info-card-title">AURA SLOT</div>
+                <div class="info-highlight-text">Steel Charge (+60% Melee Damage)</div>
+                <p class="info-card-subtext">Directly increases Landslide base scaling. Can swap for Brief Respite for shield gating setups.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-card-title">EXILUS SLOT</div>
+                <div class="info-highlight-text">Primed Sure Footed (+100% Knockdown Resistance)</div>
+                <p class="info-card-subtext">Prevents knockdowns and self-stagger, ensuring you never stop punching. Power Drift is a budget option.</p>
+              </div>
+            </div>
+
+            <!-- Arcanes & Helminth -->
+            <div class="info-grid">
+              <div class="info-card">
+                <div class="info-card-title">Recommended Arcanes</div>
+                <div class="info-item">
+                  <div class="info-text">
+                    <h4>&#10024; Arcane Fury (Rank 5)</h4>
+                    <p>On Critical Hit: +180% Melee Damage to weapons and Landslide for 18 seconds.</p>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-text">
+                    <h4>&#10024; Arcane Avenger (Rank 5)</h4>
+                    <p>On Damage Taken: +45% flat Critical Chance for 12 seconds. Pushes Landslide to red crits.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <div class="info-card-title">Helminth Abilities (Replaces Tectonics)</div>
+                <div class="info-item">
+                  <div class="info-text">
+                    <h4>&#x2694;&#xFE0F; Wrathful Advance (Kullervo)  META</h4>
+                    <p>Teleports you to targets and grants flat Crit Chance based on Strength (+200% crit at 200% Strength).</p>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-text">
+                    <h4>&#128154; Nourish (Grendel)  Utility</h4>
+                    <p>Adds Toxin/Viral damage to punches and boosts energy multipliers from drops.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Melee Stat Stick Panel -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">Stat Stick Melee Weapons (Magistar & Ceramic Dagger)</h3>
+              <span class="version-tag">Incarnon Evolution Mechanics</span>
+            </div>
+            <p class="panel-desc">
+              Landslide does not use equipped melee mods on Atlas. Instead, it inherits the damage, critical, elemental, and set bonus mods equipped on your equipped <strong>Melee weapon</strong>, alongside **Incarnon Evolutions**.
+            </p>
+
+            <div class="info-grid" style="margin-bottom: 2rem;">
+              <div class="info-card">
+                <div class="info-card-title accent-blue">Sancti Magistar (Incarnon)</div>
+                <p class="info-card-subtext">Best for raw critical scaling. Deals massive critical hits and provides healing on charge attacks.</p>
+                <div class="evo-row"><span>Evo II</span><strong>Edge of Justice:</strong> +40 Melee Damage</div>
+                <div class="evo-row"><span>Evo IV</span><strong>Critical Parallel:</strong> +16% Crit Chance & +1.0x Crit Multiplier</div>
+              </div>
+              <div class="info-card">
+                <div class="info-card-title accent-blue">Ceramic Dagger (Incarnon)</div>
+                <p class="info-card-subtext">Best for ease of use. Automatically charges and maintains your combo meter.</p>
+                <div class="evo-row"><span>Evo III</span><strong>Adept Hope:</strong> Up to +120 Starting Combo count (instant x7 combo)</div>
+                <div class="evo-row"><span>Evo IV</span><strong>Absolute Valor:</strong> +30% flat Critical Chance</div>
+              </div>
+            </div>
+
+            <h4 class="sub-section-title">&#x1F3AF; Optimal Stat Stick Modding Build</h4>
+            <div class="mod-grid">
+              <div class="mod-card prime">
+                <div class="mod-header">
+                  <span class="mod-title">Primed Pressure Point</span>
+                  <span class="mod-cost">14</span>
+                </div>
+                <p class="mod-desc">+165% Melee Damage</p>
+                <div class="mod-footer"><span>Rank 10</span></div>
+              </div>
+              <div class="mod-card umbral">
+                <div class="mod-header">
+                  <span class="mod-title">Sacrificial Steel</span>
+                  <span class="mod-cost">16</span>
+                </div>
+                <p class="mod-desc">+220% Critical Chance (+275% with Set)</p>
+                <div class="mod-footer"><span>Rank 10</span></div>
+              </div>
+              <div class="mod-card">
+                <div class="mod-header">
+                  <span class="mod-title">Organ Shatter</span>
+                  <span class="mod-cost">9</span>
+                </div>
+                <p class="mod-desc">+85% Critical Damage</p>
+                <div class="mod-footer"><span>Rank 5</span></div>
+              </div>
+              <div class="mod-card">
+                <div class="mod-header">
+                  <span class="mod-title">Blood Rush</span>
+                  <span class="mod-cost">14</span>
+                </div>
+                <p class="mod-desc">+40% Crit Chance per Combo Multiplier</p>
+                <div class="mod-footer"><span>Rank 10</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Crit Calculator Sidebar -->
+        <aside class="sidebar-panel">
+          <div class="stat-group">
+            <div class="stat-group-title">Base Landslide Stats</div>
+            <div class="stat-row">
+              <span class="stat-label">Crit Chance</span>
+              <span class="stat-val">5.0%</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Crit Multiplier</span>
+              <span class="stat-val">2.0x</span>
+            </div>
+          </div>
+
+          <div class="calculator">
+            <div class="calc-title">
+              <svg style="width:18px;height:18px" viewBox="0 0 24 24"><path fill="currentColor" d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V5H19V19M11.5,6H12.5V8.5H15V9.5H12.5V12H11.5V9.5H9V8.5H11.5V6M9,13H15V14.5H9V13M9,16.5H15V18H9V16.5Z"/></svg>
+              Landslide Crit Calculator
+            </div>
+
+            <div class="calc-control">
+              <label for="calc-incarnon">Incarnon Evolution</label>
+              <select id="calc-incarnon">
+                <option value="none">None</option>
+                <option value="magistar" selected>Magistar (Critical Parallel +16%)</option>
+                <option value="ceramic">Ceramic Dagger (Absolute Valor +30%)</option>
+              </select>
+            </div>
+
+            <div class="calc-control">
+              <label class="checkbox-label">
+                <input type="checkbox" id="calc-avenger" checked>
+                Arcane Avenger Active (+45% flat)
+              </label>
+            </div>
+
+            <div class="calc-control">
+              <label class="checkbox-label">
+                <input type="checkbox" id="calc-wrathful">
+                Wrathful Advance Active (Helminth)
+              </label>
+            </div>
+
+            <div class="calc-control" id="calc-strength-container" style="display:none;">
+              <label for="calc-strength">Ability Strength (%)</label>
+              <input type="number" id="calc-strength" value="200" min="100" max="400">
+            </div>
+
+            <div class="calc-control">
+              <label for="calc-mods">Melee Crit Chance Mods</label>
+              <select id="calc-mods">
+                <option value="none">None</option>
+                <option value="true_steel">True Steel (+120%)</option>
+                <option value="sacrificial_steel">Sacrificial Steel (+220%)</option>
+                <option value="sacrificial_set" selected>Sacrificial Steel + Set (+275%)</option>
+              </select>
+            </div>
+
+            <div class="calc-control">
+              <div class="slider-header">
+                <label for="calc-combo">Melee Combo Multiplier</label>
+                <span id="combo-val" class="highlight-val">12x</span>
+              </div>
+              <input type="range" id="calc-combo" min="1" max="12" value="12">
+            </div>
+
+            <div class="calc-control">
+              <label for="calc-gladiator">Gladiator Mods Equipped</label>
+              <select id="calc-gladiator">
+                <option value="0">0 Mods</option>
+                <option value="1" selected>1 Mod (Gladiator Might)</option>
+                <option value="2">2 Mods</option>
+                <option value="3">3 Mods</option>
+              </select>
+            </div>
+
+            <div class="calc-output">
+              <div class="calc-crit-tier" id="crit-tier-display">YELLOW CRIT CHANCE</div>
+              <div class="calc-crit-val" id="crit-val-display">0.0%</div>
+              <div class="calc-sub-stat">
+                Crit Multiplier: <span id="crit-mult-display" class="highlight-val">0.0x</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- SECTION 3: MOD SYNERGY CODEX -->
+    <div id="section-mods" class="hub-section">
+      <div class="build-header-tag">
+        <h2>&#127183; Mod Synergy Codex &amp; Sandbox</h2>
+        <span class="version-badge">Interactive Synergy Evaluation</span>
+      </div>
+
+      <div class="build-layout">
+        <!-- Left: Synergy Reference List -->
+        <div class="build-content">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">&#x2697;&#xFE0F; Elemental Combinations Reference</h3>
+            </div>
+            <div class="combo-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="info-card">
+                <div class="info-highlight-text" style="color: #3b82f6;">Viral (Cold + Toxin)</div>
+                <p class="info-card-subtext">Multiplies damage dealt directly to health (up to +325% at 10 stacks). The current meta choice for almost all builds.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-highlight-text" style="color: #10b981;">Corrosive (Electric + Toxin)</div>
+                <p class="info-card-subtext">Strips target armor (up to 80% at 10 stacks), increasing all raw direct damage. Great against high-armor targets.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-highlight-text" style="color: #f59e0b;">Radiation (Heat + Electric)</div>
+                <p class="info-card-subtext">Forces enemies to attack each other and draw aggro away from players. Essential for bosses and Eidolons.</p>
+              </div>
+              <div class="info-card">
+                <div class="info-highlight-text" style="color: #ec4899;">Magnetic (Cold + Electric)</div>
+                <p class="info-card-subtext">Disrupts enemy shields, amplifying damage against them and preventing shield regeneration. Meta against Corpus.</p>
+              </div>
+            </div>
+
+            <h4 class="sub-section-title">Core Mod Combinations & Guidelines</h4>
+            <div class="mod-grid">
+              <div class="mod-card augment" style="border-color: var(--color-primary); min-height: auto; margin-bottom: 0.5rem;">
+                <div class="mod-header">
+                  <span class="mod-title" style="color: var(--color-primary);">Blood Rush + Organ Shatter</span>
+                </div>
+                <p class="mod-desc">The critical scaling baseline for melee. Blood Rush pushes critical hit rates through the roof per combo multiplier, while Organ Shatter multiplies that critical damage.</p>
+              </div>
+              <div class="mod-card augment" style="border-color: var(--color-primary); min-height: auto;">
+                <div class="mod-header">
+                  <span class="mod-title" style="color: var(--color-primary);">Condition Overload + Weeping Wounds</span>
+                </div>
+                <p class="mod-desc">The status synergy powerhouse. Weeping Wounds ensures constant status applications, triggering Condition Overload's massive base damage scaling per active status.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Synergy Sandbox -->
+        <aside class="sidebar-panel">
+          <div class="calculator">
+            <div class="calc-title">
+              Mod Synergy Sandbox
+            </div>
+            
+            <div class="calc-control">
+              <label for="sandbox-mod1">Equip Mod Slot 1</label>
+              <select id="sandbox-mod1">
+                <!-- Injected via JS -->
+              </select>
+            </div>
+
+            <div class="calc-control">
+              <label for="sandbox-mod2">Equip Mod Slot 2</label>
+              <select id="sandbox-mod2">
+                <!-- Injected via JS -->
+              </select>
+            </div>
+
+            <div class="calc-output" id="sandbox-output" style="text-align: left; padding: 1.25rem; min-height: 120px; transition: var(--transition-smooth); border: 1px solid transparent; border-radius: 8px;">
+              <div class="calc-crit-tier" id="sandbox-rating" style="margin-bottom: 0.5rem;">Select mods above</div>
+              <div class="calc-sub-stat" id="sandbox-description" style="color: var(--text-primary); font-size: 0.8rem; line-height: 1.4;">
+                Select two mods from the dropdowns above to calculate their compatibility, elemental fusion, or diminishing returns.
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/warframe_data.js?v=4"></script>
+
+  <!-- SECRET DATA MANAGEMENT MODAL -->
+  <div id="backup-restore-modal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 20000; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+    <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid #10b981; border-radius: 16px; padding: 60px; text-align: center; max-width: 800px; width: 90%; box-shadow: 0 10px 40px rgba(16,185,129,0.2);">
+      <h3 style="color: #10b981; margin-top: 0; margin-bottom: 20px; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size: 42px;">Data Management</h3>
+      <p style="color: #cbd5e1; font-size: 20px; margin-bottom: 40px; line-height: 1.5;">Export your entire Compendium progress to a backup file, load a previous backup, or clear all data for a fresh start.</p>
+      <div style="display: flex; flex-direction: column; gap: 25px;">
+        <button onclick="handleHubExport()" title="Downloads a .json file containing all your checked boxes and progress." style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); padding: 24px; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 24px; transition: all 0.2s;">&#x1F4E4; Export Backup</button>
+        <button onclick="document.getElementById('hidden-hub-import-input').click()" title="Select an existing .json backup file to instantly restore your progress." style="background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.4); padding: 24px; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 24px; transition: all 0.2s;">&#x1F4E5; Load Backup</button>
+        <button onclick="handleClearAllData()" title="Permanently wipe all saved progress and checkboxes. Cannot be undone." style="background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.4); padding: 24px; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 24px; transition: all 0.2s;">&#x1F5D1;&#xFE0F; Clear All Data</button>
+        <input type="file" id="hidden-hub-import-input" accept=".json" style="display: none;" onchange="handleHubImport(event)">
+      </div>
+      <button onclick="document.getElementById('backup-restore-modal').style.display='none'" style="margin-top: 40px; background: transparent; color: #94a3b8; border: none; cursor: pointer; text-decoration: underline; font-family: 'Inter', sans-serif; font-size: 20px;">Close Panel</button>
+    </div>
+  </div>
+
+  <script>
+    // Shared key-scope: identical to Settings page.
+    // All Compendium storage keys use one of these prefixes or are exact matches.
+    var CODEX_PREFIXES = ['codex_','wfcodex_','wf_','tracker_','reset_checklist_','warframe_','biolab_'];
+    var CODEX_EXACT    = ['last_visit_time','migrated_global'];
+    function isCodexKey(k) {
+        if (!k) return false;
+        for (var i = 0; i < CODEX_PREFIXES.length; i++) {
+            if (k.indexOf(CODEX_PREFIXES[i]) === 0) return true;
+        }
+        return CODEX_EXACT.indexOf(k) !== -1;
+    }
+
+    function handleHubExport() {
+        var exportData = {};
+        var hasData = false;
+        for (var i = 0; i < safeStorage.length; i++) {
+            var key = safeStorage.key(i);
+            if (isCodexKey(key)) {
+                exportData[key] = safeStorage.getItem(key);
+                hasData = true;
+            }
+        }
+        if (!hasData) { alert('No Compendium data found to export!'); return; }
+        var dataStr  = JSON.stringify(exportData, null, 2);
+        var dataBlob = new Blob([dataStr], { type: 'application/json' });
+        var url  = URL.createObjectURL(dataBlob);
+        var link = document.createElement('a');
+        link.download = 'OrbiterCompendium_Backup_' + new Date().toISOString().slice(0,10) + '.json';
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        document.getElementById('backup-restore-modal').style.display = 'none';
+    }
+
+    function handleHubImport(event) {
+        var file = event.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                var data = JSON.parse(e.target.result);
+                // Clear all existing Compendium keys first
+                var keysToRemove = [];
+                for (var i = 0; i < safeStorage.length; i++) {
+                    var k = safeStorage.key(i);
+                    if (isCodexKey(k)) keysToRemove.push(k);
+                }
+                keysToRemove.forEach(function(k) { safeStorage.removeItem(k); });
+                // Restore everything from the backup
+                Object.keys(data).forEach(function(k) { safeStorage.setItem(k, data[k]); });
+                alert('&#9989; Data loaded from ' + file.name + '! Reloading...');
+                setTimeout(function() { location.reload(); }, 800);
+            } catch (err) {
+                alert('&#10060; Import failed: Invalid backup file.\n' + err.message);
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function handleClearAllData() {
+        if (!confirm('&#9888;&#65039; CLEAR ALL DATA\n\nThis permanently erases all saved checkboxes and progress across the entire Compendium.\n\nThis cannot be undone. Are you sure?')) return;
+        [window.localStorage, window.sessionStorage].forEach(function(store) {
+            if (!store) return;
+            try {
+                var keys = [];
+                for (var i = 0; i < store.length; i++) keys.push(store.key(i));
+                keys.forEach(function(k) { if (isCodexKey(k)) { try { store.removeItem(k); } catch(ex) {} } });
+            } catch(e) { console.warn('Codex clear scan failed', e); }
+        });
+        alert('&#9989; All Compendium data cleared. Reloading...');
+        location.reload();
+    }
+  </script>
+</body>
+</html>
+
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Profit-Taker &amp; Exploiter Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#129351; Profit-Taker &amp; Exploiter Guide</h1>
+        <p class="subtitle">Orb Mother fights &middot; access requirements &middot; builds &middot; rewards</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="section-overview" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#128218;</div><h2 class="qi-tile-title">Overview</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-access" style="border-left-color:#42a5f5;"><div class="qi-tile-icon">&#128273;</div><h2 class="qi-tile-title">Access &amp; Requirements</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-profit-taker" style="border-left-color:#ffb74d;"><div class="qi-tile-icon">&#129351;</div><h2 class="qi-tile-title">Profit-Taker Phases</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-pt-builds" style="border-left-color:#ef5350;"><div class="qi-tile-icon">&#128293;</div><h2 class="qi-tile-title">Profit-Taker Builds</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-exploiter" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#128293;</div><h2 class="qi-tile-title">Exploiter Orb</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-rewards" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#127873;</div><h2 class="qi-tile-title">Rewards</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. OVERVIEW -->
+    <section class="category-section" id="section-overview">
+        <h2>&#128218; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Are Orb Mothers?</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Two massive boss fights on the Orb Vallis (Venus open world): <strong>Profit-Taker Orb</strong> and <strong>Exploiter Orb</strong></li>
+                    <li>Profit-Taker is a multi-phase fight requiring Archgun use, Eidolon-style shield cycling, and specific element matching</li>
+                    <li>Exploiter Orb is a two-phase fight using thermia canisters &mdash; unique mechanic involving terrain hazards and coolant vents</li>
+                    <li>Both drop rare Corpus loot, crafting materials, and standalone mods not found elsewhere</li>
+                    <li>Profit-Taker is the primary source of <strong>Toroids</strong> for Vox Solaris standing gains</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Quick Reference</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li><strong>Location:</strong> Orb Vallis, Venus &mdash; accessible from Fortuna elevator</li>
+                    <li><strong>Profit-Taker access:</strong> Vox Solaris rank <em>Old Mate</em> (max rank) required for the heist mission series</li>
+                    <li><strong>Exploiter access:</strong> Complete Buried Debts quest; requires Diluted Thermia (from Thermia Fractures event or stockpile)</li>
+                    <li><strong>Recommended squad size:</strong> 2&ndash;4 players; Profit-Taker can be soloed with the right build; Exploiter is very soloable</li>
+                    <li><strong>Archgun required:</strong> Profit-Taker legs and pylons are immune to standard weapons; Archgun is mandatory</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. ACCESS & REQUIREMENTS -->
+    <section class="category-section" id="section-access">
+        <h2>&#128273; 2. Access &amp; Requirements</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Profit-Taker Unlock Path</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Access</span></div>
+                <ul class="list">
+                    <li><strong>Step 1:</strong> Reach Fortuna Standing rank <em>Tide Turner</em> (rank 4 of 5 with Solaris United)</li>
+                    <li><strong>Step 2:</strong> Reach Vox Solaris standing rank <em>Old Mate</em> (rank 5 of 5) &mdash; this requires large amounts of Toroids and gems from Orb Vallis</li>
+                    <li><strong>Step 3:</strong> Unlock Heist missions from Eudico in Fortuna &mdash; four heists, must be completed in order (Heist 1 &rarr; 4)</li>
+                    <li><strong>Heist 4</strong> is the Profit-Taker fight itself; completing it once gives permanent access to replays via Bounties</li>
+                    <li><strong>Archgun Deployer</strong> must be equipped in your Gear wheel before entering the mission</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Exploiter Orb Unlock Path</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Access</span></div>
+                <ul class="list">
+                    <li><strong>Step 1:</strong> Complete the <em>Buried Debts</em> quest (available after Vox Solaris rank 1+)</li>
+                    <li><strong>Step 2:</strong> Obtain <strong>Diluted Thermia</strong> &mdash; from Thermia Fractures event (recurring), or stockpile from previous event runs</li>
+                    <li><strong>Step 3:</strong> Equip Diluted Thermia in Gear wheel before entering Orb Vallis</li>
+                    <li><strong>Location:</strong> Exploiter Orb roams near Enrichment Labs on the eastern side of Vallis; approach it to trigger the fight</li>
+                    <li>No standing gate &mdash; only the quest completion and Thermia are required</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. PROFIT-TAKER PHASES -->
+    <section class="category-section" id="section-profit-taker">
+        <h2>&#129351; 3. Profit-Taker Phases</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Phase 1 &mdash; Shield Cycling</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Profit-Taker</span></div>
+                <ul class="list">
+                    <li>Profit-Taker's body shield cycles through elements displayed on the HUD: <strong>Impact, Puncture, Slash, Heat, Cold, Electric, Toxin, Blast, Corrosive, Viral, Magnetic, Radiation, Gas</strong></li>
+                    <li>Match the displayed element with your weapon to strip the shield segment; wrong element does nothing</li>
+                    <li><strong>Meta approach:</strong> Run a loadout covering 4&ndash;5 elements across your weapons &mdash; swap quickly as the cycle changes</li>
+                    <li>Archon mods and builds that swap elements on the fly (Stropha, Contagion, Fluctus) are popular choices</li>
+                    <li>Phase ends when all shield HP is stripped; Profit-Taker becomes vulnerable briefly before re-shielding</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Phase 2 &mdash; Archgun Legs</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Profit-Taker</span></div>
+                <ul class="list">
+                    <li>Profit-Taker's legs become the target; standard weapons cannot damage them &mdash; <strong>Archgun only</strong></li>
+                    <li>Deploy your Archgun via Gear wheel (Archwing Deployer) or Mech (Necramech); aim for the glowing leg joints</li>
+                    <li><strong>Best Archguns for legs:</strong> Velocitus (Magnetic &mdash; highest DPS vs Corpus), Larkspur Prime (Corrosive AoE), Mausolon (good all-around)</li>
+                    <li>Pylons spawn around the arena &mdash; destroy them (Archgun required) or they prevent damage to the boss</li>
+                    <li>Once all four legs are downed, a brief body-damage window opens before phase 3</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Phase 3 &amp; 4 &mdash; Repeat + Finale</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Profit-Taker</span></div>
+                <ul class="list">
+                    <li>Phases 3 and 4 repeat the shield-cycling and Archgun-leg pattern at increased intensity</li>
+                    <li>Additional Corpus reinforcements and Nullifier bubbles increase pressure &mdash; have a CC subsume or frame ability to handle adds</li>
+                    <li><strong>Phase 4 body:</strong> After all leg phases, the Profit-Taker body becomes fully vulnerable; dump all remaining DPS into the torso</li>
+                    <li>Time-to-kill record runs use Corrosive Projection auras + high burst Archgun to end Phase 4 in seconds</li>
+                    <li><strong>Death protection:</strong> Profit-Taker has a bleedout radius &mdash; if you go down near it, revive quickly or bleed out faster</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">General Tips</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Profit-Taker</span></div>
+                <ul class="list">
+                    <li><strong>Corrosive Projection aura</strong> removes base armor from the Profit-Taker body &mdash; stack 4 in a squad for maximum effect</li>
+                    <li>Knockdowns are constant &mdash; bring Handspring (Exilus) or use a frame with knockdown immunity (Rhino Iron Skin)</li>
+                    <li>Rolling Guard is near-mandatory; the fight has many status procs and brief invulnerability windows help with repositioning</li>
+                    <li>Archgun Ammo Mutation or Ammo Chain mod keeps Archgun fed during long phases</li>
+                    <li>Operator Amp does nothing to the boss; focus operator on Vomvalysts or adds only</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PROFIT-TAKER BUILDS -->
+    <section class="category-section" id="section-pt-builds">
+        <h2>&#128293; 4. Profit-Taker Builds</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Chroma &mdash; Solo Speed Build</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Builds</span></div>
+                <ul class="list">
+                    <li><strong>Why Chroma:</strong> Vex Armor (3) grants massive weapon damage bonus on taking hits; Profit-Taker constantly deals damage so Vex stacks are always maxed</li>
+                    <li><strong>Key mods:</strong> High strength (Transient Fortitude + Blind Rage), Continuity, Primed Flow, Effigy augment for bonus damage</li>
+                    <li><strong>Weapon loadout:</strong> Primary = Corrosive element weapon, Secondary = Radiation/Viral, Melee = Contagion or high Toxin, Archgun = Velocitus or Larkspur</li>
+                    <li><strong>Aura:</strong> Corrosive Projection (removes Profit-Taker armor)</li>
+                    <li><em>Fastest solo strategy:</em> Use Vex Armor to boost Archgun damage to extreme levels during leg phases. Chroma currently holds many sub-3-minute solo records.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Rhino &mdash; Beginner-Friendly Build</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Builds</span></div>
+                <ul class="list">
+                    <li><strong>Why Rhino:</strong> Iron Skin blocks all knockdown and status during the fight; Roar buffs both weapons and Archgun damage</li>
+                    <li><strong>Key mods:</strong> High strength for Iron Skin and Roar, Continuity, Ironclad Charge augment for huge Iron Skin pool</li>
+                    <li><strong>Weapon loadout:</strong> Cover 4+ elements across your loadout; prioritize Heat, Cold, Radiation, Viral, Toxin for common cycling elements</li>
+                    <li><strong>Aura:</strong> Corrosive Projection or Steel Charge</li>
+                    <li><em>Playstyle:</em> Keep Iron Skin active always &mdash; recast before it drops. Roar before opening Archgun for bonus damage. Much more forgiving than Chroma for learning the fight.</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Archgun Recommendations</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Builds</span></div>
+                <ul class="list">
+                    <li><strong>Velocitus (top pick):</strong> Magnetic damage &mdash; Corpus are weak to Magnetic; enormous single-target DPS on legs and body; requires charging</li>
+                    <li><strong>Mausolon:</strong> Auto-fire, consistent DPS, AoE on kill &mdash; great for clearing pylons and adds alongside boss damage</li>
+                    <li><strong>Larkspur Prime:</strong> Corrosive + AoE &mdash; hits multiple legs simultaneously; good for faster leg phases in squad</li>
+                    <li><strong>Key Archgun mods:</strong> Dual Rounds (multishot), Parallax Scope (crit chance), Automatic Trigger (fire rate), Ammo Chain (ammo efficiency)</li>
+                    <li>All Archguns benefit from <strong>Necramech Mods</strong> if using Voidrig/Bonewidow during the fight</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. EXPLOITER ORB -->
+    <section class="category-section" id="section-exploiter">
+        <h2>&#128293; 5. Exploiter Orb</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Phase 1 &mdash; Coolant Vents</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Exploiter</span></div>
+                <ul class="list">
+                    <li>Exploiter Orb has a heat shield &mdash; standard weapons deal no damage until the shield is broken</li>
+                    <li><strong>Step 1:</strong> Pick up a <strong>Thermia canister</strong> from the ground near the fight area (they glow orange)</li>
+                    <li><strong>Step 2:</strong> Throw the canister at a <strong>Coolant Vent</strong> on the Exploiter's body (glowing blue panels) to crack it open and deal heat damage to the orb</li>
+                    <li>Repeat with multiple canisters to push heat gauge to max; the Exploiter then ejects its heat shield in a burst &mdash; move away from the explosion</li>
+                    <li>Diluted Thermia canisters found in your Gear are used to <em>start</em> the fight, not thrown &mdash; the throwable canisters spawn in the fight arena</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Phase 2 &mdash; Exposed Core</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Exploiter</span></div>
+                <ul class="list">
+                    <li>After the heat purge, Exploiter Orb's cooling vents are exposed and vulnerable &mdash; deal damage to her back/underside to progress</li>
+                    <li>She summons <strong>Coolant Raknoids</strong> (small enemies that restore her cooling) &mdash; kill them first or they reset progress</li>
+                    <li>Damage her exposed vents with high-DPS weapons; this phase allows any damage type</li>
+                    <li>After sufficient damage, she reroutes heat and Phase 1 begins again &mdash; repeat the thermia throw cycle</li>
+                    <li><strong>Final kill:</strong> On the last Phase 2, a large explosion ends the fight and drops all loot in a scatter pattern across the arena</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Exploiter Tips &amp; Best Frames</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Exploiter</span></div>
+                <ul class="list">
+                    <li><strong>Best frames:</strong> Any tanky/sustain frame works well; Oberon, Rhino, Nidus handle the Raknoid swarms easily</li>
+                    <li>Bring a <strong>fast primary</strong> for killing Coolant Raknoids &mdash; they die quickly but spawn frequently; Ignis Wraith or Kuva Bramma are popular</li>
+                    <li>The fight takes place near environmental cryo-vents &mdash; stand in them if overheating becomes a threat (environmental heat proc causes damage over time)</li>
+                    <li><strong>Solo tip:</strong> Very doable solo; Phase 1 goes faster with more thermia throws, but the rhythm is easy to learn. Budget 6&ndash;10 minutes for solo runs.</li>
+                    <li><strong>Diluted Thermia source:</strong> Thermia Fractures events occur regularly and are the primary farming method; check the event calendar</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. REWARDS -->
+    <section class="category-section" id="section-rewards">
+        <h2>&#127873; 6. Rewards</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Profit-Taker Drops</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li><strong>Toroids:</strong> Calda, Sola, and Vega Toroids &mdash; currency for Vox Solaris standing; also drop from enemies in specific Vallis zones but PT is the most reliable source</li>
+                    <li><strong>Archgun Rivens:</strong> Profit-Taker is one of the few sources of Archgun Riven Mods</li>
+                    <li><strong>Corpus mods:</strong> Various Corpus-specific mods drop from the loot table</li>
+                    <li><strong>Heist bounty bonus:</strong> Completing optional objectives in the heist (no alarms, time limit, etc.) gives bonus rewards including Vox Solaris standing and gems</li>
+                    <li><strong>Kitgun parts / Kitgun Riven Mods</strong> also appear in the reward pool</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Exploiter Orb Drops</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li><strong>Hildryn Blueprint &amp; Components:</strong> All four Hildryn parts drop exclusively from Exploiter Orb (she cannot be obtained otherwise)</li>
+                    <li><strong>Gyromag, Atmo, Repeller Systems:</strong> Rare Fortuna crafting materials used for Vox Solaris standing and advanced Kitgun/Zaw crafting</li>
+                    <li><strong>Diluted Thermia:</strong> Small amounts drop from the fight itself (recoup the entry cost over multiple runs)</li>
+                    <li><strong>Corpus mods:</strong> Similar secondary drop table as other Vallis fights</li>
+                    <li>Exploiter runs are very fast (5&ndash;8 min) and rewarding &mdash; the primary grind path for Hildryn and advanced Fortuna materials</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Vox Solaris Standing Farming</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>Vox Solaris standing is capped daily by your Mastery Rank; plan your Toroid turn-ins to not exceed the daily cap</li>
+                    <li>Best Toroid farm: Profit-Taker heist rewards + <strong>Calda Toroid</strong> from Spaceport zone kills, <strong>Sola Toroid</strong> from Temple of Profit kills</li>
+                    <li>To reach <em>Old Mate</em> quickly: farm Exploiter first (fast runs), use Gyromag Systems for large standing chunks, supplement with bounty completion</li>
+                    <li>Profit-Taker Heist 4 rewards can be boosted with a <strong>Resource Booster</strong> &mdash; double Toroids per run</li>
+                    <li>Nekros Desecrate does <strong>not</strong> work on boss bodies; brings no loot advantage on PT or Exploiter</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+});
+</script>
+
+</body>
+</html>

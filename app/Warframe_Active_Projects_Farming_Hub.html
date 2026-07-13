@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Active Projects &amp; Farming Hub</title>
+    
+    <style>
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+
+/* .project-card/.step-row/.progress-bar etc had zero CSS defined anywhere
+   -- the entire page's tracker content rendered as plain unstyled HTML.
+   Same bug class as Foundry Operations Center, but page-wide. */
+:root { --violet-color: #a78bfa; }
+.project-card {
+    background: linear-gradient(180deg, rgba(30,41,59,0.8), rgba(15,23,42,0.9));
+    border: 1px solid rgba(255,255,255,0.1);
+    border-left: 4px solid #ffab00;
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+.card-amesha { border-left-color: #00e5ff; }
+.card-necramech { border-left-color: var(--violet-color); }
+.project-header {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; flex-wrap: wrap; margin-bottom: 12px;
+}
+.project-title { margin: 0; color: #f8fafc; font-size: 1.3rem; }
+.progress-text { color: #94a3b8; font-size: 0.85rem; margin-bottom: 6px; }
+.progress-container {
+    background: rgba(255,255,255,0.06); border-radius: 20px;
+    height: 10px; overflow: hidden; margin-bottom: 16px;
+}
+.progress-bar {
+    height: 100%; width: 0%; border-radius: 20px;
+    background: linear-gradient(90deg, #ffab00, #2ecc71);
+    transition: width 0.3s ease;
+}
+ul.step-list { list-style: none; padding-left: 0; margin: 0; }
+.step-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px; margin-bottom: 8px; border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,171,0,0.07), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,171,0,0.18); border-left: 3px solid rgba(255,171,0,0.5);
+    cursor: pointer; transition: all 0.25s ease;
+}
+.step-row:hover {
+    background: linear-gradient(180deg, rgba(255,171,0,0.14), rgba(255,255,255,0.04));
+    border-left-color: #ffab00;
+}
+.step-row.completed {
+    border-color: rgba(46,204,113,0.35); border-left-color: #2ecc71;
+    background: linear-gradient(180deg, rgba(46,204,113,0.12), rgba(46,204,113,0.03));
+}
+.step-checkbox { margin-top: 3px; width: 16px; height: 16px; cursor: pointer; accent-color: #ffab00; flex-shrink: 0; }
+.step-label { display: flex; flex-direction: column; gap: 2px; }
+.step-label > span:first-child { font-weight: 700; color: #f8fafc; font-size: 0.92rem; }
+.step-desc { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
+.wiki-link { color: #ffab00; text-decoration: underline; }
+.wiki-link:hover { color: #ffc94d; }
+.view-guide-btn {
+    display: inline-flex; align-items: center; padding: 8px 16px;
+    border-radius: 999px; border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.06); font-weight: 700; font-size: 0.85rem;
+    text-decoration: none; white-space: nowrap; transition: all 0.25s ease;
+}
+.view-guide-btn:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Disposal_Guidelines_SOP.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a><a id="nav-next-top" href="Warframe_Builds_Codex.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+    
+
+    <div class="container" style="max-width:1750px;">
+        <header>
+            <h1>&#127919; High-Priority Active Projects</h1>
+            <p class="subtitle">Interactive Step-by-Step Farming Trackers for Endgame Goals</p>
+        </header>
+
+        <!-- PROJECT 1: PENNANT -->
+        
+    <div class="dashboard-grid">
+<div class="project-card card-pennant" id="project-pennant">
+            <div class="project-header">
+                <h2 class="project-title">&#9876;&#65039; The Pennant (Heavy Attack Melee)</h2>
+            </div>
+
+            <div style="position: relative;">
+                <div class="progress-text" id="progress-text-pennant">0% Completed (0/4 Steps)</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar-pennant"></div>
+                </div>
+            </div>
+
+            <ul class="step-list">
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="pennant-step-1">
+                    <div class="step-label">
+                        <span>Farm Pennant Blueprint</span>
+                        <span class="step-desc">Drops from Grineer Commanders (Captain Karith, Kosma, or Glis) inside Railjack nodes in the <strong>Lupus / Flexa (Veil Proxima)</strong> sectors.</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="pennant-step-2">
+                    <div class="step-label">
+                        <span>Gather Crafting Components</span>
+                        <span class="step-desc">Acquire <a href="https://warframe.fandom.com/wiki/Carbides" target="_blank" class="wiki-link">8,000 Carbides</a> (Ceres drops), <a href="https://warframe.fandom.com/wiki/Ticor_Plate" target="_blank" class="wiki-link">8,000 Ticor Plate</a> (Railjack drops), and <a href="https://warframe.fandom.com/wiki/Gallium" target="_blank" class="wiki-link">150 Gallium</a>.</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="pennant-step-3">
+                    <div class="step-label">
+                        <span>Initiate Foundry Crafting</span>
+                        <span class="step-desc">Build the Pennant inside your Orbiter Foundry. Consumes 30,000 Credits and requires a 12-hour wait.</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="pennant-step-4">
+                    <div class="step-label">
+                        <span>Slot Melee Critical Build Mods</span>
+                        <span class="step-desc">Fully rank up and slot <em>Killing Blow, Corrupt Charge, Sacrificial Steel,</em> and <em>Organ Shatter</em> to unleash the 500k heavy attacks.</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- PROJECT 2: AMESHA -->
+        <div class="project-card card-amesha" id="project-amesha">
+            <div class="project-header">
+                <h2 class="project-title">&#128640; Amesha (Support Archwing)</h2>
+            </div>
+
+            <div style="position: relative;">
+                <div class="progress-text" id="progress-text-amesha">0% Completed (0/10 Steps)</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar-amesha"></div>
+                </div>
+            </div>
+
+            <ul class="step-list">
+                <h3 style="margin-top: 10px; margin-bottom: 5px; color: #ffab00; font-size: 14px; text-transform: uppercase;">&#x1F4CB; Phase 1: Blueprint Acquisition</h3>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-1">
+                    <div class="step-label">
+                        <span>Join a Clan (If Needed)</span>
+                        <span class="step-desc">Ensure you are in a Clan that has the Amesha researched in their Tenno Lab.</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-2">
+                    <div class="step-label">
+                        <span>Purchase Blueprints</span>
+                        <span class="step-desc">Travel to the Dojo's Tenno Lab and buy the Main, Harness, Systems, and Wings blueprints (~60,000 Credits total).</span>
+                    </div>
+                </li>
+
+                <h3 style="margin-top: 15px; margin-bottom: 5px; color: #ffab00; font-size: 14px; text-transform: uppercase;">Phase 2: Rare & Time-Gated Resources</h3>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-3">
+                    <div class="step-label">
+                        <span>Acquire 4x Nitain Extract</span>
+                        <span class="step-desc">Purchase from the Nightwave Cred Offerings store (15 creds for a pack of 5).</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-4">
+                    <div class="step-label">
+                        <span>Acquire Invasion Resources</span>
+                        <span class="step-desc">Obtain 1x Detonite Injector, 1x Mutagen Mass, and 1x Fieldron from Invasions, Fortuna/Cetus bounties, or Dojo crafting.</span>
+                    </div>
+                </li>
+
+                <h3 style="margin-top: 15px; margin-bottom: 5px; color: #ffab00; font-size: 14px; text-transform: uppercase;">&#x26CF;&#xFE0F; Phase 3: Bulk Resource Farming</h3>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-5">
+                    <div class="step-label">
+                        <span>The "Ophelia" Mega-Farm (Uranus - Survival)</span>
+                        <span class="step-desc">Farm here for 3x Tellurium, 5,650x Polymer Bundle, and 1,350x Plastids. Use a farming frame like Nekros or Khora.</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-6">
+                    <div class="step-label">
+                        <span>The Oxium Grind (Jupiter - Io Defense)</span>
+                        <span class="step-desc">Farm 2,200x Oxium. Target and destroy Oxium Ospreys before they suicide-dive. Stay for 15-20 waves.</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-7">
+                    <div class="step-label">
+                        <span>The Cryotic Dig (Earth - Everest OR Pluto - Hieracon)</span>
+                        <span class="step-desc">Farm 1,250x Cryotic. You must successfully defend 13 complete Excavators (100 per extractor).</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-8">
+                    <div class="step-label">
+                        <span>Basic Resource Cleanup</span>
+                        <span class="step-desc">Ensure you have 7,250x Ferrite (Earth/Mercury) and 6,200x Salvage (Mars/Jupiter).</span>
+                    </div>
+                </li>
+
+                <h3 style="margin-top: 15px; margin-bottom: 5px; color: #ffab00; font-size: 14px; text-transform: uppercase;">&#x1F528; Phase 4: Crafting</h3>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-9">
+                    <div class="step-label">
+                        <span>Craft Components</span>
+                        <span class="step-desc">Start crafting the Harness, Systems, and Wings in the Foundry (72 hours build time).</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="amesha-step-new-10">
+                    <div class="step-label">
+                        <span>Craft Amesha Main Assembly</span>
+                        <span class="step-desc">Claim components and start the final Amesha build (12 hours build time).</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- PROJECT 3: VOIDRIG NECRAMECH -->
+        <div class="project-card card-necramech" id="project-necramech">
+            <div class="project-header">
+                <h2 class="project-title">&#128737;&#65039; Voidrig Necramech (Progression Gate)</h2>
+                <a href="Warframe_Endgame_Systems_Codex.html" class="view-guide-btn" style="border-color: var(--violet-color); color: #fff;">&#128198; View Endgame Systems Codex</a>
+            </div>
+
+            <div style="position: relative;">
+                <div class="progress-text" id="progress-text-necramech">0% Completed (0/5 Steps)</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar-necramech"></div>
+                </div>
+            </div>
+
+            <ul class="step-list">
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="necramech-step-1">
+                    <div class="step-label">
+                        <span>Farm Damaged Necramech Components</span>
+                        <span class="step-desc">Kill enemy Necramechs in <strong>Isolation Vault bounties (Cambion Drift, Deimos)</strong> to acquire the Damaged Necramech Casing, Engine, Capsule, and Weapon Pod.</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="necramech-step-2">
+                    <div class="step-label">
+                        <span>Obtain Blueprints from Father & Loid</span>
+                        <span class="step-desc">Purchase the Voidrig Component Blueprints and Main Blueprint from <strong>Loid (Necraloid Syndicate)</strong> in the Necralisk using Orokin Matrix currency.</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="necramech-step-3">
+                    <div class="step-label">
+                        <span>Mine & Refine Deimos Minerals</span>
+                        <span class="step-desc">Refine minerals like <em>Stellated Necrathene, Adramal Alloy, Tempered Bapholite,</em> and <em>Venerol</em> to forge the high-tech components.</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="necramech-step-4">
+                    <div class="step-label">
+                        <span>Craft Necramech Components</span>
+                        <span class="step-desc">Craft all four components (Casing, Engine, Capsule, Weapon Pod) in your Foundry (12-hour wait time).</span>
+                    </div>
+                </li>
+                <li class="step-row" onclick="toggleStep(this)">
+                    <input type="checkbox" class="step-checkbox" id="necramech-step-5">
+                    <div class="step-label">
+                        <span>Combine Voidrig Main Blueprint</span>
+                        <span class="step-desc">Combine the four completed components with your main Voidrig blueprint (72-hour craft time) to gain access to the Steel Path / New War questline!</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- HUB TRACKER SCRIPTS -->
+    </div>
+<script>
+// Step row toggling & progress tracking
+window.toggleStep = function(row) {
+    const event = window.event;
+    const cb = row.querySelector('.step-checkbox');
+    if (!cb) return;
+
+    // If click is directly on the checkbox, an anchor link, a mod link, or inside the hover popup, the browser handles it.
+    // Do not toggle again to prevent double toggle.
+    if (event && (event.target === cb || event.target.tagName === 'A' || event.target.closest('.mod-db-link') || event.target.closest('.mod-hover-tooltip'))) {
+        // Just save and update
+    } else {
+        cb.checked = !cb.checked;
+    }
+
+    safeStorage.setItem(cb.id, cb.checked ? 'true' : 'false');
+
+    if (cb.checked) {
+        row.classList.add('completed');
+        row.style.opacity = '0.5';
+    } else {
+        row.classList.remove('completed');
+        row.style.opacity = '1.0';
+    }
+
+    updateProjectProgress(row.closest('.project-card'));
+};
+
+function updateProjectProgress(project) {
+    if (!project) return;
+    const checkboxes = project.querySelectorAll('.step-checkbox');
+    const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+    const total = checkboxes.length;
+    const percent = total > 0 ? Math.round((checkedCount / total) * 100) : 0;
+
+    const projectId = project.id.replace('project-', ''); // e.g. 'pennant'
+    const textEl = document.getElementById(`progress-text-${projectId}`);
+    const barEl = document.getElementById(`progress-bar-${projectId}`);
+
+    if (textEl) {
+        textEl.textContent = `${percent}% Completed (${checkedCount}/${total} Steps)`;
+    }
+    if (barEl) {
+        barEl.style.width = `${percent}%`;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Restore states for all step checkboxes
+    document.querySelectorAll('.project-card').forEach(project => {
+        const checkboxes = project.querySelectorAll('.step-checkbox');
+        checkboxes.forEach(cb => {
+            const checked = safeStorage.getItem(cb.id) === 'true';
+            cb.checked = checked;
+            const row = cb.closest('.step-row');
+            if (row) {
+                if (checked) {
+                    row.classList.add('completed');
+                    row.style.opacity = '0.5';
+                } else {
+                    row.classList.remove('completed');
+                    row.style.opacity = '1.0';
+                }
+            }
+            
+            // Also listen to direct changes on checkbox (e.g. keyboard spacebar)
+            cb.addEventListener('change', (e) => {
+                safeStorage.setItem(cb.id, cb.checked ? 'true' : 'false');
+                const targetRow = cb.closest('.step-row');
+                if (targetRow) {
+                    if (cb.checked) {
+                        targetRow.classList.add('completed');
+                        targetRow.style.opacity = '0.5';
+                    } else {
+                        targetRow.classList.remove('completed');
+                        targetRow.style.opacity = '1.0';
+                    }
+                }
+                updateProjectProgress(project);
+            });
+        });
+        updateProjectProgress(project);
+    });
+
+    // Header done trackers
+    const headers = document.querySelectorAll('.card h3, .warframe-card h3, .weapon-card h3, .planet-card h2, .category-card h2, .volume-card h2');
+    
+    headers.forEach((h, index) => {
+        if(h.querySelector('.tracker-container')) return;
+        
+        // Generate a unique ID based on the page and the header text
+        const safeTitle = h.innerText.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20);
+        const id = 'tracker_' + window.location.pathname.split('/').pop() + '_' + index + '_' + safeTitle;
+        
+        const container = document.createElement('label');
+        container.className = 'tracker-container';
+        
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'tracker-checkbox';
+        cb.id = id;
+        
+        // Find parent card to apply completion styling
+        const card = h.closest('.warframe-card, .weapon-card, .card, .volume-card');
+        
+        if(safeStorage.getItem(id) === 'true') {
+            cb.checked = true;
+            container.classList.add('completed');
+            if (card) {
+                card.style.opacity = '0.5';
+                card.style.transition = 'opacity 0.2s ease-in-out';
+            }
+        }
+        
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(id, e.target.checked ? 'true' : 'false');
+            if(e.target.checked) {
+                container.classList.add('completed');
+                if (card) {
+                    card.style.opacity = '0.5';
+                    card.style.transition = 'opacity 0.2s ease-in-out';
+                }
+            } else {
+                container.classList.remove('completed');
+                if (card) {
+                    card.style.opacity = '1.0';
+                }
+            }
+        });
+        
+        container.appendChild(cb);
+        container.appendChild(document.createTextNode('Done'));
+        
+        // Ensure the header flexes to push the checkbox to the right
+        h.style.display = 'flex';
+        h.style.justifyContent = 'space-between';
+        h.style.alignItems = 'center';
+        h.appendChild(container);
+    });
+});
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+

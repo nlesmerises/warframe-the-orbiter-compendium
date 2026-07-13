@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+        <script>
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+        fetch('/log_error?msg=' + encodeURIComponent(msg) + '&line=' + lineNo + '&col=' + columnNo);
+        return false;
+    };
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/js/mod_data.js"></script>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <title>Warframe: The Orbiter Compendium &mdash; Interactive Mods Database</title>
+    <style>
+        :root {
+            --border-color: #1f2a3e;
+
+            --primary-accent: #3949ab;
+            --accent-gold: #ffab00;
+}
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2.5rem 1.5rem;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .database-panel {
+            width: 100%;
+            max-width: 1750px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, rgba(12, 16, 28, 0.94), rgba(9, 12, 22, 0.98));
+            backdrop-filter: var(--glass-backdrop);
+            border: 1.5px solid var(--border-color);
+            padding: 2.5rem 2.5rem 1.25rem;
+            border-radius: 20px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.7);
+            box-sizing: border-box;
+        }
+
+        .database-panel header {
+            border-bottom: 0 !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 1.25rem;
+        }
+
+        .database-panel .subtitle {
+            border-bottom: none !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        
+
+        
+
+        
+
+        .filter-section {
+            margin-top: 0.25rem;
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* .search-input width/padding/border/font: see global rule in codex_glass_theme.css */
+
+        .search-input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(255, 171, 0, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .tabs-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            padding-bottom: 0;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            color: #8fa0b0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-gold);
+            color: #080a10;
+            border-color: var(--accent-gold);
+            box-shadow: 0 4px 12px rgba(255, 171, 0, 0.25);
+        }
+
+        .category-card {
+            min-height: 110px !important;
+            padding: 16px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1.5px solid rgba(255,255,255,0.08);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            text-align: left;
+            color: #e2e8f0;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,171,0,0.45);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+            background: linear-gradient(180deg, rgba(255,171,0,0.12), rgba(255,255,255,0.03));
+        }
+
+        .category-card.active {
+            border-color: var(--accent-gold);
+            background: linear-gradient(180deg, rgba(255,171,0,0.2), rgba(255,255,255,0.04));
+            box-shadow: 0 0 0 1px rgba(255,171,0,0.12), 0 14px 30px rgba(255,171,0,0.12);
+        }
+
+        .category-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 4px;
+            background: var(--accent-gold);
+            opacity: 0.85;
+        }
+
+        .category-card[data-tab="corrupted"]::before { background: #e65100; }
+        .category-card[data-tab="galvanized"]::before { background: #9c27b0; }
+        .category-card[data-tab="primed"]::before { background: #00bcd4; }
+        .category-card[data-tab="aura"]::before { background: #2196f3; }
+        .category-card[data-tab="essential"]::before { background: #4caf50; }
+        .category-card[data-tab="bounty"]::before { background: #ffc107; }
+        .category-card[data-tab="drift"]::before { background: #795548; }
+        .category-card[data-tab="exilus"]::before { background: #d500f9; }
+        .category-card[data-tab="sandbox"]::before { background: #f97316; }
+        .category-card[data-tab="weapon"]::before { background: #ef4444; }
+        .category-card[data-tab="warframe"]::before { background: #6366f1; }
+        .category-card[data-tab="companion"]::before { background: #f43f5e; }
+        .category-card[data-tab="focus"]::before { background: #eab308; }
+        .category-card[data-tab="stance"]::before { background: #14b8a6; }
+        .category-card[data-tab="plexus"]::before { background: #0ea5e9; }
+        .category-card[data-tab="miscvehicle"]::before { background: #64748b; }
+
+        .category-card[data-tab="corrupted"] .category-icon { color: #e65100; }
+        .category-card[data-tab="galvanized"] .category-icon { color: #9c27b0; }
+        .category-card[data-tab="primed"] .category-icon { color: #00bcd4; }
+        .category-card[data-tab="aura"] .category-icon { color: #2196f3; }
+        .category-card[data-tab="essential"] .category-icon { color: #4caf50; }
+        .category-card[data-tab="bounty"] .category-icon { color: #ffc107; }
+        .category-card[data-tab="drift"] .category-icon { color: #795548; }
+        .category-card[data-tab="exilus"] .category-icon { color: #d500f9; }
+        .category-card[data-tab="sandbox"] .category-icon { color: #f97316; }
+        .category-card[data-tab="weapon"] .category-icon { color: #ef4444; }
+        .category-card[data-tab="warframe"] .category-icon { color: #6366f1; }
+        .category-card[data-tab="companion"] .category-icon { color: #f43f5e; }
+        .category-card[data-tab="focus"] .category-icon { color: #eab308; }
+        .category-card[data-tab="stance"] .category-icon { color: #14b8a6; }
+        .category-card[data-tab="plexus"] .category-icon { color: #0ea5e9; }
+        .category-card[data-tab="miscvehicle"] .category-icon { color: #64748b; }
+
+        .category-card[data-tab="corrupted"] .category-count { color: #e65100; }
+        .category-card[data-tab="galvanized"] .category-count { color: #9c27b0; }
+        .category-card[data-tab="primed"] .category-count { color: #00bcd4; }
+        .category-card[data-tab="aura"] .category-count { color: #2196f3; }
+        .category-card[data-tab="essential"] .category-count { color: #4caf50; }
+        .category-card[data-tab="bounty"] .category-count { color: #ffc107; }
+        .category-card[data-tab="drift"] .category-count { color: #795548; }
+        .category-card[data-tab="exilus"] .category-count { color: #d500f9; }
+        .category-card[data-tab="sandbox"] .category-count { color: #f97316; }
+        .category-card[data-tab="weapon"] .category-count { color: #ef4444; }
+        .category-card[data-tab="warframe"] .category-count { color: #6366f1; }
+        .category-card[data-tab="companion"] .category-count { color: #f43f5e; }
+        .category-card[data-tab="focus"] .category-count { color: #eab308; }
+        .category-card[data-tab="stance"] .category-count { color: #14b8a6; }
+        .category-card[data-tab="plexus"] .category-count { color: #0ea5e9; }
+        .category-card[data-tab="miscvehicle"] .category-count { color: #64748b; }
+
+        .category-card[data-tab="corrupted"] .category-title { color: #e65100; }
+        .category-card[data-tab="galvanized"] .category-title { color: #9c27b0; }
+        .category-card[data-tab="primed"] .category-title { color: #00bcd4; }
+        .category-card[data-tab="aura"] .category-title { color: #2196f3; }
+        .category-card[data-tab="essential"] .category-title { color: #4caf50; }
+        .category-card[data-tab="bounty"] .category-title { color: #ffc107; }
+        .category-card[data-tab="drift"] .category-title { color: #795548; }
+        .category-card[data-tab="exilus"] .category-title { color: #d500f9; }
+        .category-card[data-tab="sandbox"] .category-title { color: #f97316; }
+        .category-card[data-tab="weapon"] .category-title { color: #ef4444; }
+        .category-card[data-tab="warframe"] .category-title { color: #6366f1; }
+        .category-card[data-tab="companion"] .category-title { color: #f43f5e; }
+        .category-card[data-tab="focus"] .category-title { color: #eab308; }
+        .category-card[data-tab="stance"] .category-title { color: #14b8a6; }
+        .category-card[data-tab="plexus"] .category-title { color: #0ea5e9; }
+        .category-card[data-tab="miscvehicle"] .category-title { color: #64748b; }
+
+        .category-card[data-tab="corrupted"].active { box-shadow: 0 0 0 1px rgba(230,81,0,0.16), 0 14px 30px rgba(230,81,0,0.12); }
+        .category-card[data-tab="galvanized"].active { box-shadow: 0 0 0 1px rgba(156,39,176,0.16), 0 14px 30px rgba(156,39,176,0.12); }
+        .category-card[data-tab="primed"].active { box-shadow: 0 0 0 1px rgba(0,188,212,0.16), 0 14px 30px rgba(0,188,212,0.12); }
+        .category-card[data-tab="aura"].active { box-shadow: 0 0 0 1px rgba(33,150,243,0.16), 0 14px 30px rgba(33,150,243,0.12); }
+        .category-card[data-tab="essential"].active { box-shadow: 0 0 0 1px rgba(76,175,80,0.16), 0 14px 30px rgba(76,175,80,0.12); }
+        .category-card[data-tab="bounty"].active { box-shadow: 0 0 0 1px rgba(255,193,7,0.16), 0 14px 30px rgba(255,193,7,0.12); }
+        .category-card[data-tab="drift"].active { box-shadow: 0 0 0 1px rgba(121,85,72,0.16), 0 14px 30px rgba(121,85,72,0.12); }
+        .category-card[data-tab="exilus"].active { box-shadow: 0 0 0 1px rgba(213,0,249,0.16), 0 14px 30px rgba(213,0,249,0.12); }
+        .category-card[data-tab="sandbox"].active { box-shadow: 0 0 0 1px rgba(249,115,22,0.16), 0 14px 30px rgba(249,115,22,0.12); }
+        .category-card[data-tab="weapon"].active { box-shadow: 0 0 0 1px rgba(239,68,68,0.16), 0 14px 30px rgba(239,68,68,0.12); }
+        .category-card[data-tab="warframe"].active { box-shadow: 0 0 0 1px rgba(99,102,241,0.16), 0 14px 30px rgba(99,102,241,0.12); }
+        .category-card[data-tab="companion"].active { box-shadow: 0 0 0 1px rgba(244,63,94,0.16), 0 14px 30px rgba(244,63,94,0.12); }
+        .category-card[data-tab="focus"].active { box-shadow: 0 0 0 1px rgba(234,179,8,0.16), 0 14px 30px rgba(234,179,8,0.12); }
+        .category-card[data-tab="stance"].active { box-shadow: 0 0 0 1px rgba(20,184,166,0.16), 0 14px 30px rgba(20,184,166,0.12); }
+        .category-card[data-tab="plexus"].active { box-shadow: 0 0 0 1px rgba(14,165,233,0.16), 0 14px 30px rgba(14,165,233,0.12); }
+        .category-card[data-tab="miscvehicle"].active { box-shadow: 0 0 0 1px rgba(100,116,139,0.16), 0 14px 30px rgba(100,116,139,0.12); }
+
+        .category-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .category-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .category-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.2px;
+        }
+
+        .category-meta {
+            font-size: 0.75rem;
+            line-height: 1.35;
+            color: #9fb0c4;
+        }
+
+        .category-count {
+            font-size: 0.72rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 700;
+        }
+
+        .category-panel {
+            margin-top: 1.25rem;
+            border: 1.5px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+            box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+            padding: 20px;
+        }
+
+        .category-panel[data-tab="corrupted"] { border-color: rgba(230,81,0,0.18); box-shadow: 0 0 0 1px rgba(230,81,0,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="galvanized"] { border-color: rgba(156,39,176,0.18); box-shadow: 0 0 0 1px rgba(156,39,176,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="primed"] { border-color: rgba(0,188,212,0.18); box-shadow: 0 0 0 1px rgba(0,188,212,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="aura"] { border-color: rgba(33,150,243,0.18); box-shadow: 0 0 0 1px rgba(33,150,243,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="essential"] { border-color: rgba(76,175,80,0.18); box-shadow: 0 0 0 1px rgba(76,175,80,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="bounty"] { border-color: rgba(255,193,7,0.18); box-shadow: 0 0 0 1px rgba(255,193,7,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="drift"] { border-color: rgba(121,85,72,0.18); box-shadow: 0 0 0 1px rgba(121,85,72,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="exilus"] { border-color: rgba(213,0,249,0.18); box-shadow: 0 0 0 1px rgba(213,0,249,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="sandbox"] { border-color: rgba(249,115,22,0.18); box-shadow: 0 0 0 1px rgba(249,115,22,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="weapon"] { border-color: rgba(239,68,68,0.18); box-shadow: 0 0 0 1px rgba(239,68,68,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="warframe"] { border-color: rgba(99,102,241,0.18); box-shadow: 0 0 0 1px rgba(99,102,241,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="companion"] { border-color: rgba(244,63,94,0.18); box-shadow: 0 0 0 1px rgba(244,63,94,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="focus"] { border-color: rgba(234,179,8,0.18); box-shadow: 0 0 0 1px rgba(234,179,8,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="stance"] { border-color: rgba(20,184,166,0.18); box-shadow: 0 0 0 1px rgba(20,184,166,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="plexus"] { border-color: rgba(14,165,233,0.18); box-shadow: 0 0 0 1px rgba(14,165,233,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+        .category-panel[data-tab="miscvehicle"] { border-color: rgba(100,116,139,0.18); box-shadow: 0 0 0 1px rgba(100,116,139,0.08), 0 10px 28px rgba(0,0,0,0.25); }
+
+        .category-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .category-panel-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            letter-spacing: 0.3px;
+        }
+
+        .category-panel-subtitle {
+            margin-top: 6px;
+            color: #a0aec0;
+            font-size: 0.92rem;
+            line-height: 1.4;
+        }
+
+        .category-panel-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .category-back-btn {
+            background: rgba(255,171,0,0.12);
+            border: 1px solid rgba(255,171,0,0.35);
+            color: #ffab00;
+            border-radius: 999px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .category-back-btn:hover {
+            background: rgba(255,171,0,0.18);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 1200px) {
+            .tabs-container { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .category-panel-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 760px) {
+            .tabs-container { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .category-panel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 520px) {
+            .tabs-container { grid-template-columns: 1fr; }
+            .category-panel-grid { grid-template-columns: 1fr; }
+        }
+
+        .mods-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            transition: all 0.3s ease-in-out;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 1200px) {
+            .mods-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 900px) {
+            .mods-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .mods-grid { grid-template-columns: 1fr; }
+        }
+
+        .mod-card {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mod-card:hover {
+            background: var(--card-hover-bg);
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .mod-title {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .mod-type-badge {
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .mod-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .mod-effect {
+            font-size: 0.9rem;
+            color: #cbd5e0;
+            margin: 0 0 15px 0;
+            flex-grow: 1;
+            line-height: 1.4;
+        }
+
+        .mod-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 12px;
+            font-size: 0.78rem;
+        }
+
+        .mod-farm-label {
+            color: #a0aec0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+
+        .mod-value {
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* MOD CATEGORY STYLES */
+        .rarity-corrupted { border-left: 5px solid #e65100; box-shadow: inset 3px 0 0 rgba(230, 81, 0, 0.2); }
+        .rarity-galvanized { border-left: 5px solid #9c27b0; box-shadow: inset 3px 0 0 rgba(156, 39, 176, 0.2); }
+        .rarity-primed { border-left: 5px solid #00bcd4; box-shadow: inset 3px 0 0 rgba(0, 188, 212, 0.2); }
+        .rarity-aura { border-left: 5px solid #2196f3; box-shadow: inset 3px 0 0 rgba(33, 150, 243, 0.2); }
+        .rarity-essential { border-left: 5px solid #4caf50; box-shadow: inset 3px 0 0 rgba(76, 175, 80, 0.2); }
+        .rarity-bounty { border-left: 5px solid #ffc107; box-shadow: inset 3px 0 0 rgba(255, 193, 7, 0.2); }
+        .rarity-drift { border-left: 5px solid #795548; box-shadow: inset 3px 0 0 rgba(121, 85, 72, 0.2); }
+        .rarity-exilus { border-left: 5px solid #d500f9; box-shadow: inset 3px 0 0 rgba(213, 0, 249, 0.2); }
+        .rarity-other { border-left: 5px solid #607d8b; box-shadow: inset 3px 0 0 rgba(96, 125, 139, 0.2); }
+
+        .badge-corrupted { background: #e65100; color: #fff; }
+        .badge-galvanized { background: #9c27b0; color: #fff; }
+        .badge-primed { background: #00bcd4; color: #000; }
+        .badge-aura { background: #2196f3; color: #fff; }
+        .badge-exilus { background: #d500f9; color: #fff; }
+        .badge-essential { background: #4caf50; color: #fff; }
+        .badge-bounty { background: #ffc107; color: #000; }
+        .badge-drift { background: #795548; color: #fff; }
+        .badge-rare { background: #ffab00; color: #000; }
+        .badge-uncommon { background: #cbd5e1; color: #000; }
+        .badge-common { background: #b07d62; color: #fff; }
+        .badge-other { background: #607d8b; color: #fff; }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #8fa0b0;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .strategy-note {
+            margin-bottom: 18px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-left: 4px solid var(--note-accent, var(--accent-gold));
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 28px;
+        }
+
+        .strategy-note-full {
+            grid-column: 1 / -1;
+        }
+
+        .strategy-note-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: var(--note-accent, var(--accent-gold));
+            margin-bottom: 4px;
+        }
+
+        .strategy-note-value {
+            font-size: 0.82rem;
+            color: #b0c4d8;
+            line-height: 1.55;
+        }
+
+        .strategy-note-value strong {
+            color: #e2e8f0;
+        }
+
+        .strategy-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin: 2px 3px 2px 0;
+            background: rgba(255,255,255,0.08);
+            color: #e2e8f0;
+        }
+
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px !important; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Relics_Database.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a><a id="nav-next-top" href="Warframe_Mod_Farming_Guide.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+
+
+
+
+    <div class="container" style="max-width:1750px; width:1750px;">
+        <header>
+            <h1>&#128194; Warframe Mods Directory</h1>
+            <p class="subtitle">Interactive Encyclopedia of Core & Endgame Mod Upgrades</p>
+        </header>
+
+        <div class="filter-section">
+            <input type="text" class="search-input" id="mod-search" placeholder="Search mods by name, effect, or farming location...">
+            
+            <div class="tabs-container" id="type-tabs">
+                <button class="category-card" data-tab="corrupted" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F480;</div>
+                        <div class="category-title">Corrupted</div>
+                    </div>
+                    <div class="category-meta">Vault drops with high-impact builds and rare aura/value mods.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="galvanized" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x26A1;</div>
+                        <div class="category-title">Galvanized</div>
+                    </div>
+                    <div class="category-meta">Scaling core mods for stronger endgame weapon setups.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="primed" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x2B50;</div>
+                        <div class="category-title">Primed</div>
+                    </div>
+                    <div class="category-meta">High-value upgraded variants with premium stat ceilings.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="aura" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x2728;</div>
+                        <div class="category-title">Aura</div>
+                    </div>
+                    <div class="category-meta">Warframe aura slots and utility-driven polarity picks.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="essential" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F530;</div>
+                        <div class="category-title">Essentials</div>
+                    </div>
+                    <div class="category-meta">Foundation mods used across most builds and loadouts.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="bounty" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F3AF;</div>
+                        <div class="category-title">Bounty Drops</div>
+                    </div>
+                    <div class="category-meta">Open-world reward pools and mission-gated drops.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="drift" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F315;</div>
+                        <div class="category-title">Lua Drifts</div>
+                    </div>
+                    <div class="category-meta">Drift set and path-based mobility or utility mods.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="exilus" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F504;</div>
+                        <div class="category-title">Exilus</div>
+                    </div>
+                    <div class="category-meta">Utility slots and mobility-focused mod picks.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="sandbox" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F9EA;</div>
+                        <div class="category-title">Synergy Sandbox</div>
+                    </div>
+                    <div class="category-meta">Pair two mods and inspect whether they stack, clash, or fuse.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="weapon" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F52B;</div>
+                        <div class="category-title">Weapon Mods</div>
+                    </div>
+                    <div class="category-meta">Primary, secondary, shotgun, melee, and arch-weapon upgrades.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="warframe" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F9CD;</div>
+                        <div class="category-title">Warframe Mods</div>
+                    </div>
+                    <div class="category-meta">Ability, survivability, and utility mods for your frame.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="companion" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F43E;</div>
+                        <div class="category-title">Companion Mods</div>
+                    </div>
+                    <div class="category-meta">Sentinel, Kubrow, Kavat, and Moa loadout upgrades.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="focus" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F441;</div>
+                        <div class="category-title">Focus</div>
+                    </div>
+                    <div class="category-meta">Operator Focus School way nodes and passives.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="stance" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F94B;</div>
+                        <div class="category-title">Stance Mods</div>
+                    </div>
+                    <div class="category-meta">Melee combo styles and stance-slot mods.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="plexus" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F6F8;</div>
+                        <div class="category-title">Plexus Mods</div>
+                    </div>
+                    <div class="category-meta">Railjack Plexus upgrades for the squad's ship systems.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+                <button class="category-card" data-tab="miscvehicle" type="button">
+                    <div class="category-card-top">
+                        <div class="category-icon">&#x1F6F0;</div>
+                        <div class="category-title">Vehicle &amp; Misc</div>
+                    </div>
+                    <div class="category-meta">K-Drive, Archwing, Necramech, Railjack, and other niche mods.</div>
+                    <div class="category-count">Open category</div>
+                </button>
+            </div>
+        </div>
+
+        <div class="mods-grid" id="mods-display-grid" style="display:none;">
+            <!-- Cards will be dynamically injected here -->
+        </div>
+
+        <!-- MOD SYNERGY SANDBOX PANEL -->
+        <div id="sandbox-section" style="display: none; margin-top: 1.5rem;">
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; flex-wrap: wrap;">
+                <!-- Left: Guide Combinations -->
+                <div style="background: rgba(0,0,0,0.25); border: 1.5px solid var(--border-color); padding: 20px; border-radius: 12px;">
+                    <h3 style="margin-top: 0; color: var(--accent-gold); border-bottom: 1.5px solid var(--border-color); padding-bottom: 8px;">&#x2697;&#xFE0F; Elemental Combinations Reference</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 20px;">
+                        <div style="background: var(--card-bg); padding: 12px; border-radius: 6px; border-left: 3px solid #3b82f6;">
+                            <strong style="color: #3b82f6; font-size: 0.9rem;">Viral (Cold + Toxin)</strong>
+                            <p style="font-size: 0.75rem; color: #a0aec0; margin: 4px 0 0 0;">Multiplies damage to health by up to +325% at 10 stacks. The meta choice.</p>
+                        </div>
+                        <div style="background: var(--card-bg); padding: 12px; border-radius: 6px; border-left: 3px solid #10b981;">
+                            <strong style="color: #10b981; font-size: 0.9rem;">Corrosive (Electric + Toxin)</strong>
+                            <p style="font-size: 0.75rem; color: #a0aec0; margin: 4px 0 0 0;">Strips target armor by up to 80% at 10 stacks. Destroys heavy units.</p>
+                        </div>
+                        <div style="background: var(--card-bg); padding: 12px; border-radius: 6px; border-left: 3px solid #f59e0b;">
+                            <strong style="color: #f59e0b; font-size: 0.9rem;">Radiation (Heat + Electric)</strong>
+                            <p style="font-size: 0.75rem; color: #a0aec0; margin: 4px 0 0 0;">Causes targets to attack allies and draw aggro. Bonus vs bosses.</p>
+                        </div>
+                        <div style="background: var(--card-bg); padding: 12px; border-radius: 6px; border-left: 3px solid #ec4899;">
+                            <strong style="color: #ec4899; font-size: 0.9rem;">Magnetic (Cold + Electric)</strong>
+                            <p style="font-size: 0.75rem; color: #a0aec0; margin: 4px 0 0 0;">Amplifies damage to shields by up to +325%. Stops shield recharge.</p>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: var(--accent-gold); border-bottom: 1.5px solid var(--border-color); padding-bottom: 8px;">&#x1F5DD;&#xFE0F; Key Mod Combinations</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="background: var(--card-bg); padding: 12px; border-radius: 6px; border-left: 3px solid var(--accent-gold);">
+                            <strong style="color: #ffab00; font-size: 0.85rem;">Blood Rush + Organ Shatter</strong>
+                            <p style="font-size: 0.75rem; color: #a0aec0; margin: 2px 0 0 0;">Scales Melee critical rate per combo stack, multiplying massive critical damage.</p>
+                        </div>
+                        <div style="background: var(--card-bg); padding: 12px; border-radius: 6px; border-left: 3px solid var(--accent-gold);">
+                            <strong style="color: #ffab00; font-size: 0.85rem;">Condition Overload + Weeping Wounds</strong>
+                            <p style="font-size: 0.75rem; color: #a0aec0; margin: 2px 0 0 0;">Weeping Wounds secures status procs, driving Condition Overload's damage scaling.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Sandbox Configurator -->
+                <div style="background: rgba(0,0,0,0.25); border: 1.5px solid var(--border-color); padding: 20px; border-radius: 12px; height: fit-content;">
+                    <h3 style="margin-top: 0; color: var(--accent-gold); display: flex; align-items: center; gap: 8px;">&#x1F9EA; Mod Synergy Sandbox</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 0.8rem; color: #a0aec0; margin-bottom: 6px;">Mod Slot 1</label>
+                        <select id="sandbox-mod1" style="width: 100%; padding: 10px; background: #080a10; border: 1.5px solid var(--border-color); color: #fff; border-radius: 6px; font-family: inherit; font-size: 0.9rem;">
+                            <!-- Injected -->
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 0.8rem; color: #a0aec0; margin-bottom: 6px;">Mod Slot 2</label>
+                        <select id="sandbox-mod2" style="width: 100%; padding: 10px; background: #080a10; border: 1.5px solid var(--border-color); color: #fff; border-radius: 6px; font-family: inherit; font-size: 0.9rem;">
+                            <!-- Injected -->
+                        </select>
+                    </div>
+
+                    <div id="sandbox-output-panel" style="padding: 1.25rem; min-height: 120px; border-radius: 8px; border: 1.5px solid transparent; background: rgba(0,0,0,0.4); text-align: left; transition: all 0.25s;">
+                        <h4 id="sandbox-rating" style="margin: 0 0 8px 0; font-size: 1rem; color: var(--accent-gold);">Select mods above</h4>
+                        <p id="sandbox-description" style="margin: 0; font-size: 0.85rem; color: #cbd5e0; line-height: 1.4;">
+                            Choose two mods to evaluate their compatibility, fusions, or diminishing returns.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the mod database dynamically from JSON -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('mods-display-grid');
+            const searchInput = document.getElementById('mod-search');
+            const tabButtons = document.querySelectorAll('#type-tabs [data-tab]');
+            const panelTemplate = {
+                titleEl: null,
+                subtitleEl: null,
+                countEl: null,
+                iconEl: null,
+                gridEl: null,
+                backBtn: null
+            };
+            
+            let allMods = [];
+            let filteredMods = [];
+            let activeTab = 'all';
+            let dashboardMode = 'dashboard';
+            let currentPage = 1;
+            const itemsPerPage = 30;
+
+            const ESSENTIAL_MODS = new Set([
+                "Serration", "Hornet Strike", "Pressure Point", "Point Blank", 
+                "Vitality", "Redirection", "Steel Fiber", "Flow", "Streamline", 
+                "Intensify", "Continuity", "Stretch", "Split Chamber", 
+                "Barrel Diffusion", "Hell's Chamber", "Point Strike", 
+                "Pistol Pestilence", "Virulent Scourge", "Toxic Barrage", 
+                "Malignant Force", "Vital Sense", "Lethal Torrent", "Fury", 
+                "Organ Shatter", "Hunter Munitions", "Vigilante Armaments", 
+                "Quick Thinking", "Rage", "Hunter Adrenaline"
+            ]);
+
+            const WEAPON_MOD_TYPES = new Set([
+                "Primary Mod", "Secondary Mod", "Shotgun Mod", "Melee Mod",
+                "Arch-Gun Mod", "Arch-Melee Mod", "Pistol Riven Mod", "Rifle Riven Mod",
+                "Shotgun Riven Mod", "Melee Riven Mod", "Kitgun Riven Mod",
+                "Zaw Riven Mod", "Arch-Gun Riven Mod", "Companion Weapon Riven Mod"
+            ]);
+
+            const MISC_VEHICLE_MOD_TYPES = new Set([
+                "K-Drive Mod", "Archwing Mod", "Necramech Mod", "Railjack Mod",
+                "Mod Set Mod", "Parazon Mod", "Tektolyst Artifact Mod",
+                "Posture Mod", "Peculiar Mod", "Transmutation Mod"
+            ]);
+
+                        // Fetch Mods.json
+            Promise.resolve({ json: () => Promise.resolve(allModsData) })
+                .then(res => res.json())
+                .then(data => {
+                    // Sort mods alphabetically by name
+                    allMods = data.sort((a, b) => a.name.localeCompare(b.name));
+                    
+                    // Check URL for ?mod= parameter
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const targetMod = urlParams.get('mod');
+                    if (targetMod) {
+                        const searchInput = document.getElementById('mod-search');
+                        if (searchInput) searchInput.value = targetMod;
+                        // Keep the full library visible and let the category cards act as filters on demand
+                        activeTab = 'all';
+                        
+                        // Inject Return Button
+                        let backBtn = document.createElement('button');
+                        backBtn.innerHTML = '&#x2B05;&#xFE0F; Return to Build';
+                        backBtn.style.cssText = 'background: transparent; color: #ffab00; border: none; padding: 4px 8px; cursor: pointer; font-weight: bold; margin-bottom: 10px; display: inline-block; font-size: 13px; font-family: inherit; transition: all 0.2s; text-decoration: underline dotted #ffab00;';
+                        backBtn.onmouseover = () => { backBtn.style.background = 'rgba(255,171,0,0.3)'; backBtn.style.transform = 'scale(1.02)'; };
+                        backBtn.onmouseout = () => { backBtn.style.background = 'rgba(255,171,0,0.1)'; backBtn.style.transform = 'scale(1)'; };
+                        backBtn.onclick = () => {
+                            const target = new URL('Warframe_Builds_Codex.html', window.location.href);
+                            window.location.href = target.href;
+                        };
+                        document.querySelector('.filter-section').prepend(backBtn);
+                    }
+                    
+                    filterMods();
+                })
+                .catch(err => {
+                    console.error("Failed to load mods database:", err);
+                    grid.innerHTML = `
+                        <div class="no-results">
+                            &#x274C; Error loading mod database. Please ensure the Codex Server is running.
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 10px; font-family: monospace;">
+                                Details: ${err.name} - ${err.message}
+                            </div>
+                        </div>
+                    `;
+                });
+
+            // Get Rarity Class for Styling
+            function getRarityClass(mod) {
+                if (mod.name.startsWith('Galvanized')) return 'rarity-galvanized';
+                if (mod.drops && mod.drops.some(d => d.location && d.location.includes('Derelict Vault'))) return 'rarity-corrupted';
+                if (mod.isPrime || mod.rarity === 'Legendary') return 'rarity-primed';
+                if (mod.compatName === 'AURA') return 'rarity-aura';
+                if (mod.name.endsWith(' Drift')) return 'rarity-drift';
+                if (mod.isExilus) return 'rarity-exilus';
+                if (ESSENTIAL_MODS.has(mod.name)) return 'rarity-essential';
+                if (mod.drops && mod.drops.some(d => d.location && d.location.toLowerCase().includes('bounty'))) return 'rarity-bounty';
+                return 'rarity-other';
+            }
+
+            // Get Badge Class for Styling
+            function getBadgeClass(mod) {
+                if (mod.name.startsWith('Galvanized')) return 'badge-galvanized';
+                if (mod.drops && mod.drops.some(d => d.location && d.location.includes('Derelict Vault'))) return 'badge-corrupted';
+                if (mod.isPrime || mod.rarity === 'Legendary') return 'badge-primed';
+                if (mod.compatName === 'AURA') return 'badge-aura';
+                if (mod.name.endsWith(' Drift')) return 'badge-drift';
+                if (mod.isExilus) return 'badge-exilus';
+                if (ESSENTIAL_MODS.has(mod.name)) return 'badge-essential';
+                if (mod.drops && mod.drops.some(d => d.location && d.location.toLowerCase().includes('bounty'))) return 'badge-bounty';
+                if (mod.rarity === 'Rare') return 'badge-rare';
+                if (mod.rarity === 'Uncommon') return 'badge-uncommon';
+                if (mod.rarity === 'Common') return 'badge-common';
+                return 'badge-other';
+            }
+
+            function getBadgeText(mod) {
+                if (mod.name.startsWith('Galvanized')) return 'Galvanized';
+                if (mod.drops && mod.drops.some(d => d.location && d.location.includes('Derelict Vault'))) return 'Corrupted';
+                if (mod.isPrime || mod.rarity === 'Legendary') return 'Primed';
+                if (mod.compatName === 'AURA') return 'Aura';
+                if (mod.name.endsWith(' Drift')) return 'Drift';
+                if (mod.isExilus) return 'Exilus';
+                if (ESSENTIAL_MODS.has(mod.name)) return 'Essential';
+                return mod.rarity || 'Common';
+            }
+
+            // Filter Mods based on Tab and Search Input
+            function filterMods() {
+                const query = searchInput.value.toLowerCase().trim();
+                currentPage = 1; // Reset to page 1
+                
+                filteredMods = allMods.filter(mod => {
+                    // Category Tab filter
+                    let tabMatch = false;
+                    if (activeTab === 'all') {
+                        tabMatch = true;
+                    } else if (activeTab === 'corrupted') {
+                        tabMatch = mod.drops && mod.drops.some(d => d.location && d.location.includes('Derelict Vault'));
+                    } else if (activeTab === 'galvanized') {
+                        tabMatch = mod.name.startsWith('Galvanized');
+                    } else if (activeTab === 'primed') {
+                        tabMatch = mod.isPrime || mod.rarity === 'Legendary';
+                    } else if (activeTab === 'aura') {
+                        tabMatch = mod.compatName === 'AURA';
+                    } else if (activeTab === 'essential') {
+                        tabMatch = ESSENTIAL_MODS.has(mod.name);
+                    } else if (activeTab === 'bounty') {
+                        tabMatch = mod.drops && mod.drops.some(d => d.location && d.location.toLowerCase().includes('bounty'));
+                    } else if (activeTab === 'drift') {
+                        tabMatch = mod.name.endsWith(' Drift');
+                    } else if (activeTab === 'exilus') {
+                        tabMatch = mod.isExilus === true;
+                    } else if (activeTab === 'sandbox') {
+                        tabMatch = true;
+                    } else if (activeTab === 'weapon') {
+                        tabMatch = WEAPON_MOD_TYPES.has(mod.type);
+                    } else if (activeTab === 'warframe') {
+                        tabMatch = mod.type === 'Warframe Mod';
+                    } else if (activeTab === 'companion') {
+                        tabMatch = mod.type === 'Companion Mod';
+                    } else if (activeTab === 'focus') {
+                        tabMatch = mod.type === 'Focus Way';
+                    } else if (activeTab === 'stance') {
+                        tabMatch = mod.type === 'Stance Mod';
+                    } else if (activeTab === 'plexus') {
+                        tabMatch = mod.type === 'Plexus Mod';
+                    } else if (activeTab === 'miscvehicle') {
+                        tabMatch = MISC_VEHICLE_MOD_TYPES.has(mod.type);
+                    }
+
+                    if (!tabMatch) return false;
+
+                    // Search filter
+                    if (query === '') return true;
+                    
+                    const maxStats = mod.levelStats && mod.levelStats.length > 0 
+                        ? mod.levelStats[mod.levelStats.length - 1].stats.join(' ') 
+                        : '';
+                    const searchString = `${mod.name} ${mod.description || ''} ${maxStats} ${mod.compatName || ''} ${mod.type || ''}`.toLowerCase();
+                    
+                    // Search in drops as well
+                    const dropsMatch = mod.drops && mod.drops.some(d => d.location && d.location.toLowerCase().includes(query));
+
+                    return searchString.includes(query) || dropsMatch;
+                });
+
+                renderMods(true);
+            }
+
+            // Render visible cards
+            function renderMods(resetGrid = true) {
+                if (resetGrid) {
+                    grid.innerHTML = '';
+                }
+
+                if (filteredMods.length === 0) {
+                    grid.innerHTML = `
+                        <div class="no-results">
+                            &#x1F525;  No mods found matching this search or category filter.
+                        </div>
+                    `;
+                    return;
+                }
+
+                filteredMods.forEach(mod => {
+                    const rarityClass = getRarityClass(mod);
+                    const badgeClass = getBadgeClass(mod);
+                    const badgeText = getBadgeText(mod);
+                    
+                    // Extract max stats
+                    const maxStats = mod.levelStats && mod.levelStats.length > 0 
+                        ? mod.levelStats[mod.levelStats.length - 1].stats.join(', ').replace(/\\n/g, ' ') 
+                        : mod.description || 'No stats available';
+
+                    // First drop location as summary
+                    let farmSummary = 'Special Source';
+                    if (mod.drops && mod.drops.length > 0) {
+                        farmSummary = mod.drops[0].location;
+                        if (farmSummary.length > 22) farmSummary = farmSummary.substring(0, 20) + '...';
+                    }
+
+                    const card = document.createElement('div');
+                    card.className = `mod-card ${rarityClass}`;
+                    card.addEventListener('click', () => showModModal(mod));
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="mod-header">
+                                <h3 class="mod-title">${mod.name}</h3>
+                                <span class="mod-type-badge ${badgeClass}">${badgeText}</span>
+                            </div>
+                            <p class="mod-effect">${maxStats}</p>
+                        </div>
+                        <div class="mod-footer">
+                            <span class="mod-farm-label" title="${mod.drops && mod.drops.length > 0 ? mod.drops.map(d => d.location).join(', ') : 'Special Source'}">&#x1F680; ${farmSummary}</span>
+                            <span class="mod-value">${getEstimatedValue(mod)}</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            // Estimate Trade Value
+            function getEstimatedValue(mod) {
+                if (!mod.tradable) return "Untradable";
+                const name = mod.name;
+                const rarity = mod.rarity;
+                if (name.startsWith("Galvanized")) return "15 - 20 Plt";
+                if (mod.isPrime || rarity === "Legendary") return "30 - 50 Plt";
+                if (mod.drops && mod.drops.some(d => d.location && d.location.includes("Derelict Vault"))) return "15 - 20 Plt";
+                if (mod.compatName === "AURA") return "10 - 15 Plt";
+                if (rarity === "Rare") return "10 - 15 Plt";
+                if (rarity === "Uncommon") return "3 - 5 Plt";
+                if (rarity === "Common") return "1 - 2 Plt";
+                return "5 - 10 Plt";
+            }
+
+            function createModCard(mod) {
+                const rarityClass = getRarityClass(mod);
+                const badgeClass = getBadgeClass(mod);
+                const badgeText = getBadgeText(mod);
+
+                const maxStats = mod.levelStats && mod.levelStats.length > 0
+                    ? mod.levelStats[mod.levelStats.length - 1].stats.join(', ').replace(/\\n/g, ' ')
+                    : mod.description || 'No stats available';
+
+                let farmSummary = 'Special Source';
+                if (mod.drops && mod.drops.length > 0) {
+                    farmSummary = mod.drops[0].location;
+                    if (farmSummary.length > 22) farmSummary = farmSummary.substring(0, 20) + '...';
+                }
+
+                const card = document.createElement('div');
+                card.className = `mod-card ${rarityClass}`;
+                card.addEventListener('click', () => showModModal(mod));
+                card.innerHTML = `
+                    <div>
+                        <div class="mod-header">
+                            <h3 class="mod-title">${mod.name}</h3>
+                            <span class="mod-type-badge ${badgeClass}">${badgeText}</span>
+                        </div>
+                        <p class="mod-effect">${maxStats}</p>
+                    </div>
+                    <div class="mod-footer">
+                        <span class="mod-farm-label" title="${mod.drops && mod.drops.length > 0 ? mod.drops.map(d => d.location).join(', ') : 'Special Source'}">&#x1F680; ${farmSummary}</span>
+                        <span class="mod-value">${getEstimatedValue(mod)}</span>
+                    </div>
+                `;
+                return card;
+            }
+
+            function getStrategyNote(tab) {
+                const accent = {
+                    corrupted: '#e65100', galvanized: '#9c27b0', primed: '#00bcd4',
+                    aura: '#2196f3', essential: '#4caf50', bounty: '#ffc107',
+                    drift: '#795548', exilus: '#d500f9', sandbox: '#f97316',
+                    weapon: '#ef4444', warframe: '#6366f1', companion: '#f43f5e',
+                    focus: '#eab308', stance: '#14b8a6', plexus: '#0ea5e9',
+                    miscvehicle: '#64748b'
+                }[tab] || '#ffab00';
+
+                const notes = {
+                    corrupted: {
+                        accent,
+                        rows: [
+                            { label: 'How They Work', text: 'Each Corrupted mod buffs one stat while penalizing another. The meta approach is to <strong>pair them so their penalties cancel each other out</strong> — running two Corrupted mods together whose debuffs offset is the foundation of most endgame Warframe builds.' },
+                            { label: 'Classic Pairs', text: '<span class="strategy-tag">Overextended + Narrow Minded</span> <span class="strategy-tag">Fleeting Expertise + Blind Rage</span> <span class="strategy-tag">Transient Fortitude + Fleeting Expertise</span> — these pairs maximize ability stats while keeping penalties manageable.' },
+                            { label: 'Drop Source', text: 'Orokin Derelict Vaults (Deimos). Each vault requires a <strong>Dragon Key</strong> matching the vault type (Bleeding, Decaying, Extinguished, or Hobbled). Bring a full key set on a squad of 4 to open all vaults in one run.' },
+                            { label: 'Build Role', text: 'Most high-end ability builds run <strong>2–4 Corrupted mods</strong> simultaneously. They are not optional at endgame — the stat ceilings they enable (e.g., 200%+ ability strength with low efficiency cost) are not reachable with standard mods alone.' }
+                        ]
+                    },
+                    galvanized: {
+                        accent,
+                        rows: [
+                            { label: 'How They Work', text: 'Galvanized mods start slightly weaker than their standard equivalents but gain <strong>stacking kill bonuses</strong> that push them far beyond base mod ceilings. Stacks decay when kills stop — stay aggressive to maintain uptime.' },
+                            { label: 'Priority Picks', text: '<span class="strategy-tag">Galvanized Chamber</span> highest DPS primary mod at max stacks &nbsp;·&nbsp; <span class="strategy-tag">Galvanized Aptitude</span> status scaling on kill &nbsp;·&nbsp; <span class="strategy-tag">Galvanized Scope</span> headshot crit stacking &nbsp;·&nbsp; <span class="strategy-tag">Galvanized Savvy</span> shotgun status' },
+                            { label: 'Drop Source', text: '<strong>Arbitrations</strong> (Arbiters of Hexis honor store) and <strong>Steel Path</strong> mission drop tables. Arbitration medals are the reliable farming path — run Arbitrations and spend medals in the honor store.' },
+                            { label: 'Stack Decay', text: 'Stacks do <strong>not</strong> decay on a timer — they decay only when kills stop. In dense missions (Defense, Survival, Disruption) stacks are trivial to maintain. In sparse missions, pre-clear before engaging priority targets.' }
+                        ]
+                    },
+                    primed: {
+                        accent,
+                        rows: [
+                            { label: 'How They Work', text: 'Primed mods are enhanced versions of core mods with a <strong>max rank of 10</strong> (vs. 5–8 for base variants), delivering the highest stat ceiling available in their slot. They cost significantly more Endo and Credits to max rank.' },
+                            { label: 'Priority Picks', text: '<span class="strategy-tag">Primed Flow</span> energy max &nbsp;·&nbsp; <span class="strategy-tag">Primed Continuity</span> duration &nbsp;·&nbsp; <span class="strategy-tag">Primed Sure Footed</span> knockdown immunity &nbsp;·&nbsp; <span class="strategy-tag">Primed Cryo Rounds</span> cold damage &nbsp;·&nbsp; <span class="strategy-tag">Primed Hornet Strike</span> secondary base damage' },
+                            { label: 'Drop Source', text: '<strong>Baro Ki\'Teer</strong> is the primary source, rotating stock every two weeks at relay stations. Pay with Ducats (from selling duplicate Prime parts) + Credits. Not all Primed mods are available on every visit — check the rotation before his arrival.' },
+                            { label: 'Farming Tip', text: 'Build Ducat reserves between Baro visits by selling duplicate Prime parts at Void Trader kiosks. Prioritize buying Primed mods you cannot replace with standard options — Primed Sure Footed and Primed Flow are highest priority for most builds.' }
+                        ]
+                    },
+                    aura: {
+                        accent,
+                        rows: [
+                            { label: 'How They Work', text: 'Aura mods go in the dedicated Aura slot (top-left of the Warframe mod screen) and <strong>grant bonus mod capacity</strong> in addition to their passive effect. The entire squad benefits from everyone\'s aura — stack team auras deliberately.' },
+                            { label: 'Polarity Matching — Critical', text: 'An aura whose polarity <strong>matches</strong> your Aura slot <strong>adds</strong> its full capacity to your total. A mismatch costs capacity instead of adding it. Most endgame frames use Naramon (dash) or Madurai (v) polarity — forma the slot if needed.' },
+                            { label: 'Top Picks by Role', text: '<span class="strategy-tag">Steel Charge</span> melee builds (+capacity) &nbsp;·&nbsp; <span class="strategy-tag">Corrosive Projection</span> armor strip (4× squad = 100% strip) &nbsp;·&nbsp; <span class="strategy-tag">Growing Power</span> ability strength on status proc &nbsp;·&nbsp; <span class="strategy-tag">Brief Respite</span> energy → shield gate builds' },
+                            { label: 'Squad Stacking', text: '<strong>Corrosive Projection</strong> stacks across all four squad members — four copies fully strip enemy armor, making it the top pick for Steel Path and Arbitrations. Coordinate with your squad for maximum effect.' }
+                        ]
+                    },
+                    essential: {
+                        accent,
+                        rows: [
+                            { label: 'Role', text: 'These are the <strong>baseline mods every build needs</strong> before any specialization. They represent 60–70% of your total damage and survivability scaling. Never skip them in favor of niche mods.' },
+                            { label: 'Primary Weapons', text: '<span class="strategy-tag">Serration</span> base damage &nbsp;·&nbsp; <span class="strategy-tag">Split Chamber</span> multishot &nbsp;·&nbsp; <span class="strategy-tag">Point Strike</span> crit chance &nbsp;·&nbsp; <span class="strategy-tag">Vital Sense</span> crit damage &nbsp;·&nbsp; <span class="strategy-tag">Hunter Munitions</span> slash proc on crit' },
+                            { label: 'Secondary & Melee', text: '<span class="strategy-tag">Hornet Strike</span> + <span class="strategy-tag">Barrel Diffusion</span> + <span class="strategy-tag">Lethal Torrent</span> for secondaries &nbsp;·&nbsp; <span class="strategy-tag">Pressure Point</span> + <span class="strategy-tag">Blood Rush</span> + <span class="strategy-tag">Organ Shatter</span> for melee' },
+                            { label: 'Warframe Survivability', text: '<span class="strategy-tag">Vitality</span> health &nbsp;·&nbsp; <span class="strategy-tag">Adaptation</span> damage reduction (builds per damage type received) &nbsp;·&nbsp; <span class="strategy-tag">Quick Thinking</span> energy buffer &nbsp;·&nbsp; <span class="strategy-tag">Rage</span> or <span class="strategy-tag">Hunter Adrenaline</span> for energy regeneration from damage taken' }
+                        ]
+                    },
+                    bounty: {
+                        accent,
+                        rows: [
+                            { label: 'Drop Source', text: 'These mods drop from <strong>Cetus</strong> (Plains of Eidolon), <strong>Fortuna</strong> (Orb Vallis), and <strong>Necralisk</strong> (Cambion Drift) bounty reward tables. Reward tables <strong>rotate daily</strong> — check the active rotation before farming a specific mod.' },
+                            { label: 'Farming Tier', text: 'Tier 5 bounties (highest difficulty) offer the rarest drops and the most standing per run. For standing-gated mods, rank up with the respective syndicate (Ostron, Solaris United, Entrati) first to unlock higher-tier bounties.' },
+                            { label: 'Notable Drops', text: 'Several weapon augments and open-world exclusive mods are <strong>solely bounty-locked</strong> with no other acquisition path. Check the in-game Codex drop table for the mod you need before committing to a farm.' },
+                            { label: 'Efficiency Tip', text: 'Run bounties in a group of 4 to share objectives and reduce mission time. Each bounty stage completed awards its own drop roll — complete all stages rather than abandoning early to maximize drops per run.' }
+                        ]
+                    },
+                    drift: {
+                        accent,
+                        rows: [
+                            { label: 'How to Unlock', text: 'Drift mods are earned by completing <strong>challenge rooms on Lua (The Moon)</strong>. Each room type grants a specific Drift mod. Rooms are permanently available on Lua — no rotation dependency, but some require Void Dash (Operator) to access.' },
+                            { label: 'Room Types', text: '<span class="strategy-tag">Agility Drift</span> parkour vault room &nbsp;·&nbsp; <span class="strategy-tag">Coaction Drift</span> puzzle room &nbsp;·&nbsp; <span class="strategy-tag">Cunning Drift</span> stealth/laser room &nbsp;·&nbsp; <span class="strategy-tag">Endurance Drift</span> survival challenge &nbsp;·&nbsp; <span class="strategy-tag">Guardian Drift</span> defense puzzle' },
+                            { label: 'Priority Pick', text: '<strong>Coaction Drift</strong> is the standout — it <strong>doubles the effectiveness of equipped aura mods</strong> for the entire squad. Paired with Corrosive Projection, this gives 80% armor strip per player (vs. the base 40%), dramatically reducing the number needed for full strip.' },
+                            { label: 'Build Role', text: 'Drift mods occupy the Exilus slot or a standard mod slot depending on their tag. Most are solid utility picks that do not compete with damage mods, making them efficient slot-for-value additions on any build.' }
+                        ]
+                    },
+                    exilus: {
+                        accent,
+                        rows: [
+                            { label: 'How It Works', text: 'The Exilus slot is a <strong>bonus mod slot</strong> that only accepts mods tagged as Exilus-compatible (mostly utility, mobility, and QoL effects). It must be unlocked with an <strong>Exilus Adapter</strong>, which can be crafted or purchased.' },
+                            { label: 'Top Picks', text: '<span class="strategy-tag">Primed Sure Footed</span> knockdown immunity (near-mandatory at high level) &nbsp;·&nbsp; <span class="strategy-tag">Rush</span> sprint speed &nbsp;·&nbsp; <span class="strategy-tag">Vigilante Pursuit</span> enemy radar &nbsp;·&nbsp; <span class="strategy-tag">Power Drift</span> CC resist + ability strength &nbsp;·&nbsp; <span class="strategy-tag">Handspring</span> fast recovery' },
+                            { label: 'Getting Adapters', text: '<strong>Exilus Adapters</strong> drop from Arbitrations and can be built from the Tenno Lab (Clan Dojo). They are also occasionally available from Baro Ki\'Teer and Nightwave rewards. Do not waste them on low-investment frames.' },
+                            { label: 'Key Principle', text: 'The Exilus slot\'s value is freeing up a regular mod slot for a damage or survivability mod. A good Exilus pick should provide utility you\'d otherwise not have room for — not replace a damage mod that would give more total output.' }
+                        ]
+                    },
+                    sandbox: {
+                        accent,
+                        rows: [
+                            { label: 'How to Use', text: 'Select any two mods from the dropdowns to evaluate their interaction. The sandbox checks for <strong>duplicate equips, class mismatches, elemental fusions, known synergies, and diminishing return stacking</strong>.' },
+                            { label: 'Elemental Fusion Order', text: 'When two elemental mods are combined, the game always fuses them into a combined element regardless of order in the build. Fusion happens at the <strong>weapon level</strong>, not per-slot — position in the mod grid does not matter.' },
+                            { label: 'All Elemental Combinations', text: '<span class="strategy-tag">Cold + Toxin → Viral</span> <span class="strategy-tag">Electric + Toxin → Corrosive</span> <span class="strategy-tag">Heat + Electric → Radiation</span> <span class="strategy-tag">Cold + Electric → Magnetic</span> <span class="strategy-tag">Cold + Heat → Blast</span> <span class="strategy-tag">Heat + Toxin → Gas</span>' },
+                            { label: 'Meta Priority', text: '<strong>Viral</strong> is the current meta status element for health damage (+325% at 10 stacks). <strong>Corrosive</strong> is best against heavy armor (Grineer). <strong>Radiation</strong> for alloy armor and bosses. <strong>Magnetic</strong> for Corpus shields. Avoid <strong>Blast</strong> — status effect is currently weak.' }
+                        ]
+                    },
+                    weapon: {
+                        accent,
+                        rows: [
+                            { label: 'Coverage', text: 'Every standard Primary, Secondary, Shotgun, Melee, and Arch-weapon mod that is not already covered by Corrupted, Galvanized, Primed, or Essentials lives here — the ordinary damage, status, crit, and multishot mods that fill out the rest of a weapon build.' },
+                            { label: 'Riven Mods', text: 'Weapon-specific <strong>Riven Mods</strong> (Pistol, Rifle, Shotgun, Melee, Kitgun, Zaw, Arch-Gun, and Companion Weapon variants) are grouped here too — each rolls random stats unique to the weapon it was unveiled for.' },
+                            { label: 'Build Role', text: 'Once the Essential foundation mods and any Corrupted/Galvanized/Primed picks are slotted, remaining capacity is usually filled from this pool — elemental combos, punch-through, fire rate, or utility mods matched to the weapon\'s playstyle.' },
+                            { label: 'Polarity & Forma', text: 'Every weapon mod slot has a <strong>polarity</strong> (a shape). Slotting a mod whose own polarity matches the slot\'s halves its capacity (drain) cost. <strong>Forma</strong> lets you reset a weapon and change one slot\'s polarity (or add a polarity to a previously blank slot) — the standard way to fit more/higher-rank mods than the weapon\'s base capacity would otherwise allow. Use the calculator below to check the exact drain cost for a matched vs. unmatched slot.' }
+                        ]
+                    },
+                    warframe: {
+                        accent,
+                        rows: [
+                            { label: 'Coverage', text: 'Standard Warframe ability, survivability, and utility mods that are not already covered by Aura or Essentials — armor, energy pool, ability duration/range/efficiency mods, and frame-specific augments.' },
+                            { label: 'Augments', text: 'Many entries here are <strong>Warframe Augment mods</strong> — frame-specific mods that modify or add a new function to one of that frame\'s four abilities. They only work on the frame they were designed for.' },
+                            { label: 'Build Role', text: 'These fill out ability-focused builds alongside Corrupted mods (for stat ceilings) and Essentials (for baseline survivability) — the specific pick depends heavily on which frame and which of its four abilities the build is built around.' },
+                            { label: 'Polarity & Forma', text: 'Every Warframe mod slot has a <strong>polarity</strong>. A mod whose polarity matches its slot costs <strong>half capacity</strong> (drain). <strong>Forma</strong> resets the frame and lets you change (or add) a slot\'s polarity — the standard way to push a build past the frame\'s base capacity. Note this works independently of weapon Forma — a frame\'s polarities and a weapon\'s polarities are entirely separate slot pools. Use the calculator below to check the exact drain cost for a matched vs. unmatched slot.' }
+                        ]
+                    },
+                    companion: {
+                        accent,
+                        rows: [
+                            { label: 'Coverage', text: 'Mods for Sentinels, Kubrows, Kavats, and Moas — precept mods (companion abilities), survivability mods, and companion weapon mods that are not already covered by a Riven.' },
+                            { label: 'Precept Mods', text: 'Companion-specific ability mods (e.g. a Sentinel\'s vacuum or a Kubrow\'s pack-hunting buff) are the highest-impact picks in this category — most builds run at least one precept mod alongside survivability mods.' },
+                            { label: 'Build Role', text: 'Companion survivability mods (health, armor, shields) matter more than they first appear — a dead companion loses its precept-mod benefit for the rest of the mission, so tanking mods are rarely a wasted slot.' }
+                        ]
+                    },
+                    focus: {
+                        accent,
+                        rows: [
+                            { label: 'Coverage', text: 'Operator <strong>Focus School</strong> "Way" nodes — passive and active unlocks purchased with Focus points on the Operator\'s Focus tree, spanning the five schools (Zenurik, Madurai, Naramon, Unairu, Vazarin).' },
+                            { label: 'Earning Focus', text: 'Focus points come from converting <strong>Convergence orbs</strong> (which spawn after killing enemies while your Operator is out) using an equipped Lens. Different lenses grant Focus toward a specific school.' },
+                            { label: 'Build Role', text: 'Zenurik\'s energy regeneration way is the most commonly run for endgame ability builds; other schools support specific playstyles (Naramon for melee, Vazarin for team support, Unairu for tanking, Madurai for Operator damage).' }
+                        ]
+                    },
+                    stance: {
+                        accent,
+                        rows: [
+                            { label: 'How They Work', text: 'A Stance mod slots into the melee weapon\'s dedicated Stance polarity slot and determines the weapon\'s <strong>combo string</strong> — which attack animations and combo names are available when chaining melee hits.' },
+                            { label: 'Weapon-Type Locked', text: 'Each Stance only fits weapons of its matching melee category (e.g. a Sword stance will not fit a Polearm) — check a weapon\'s type before shopping for a stance to pair with it.' },
+                            { label: 'Build Role', text: 'Beyond unlocking combos, an equipped Stance also grants bonus mod capacity like an Aura does — always run one rather than leaving the slot empty, even if you rarely use manual combos.' }
+                        ]
+                    },
+                    plexus: {
+                        accent,
+                        rows: [
+                            { label: 'How They Work', text: 'Plexus mods upgrade the <strong>Railjack\'s Plexus</strong> — the ship-wide system governing pilot stats, tactical avionics, and squad-shared bonuses, separate from mods on individual ship components (shields, engines, etc.).' },
+                            { label: 'Build Role', text: 'A Plexus build typically balances offense (turret damage, ordnance), survivability (hull/shield capacity), and tactical avionics (crew AI, squad buffs) depending on whether the squad is running combat missions or objective-focused Railjack content.' },
+                            { label: 'Drop Source', text: 'Most Plexus mods drop from Railjack proxima missions and Orphix/Void Storm content, with a smaller set available through Command Intrinsic crew recruitment.' }
+                        ]
+                    },
+                    miscvehicle: {
+                        accent,
+                        rows: [
+                            { label: 'Coverage', text: 'Everything that does not fit the other categories: <strong>K-Drive</strong> (Fortuna hoverboard) tricks/stat mods, <strong>Archwing</strong> and <strong>Necramech</strong> mods, <strong>Railjack</strong> mods outside the Plexus system, and small niche types — Mod Sets, Parazon finishers, Tektolyst Artifacts, Posture, Peculiar, and Transmutation cores.' },
+                            { label: 'Why Grouped Together', text: 'Each of these types is individually small (10-30 mods), too narrow to justify its own tab, but they don\'t belong under any of the weapon/warframe/companion umbrellas either — this bucket keeps them findable without fragmenting the tab list further.' },
+                            { label: 'Build Role', text: 'Relevant only when actively using that specific vehicle/system — a K-Drive trick mod does nothing outside Fortuna\'s open world, a Necramech mod does nothing outside Necramech piloting, and so on.' }
+                        ]
+                    }
+                };
+
+                const data = notes[tab];
+                if (!data) return '';
+
+                const rowsHTML = data.rows.map((r, i) => `
+                    <div ${i === 0 ? 'class="strategy-note-full"' : ''}>
+                        <div class="strategy-note-label">${r.label}</div>
+                        <div class="strategy-note-value">${r.text}</div>
+                    </div>
+                `).join('');
+
+                return `<div class="strategy-note" style="--note-accent: ${data.accent}">${rowsHTML}</div>`;
+            }
+
+            function getTabMeta(tab) {
+                const meta = {
+                    corrupted: { title: 'Corrupted', icon: '&#x1F480;', subtitle: 'Vault drops and high-impact rare sets.', countLabel: 'Open category' },
+                    galvanized: { title: 'Galvanized', icon: '&#x26A1;', subtitle: 'Scaling endgame mods for weapon setups.', countLabel: 'Open category' },
+                    primed: { title: 'Primed', icon: '&#x2B50;', subtitle: 'Premium upgraded variants and stat ceilings.', countLabel: 'Open category' },
+                    aura: { title: 'Aura', icon: '&#x2728;', subtitle: 'Aura slot and polarity utility picks.', countLabel: 'Open category' },
+                    essential: { title: 'Essentials', icon: '&#x1F530;', subtitle: 'Core foundation mods used across most builds.', countLabel: 'Open category' },
+                    bounty: { title: 'Bounty Drops', icon: '&#x1F3AF;', subtitle: 'Open-world reward pools and mission-gated drops.', countLabel: 'Open category' },
+                    drift: { title: 'Lua Drifts', icon: '&#x1F315;', subtitle: 'Drift set and movement utility mods.', countLabel: 'Open category' },
+                    exilus: { title: 'Exilus', icon: '&#x1F504;', subtitle: 'Utility slots and mobility-focused mod picks.', countLabel: 'Open category' },
+                    sandbox: { title: 'Synergy Sandbox', icon: '&#x1F9EA;', subtitle: 'Pair two mods and inspect whether they stack, clash, or fuse.', countLabel: 'Open category' },
+                    weapon: { title: 'Weapon Mods', icon: '&#x1F52B;', subtitle: 'Primary, secondary, shotgun, melee, and arch-weapon upgrades.', countLabel: 'Open category' },
+                    warframe: { title: 'Warframe Mods', icon: '&#x1F9CD;', subtitle: 'Ability, survivability, and utility mods for your frame.', countLabel: 'Open category' },
+                    companion: { title: 'Companion Mods', icon: '&#x1F43E;', subtitle: 'Sentinel, Kubrow, Kavat, and Moa loadout upgrades.', countLabel: 'Open category' },
+                    focus: { title: 'Focus', icon: '&#x1F441;', subtitle: 'Operator Focus School way nodes and passives.', countLabel: 'Open category' },
+                    stance: { title: 'Stance Mods', icon: '&#x1F94B;', subtitle: 'Melee combo styles and stance-slot mods.', countLabel: 'Open category' },
+                    plexus: { title: 'Plexus Mods', icon: '&#x1F6F8;', subtitle: 'Railjack Plexus upgrades for the squad\'s ship systems.', countLabel: 'Open category' },
+                    miscvehicle: { title: 'Vehicle & Misc', icon: '&#x1F6F0;', subtitle: 'K-Drive, Archwing, Necramech, Railjack, and other niche mods.', countLabel: 'Open category' },
+                    all: { title: 'Search Results', icon: '&#x1F50D;', subtitle: 'Every mod in the database matching your search.', countLabel: 'Open category' }
+                };
+                return meta[tab] || meta.all;
+            }
+
+            function renderCategoryPanel() {
+                const tabMeta = getTabMeta(activeTab);
+                const query = searchInput.value.toLowerCase().trim();
+
+                if (dashboardMode !== 'category') return;
+
+                filteredMods = [];
+                if (activeTab === 'all') {
+                    filteredMods = allMods.filter(mod => {
+                        if (!query) return true;
+                        const maxStats = mod.levelStats && mod.levelStats.length > 0
+                            ? mod.levelStats[mod.levelStats.length - 1].stats.join(' ')
+                            : '';
+                        const searchString = `${mod.name} ${mod.description || ''} ${maxStats} ${mod.compatName || ''} ${mod.type || ''}`.toLowerCase();
+                        const dropsMatch = mod.drops && mod.drops.some(d => d.location && d.location.toLowerCase().includes(query));
+                        return searchString.includes(query) || dropsMatch;
+                    });
+                } else {
+                    filteredMods = allMods.filter(mod => {
+                        const inTab =
+                            (activeTab === 'corrupted' && mod.drops && mod.drops.some(d => d.location && d.location.includes('Derelict Vault'))) ||
+                            (activeTab === 'galvanized' && mod.name.startsWith('Galvanized')) ||
+                            (activeTab === 'primed' && (mod.isPrime || mod.rarity === 'Legendary')) ||
+                            (activeTab === 'aura' && mod.compatName === 'AURA') ||
+                            (activeTab === 'essential' && ESSENTIAL_MODS.has(mod.name)) ||
+                            (activeTab === 'bounty' && mod.drops && mod.drops.some(d => d.location && d.location.toLowerCase().includes('bounty'))) ||
+                            (activeTab === 'drift' && mod.name.endsWith(' Drift')) ||
+                            (activeTab === 'exilus' && mod.isExilus === true) ||
+                            (activeTab === 'sandbox') ||
+                            (activeTab === 'weapon' && WEAPON_MOD_TYPES.has(mod.type)) ||
+                            (activeTab === 'warframe' && mod.type === 'Warframe Mod') ||
+                            (activeTab === 'companion' && mod.type === 'Companion Mod') ||
+                            (activeTab === 'focus' && mod.type === 'Focus Way') ||
+                            (activeTab === 'stance' && mod.type === 'Stance Mod') ||
+                            (activeTab === 'plexus' && mod.type === 'Plexus Mod') ||
+                            (activeTab === 'miscvehicle' && MISC_VEHICLE_MOD_TYPES.has(mod.type));
+
+                        if (!inTab) return false;
+                        if (!query) return true;
+
+                        const maxStats = mod.levelStats && mod.levelStats.length > 0
+                            ? mod.levelStats[mod.levelStats.length - 1].stats.join(' ')
+                            : '';
+                        const searchString = `${mod.name} ${mod.description || ''} ${maxStats} ${mod.compatName || ''} ${mod.type || ''}`.toLowerCase();
+                        const dropsMatch = mod.drops && mod.drops.some(d => d.location && d.location.toLowerCase().includes(query));
+                        return searchString.includes(query) || dropsMatch;
+                    });
+                }
+
+                const panel = ensureCategoryPanel();
+                panel.dataset.tab = activeTab;
+                panelTemplate.iconEl.innerHTML = tabMeta.icon;
+                panelTemplate.titleEl.textContent = tabMeta.title;
+                panelTemplate.subtitleEl.textContent = tabMeta.subtitle;
+                panelTemplate.countEl.textContent = `${filteredMods.length} matching mods`;
+                if (panelTemplate.strategyEl) {
+                    panelTemplate.strategyEl.innerHTML = getStrategyNote(activeTab);
+                }
+                if (panelTemplate.calcEl) {
+                    renderPolarityCalculator(activeTab, filteredMods);
+                }
+                panel.style.display = 'block';
+
+                if (activeTab === 'sandbox') {
+                    panelTemplate.gridEl.innerHTML = '';
+                    const sandboxBlock = document.createElement('div');
+                    sandboxBlock.style.gridColumn = '1 / -1';
+                    sandboxBlock.innerHTML = document.getElementById('sandbox-section').innerHTML;
+                    panelTemplate.gridEl.appendChild(sandboxBlock);
+                    const sandboxPanel = sandboxBlock.querySelector('#sandbox-output-panel');
+                    if (sandboxPanel) {
+                        sandboxPanel.style.maxWidth = 'unset';
+                    }
+                    initSandbox(sandboxBlock);
+                    return;
+                }
+
+                if (filteredMods.length === 0) {
+                    const empty = document.createElement('div');
+                    empty.className = 'no-results';
+                    empty.style.gridColumn = '1 / -1';
+                    empty.innerHTML = 'No mods found matching this category and search text.';
+                    panelTemplate.gridEl.innerHTML = '';
+                    panelTemplate.gridEl.appendChild(empty);
+                    return;
+                }
+
+                panelTemplate.gridEl.innerHTML = '';
+                filteredMods.forEach(mod => {
+                    panelTemplate.gridEl.appendChild(createModCard(mod));
+                });
+            }
+
+            function ensureCategoryPanel() {
+                let panel = document.getElementById('category-panel');
+                if (panel) return panel;
+
+                panel = document.createElement('div');
+                panel.id = 'category-panel';
+                panel.className = 'category-panel';
+                panel.style.display = 'none';
+                panel.innerHTML = `
+                    <div class="category-panel-header">
+                        <div>
+                            <div class="category-panel-title">
+                                <span id="category-panel-icon">&#x1F480;</span>
+                                <span id="category-panel-name">Corrupted</span>
+                            </div>
+                            <div id="category-panel-subtitle" class="category-panel-subtitle">Vault drops and high-impact rare sets.</div>
+                            <div id="category-panel-count" style="margin-top: 8px; color: var(--accent-gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">0 matching mods</div>
+                        </div>
+                        <button type="button" id="category-back-btn" class="category-back-btn">Back to dashboard</button>
+                    </div>
+                    <div id="category-strategy-note"></div>
+                    <div id="category-polarity-calc"></div>
+                    <div id="category-panel-grid" class="category-panel-grid"></div>
+                `;
+
+                const filterSection = document.querySelector('.filter-section');
+                filterSection.insertAdjacentElement('afterend', panel);
+
+                panelTemplate.iconEl = panel.querySelector('#category-panel-icon');
+                panelTemplate.titleEl = panel.querySelector('#category-panel-name');
+                panelTemplate.subtitleEl = panel.querySelector('#category-panel-subtitle');
+                panelTemplate.countEl = panel.querySelector('#category-panel-count');
+                panelTemplate.strategyEl = panel.querySelector('#category-strategy-note');
+                panelTemplate.calcEl = panel.querySelector('#category-polarity-calc');
+                panelTemplate.gridEl = panel.querySelector('#category-panel-grid');
+                panelTemplate.backBtn = panel.querySelector('#category-back-btn');
+                panelTemplate.backBtn.addEventListener('click', () => showDashboard());
+
+                return panel;
+            }
+
+            // Polarity/Forma capacity calculator -- only meaningful for the
+            // Weapon Mods and Warframe Mods tabs (Forma/polarity slots are
+            // specific to weapons and warframes, not the other categories).
+            function renderPolarityCalculator(tab, modsForTab) {
+                if (tab !== 'weapon' && tab !== 'warframe') {
+                    panelTemplate.calcEl.innerHTML = '';
+                    return;
+                }
+                const options = modsForTab
+                    .filter(m => typeof m.baseDrain === 'number')
+                    .map(m => `<option value="${m.baseDrain}">${m.name} (${m.baseDrain} drain)</option>`)
+                    .join('');
+                panelTemplate.calcEl.innerHTML = `
+                    <div class="strategy-note" style="--note-accent: var(--accent-gold); margin-top: 12px;">
+                        <div class="strategy-note-full">
+                            <div class="strategy-note-label">Polarity/Forma Capacity Calculator</div>
+                            <div class="strategy-note-value">
+                                <select id="polarity-calc-mod" style="margin-right:10px; padding:4px 8px; border-radius:6px;">
+                                    ${options}
+                                </select>
+                                <label style="margin-right:10px;">
+                                    <input type="checkbox" id="polarity-calc-match"> Polarity matches slot
+                                </label>
+                                <strong id="polarity-calc-result"></strong>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                const select = panelTemplate.calcEl.querySelector('#polarity-calc-mod');
+                const checkbox = panelTemplate.calcEl.querySelector('#polarity-calc-match');
+                const result = panelTemplate.calcEl.querySelector('#polarity-calc-result');
+                function update() {
+                    const base = parseInt(select.value, 10) || 0;
+                    const cost = checkbox.checked ? Math.ceil(base / 2) : base;
+                    result.textContent = `Effective cost: ${cost} capacity (base ${base}${checkbox.checked ? ', halved for matched polarity' : ''})`;
+                }
+                select.addEventListener('change', update);
+                checkbox.addEventListener('change', update);
+                if (options) update();
+            }
+
+            let suppressHistoryPush = false;
+
+            function openCategory(tab, fromHistory) {
+                activeTab = tab;
+                dashboardMode = 'category';
+                document.getElementById('type-tabs').style.display = 'none';
+                document.getElementById('mods-display-grid').style.display = 'none';
+                renderCategoryPanel();
+                if (!fromHistory && !suppressHistoryPush) {
+                    history.pushState({ wfModsTab: tab }, '', '#' + tab);
+                }
+            }
+
+            function showDashboard(fromHistory) {
+                dashboardMode = 'dashboard';
+                const panel = document.getElementById('category-panel');
+                if (panel) panel.remove();
+                document.getElementById('mods-display-grid').style.display = 'none';
+                document.getElementById('type-tabs').style.display = 'grid';
+                filteredMods = [];
+                if (!fromHistory && !suppressHistoryPush) {
+                    history.pushState({ wfModsTab: null }, '', location.pathname);
+                }
+            }
+
+            window.addEventListener('popstate', (event) => {
+                suppressHistoryPush = true;
+                const tab = event.state && event.state.wfModsTab;
+                if (tab) {
+                    openCategory(tab, true);
+                } else {
+                    showDashboard(true);
+                }
+                suppressHistoryPush = false;
+            });
+
+            // Modal Display
+            function showModModal(mod) {
+                const existing = document.querySelector('.mod-modal-overlay');
+                if (existing) document.body.removeChild(existing);
+
+                const overlay = document.createElement('div');
+                overlay.className = 'mod-modal-overlay no-print';
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100vw';
+                overlay.style.height = '100vh';
+                overlay.style.background = 'rgba(10, 12, 18, 0.8)';
+                overlay.style.backdropFilter = 'blur(6px)';
+                overlay.style.zIndex = '100000';
+                overlay.style.display = 'flex';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 0.25s ease';
+
+                const modalBox = document.createElement('div');
+                modalBox.style.background = 'rgba(14, 19, 29, 0.95)';
+                modalBox.style.backdropFilter = 'blur(15px)';
+                modalBox.style.border = '2.5px solid var(--accent-gold)';
+                modalBox.style.borderRadius = '16px';
+                modalBox.style.padding = '25px';
+                modalBox.style.maxWidth = '550px';
+                modalBox.style.width = '90%';
+                modalBox.style.maxHeight = '85vh';
+                modalBox.style.overflowY = 'auto';
+                modalBox.style.boxShadow = '0 15px 40px rgba(0,0,0,0.6)';
+                modalBox.style.color = '#fff';
+                modalBox.style.fontFamily = "'Segoe UI', Roboto, sans-serif";
+                modalBox.style.transform = 'scale(0.9)';
+                modalBox.style.transition = 'transform 0.25s ease';
+                modalBox.style.textAlign = 'left';
+
+                const badgeClass = getBadgeClass(mod);
+                const badgeText = getBadgeText(mod);
+
+                // Build header
+                const header = document.createElement('h3');
+                header.style.margin = '0 0 15px 0';
+                header.style.fontSize = '24px';
+                header.style.color = 'var(--accent-gold)';
+                header.style.borderBottom = '1.5px solid var(--border-color)';
+                header.style.paddingBottom = '10px';
+                header.style.display = 'flex';
+                header.style.justifyContent = 'space-between';
+                header.style.alignItems = 'center';
+                header.innerHTML = `
+                    <span>${mod.name}</span>
+                    <span class="mod-type-badge ${badgeClass}" style="font-size: 10px; padding: 4px 10px; border-radius: 12px;">${badgeText}</span>
+                `;
+
+                // Build rank slider section if levelStats exists
+                let rankSliderHTML = '';
+                const maxRank = mod.levelStats ? mod.levelStats.length - 1 : 0;
+                
+                if (maxRank > 0) {
+                    const initialStats = mod.levelStats[maxRank].stats.join(', ').replace(/\\n/g, '<br>');
+                    rankSliderHTML = `
+                        <div style="margin-bottom: 20px; background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <strong style="color: var(--accent-gold); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">P Rank Selector:</strong>
+                                <span id="modal-rank-display" style="font-weight: bold; color: #fff; font-family: monospace; font-size: 14px;">Rank ${maxRank} (Max)</span>
+                            </div>
+                            <input type="range" id="modal-rank-slider" min="0" max="${maxRank}" value="${maxRank}" style="width:100%; accent-color: var(--accent-gold); cursor: pointer; margin-bottom: 12px;">
+                            
+                            <div style="margin-bottom: 10px;">
+                                <strong style="color: #cbd5e0; font-size: 10px; text-transform: uppercase; display: block; margin-bottom: 4px;">Mod Effect:</strong>
+                                <div id="modal-effect-display" style="color: #fff; font-size: 14.5px; font-weight: 500; min-height: 40px;">${initialStats}</div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #a0aec0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                                <span>Endo: <span id="modal-endo-cost" style="color:#00d2ff; font-weight:bold;">0</span></span>
+                                <span>Credits: <span id="modal-credit-cost" style="color:#ffc107; font-weight:bold;">0</span></span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const stats = mod.description || 'No stats available';
+                    rankSliderHTML = `
+                        <div style="margin-bottom: 20px; background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <strong style="color: var(--accent-gold); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">&#x26A1; Mod Effect:</strong>
+                            <div style="color: #fff; font-size: 14.5px; font-weight: 500;">${stats}</div>
+                        </div>
+                    `;
+                }
+
+                // Build drops section
+                let dropsHTML = '';
+                if (mod.drops && mod.drops.length > 0) {
+                    const sortedDrops = [...mod.drops].sort((a, b) => b.chance - a.chance);
+                    
+                    let tableRows = sortedDrops.map(d => {
+                        const chancePercent = d.chance < 1 ? (d.chance * 100).toFixed(2) + '%' : d.chance.toFixed(2) + '%';
+                        return `
+                            <tr>
+                                <td style="padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; color: #e2e8f0;">${d.location}</td>
+                                <td style="padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; color: #a0aec0; text-align: center;">${d.type || 'N/A'}</td>
+                                <td style="padding: 6px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; color: var(--accent-gold); text-align: right; font-weight: bold; font-family: monospace;">${chancePercent}</td>
+                            </tr>
+                        `;
+                    }).join('');
+
+                    dropsHTML = `
+                        <div style="margin-bottom: 20px;">
+                            <strong style="color: #00d2ff; display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">&#x1F680; Drop Table & Farming Locations:</strong>
+                            <div style="max-height: 180px; overflow-y: auto; border: 1.5px solid var(--border-color); border-radius: 8px; background: rgba(0,0,0,0.2);">
+                                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                                    <thead>
+                                        <tr style="background: rgba(255,255,255,0.02);">
+                                            <th style="padding: 6px 10px; font-size: 11px; text-transform: uppercase; color: #a0aec0; border-bottom: 1.5px solid var(--border-color);">Location</th>
+                                            <th style="padding: 6px 10px; font-size: 11px; text-transform: uppercase; color: #a0aec0; border-bottom: 1.5px solid var(--border-color); text-align: center;">Source</th>
+                                            <th style="padding: 6px 10px; font-size: 11px; text-transform: uppercase; color: #a0aec0; border-bottom: 1.5px solid var(--border-color); text-align: right;">Chance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${tableRows}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    dropsHTML = `
+                        <div style="margin-bottom: 20px; background: rgba(255, 255, 255, 0.02); padding: 12px; border-radius: 8px; border-left: 4px solid #718096;">
+                            <strong style="color: #cbd5e0; display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">&#x1F680; Drop Table:</strong>
+                            <span style="color: #a0aec0; font-size: 13.5px;">No active drop locations. Likely acquired via Baro Ki'Teer, Arbitration honors, void trader rotation, or transmutation.</span>
+                        </div>
+                    `;
+                }
+
+                // Build trade value panel
+                const tradeHTML = `
+                    <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 171, 0, 0.03); padding: 10px 15px; border-radius: 8px; border: 1.5px solid rgba(255, 171, 0, 0.15);">
+                        <div>
+                            <strong style="color: var(--accent-gold); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block;">&#x1F48E; Estimated Market Trading Value:</strong>
+                            <span style="color: #fff; font-size: 15px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+                                ${getEstimatedValue(mod)}
+                            </span>
+                        </div>
+                        <span style="font-size: 20px;"></span>
+                    </div>
+                `;
+
+                // Build buttons
+                const buttonsHTML = `
+                    <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 25px; border-top: 1.5px solid var(--border-color); padding-top: 15px;">
+                        ${mod.wikiaUrl ? `<a href="${mod.wikiaUrl}" target="_blank" style="background: transparent; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); padding: 8px 18px; border-radius: 20px; font-weight: bold; text-decoration: none; font-size: 12px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px;" onmouseover="this.style.background='rgba(255, 171, 0, 0.1)';" onmouseout="this.style.background='transparent';">&#x1F310; View Wiki</a>` : ''}
+                        <button id="close-modal-btn" style="background: var(--accent-gold); border: none; color: #080a10; padding: 8px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 12px; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">Close</button>
+                    </div>
+                `;
+
+                // --- Quick Stats Block ---
+                const polarityMap = {
+                    madurai:  { symbol: '▽', label: 'Madurai',  color: '#e65100' },
+                    naramon:  { symbol: '—', label: 'Naramon',  color: '#9e9e9e' },
+                    vazarin:  { symbol: '○', label: 'Vazarin',  color: '#90caf9' },
+                    zenurik:  { symbol: '=', label: 'Zenurik',  color: '#42a5f5' },
+                    unairu:   { symbol: '◻', label: 'Unairu',   color: '#ffd54f' },
+                    penjaga:  { symbol: '★', label: 'Penjaga',  color: '#4db6ac' },
+                    umbra:    { symbol: '∿', label: 'Umbra',    color: '#ce93d8' }
+                };
+                const polData = mod.polarity ? (polarityMap[mod.polarity.toLowerCase()] || { symbol: '?', label: mod.polarity, color: '#9e9e9e' }) : null;
+                const polarityHTML = polData
+                    ? `<span style="font-weight:800; font-size:16px; color:${polData.color};">${polData.symbol}</span> <span style="color:#e2e8f0;">${polData.label}</span>`
+                    : '<span style="color:#718096;">None</span>';
+
+                const compatMap = {
+                    'AURA': 'Warframe Aura', 'WARFRAME': 'Warframe', 'RIFLE': 'Primary · Rifle',
+                    'Shotgun': 'Primary · Shotgun', 'PISTOL': 'Secondary', 'MELEE': 'Melee',
+                    'ROBOTIC': 'Companion', 'EXILUS_WEAPON': 'Weapon Exilus', 'EXILUS': 'Warframe Exilus',
+                    'Sniper': 'Primary · Sniper', 'Bow': 'Primary · Bow', 'Kitgun': 'Secondary · Kitgun',
+                    'Thrown': 'Secondary · Thrown', 'Zaw': 'Melee · Zaw', 'Arch-Gun': 'Arch-Gun',
+                    'Arch-Melee': 'Arch-Melee', 'Rifle': 'Primary · Rifle'
+                };
+                const equipType = mod.compatName ? (compatMap[mod.compatName] || mod.compatName) : (mod.type || 'Any');
+                const drain = mod.baseDrain !== undefined ? mod.baseDrain : '—';
+                const maxRankLabel = mod.fusionLimit !== undefined ? mod.fusionLimit : '—';
+                const tradableLabel = mod.tradable ? '<span style="color:#4caf50;">✓ Tradable</span>' : '<span style="color:#ef5350;">✗ Untradable</span>';
+                const augmentLabel = mod.isAugment ? ' <span style="background:#3949ab;color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;vertical-align:middle;">Augment</span>' : '';
+
+                const quickStatsHTML = `
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-bottom:18px;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.07);">
+                        <div>
+                            <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:#718096;margin-bottom:3px;">Equipment</div>
+                            <div style="font-size:13px;color:#e2e8f0;font-weight:600;">${equipType}${augmentLabel}</div>
+                        </div>
+                        <div>
+                            <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:#718096;margin-bottom:3px;">Polarity</div>
+                            <div style="font-size:13px;">${polarityHTML}</div>
+                        </div>
+                        <div>
+                            <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:#718096;margin-bottom:3px;">Base Drain</div>
+                            <div style="font-size:13px;color:#e2e8f0;font-weight:600;">${drain} capacity</div>
+                        </div>
+                        <div>
+                            <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:#718096;margin-bottom:3px;">Max Rank · Trade</div>
+                            <div style="font-size:13px;font-weight:600;">R${maxRankLabel} &nbsp;·&nbsp; ${tradableLabel}</div>
+                        </div>
+                    </div>
+                `;
+
+                // --- Build Context Note ---
+                function getBuildNote(m) {
+                    if (m.name.startsWith('Galvanized')) return '⚡ <strong>Kill-stacking mod.</strong> Starts below base equivalent but surpasses it with stacks. Stacks decay when kills stop — keep the kill chain going in endgame missions.';
+                    if (m.isPrime || m.rarity === 'Legendary') return '⭐ <strong>Primed variant</strong> — max rank 10, the highest stat ceiling in its slot. Available from <strong>Baro Ki\'Teer</strong> for Ducats + Credits. Not always in rotation — plan Ducat reserves before each visit.';
+                    if (m.drops && m.drops.some(d => d.location && d.location.includes('Derelict Vault'))) return '💀 <strong>Corrupted mod</strong> — buffs one stat, penalizes another. Pair with a complementary Corrupted mod whose debuff offsets this one\'s penalty. Drop from Orokin Derelict Vaults using matching Dragon Keys.';
+                    if (m.compatName === 'AURA') return '✨ <strong>Aura mod</strong> — goes in the Warframe Aura slot and benefits the whole squad. Matching slot polarity <em>adds</em> capacity; a mismatch costs it. Coordinate with your team for stacking aura effects.';
+                    if (m.name.endsWith(' Drift')) return '🌙 <strong>Lua Drift mod</strong> — earned from challenge rooms on The Moon. No rotation dependency; rooms are always present. Coaction Drift doubles aura effectiveness for the whole squad.';
+                    if (m.isExilus) return '🔄 <strong>Exilus-compatible</strong> — slots into the bonus Exilus slot (requires Exilus Adapter) without consuming a regular mod slot. Use this to free up a standard slot for a damage or survivability mod.';
+                    if (m.isAugment) return '🔧 <strong>Warframe Augment</strong> — modifies a specific Warframe ability. Replaces or extends default ability behavior. Synergy varies significantly per frame and squad composition.';
+                    if (m.drops && m.drops.some(d => d.location && d.location.toLowerCase().includes('bounty'))) return '🎯 <strong>Bounty drop</strong> — obtained from open-world bounty reward tables (Cetus, Fortuna, Necralisk). Reward tables rotate daily; confirm the active rotation before farming.';
+                    if (ESSENTIAL_MODS.has(m.name)) return '🛡️ <strong>Essential mod</strong> — a baseline pick for virtually every build of its type. This should be one of the first mods you slot before any specialization.';
+                    return '📦 Equip in a matching slot. Check polarity before adding — mismatched polarities increase capacity cost. Forma the slot to match if this mod is a permanent fixture in your build.';
+                }
+
+                const buildNoteHTML = `
+                    <div style="margin-bottom:18px;padding:11px 14px;border-radius:8px;background:rgba(255,255,255,0.02);border-left:3px solid rgba(255,255,255,0.15);font-size:12.5px;color:#a0b8cc;line-height:1.55;">
+                        ${getBuildNote(mod)}
+                    </div>
+                `;
+
+                // Assemble modal contents
+                modalBox.appendChild(header);
+
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = quickStatsHTML + buildNoteHTML + rankSliderHTML + dropsHTML + tradeHTML + buttonsHTML;
+                modalBox.appendChild(contentDiv);
+                
+                overlay.appendChild(modalBox);
+                document.body.appendChild(overlay);
+
+                // Fade-in trigger
+                setTimeout(() => {
+                    overlay.style.opacity = '1';
+                    modalBox.style.transform = 'scale(1)';
+                }, 10);
+
+                // Setup Slider Cost Calculation if slider exists
+                if (maxRank > 0) {
+                    const slider = overlay.querySelector('#modal-rank-slider');
+                    const rankDisplay = overlay.querySelector('#modal-rank-display');
+                    const effectDisplay = overlay.querySelector('#modal-effect-display');
+                    const endoDisplay = overlay.querySelector('#modal-endo-cost');
+                    const creditDisplay = overlay.querySelector('#modal-credit-cost');
+
+                    const updateCosts = (rank) => {
+                        rankDisplay.innerText = rank === maxRank ? `Rank ${rank} (Max)` : `Rank ${rank}`;
+                        
+                        const statsAtRank = mod.levelStats[rank].stats.join(', ').replace(/\\n/g, '<br>');
+                        effectDisplay.innerHTML = statsAtRank;
+
+                        const rankMultiplier = {
+                            "Common": 10,
+                            "Uncommon": 20,
+                            "Rare": 30,
+                            "Legendary": 40
+                        }[mod.rarity] || 10;
+                        
+                        const endo = (Math.pow(2, rank) - 1) * rankMultiplier;
+                        const credits = endo * 48.25;
+
+                        endoDisplay.innerText = endo.toLocaleString();
+                        creditDisplay.innerText = Math.round(credits).toLocaleString();
+                    };
+
+                    slider.addEventListener('input', (e) => {
+                        updateCosts(parseInt(e.target.value));
+                    });
+
+                    updateCosts(maxRank);
+                }
+
+                // Close handlers
+                const closeModal = () => {
+                    overlay.style.opacity = '0';
+                    modalBox.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        if (document.body.contains(overlay)) {
+                            document.body.removeChild(overlay);
+                        }
+                    }, 200);
+                };
+
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) closeModal();
+                });
+                
+                overlay.querySelector('#close-modal-btn').addEventListener('click', closeModal);
+            }
+
+            // Setup search handler -- works both inside an open category (narrows
+            // that category) and from the dashboard (searches all mods directly,
+            // no need to open a category first).
+            function handleSearchInput() {
+                const query = searchInput.value.trim();
+                if (dashboardMode === 'dashboard') {
+                    if (query) {
+                        activeTab = 'all';
+                        openCategory('all');
+                    }
+                    return;
+                }
+                if (dashboardMode === 'category' && activeTab === 'all' && !query) {
+                    showDashboard();
+                    return;
+                }
+                renderCategoryPanel();
+            }
+            searchInput.addEventListener('input', handleSearchInput);
+
+            // Setup tabs handlers
+            const sandboxSec = document.getElementById('sandbox-section');
+            const searchBoxWrap = document.getElementById('mod-search');
+            
+            const SANDBOX_MODS = [
+              // PRIMARY
+              { name: "Serration",              type: "Primary",   attribute: "Base Damage" },
+              { name: "Heavy Caliber",          type: "Primary",   attribute: "Base Damage",    note: "Corrupted — -Accuracy penalty" },
+              { name: "Split Chamber",          type: "Primary",   attribute: "Multishot" },
+              { name: "Vigilante Armaments",    type: "Primary",   attribute: "Multishot" },
+              { name: "Galvanized Chamber",     type: "Primary",   attribute: "Multishot",      note: "Kill-stacking" },
+              { name: "Point Strike",           type: "Primary",   attribute: "Crit Chance" },
+              { name: "Galvanized Scope",       type: "Primary",   attribute: "Crit Chance",    note: "Headshot-stacking" },
+              { name: "Vital Sense",            type: "Primary",   attribute: "Crit Damage" },
+              { name: "Hunter Munitions",       type: "Primary",   attribute: "Slash on Crit" },
+              { name: "Speed Trigger",          type: "Primary",   attribute: "Fire Rate" },
+              { name: "Galvanized Aptitude",    type: "Primary",   attribute: "Status Chance",  note: "Kill-stacking" },
+              { name: "Primed Cryo Rounds",     type: "Primary",   attribute: "Cold Damage",    elem: "Cold" },
+              { name: "Infected Clip",          type: "Primary",   attribute: "Toxin Damage",   elem: "Toxin" },
+              { name: "Stormbringer",           type: "Primary",   attribute: "Electric Damage", elem: "Electric" },
+              { name: "Hellfire",               type: "Primary",   attribute: "Heat Damage",    elem: "Heat" },
+              // SECONDARY
+              { name: "Hornet Strike",          type: "Secondary", attribute: "Base Damage" },
+              { name: "Magnum Force",           type: "Secondary", attribute: "Base Damage",    note: "Corrupted — -Accuracy penalty" },
+              { name: "Barrel Diffusion",       type: "Secondary", attribute: "Multishot" },
+              { name: "Lethal Torrent",         type: "Secondary", attribute: "Multishot + Fire Rate" },
+              { name: "Galvanized Shot",        type: "Secondary", attribute: "Status Chance",  note: "Kill-stacking" },
+              { name: "Primed Pistol Gambit",   type: "Secondary", attribute: "Crit Chance" },
+              { name: "Primed Target Cracker",  type: "Secondary", attribute: "Crit Damage" },
+              { name: "Hollow Point",           type: "Secondary", attribute: "Crit Damage",    note: "Corrupted — -Base Damage penalty" },
+              { name: "Deep Freeze",            type: "Secondary", attribute: "Cold Damage",    elem: "Cold" },
+              { name: "Pathogen Rounds",        type: "Secondary", attribute: "Toxin Damage",   elem: "Toxin" },
+              { name: "Convulsion",             type: "Secondary", attribute: "Electric Damage", elem: "Electric" },
+              { name: "Heated Charge",          type: "Secondary", attribute: "Heat Damage",    elem: "Heat" },
+              // MELEE
+              { name: "Pressure Point",         type: "Melee",     attribute: "Base Damage" },
+              { name: "Primed Pressure Point",  type: "Melee",     attribute: "Base Damage" },
+              { name: "Blood Rush",             type: "Melee",     attribute: "Crit Chance",    note: "Combo-stacking" },
+              { name: "True Steel",             type: "Melee",     attribute: "Crit Chance" },
+              { name: "Sacrificial Steel",      type: "Melee",     attribute: "Crit Chance" },
+              { name: "Organ Shatter",          type: "Melee",     attribute: "Crit Damage" },
+              { name: "Gladiator Might",        type: "Melee",     attribute: "Crit Damage",    note: "Combo-stacking" },
+              { name: "Condition Overload",     type: "Melee",     attribute: "Base Damage",    note: "Status-stacking" },
+              { name: "Weeping Wounds",         type: "Melee",     attribute: "Status Chance",  note: "Combo-stacking" },
+              { name: "Drifting Contact",       type: "Melee",     attribute: "Status Duration" },
+              { name: "Berserker Fury",         type: "Melee",     attribute: "Attack Speed",   note: "Kill-stacking" },
+              { name: "Life Strike",            type: "Melee",     attribute: "Lifesteal" },
+              { name: "Healing Return",         type: "Melee",     attribute: "Lifesteal",      note: "On status proc" },
+              { name: "Fever Strike",           type: "Melee",     attribute: "Toxin Damage",   elem: "Toxin" },
+              { name: "North Wind",             type: "Melee",     attribute: "Cold Damage",    elem: "Cold" },
+              { name: "Shocking Touch",         type: "Melee",     attribute: "Electric Damage", elem: "Electric" },
+              { name: "Molten Impact",          type: "Melee",     attribute: "Heat Damage",    elem: "Heat" },
+              { name: "Focus Energy",           type: "Melee",     attribute: "Electric Damage", elem: "Electric" },
+              // WARFRAME
+              { name: "Intensify",              type: "Warframe",  attribute: "Ability Strength" },
+              { name: "Blind Rage",             type: "Warframe",  attribute: "Ability Strength", note: "Corrupted — -Efficiency" },
+              { name: "Transient Fortitude",    type: "Warframe",  attribute: "Ability Strength", note: "Corrupted — -Duration" },
+              { name: "Continuity",             type: "Warframe",  attribute: "Ability Duration" },
+              { name: "Narrow Minded",          type: "Warframe",  attribute: "Ability Duration", note: "Corrupted — -Range" },
+              { name: "Primed Continuity",      type: "Warframe",  attribute: "Ability Duration" },
+              { name: "Stretch",                type: "Warframe",  attribute: "Ability Range" },
+              { name: "Overextended",           type: "Warframe",  attribute: "Ability Range",  note: "Corrupted — -Strength" },
+              { name: "Streamline",             type: "Warframe",  attribute: "Ability Efficiency" },
+              { name: "Fleeting Expertise",     type: "Warframe",  attribute: "Ability Efficiency", note: "Corrupted — -Duration" },
+              { name: "Primed Flow",            type: "Warframe",  attribute: "Energy Max" },
+              { name: "Vitality",               type: "Warframe",  attribute: "Health" },
+              { name: "Adaptation",             type: "Warframe",  attribute: "Damage Reduction" },
+              { name: "Quick Thinking",         type: "Warframe",  attribute: "Energy Buffer" },
+              { name: "Rage",                   type: "Warframe",  attribute: "Energy on Damage" }
+            ];
+
+            function initSandbox(root = document) {
+              const select1 = root.querySelector("#sandbox-mod1");
+              const select2 = root.querySelector("#sandbox-mod2");
+              if (!select1 || !select2) return;
+
+              const sortedMods = [...SANDBOX_MODS].sort((a, b) => a.name.localeCompare(b.name));
+
+              select1.innerHTML = sortedMods.map(m => `<option value="${m.name}">${m.name} (${m.type})</option>`).join('');
+              select2.innerHTML = sortedMods.map(m => `<option value="${m.name}">${m.name} (${m.type})</option>`).join('');
+
+              select1.value = "Blood Rush";
+              select2.value = "Organ Shatter";
+
+              select1.addEventListener("change", () => evaluateSandbox(root));
+              select2.addEventListener("change", () => evaluateSandbox(root));
+              evaluateSandbox(root);
+            }
+
+            function evaluateSandbox(root = document) {
+              const mod1Select = root.querySelector("#sandbox-mod1");
+              const mod2Select = root.querySelector("#sandbox-mod2");
+              const outputBox = root.querySelector("#sandbox-output-panel");
+              const ratingEl = root.querySelector("#sandbox-rating");
+              const descEl = root.querySelector("#sandbox-description");
+              if (!mod1Select || !mod2Select || !outputBox || !ratingEl || !descEl) return;
+              const mod1Name = mod1Select.value;
+              const mod2Name = mod2Select.value;
+              const mod1 = SANDBOX_MODS.find(m => m.name === mod1Name);
+              const mod2 = SANDBOX_MODS.find(m => m.name === mod2Name);
+
+              function setResult(color, title, body) {
+                outputBox.style.borderColor = color;
+                outputBox.style.background = `${color}14`;
+                ratingEl.innerHTML = `<span style='color:${color};'>${title}</span>`;
+                descEl.innerHTML = body;
+              }
+
+              outputBox.style.borderColor = "transparent";
+              outputBox.style.background = "rgba(0,0,0,0.4)";
+
+              // Duplicate check
+              if (mod1Name === mod2Name) {
+                setResult("#e74c3c", "⚠️ Duplicate Mod Equipped",
+                  `You cannot equip two copies of <strong>'${mod1Name}'</strong> on the same loadout.`);
+                return;
+              }
+
+              // Type mismatch
+              if (mod1.type !== mod2.type) {
+                setResult("#e74c3c", "⚠️ Class Mismatch",
+                  `<strong>'${mod1.name}'</strong> is a <strong>${mod1.type}</strong> mod — <strong>'${mod2.name}'</strong> is a <strong>${mod2.type}</strong> mod. They cannot be equipped on the same piece of equipment.`);
+                return;
+              }
+
+              const comboKey = [mod1Name, mod2Name].sort().join(" + ");
+
+              // ── NAMED SYNERGIES ────────────────────────────────────────────
+              const namedSynergies = {
+                "Blood Rush + Organ Shatter": ["#2ecc71", "🟢 Maximal Synergy: Melee Crit Loop",
+                  "<strong>Blood Rush</strong> scales critical chance per combo multiplier (+40% per combo, up to +440% at ×12), pushing hits into orange and red-crit tiers. <strong>Organ Shatter</strong> then multiplies that red-crit damage by +90%. Together these two mods are the backbone of every high-end melee crit build."],
+                "Condition Overload + Weeping Wounds": ["#2ecc71", "🟢 Maximal Synergy: Melee Status Loop",
+                  "<strong>Weeping Wounds</strong> scales status chance per combo stack (+40% per stack), guaranteeing rapid status procs. Each unique status type on the target adds +80% base damage via <strong>Condition Overload</strong>. Stack five unique elements and you're looking at +400% base damage — multiplicative with crit."],
+                "Blood Rush + Weeping Wounds": ["#2ecc71", "🟢 Dual Combo Scaling",
+                  "Both mods scale with the combo multiplier — <strong>Blood Rush</strong> grows your crit chance, <strong>Weeping Wounds</strong> grows your status chance simultaneously. Pairing with Condition Overload and Organ Shatter creates a full four-mod endgame melee core."],
+                "Berserker Fury + Blood Rush": ["#2ecc71", "🟢 Strong Synergy: Attack Speed × Crit",
+                  "<strong>Berserker Fury</strong> grants +75% attack speed on kill (stacks 2×), which dramatically increases combo counter buildup speed. Faster combo growth means <strong>Blood Rush</strong> reaches high crit tiers sooner. Pairs best on fast-hitting melee weapons (claws, daggers, dual blades)."],
+                "Gladiator Might + Blood Rush": ["#2ecc71", "🟢 Gladiator Set Synergy",
+                  "<strong>Gladiator Might</strong> is part of the Gladiator set — each Gladiator mod equipped adds +15% critical chance per combo multiplier on top of Blood Rush's own scaling. Even one Gladiator piece alongside Blood Rush noticeably pushes crit floors higher."],
+                "Healing Return + Drifting Contact": ["#2ecc71", "🟢 Sustained Survivability Loop",
+                  "<strong>Drifting Contact</strong> extends status duration, keeping status effects active longer on enemies. <strong>Healing Return</strong> heals you on every hit against a status-afflicted enemy. Longer statuses mean more healing windows per attack cycle — a strong self-sustain loop on status-heavy melee weapons."],
+                "Hunter Munitions + Point Strike": ["#2ecc71", "🟢 Crit-to-Slash Conversion",
+                  "<strong>Hunter Munitions</strong> adds a 30% chance to proc Slash on any critical hit. <strong>Point Strike</strong> boosts critical chance, directly increasing how often Hunter Munitions fires. Stack with Vital Sense and a high-crit primary for consistent Slash proc cascades that bypass armor entirely."],
+                "Galvanized Chamber + Galvanized Aptitude": ["#2ecc71", "🟢 Dual Kill-Stack Scaling",
+                  "Both mods gain bonus stacks on kill. <strong>Galvanized Chamber</strong> grows multishot (the highest DPS modifier in the game at max stacks), while <strong>Galvanized Aptitude</strong> grows status chance — more status procs generate more Viral/Slash synergy. This pairing is the foundation of endgame primary builds."],
+                "Blind Rage + Fleeting Expertise": ["#2ecc71", "🟢 Corrupted Pair: Strength + Efficiency",
+                  "<strong>Blind Rage</strong> gives massive ability strength (+99%) but destroys efficiency (-55%). <strong>Fleeting Expertise</strong> restores efficiency (+60%) at the cost of duration (-60%). Together they deliver high strength and full efficiency — the duration penalty is then offset by Narrow Minded or Primed Continuity."],
+                "Narrow Minded + Overextended": ["#2ecc71", "🟢 Corrupted Pair: Duration + Range",
+                  "<strong>Narrow Minded</strong> grants +99% ability duration but cuts range (-66%). <strong>Overextended</strong> grants +90% range but cuts strength (-60%). Equipping both offsets their respective penalties — you recover range from Narrow Minded's loss and recover some duration from Overextended's loss. A cornerstone of ability-focused endgame builds."],
+                "Narrow Minded + Blind Rage": ["#2ecc71", "🟢 Corrupted Pair: Duration + Strength",
+                  "<strong>Narrow Minded</strong>'s range penalty is less impactful on abilities that don't rely on range (exalted weapons, buff frames). <strong>Blind Rage</strong> delivers extreme ability strength. For buff-focused or exalted-weapon frames, this pair is often the most efficient strength-duration trade available."],
+                "Fleeting Expertise + Continuity": ["#f1c40f", "🟡 Partial Offset — Duration Gap Remains",
+                  "<strong>Fleeting Expertise</strong> slashes duration by -60%. <strong>Continuity</strong> adds back +30% — not enough to fully offset. You'll end with below-baseline duration. Works only on frames where low duration is acceptable or intentional. Consider Primed Continuity or Narrow Minded if you need higher duration alongside Fleeting Expertise."],
+                "Transient Fortitude + Fleeting Expertise": ["#2ecc71", "🟢 Corrupted Pair: Strength + Efficiency",
+                  "<strong>Transient Fortitude</strong> adds +55% strength with -27.5% duration. <strong>Fleeting Expertise</strong> maxes efficiency with -60% duration. Duration tanks hard here — this pair requires Narrow Minded or Primed Continuity to recover it. Best for frames where you want high strength + full energy efficiency regardless of duration."],
+                "Sacrificial Steel + True Steel": ["#f1c40f", "🟡 Sub-Optimal: Redundant Stat",
+                  "Both add flat critical chance additively. <strong>Sacrificial Steel</strong> is a strict upgrade over True Steel — there is no benefit to running both. Replace True Steel with Organ Shatter, Berserker Fury, or an elemental damage mod for higher total output."],
+                "Primed Pressure Point + Pressure Point": ["#e74c3c", "🔴 Strict Upgrade Conflict",
+                  "<strong>Primed Pressure Point</strong> is a direct upgrade of <strong>Pressure Point</strong> — you cannot equip both simultaneously. Replace Pressure Point entirely with Primed Pressure Point. The Primed version provides +165% damage at max rank vs +120%."],
+                "Primed Continuity + Continuity": ["#e74c3c", "🔴 Strict Upgrade Conflict",
+                  "<strong>Primed Continuity</strong> is a direct upgrade and replaces base <strong>Continuity</strong>. You cannot equip both. Once you have the Primed version, base Continuity is obsolete."],
+                "Quick Thinking + Rage": ["#2ecc71", "🟢 Energy-On-Damage Loop",
+                  "<strong>Rage</strong> converts 40% of health damage into energy. <strong>Quick Thinking</strong> drains energy instead of health when you'd die, creating a buffer. Together these mods create a feedback loop: taking damage fills energy, Quick Thinking uses that energy to survive lethal hits. Standard on ability-hungry frames that take punishment."],
+                "Adaptation + Vitality": ["#2ecc71", "🟢 Core Survivability Stack",
+                  "<strong>Vitality</strong> doubles your health pool, giving Adaptation more raw health to work with. <strong>Adaptation</strong> builds up to 90% damage reduction against any damage type you've been hit by. More health means you survive long enough for Adaptation to stack, after which you become dramatically more durable. Standard survivability core for most endgame Warframe builds."],
+                "Life Strike + Primed Pressure Point": ["#2ecc71", "🟢 Damage + Sustain",
+                  "<strong>Life Strike</strong> heals a percentage of damage dealt on heavy attacks. <strong>Primed Pressure Point</strong> maximizes base damage, meaning heavier hits produce larger heals. This self-sustain loop is particularly strong on high-damage heavy-attack weapons against high-density targets."],
+              };
+
+              if (namedSynergies[comboKey]) {
+                const [color, title, body] = namedSynergies[comboKey];
+                setResult(color, title, body);
+                return;
+              }
+
+              // ── ELEMENTAL FUSION ────────────────────────────────────────────
+              if (mod1.elem && mod2.elem) {
+                const elCombo = [mod1.elem, mod2.elem].sort().join(" + ");
+                const fusionMap = {
+                  "Cold + Toxin":     ["Viral",     "#e91e8c", "🟢 META: Viral",     "The current endgame meta status element. Multiplies damage to enemy health by +100% on the first proc, scaling to +325% at 10 stacks. Combine with Slash procs to bypass armor entirely. Recommended against almost every faction."],
+                  "Electric + Toxin": ["Corrosive", "#4caf50", "🟢 Armor Strip: Corrosive", "Strips 26% of target armor per proc, up to 80% reduction at 10 stacks. The strongest anti-Grineer element. At 10 stacks, even Steel Path heavy units lose the majority of their armor."],
+                  "Heat + Electric":  ["Radiation", "#ff9800", "🟢 Alloy Armor / Chaos: Radiation", "Deals +75% bonus damage to Alloy Armor (heavy Grineer, most bosses). Status effect causes the target to attack its own allies for 12 seconds — excellent for crowd control in dense fights."],
+                  "Cold + Electric":  ["Magnetic",  "#2196f3", "🟢 Shield Shred: Magnetic", "Amplifies damage to active shields by +100% (+325% at 10 stacks) and halts shield recharge. Essential against Corpus — pairs with Toxin for Corrosive if shields are not the primary concern."],
+                  "Cold + Heat":      ["Blast",     "#607d8b", "🟡 Weak — Avoid in Meta: Blast", "Triggers a small AoE explosion on 10 stacks. Currently considered the weakest combined element — the status effect provides limited practical value compared to Viral, Corrosive, or Radiation. Avoid in endgame builds unless specifically required."],
+                  "Heat + Toxin":     ["Gas",       "#8bc34a", "🟢 AoE DoT: Gas", "Creates a toxic cloud on proc that deals Toxin damage over time to all enemies within a radius. Strong against tightly packed, low-armor groups (Infested). Less effective against high-armor or shielded enemies."],
+                };
+                const fusion = fusionMap[elCombo];
+                if (fusion) {
+                  const [elem, color, title, body] = fusion;
+                  setResult(color, `⚡ Elemental Fusion → ${elem}`,
+                    `<strong>'${mod1Name}'</strong> (${mod1.elem}) + <strong>'${mod2Name}'</strong> (${mod2.elem}) fuse into <strong>${elem}</strong>. Note: element order in the mod grid doesn't matter — fusion is determined by the base element types alone.<br><br>${body}`);
+                  return;
+                }
+              }
+
+              // ── DIMINISHING RETURNS — SAME ATTRIBUTE ────────────────────────
+              const additiveAttrs = ["Base Damage", "Multishot", "Crit Chance", "Crit Damage", "Status Chance", "Ability Strength", "Ability Duration", "Ability Range", "Ability Efficiency", "Energy Max", "Health", "Attack Speed"];
+              if (mod1.attribute === mod2.attribute && additiveAttrs.some(a => mod1.attribute.includes(a.split(" ")[0]))) {
+                setResult("#f1c40f", "🟡 Diminishing Returns — Additive Stacking",
+                  `Both <strong>'${mod1Name}'</strong> and <strong>'${mod2Name}'</strong> add to the same stat (<strong>${mod1.attribute}</strong>). They stack additively, meaning each additional point of the same stat gives a smaller relative gain. Consider replacing one with a mod that adds a <em>different</em> stat — multiplicative diversity almost always outperforms additive doubling.`);
+                return;
+              }
+
+              // ── CORRUPTED PAIR DETECTION ────────────────────────────────────
+              const corruptedMods = ["Heavy Caliber","Blind Rage","Transient Fortitude","Narrow Minded","Overextended","Fleeting Expertise","Magnum Force","Hollow Point"];
+              const bothCorrupted = corruptedMods.includes(mod1Name) && corruptedMods.includes(mod2Name);
+              if (bothCorrupted) {
+                setResult("#f1c40f", "🟡 Dual Corrupted — Check Penalty Balance",
+                  `Both <strong>'${mod1Name}'</strong> and <strong>'${mod2Name}'</strong> are Corrupted mods with stat penalties. Running two Corrupted mods simultaneously can stack penalties beyond manageable levels. Verify the combined debuffs don't cripple a core stat before committing — Corrupted pairs work best when each mod's penalty offsets the other's.`);
+                return;
+              }
+
+              // ── GENERIC COMPATIBLE ──────────────────────────────────────────
+              setResult("#2ecc71", "🟢 Compatible",
+                `<strong>'${mod1Name}'</strong> (${mod1.attribute}) and <strong>'${mod2Name}'</strong> (${mod2.attribute}) are fully compatible on the same loadout. They buff different stats and do not conflict. No diminishing returns detected.`);
+            }
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    activeTab = btn.getAttribute('data-tab');
+                    openCategory(activeTab);
+                });
+            });
+
+            // Dashboard first; category content stays hidden until a card is selected.
+            history.replaceState({ wfModsTab: null }, '', location.pathname);
+            showDashboard(true);
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

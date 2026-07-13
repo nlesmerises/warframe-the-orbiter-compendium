@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Albrecht's Labs & Sanctum Anatomica</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile {
+    display: flex !important; flex-direction: column; align-items: flex-start; text-align: left;
+    min-height: 110px; padding: 20px 22px !important; border-radius: 14px;
+    text-decoration: none !important; color: inherit;
+    background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease;
+}
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#129514; Albrecht's Labs &amp; Sanctum Anatomica</h1>
+        <p class="subtitle">Deimos underground &middot; Cavia Syndicate &middot; Incarnon Genesis &middot; Vome &amp; Fass cycles</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="overview" style="border-left-color:#ffd700;">
+                <div class="qi-tile-icon">&#129514;</div>
+                <h2 class="qi-tile-title">Overview</h2>
+                <p class="qi-tile-desc">What the Sanctum Anatomica area is, why to come, and how the Vome &amp; Fass cycles work.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="access" style="border-left-color:#42a5f5;">
+                <div class="qi-tile-icon">&#128273;</div>
+                <h2 class="qi-tile-title">Access &amp; Prerequisites</h2>
+                <p class="qi-tile-desc">How to unlock the Deimos underground and get there.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="cavia" style="border-left-color:#ce93d8;">
+                <div class="qi-tile-icon">&#129309;</div>
+                <h2 class="qi-tile-title">Cavia Syndicate</h2>
+                <p class="qi-tile-desc">The Cavia syndicate structure, its key vendors, and standing-farming tips.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="missions" style="border-left-color:#ef5350;">
+                <div class="qi-tile-icon">&#127919;</div>
+                <h2 class="qi-tile-title">Mission Types</h2>
+                <p class="qi-tile-desc">Surface and Cavia bounties plus the weekly Netracell mission.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="isolation" style="border-left-color:#ffb74d;">
+                <div class="qi-tile-icon">&#128274;</div>
+                <h2 class="qi-tile-title">Isolation Vaults</h2>
+                <p class="qi-tile-desc">Isolation Vault tiers, Arcana bounties, and the vault reward pool.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="incarnon" style="border-left-color:#4ade80;">
+                <div class="qi-tile-icon">&#9889;</div>
+                <h2 class="qi-tile-title">Incarnon Genesis</h2>
+                <p class="qi-tile-desc">What Incarnon Genesis is, priority adapters, weekly rotation, and evolution challenges.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="rewards" style="border-left-color:#ffd700;">
+                <div class="qi-tile-icon">&#127942;</div>
+                <h2 class="qi-tile-title">Key Rewards</h2>
+                <p class="qi-tile-desc">Exclusive weapons, unique mods, arcanes, and crafting resources on offer.</p>
+            </a>
+        </div>
+    </div>
+
+    <section class="category-section" id="overview">
+        <h2>&#129514; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Is This Area?</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Underground laboratory complex beneath the Cambion Drift (Deimos)</li>
+                    <li>Introduced in the <strong>Whispers in the Walls</strong> update</li>
+                    <li>Home of the <strong>Cavia</strong> syndicate &mdash; a collective of researchers studying the Infestation and the Void</li>
+                    <li>Contains the <strong>Sanctum Anatomica</strong> &mdash; the hub where you interact with Cavia vendors</li>
+                    <li>Albrecht Entrati's original research facility; lore-heavy area with strong Void and Infestation themes</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Why Come Here?</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Farm <strong>Incarnon Genesis</strong> adapters &mdash; the single biggest damage upgrade in the game</li>
+                    <li>Complete <strong>Isolation Vaults &amp; Arcana</strong> bounties for unique rewards</li>
+                    <li>Rank up Cavia syndicate for standing rewards and Incarnon Genesis unlocks</li>
+                    <li>Collect <strong>Voca</strong> (story fragments) to progress Albrecht's lore journals</li>
+                    <li>Hunt <strong>Necraloid</strong> decorations and Cavia-specific cosmetics</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Vome &amp; Fass Cycles</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Cycles</span></div>
+                <ul class="list">
+                    <li>Deimos has a two-phase day/night cycle: <strong>Vome</strong> (day &mdash; calmer, yellow sky) and <strong>Fass</strong> (night &mdash; more hostile, orange sky)</li>
+                    <li>Cycle is ~2 hours in real time; check the Deimos cycle tracker in-game</li>
+                    <li>Certain Isolation Vault bounties and Fishing drops are cycle-gated</li>
+                    <li><strong>Fass Residue</strong> and <strong>Vome Residue</strong> are crafting resources dropped only during their respective cycle</li>
+                    <li>Residues are used in Necraloid and Cavia component blueprints</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="access">
+        <h2>&#128274; 2. Access &amp; Prerequisites</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">How to Unlock</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Access</span></div>
+                <ul class="list">
+                    <li>Complete the <strong>Whispers in the Walls</strong> quest (requires Deimos access and completion of <strong>The War Within</strong>)</li>
+                    <li>Deimos itself requires completion of <strong>Heart of Deimos</strong> quest</li>
+                    <li>Recommended MR: 8+ (higher for Isolation Vault bounties)</li>
+                    <li>After the quest, the <strong>Sanctum Anatomica</strong> hub becomes accessible via the Cambion Drift or directly from Orbiter navigation</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Getting There</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Access</span></div>
+                <ul class="list">
+                    <li>Navigate to <strong>Deimos</strong> on the star chart</li>
+                    <li>Land at <strong>Sanctum Anatomica</strong> (hub node) or drop into the Cambion Drift and find the underground entrance</li>
+                    <li>Inside the Sanctum: speak to <strong>Loid</strong>, <strong>Otak</strong>, <strong>Fibonacci</strong>, <strong>Archimedean Yonta</strong>, and <strong>Tagfer</strong> for syndicate content</li>
+                    <li>Cavia missions launch from bounty boards inside the Sanctum or from the Drift's surface camps</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="cavia">
+        <h2>&#128101; 3. Cavia Syndicate</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Syndicate Structure</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Syndicate</span></div>
+                <ul class="list">
+                    <li>Five Cavia ranks: <strong>Stranger &rarr; Acquaintance &rarr; Associate &rarr; Colleague &rarr; Partner</strong></li>
+                    <li>Standing is earned via Deimos bounties, Isolation Vault completions, and resource donations</li>
+                    <li>Daily standing cap scales with MR (same formula as other open world syndicates)</li>
+                    <li>No opposing syndicate &mdash; no standing loss risk</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Key Vendors</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Vendors</span></div>
+                <ul class="list">
+                    <li><strong>Loid / Otak</strong> &mdash; primary Cavia vendor; standing gear, blueprints, and cosmetics</li>
+                    <li><strong>Fibonacci</strong> &mdash; Incarnon Genesis adapters (require Partner rank for highest-tier items)</li>
+                    <li><strong>Archimedean Yonta</strong> &mdash; Arcana Isolation Vault bounties and related rewards</li>
+                    <li><strong>Tagfer</strong> &mdash; decorations and Cavia-themed cosmetics</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Standing Farming Tips</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Farming</span></div>
+                <ul class="list">
+                    <li>Isolation Vault bounties give the most standing per run &mdash; complete all three tiers back-to-back</li>
+                    <li>Surface bounties from the Drift camps fill the cap quickly with low effort</li>
+                    <li>Donate excess Deimos resources (Thaumica, Sporulate Sac, etc.) at Loid for bonus standing</li>
+                    <li>Bring a Necramech for Vault Tier 3 &mdash; heavily recommended</li>
+                    <li>Rank up fast: Partner rank unlocks the full Incarnon Genesis catalog at Fibonacci</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="missions">
+        <h2>&#127919; 4. Mission Types</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Surface Bounties (Cambion Drift)</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Bounties</span></div>
+                <ul class="list">
+                    <li>Standard open world bounty structure &mdash; 5 tiers, escalating difficulty</li>
+                    <li>Objectives: Exterminate, Capture, Resource Collection, Hive Purge, Caches</li>
+                    <li>Rewards: Deimos resources, Orokin Matrix, Necraloid standing, weapon parts</li>
+                    <li>Best for: fast standing fill and resource top-ups</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Cavia Bounties (Underground)</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Bounties</span></div>
+                <ul class="list">
+                    <li>Accessed from Sanctum Anatomica &mdash; launch directly into underground Labs nodes</li>
+                    <li>Standard Exterminate / Defense / Mobile Defense variants inside the lab corridors</li>
+                    <li>Higher standing density than surface bounties</li>
+                    <li>Rewards include unique Cavia standing tokens and Arcana Vault keys</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Netracell (Weekly)</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Weekly</span></div>
+                <ul class="list">
+                    <li>Weekly endgame mission &mdash; locate and crack open a <strong>Netracell</strong> containment pod</li>
+                    <li>5 attempts per week; each run costs one <strong>Pearl</strong> (earned from bounties)</li>
+                    <li>Enemies are heavily armored and Void-infused &mdash; bring high-DPS builds</li>
+                    <li>Rewards: <strong>Archon Shards</strong> (teal/amber/violet), Cavia standing tokens, Oull Requiem mod</li>
+                    <li>Teal Archon Shards (ability strength) are uniquely available here &mdash; very high value</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="isolation">
+        <h2>&#128682; 5. Isolation Vaults &amp; Arcana</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Isolation Vault Tiers</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Vaults</span></div>
+                <ul class="list">
+                    <li>Three sequential tiers (T1 &rarr; T2 &rarr; T3) &mdash; each entered from the previous vault's exit</li>
+                    <li>Objective: deactivate the Infested Defense Mechanism protecting the vault door, then crack the vault</li>
+                    <li>Bring a <strong>Necramech</strong> &mdash; mandatory for T2/T3; damage zones inside the vault rooms heavily punish unshielded frames</li>
+                    <li>Complete all three in a single run for maximum efficiency</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Arcana Bounties</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Arcana</span></div>
+                <ul class="list">
+                    <li>Post-vault bonus objectives offered by Archimedean Yonta &mdash; run immediately after completing T3</li>
+                    <li>Types: Capture, Exterminate, Sabotage in the vault aftermath zone</li>
+                    <li>Reward pools: Necramech mods, Cortege weapon parts, Mausolon parts, Sporothrix parts, Bonewidow chassis/neuroptics</li>
+                    <li>Best source for Necramech mod drops</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Vault Rewards</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li><strong>T1:</strong> Necramech components, Cavia standing tokens, Thaumica, Breath of the Eidolon</li>
+                    <li><strong>T2:</strong> Rare Necramech mods, Damaged Necramech parts (for repair), Sporothrix parts</li>
+                    <li><strong>T3:</strong> Bonewidow Neuroptics/Chassis, Cortege parts, Mausolon parts, high Cavia standing</li>
+                    <li>Weekly bonus chest in T3 &mdash; guarantees a rare drop on first clear each week</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="incarnon">
+        <h2>&#128293; 6. Incarnon Genesis</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Is Incarnon Genesis?</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>An adapter that transforms eligible base weapons into <strong>Incarnon</strong> form &mdash; massively boosted stats and alternate fire modes</li>
+                    <li>Acquired from <strong>Fibonacci</strong> in the Sanctum Anatomica using Cavia standing</li>
+                    <li>Requires <strong>Partner rank</strong> with Cavia for most high-tier adapters</li>
+                    <li>Once applied (in the Arsenal), the weapon gains a new Evolution path with 5 evolutions unlocked via kill challenges</li>
+                    <li>Incarnon form activates by filling the <strong>Incarnon Gauge</strong> via headshots or kills, then pressing Alt-Fire to transform</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Top Priority Adapters</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Builds</span></div>
+                <ul class="list">
+                    <li>&#128293; <strong>Braton</strong> &mdash; top-tier primary in Incarnon form; reliable and easy to use</li>
+                    <li>&#128293; <strong>Latron</strong> &mdash; high single-shot burst; excellent for Steel Path</li>
+                    <li>&#128293; <strong>Boar</strong> &mdash; shotgun with absurd AoE in Incarnon form</li>
+                    <li>&#128293; <strong>Lex</strong> &mdash; pistol powerhouse; pairs with dual Lex builds</li>
+                    <li>&#128293; <strong>Torid</strong> &mdash; poison cloud primary; top pick for endgame</li>
+                    <li>&#128293; <strong>Furax</strong> &mdash; melee Incarnon; strong slam attack synergy</li>
+                    <li>&#128293; <strong>Dual Ichor</strong> &mdash; meta melee with high slash proc output</li>
+                    <li>&#128293; <strong>Ceramic Dagger</strong> &mdash; extreme crit/status combo in Incarnon form</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Rotation &amp; Weekly Unlock</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Rotation</span></div>
+                <ul class="list">
+                    <li>Fibonacci offers a rotating weekly selection of adapters &mdash; not all are available every week</li>
+                    <li>Rotation resets weekly on Wednesday (same as Nightwave, Archon Hunt)</li>
+                    <li>Check the current week's rotation on the Warframe wiki or community sites</li>
+                    <li>You can only install one Incarnon Genesis adapter per weapon &mdash; choose wisely</li>
+                    <li>Adapters are tradeable between players on the market</li>
+                    <li>Evolving the weapon fully requires running Void Cascade or Netracell for Pathos Clamps (weekly cap)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Evolution Challenges</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Evolution</span></div>
+                <ul class="list">
+                    <li>Each weapon has 5 evolution tiers unlocked by completing in-mission challenges (kills, headshots, slam kills, etc.)</li>
+                    <li>Each evolution tier offers a passive bonus perk &mdash; choose one of two options per tier</li>
+                    <li>Final evolution (Tier 5) gives the most impactful perk &mdash; prioritize unlocking this</li>
+                    <li>Challenges can be completed in any mission; no special location required</li>
+                    <li>Fully evolved Incarnon weapons rival or exceed most Rivens in raw output</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="rewards">
+        <h2>&#127942; 7. Key Rewards</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Exclusive Weapons</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Weapons</span></div>
+                <ul class="list">
+                    <li><strong>Cortege</strong> &mdash; Necramech heavy weapon; rapid-fire projectile launcher</li>
+                    <li><strong>Mausolon</strong> &mdash; Necramech primary; top auto rifle with innate Void damage</li>
+                    <li><strong>Sporothrix</strong> &mdash; secondary crossbow; high toxin/slash output, excellent for status builds</li>
+                    <li><strong>Cedo</strong> &mdash; primary shotgun; builds status stacks from alt-fire then detonates with primary; top-tier status weapon</li>
+                    <li>All require parts from Isolation Vault and Cambion Drift resource drops</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Unique Mods</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Mods</span></div>
+                <ul class="list">
+                    <li><strong>Necramech mods</strong> &mdash; Mech-specific power, armor, and ability mods; primarily from Arcana bounties</li>
+                    <li><strong>Molt Augmented / Molt Reconstruct / Molt Vigor</strong> &mdash; Arcane-grade mods with very strong passive effects; obtained from Cavia standing</li>
+                    <li><strong>Melee Influence</strong> &mdash; top-tier melee arcane; one of the strongest electrical-proc multipliers in the game</li>
+                    <li><strong>Primary Blight / Secondary Blight</strong> &mdash; strong corrosive proc mods from high-level lab bounties</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Arcanes</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Arcanes</span></div>
+                <ul class="list">
+                    <li><strong>Arcane Avenger</strong> &mdash; flat crit chance on taking damage; stacks to +45% crit chance; extremely potent</li>
+                    <li><strong>Arcane Energize</strong> &mdash; energy restore on energy pickup; core for energy-hungry builds</li>
+                    <li><strong>Arcane Guardian</strong> &mdash; flat armor bonus on taking damage; tanking staple</li>
+                    <li>All three obtainable from Deimos bounty reward pools and Vault completions</li>
+                    <li>Rank arcanes to R5 by combining five copies</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Crafting Resources</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Resources</span></div>
+                <ul class="list">
+                    <li><strong>Thaumica</strong> &mdash; rare Deimos mineral; required for Necramech component blueprints</li>
+                    <li><strong>Fass Residue / Vome Residue</strong> &mdash; cycle-specific drops; used in multiple Cavia blueprints</li>
+                    <li><strong>Sporulate Sac</strong> &mdash; uncommon infested drop; standing donation item</li>
+                    <li><strong>Pathos Clamp</strong> &mdash; weekly-capped resource used to unlock Incarnon Evolution tiers (obtained from Netracell)</li>
+                    <li><strong>Orokin Matrix</strong> &mdash; used in Necramech crafting and Cavia offerings</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Warframe Arcane Codex &mdash; how arcanes work, the rank 0-5 / 21-copy system, every arcane slot, top Warframe and weapon arcanes, operator/amp arcanes, and where to farm them.">
+    <title>Warframe: The Orbiter Compendium &mdash; Arcane Codex</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+<style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile {
+    display: flex !important; flex-direction: column; align-items: flex-start; text-align: left;
+    min-height: 110px; padding: 20px 22px !important; border-radius: 14px;
+    text-decoration: none !important; color: inherit;
+    background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease;
+}
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+</style>
+</head>
+<body>
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+    <header>
+        <h1>&#10024; Arcane Codex</h1>
+        <p class="subtitle">How arcanes work, the rank&nbsp;0&ndash;5 system, every slot, and the arcanes worth chasing</p>
+    </header>
+
+    <div class="card" style="border-left:3px solid #ffab00;">
+        <p style="margin:0;color:#9fb0c4;font-size:0.9rem;"><strong style="color:#ffab00;">Living data note:</strong> Arcane <em>effects and rank mechanics</em> below are stable. New arcanes are added with most major updates, and a few drop rates shift &mdash; confirm any farm against the in-game Arcane screen or the official Warframe wiki before a long grind.</p>
+    </div>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="arcane-basics" style="border-left-color:#ffab00;">
+                <div class="qi-tile-icon">&#x2728;</div>
+                <h2 class="qi-tile-title">What Are Arcanes?</h2>
+                <p class="qi-tile-desc">Conditional power boosts, and the rank 0&ndash;5 / 21-copy rule explained.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="rank-table" style="border-left-color:#42a5f5;">
+                <div class="qi-tile-icon">&#x1F4CA;</div>
+                <h2 class="qi-tile-title">Copies Per Rank</h2>
+                <p class="qi-tile-desc">How many copies each arcane rank requires, from rank 0 up to max.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="slots" style="border-left-color:#a78bfa;">
+                <div class="qi-tile-icon">&#x1F9E9;</div>
+                <h2 class="qi-tile-title">Arcane Slots</h2>
+                <p class="qi-tile-desc">Where arcanes go &mdash; Warframe, weapons, Operator/Amp, and companions.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="warframe-arcanes" style="border-left-color:#ffd700;">
+                <div class="qi-tile-icon">&#x1F3C6;</div>
+                <h2 class="qi-tile-title">Warframe Arcanes</h2>
+                <p class="qi-tile-desc">The top Warframe arcanes worth chasing and slotting first.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="weapon-arcanes" style="border-left-color:#ef5350;">
+                <div class="qi-tile-icon">&#x2694;&#xFE0F;</div>
+                <h2 class="qi-tile-title">Weapon Arcanes</h2>
+                <p class="qi-tile-desc">Primary, secondary, and melee weapon arcanes and what they do.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="operator-arcanes" style="border-left-color:#ce93d8;">
+                <div class="qi-tile-icon">&#x1F441;&#xFE0F;</div>
+                <h2 class="qi-tile-title">Operator &amp; Amp</h2>
+                <p class="qi-tile-desc">Magus (Operator) and Virtuos (Amp) arcanes for the second half of your kit.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="sources" style="border-left-color:#4ade80;">
+                <div class="qi-tile-icon">&#x1F33E;</div>
+                <h2 class="qi-tile-title">Farm Sources</h2>
+                <p class="qi-tile-desc">Where to farm arcanes across the game&rsquo;s activities.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="strategy" style="border-left-color:#ffd54f;">
+                <div class="qi-tile-icon">&#x1FA99;</div>
+                <h2 class="qi-tile-title">Ranking Strategy</h2>
+                <p class="qi-tile-desc">Which arcanes to max first, and when to buy versus farm.</p>
+            </a>
+        </div>
+    </div>
+
+    <section class="category-section" id="arcane-basics">
+    <h2>&#x2728; 1. What Are Arcanes?</h2>
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>&#9889; Conditional Power Boosts</h3>
+            <ul class="list">
+                <li>Arcanes are equippable enhancements that trigger on a <strong>condition</strong> (on hit, on kill, on headshot, on taking damage, on ability cast).</li>
+                <li>Most have a <strong>chance to proc</strong> and a <strong>duration</strong>, and many <strong>stack</strong> (e.g. Energize, Merciless) up to a cap.</li>
+                <li>They are separate from mods &mdash; arcanes occupy dedicated arcane slots, so they add power without costing mod capacity.</li>
+                <li>Arcanes are a <strong>mid-to-late game</strong> power layer. You do not need them to clear the star chart; they shine in Steel Path and endurance content.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>&#128209; Rank 0&ndash;5 &amp; the 21-Copy Rule</h3>
+            <ul class="list">
+                <li>Most arcanes rank from <strong>0 to 5</strong>. Higher rank = stronger effect and/or higher proc chance.</li>
+                <li>You rank up by <strong>combining identical copies</strong>. Reaching Rank&nbsp;5 needs <strong>21 total copies</strong> of that arcane.</li>
+                <li>A handful of <strong>Amp and Kitgun</strong> arcanes cap their effect at fewer copies (10 total).</li>
+                <li>Owning duplicates beyond a maxed arcane = pure trade/sell value.</li>
+            </ul>
+        </div>
+    </div>
+    </section>
+
+    <section class="category-section" id="rank-table">
+    <h2>&#x1F4CA; 2. Copies Needed Per Rank</h2>
+    <div class="card" style="padding:0;overflow:hidden;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+            <thead>
+                <tr style="background:rgba(255,255,255,0.05);">
+                    <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Rank</th>
+                    <th style="padding:9px 14px;text-align:right;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Total Copies Owned</th>
+                    <th style="padding:9px 14px;text-align:right;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Additional Copies for This Rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">0</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">1</td><td style="padding:7px 14px;color:#9fb0c4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">&mdash;</td></tr>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">1</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">3</td><td style="padding:7px 14px;color:#9fb0c4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">+2</td></tr>
+                <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">2</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">6</td><td style="padding:7px 14px;color:#9fb0c4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">+3</td></tr>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">3</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">10</td><td style="padding:7px 14px;color:#9fb0c4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">+4</td></tr>
+                <tr><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">4</td><td style="padding:7px 14px;color:#ffab00;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">15</td><td style="padding:7px 14px;color:#9fb0c4;text-align:right;border-bottom:1px solid rgba(255,255,255,0.04);">+5</td></tr>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#4ade80;font-weight:600;">5 (max)</td><td style="padding:7px 14px;color:#4ade80;font-weight:600;text-align:right;">21</td><td style="padding:7px 14px;color:#4ade80;text-align:right;">+6</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="color:#9fb0c4;margin-top:0.6rem;font-size:0.85rem;">Counts are cumulative and follow the triangular pattern (1, 3, 6, 10, 15, 21). You consume the lower-rank arcane each time you upgrade.</p>
+    </section>
+
+    <section class="category-section" id="slots">
+    <h2>&#x1F9E9; 3. Arcane Slots &mdash; Where They Go</h2>
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>&#129504; Warframe (&times;2)</h3>
+            <ul class="list">
+                <li>Every Warframe has <strong>two</strong> arcane slots, unlocked once.</li>
+                <li>Unlock by ranking <strong>any Warframe arcane</strong> to a threshold once, or via the in-game prompt &mdash; after that all frames share the slots.</li>
+                <li>This is the highest-impact pair: survivability + energy or DPS.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>&#128481; Weapons (&times;1 each)</h3>
+            <ul class="list">
+                <li><strong>Primary, Secondary, and Melee</strong> each have one arcane slot.</li>
+                <li>Weapon arcanes scale damage hard in endgame (Merciless line, Melee Arcanes).</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>&#128064; Operator &amp; Amp</h3>
+            <ul class="list">
+                <li>Operator suit takes <strong>Magus</strong> arcanes; Amps take <strong>Virtuos</strong> arcanes.</li>
+                <li>Critical for Eidolon hunting and survivability during Operator play.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>&#128062; Companions</h3>
+            <ul class="list">
+                <li>Robotic companions / Sentinels use companion arcanes (e.g. survivability, looter utility).</li>
+                <li>Lower priority than frame and weapon arcanes for most builds.</li>
+            </ul>
+        </div>
+    </div>
+    </section>
+
+    <section class="category-section" id="warframe-arcanes">
+    <h2>&#x1F3C6; 4. Top Warframe Arcanes</h2>
+    <div class="card" style="padding:0;overflow:hidden;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+            <thead>
+                <tr style="background:rgba(255,255,255,0.05);">
+                    <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Arcane</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Effect (at max)</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Why / When</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Energize</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">On energy pickup: chance to restore energy to you and allies (stacks to 3&times;)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">The classic energy economy enabler for ability-spam frames</td></tr>
+                <tr><td style="padding:7px 14px;color:#ffab00;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Grace</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">On damage: strong health regen per second</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Premier sustain on high-HP/tank frames</td></tr>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Guardian</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">On damage: large flat armor buff</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Cheap, reliable tankiness for armor frames</td></tr>
+                <tr><td style="padding:7px 14px;color:#ffab00;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Blessing</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">On heal: stacking bonus max health (huge ceiling)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Massive EHP on frames with self-heal</td></tr>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Molt Efficiency / Vigor / Reconstruct / Augur</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Duration, status immunity+health, shield/health on cast (Cavia set)</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Cheap, flexible glue arcanes from Deep Archimedea / Cavia</td></tr>
+                <tr><td style="padding:7px 14px;color:#ffab00;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.04);">Arcane Fury / Avenger / Precision</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Melee damage / crit chance / weapon damage on trigger</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Offensive slot when survivability is already covered</td></tr>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;font-weight:600;">Arcane Aegis / Arcane Battery</td><td style="padding:7px 14px;color:#e2e8f0;">Shield regen / energy on shield-gate</td><td style="padding:7px 14px;color:#9fb0c4;">Shield-gating and shield-tank builds</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="color:#9fb0c4;margin-top:0.6rem;font-size:0.85rem;">A common &ldquo;default&rdquo; pairing: one survivability arcane (Grace / Guardian / Blessing) + one economy or DPS arcane (Energize / Fury). Tune to the frame's role &mdash; see the <a href="Warframe_Builds_Codex.html" style="color:#89cff0;">Builds Codex</a> and <a href="Warframe_Helminth_Synergy_App.html" style="color:#89cff0;">Helminth app</a>.</p>
+    </section>
+
+    <section class="category-section" id="weapon-arcanes">
+    <h2>&#x2694;&#xFE0F; 5. Weapon &amp; Melee Arcanes</h2>
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>&#128299; Primary / Secondary</h3>
+            <ul class="list">
+                <li><strong>Primary/Secondary Merciless</strong> &mdash; on kill: stacking damage (up to 12&times;), the top DPS arcane for most guns.</li>
+                <li><strong>Primary/Secondary Deadhead</strong> &mdash; on headshot kill: damage + bonus headshot multiplier.</li>
+                <li><strong>Primary/Secondary Dexterity</strong> &mdash; on kill: damage that also feeds melee.</li>
+                <li>Source: <strong>Steel Path Incursions / Cavalero (Zariman) standing</strong>.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>&#9876;&#65039; Melee Arcanes</h3>
+            <ul class="list">
+                <li>Melee has its own arcane line (e.g. <strong>Melee Influence, Melee Vortex, Melee Crescendo, Melee Animosity, Melee Exposure</strong>).</li>
+                <li>Influence (electric spread) and Crescendo (stacking combo-based damage) are standout picks.</li>
+                <li>Source: <strong>Steel Path Circuit (Duviri) weekly rewards</strong> &mdash; see the <a href="Warframe_Circuit_Tracker_App.html" style="color:#89cff0;">Circuit Tracker</a>.</li>
+            </ul>
+        </div>
+    </div>
+    </section>
+
+    <section class="category-section" id="operator-arcanes">
+    <h2>&#x1F441;&#xFE0F; 6. Operator (Magus) &amp; Amp (Virtuos) Arcanes</h2>
+    <div class="card">
+        <div class="grid-2col">
+            <div class="box">
+                <h4>&#10024; Magus (Operator suit)</h4>
+                <p><strong>Magus Lockdown</strong> (CC on void dash), <strong>Magus Elevate</strong> (heal on transference), <strong>Magus Repair</strong> (heal allies), <strong>Magus Husk</strong> (armor), <strong>Magus Cadence</strong> (sprint). Elevate + Lockdown is the staple Eidolon/utility pair.</p>
+            </div>
+            <div class="box">
+                <h4>&#10024; Virtuos (Amp)</h4>
+                <p><strong>Virtuos Strike</strong> (amp crit), <strong>Virtuos Shadow</strong> (void-status crit), <strong>Virtuos Forge</strong> (Unairu synergy). Essential damage boosts for Eidolon and Profit-Taker amp play &mdash; see the <a href="Warframe_Eidolon_Hunt_Guide.html" style="color:#89cff0;">Eidolon Hunt Guide</a>.</p>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <section class="category-section" id="sources">
+    <h2>&#x1F33E; 7. Where to Farm Arcanes</h2>
+    <div class="card" style="padding:0;overflow:hidden;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+            <thead>
+                <tr style="background:rgba(255,255,255,0.05);">
+                    <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Source</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Arcanes</th>
+                    <th style="padding:9px 14px;text-align:left;color:#718096;border-bottom:1px solid rgba(255,255,255,0.07);">Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Eidolon Hunts (Plains of Eidolon)</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Energize, Grace, Guardian, most classic Warframe arcanes; Virtuos/Magus</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Tridolon runs at night; the core arcane farm</td></tr>
+                <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Deep Archimedea / Cavia (Sanctum Anatomica)</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Molt set (Efficiency, Vigor, Reconstruct, Augur), Archon arcanes</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Weekly; also buy with Cavia standing &mdash; see <a href="Warframe_Deep_Archimedea_Guide.html" style="color:#89cff0;">Deep Archimedea</a></td></tr>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Steel Path Circuit (Duviri)</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Melee Arcanes</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Weekly rotating reward pool</td></tr>
+                <tr><td style="padding:7px 14px;color:#ffab00;border-bottom:1px solid rgba(255,255,255,0.04);">Zariman (Cavalero standing)</td><td style="padding:7px 14px;color:#e2e8f0;border-bottom:1px solid rgba(255,255,255,0.04);">Primary/Secondary Merciless, Deadhead, Dexterity</td><td style="padding:7px 14px;color:#9fb0c4;border-bottom:1px solid rgba(255,255,255,0.04);">Buy directly with standing &mdash; no RNG</td></tr>
+                <tr style="background:rgba(255,255,255,0.02);"><td style="padding:7px 14px;color:#ffab00;">Nightwave / Trade</td><td style="padding:7px 14px;color:#e2e8f0;">Energize and others appear in the NW store; player trade for the rest</td><td style="padding:7px 14px;color:#9fb0c4;">See <a href="Warframe_Nightwave_Guide.html" style="color:#89cff0;">Nightwave</a> &amp; <a href="Warframe_Trading_Ledger.html" style="color:#89cff0;">Trading Ledger</a></td></tr>
+            </tbody>
+        </table>
+    </div>
+    </section>
+
+    <section class="category-section" id="strategy">
+    <h2>&#x1FA99; 8. Ranking Priority &amp; Plat Strategy</h2>
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>&#11088; Max These First</h3>
+            <ul class="list">
+                <li><strong>Survivability first:</strong> a maxed Grace, Guardian, or Blessing keeps you alive in Steel Path far more than a half-ranked DPS arcane.</li>
+                <li><strong>Then economy:</strong> Energize unlocks ability-heavy frames.</li>
+                <li><strong>Then damage:</strong> Merciless on your main gun, Melee Influence/Crescendo on your main melee.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>&#128176; Buy vs. Farm</h3>
+            <ul class="list">
+                <li>Standing-bought arcanes (Zariman, Cavia) are <strong>guaranteed</strong> &mdash; cheaper than farming RNG for newer players.</li>
+                <li>High-value Eidolon arcanes are often <strong>cheaper to trade for</strong> than to farm if you dislike Tridolons.</li>
+                <li>Reaching Rank 5 = 21 copies; partial ranks (R3&ndash;R4) capture most of the benefit if copies are scarce.</li>
+            </ul>
+        </div>
+    </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+</body>
+</html>
+
+

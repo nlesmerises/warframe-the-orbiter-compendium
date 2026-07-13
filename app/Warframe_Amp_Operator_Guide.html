@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Amp &amp; Operator Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile {
+    display: flex !important; flex-direction: column; align-items: flex-start; text-align: left;
+    min-height: 110px; padding: 20px 22px !important; border-radius: 14px;
+    text-decoration: none !important; color: inherit;
+    background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease;
+}
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#9889; Amp &amp; Operator Guide</h1>
+        <p class="subtitle">Void Mode &middot; Amp builds by tier &middot; Focus schools &middot; Operator combat &middot; Drifter mechanics</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="section-overview" style="border-left-color:#ffd700;">
+                <div class="qi-tile-icon">&#9889;</div>
+                <h2 class="qi-tile-title">Overview</h2>
+                <p class="qi-tile-desc">Operator versus Drifter and why upgrading your Amp is worth the effort.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-amp-parts" style="border-left-color:#42a5f5;">
+                <div class="qi-tile-icon">&#128295;</div>
+                <h2 class="qi-tile-title">Amp Parts</h2>
+                <p class="qi-tile-desc">The 3-digit part notation and how prism and scaffold types shape an Amp.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-amp-builds" style="border-left-color:#ffb74d;">
+                <div class="qi-tile-icon">&#127775;</div>
+                <h2 class="qi-tile-title">Amp Builds by Use</h2>
+                <p class="qi-tile-desc">Recommended Amps for Eidolon hunting, general Void content, and budget starters.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-focus" style="border-left-color:#ce93d8;">
+                <div class="qi-tile-icon">&#127891;</div>
+                <h2 class="qi-tile-title">Focus Schools</h2>
+                <p class="qi-tile-desc">All five schools &mdash; Madurai, Vazarin, Zenurik, Naramon, and Unairu.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-void-mode" style="border-left-color:#4ade80;">
+                <div class="qi-tile-icon">&#128065;</div>
+                <h2 class="qi-tile-title">Void Mode</h2>
+                <p class="qi-tile-desc">What Void Mode does and its key uses in and out of combat.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-crafting" style="border-left-color:#ef5350;">
+                <div class="qi-tile-icon">&#128296;</div>
+                <h2 class="qi-tile-title">Crafting &amp; Vendors</h2>
+                <p class="qi-tile-desc">Building Amps through the Quills, Vox Solaris, and the Holdfasts.</p>
+            </a>
+        </div>
+    </div>
+
+    <section class="category-section" id="section-overview">
+        <h2>&#9889; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Operator vs Drifter</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li><strong>Operator</strong> &mdash; the Tenno child; uses Amp and Void Mode; required for Eidolons, Zariman, Void content</li>
+                    <li><strong>Drifter</strong> &mdash; unlocked after The New War; uses Amp but different passive abilities; used in Duviri</li>
+                    <li>Both use the same Amp &mdash; build choice carries over between them</li>
+                    <li>Switch between Operator and Drifter in Operator Appearance settings</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Why Upgrade Your Amp?</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Mote Amp (starter) is too weak for Eidolons, Void Cascade, and Angel fights</li>
+                    <li>Amp is the <strong>only</strong> tool that breaks Void shields on Eidolons and Sentients</li>
+                    <li>Higher-tier Amps deal significantly more damage to Void-shielded enemies</li>
+                    <li>Unlocks access to endgame open-world content effectively</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-amp-parts">
+        <h2>&#128295; 2. Amp Parts</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Part System (3-digit notation)</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">System</span></div>
+                <ul class="list">
+                    <li>Amps are built from 3 parts &mdash; written as <strong>Prism-Scaffold-Brace</strong> (e.g. 177)</li>
+                    <li><strong>Prism</strong> &mdash; primary fire mode (1st digit)</li>
+                    <li><strong>Scaffold</strong> &mdash; secondary fire mode (2nd digit)</li>
+                    <li><strong>Brace</strong> &mdash; stat modifier: crit chance, status, energy regen (3rd digit)</li>
+                    <li>Each digit = part tier from vendor (1 = Quills T1, 7 = Quills/Zariman T7)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Prism Types</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Prism</span></div>
+                <ul class="list">
+                    <li><strong>1 (Raplak)</strong> &mdash; semi-auto, high single-shot damage, good for Eidolon shields</li>
+                    <li><strong>2 (Shwaak)</strong> &mdash; cone blast, crowd clear</li>
+                    <li><strong>3 (Granmu)</strong> &mdash; grenade prism, AOE burst</li>
+                    <li><strong>7 (Klamora)</strong> &mdash; sustained beam, best for general Void damage</li>
+                    <li><strong>X (Certus / Lega / Juttni)</strong> &mdash; Fortuna variants with status/crit focus</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Scaffold Types</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Scaffold</span></div>
+                <ul class="list">
+                    <li><strong>1 (Pencha)</strong> &mdash; charged shot, high single-target</li>
+                    <li><strong>7 (Propa)</strong> &mdash; sticky bomb alt-fire, excellent burst damage</li>
+                    <li><strong>Dissic</strong> &mdash; Fortuna scaffold, good area damage</li>
+                    <li>Scaffold matters less than Prism &mdash; focus Prism choice first</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-amp-builds">
+        <h2>&#127919; 3. Amp Builds by Use Case</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Eidolon Hunting</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Eidolons</span></div>
+                <ul class="list">
+                    <li><strong>177</strong> &mdash; Raplak Prism + Propa Scaffold + Certus Brace</li>
+                    <li>Raplak (1) for fast, accurate Void shield breaks on Eidolon synovias</li>
+                    <li>Propa (7) scaffold for burst damage on the exposed weak point</li>
+                    <li>Certus Brace for high crit chance on the scaffold shot</li>
+                    <li>Minimum viable: <strong>223</strong> &mdash; upgrade to 177 as soon as Quills rank allows</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">General Void Content (Zariman, Cascade)</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Void</span></div>
+                <ul class="list">
+                    <li><strong>777</strong> &mdash; Klamora Prism + Propa Scaffold + Certus Brace</li>
+                    <li>Klamora beam deals consistent Void damage to Manifestations and Angels</li>
+                    <li>Good for Exolizer cleansing missions where sustained presence matters</li>
+                    <li>Certus Brace maximizes critical output on scaffold</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Starter / Budget</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Budget</span></div>
+                <ul class="list">
+                    <li><strong>223</strong> &mdash; functional for early Eidolons; craft at Quills rank 1&ndash;2</li>
+                    <li>Enough to break Teralyst shields reliably</li>
+                    <li>Not sufficient for Garuda or Hydrolyst solo &mdash; upgrade to 177 before progressing</li>
+                    <li>Get to Quills rank 2 (Observer) as fast as possible</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-focus">
+        <h2>&#127775; 4. Focus Schools</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Madurai &mdash; Offense</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Offense</span></div>
+                <ul class="list">
+                    <li>Primary use: Eidolon shield breaking (Void Strike)</li>
+                    <li><strong>Void Strike</strong>: charge Void energy during Void Mode, release for massive Amp damage multiplier</li>
+                    <li>Best school for Eidolon runs &mdash; mandatory for experienced hunters</li>
+                    <li>Secondary: Way-Bound Madurai passives boost Warframe damage after Operator use</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Vazarin &mdash; Support / Survival</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Support</span></div>
+                <ul class="list">
+                    <li><strong>Void Radiance</strong>: heals allies on Operator dash &mdash; strong in squads</li>
+                    <li><strong>Protective Dash</strong>: makes allies invulnerable briefly on Operator dash</li>
+                    <li>Best for Void Cascade &mdash; keeps team alive while cleansing Exolizers</li>
+                    <li>Also useful for keeping Eidolon Lures alive during hunts</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Zenurik &mdash; Energy</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Energy</span></div>
+                <ul class="list">
+                    <li><strong>Energizing Dash</strong>: Operator dash leaves energy field, restores Warframe energy over time</li>
+                    <li>Top passive for energy-hungry Warframes without Arcane Energize</li>
+                    <li>Activate between Operator and Warframe use to keep abilities flowing</li>
+                    <li>Recommended school if you haven&rsquo;t yet farmed Arcane Energize R5</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Naramon &mdash; Combo / Melee</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Melee</span></div>
+                <ul class="list">
+                    <li><strong>Power Spike</strong>: melee combo counter decays slowly instead of resetting &mdash; major DPS boost</li>
+                    <li>Best school for melee-focused builds maintaining high combo multipliers</li>
+                    <li>Less useful for Void/Operator-focused content</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Unairu &mdash; Defense / Strip</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Defense</span></div>
+                <ul class="list">
+                    <li><strong>Wisp</strong>: Operator kills spawn a buff orb that strips enemy armor</li>
+                    <li>Niche use: armor stripping on heavy Steel Path units</li>
+                    <li>Least commonly used in endgame &mdash; Madurai/Vazarin/Zenurik cover most cases</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-void-mode">
+        <h2>&#128262; 5. Void Mode</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What It Does</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Pressing Operator key while Warframe is active switches to Operator (or Drifter)</li>
+                    <li><strong>Void Mode</strong>: hold crouch as Operator to become invisible and invulnerable to most damage</li>
+                    <li>Void Mode drains energy &mdash; manage energy during extended use</li>
+                    <li>Holding Void Mode while stationary builds <strong>Void Strike</strong> charge (Madurai)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Key Uses</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Uses</span></div>
+                <ul class="list">
+                    <li>Survive lethal damage by switching to Operator when Warframe is about to die</li>
+                    <li>Break Void shields on Eidolons, Sentients, and Zariman Angels</li>
+                    <li>Detect Voidplumes on the Zariman (glow visible in Void Mode)</li>
+                    <li>Cleanse Exolizers in Void Cascade (must be in Void Mode while standing in them)</li>
+                    <li>Revive a dead Warframe without a teammate using Operator survivability</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-crafting">
+        <h2>&#128188; 6. Crafting &amp; Vendors</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Quills (Cetus / Plains)</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Vendor</span></div>
+                <ul class="list">
+                    <li>Sell Prism, Scaffold, Brace parts for Tiers 1&ndash;3</li>
+                    <li>Earn standing from Eidolon Sentient Cores (turn in after hunts)</li>
+                    <li>Rank up: Unranked &rarr; Adherent &rarr; Observer &rarr; Instrument &rarr; Architect</li>
+                    <li>Observer rank unlocks 223 parts; Architect unlocks 177</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Vox Solaris (Fortuna / Orb Vallis)</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Vendor</span></div>
+                <ul class="list">
+                    <li>Sell Prism, Scaffold, Brace parts for Tiers 4&ndash;6 (Certus, Lega, Juttni, Dissic)</li>
+                    <li>Earn standing from Toroids (farm near Fortuna caves and enemy camps)</li>
+                    <li>Certus Brace (critical stats) sold here &mdash; essential for 177 build</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Quinn / Holdfast (Zariman)</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Vendor</span></div>
+                <ul class="list">
+                    <li>Sell Tier 7 parts: Klamora Prism, Propa Scaffold, Lohrin Brace</li>
+                    <li>Earn standing from Zariman bounties and Voidplume turn-ins</li>
+                    <li>Lohrin Brace: status chance bonus &mdash; niche but viable for status Amp builds</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

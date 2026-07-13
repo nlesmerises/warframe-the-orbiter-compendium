@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <title>Warframe: The Orbiter Compendium &mdash; Progression Roadmap</title>
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile {
+    display: flex !important; flex-direction: column; align-items: flex-start; text-align: left;
+    min-height: 110px; padding: 20px 22px !important; border-radius: 14px;
+    text-decoration: none !important; color: inherit;
+    background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease;
+}
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+.trap-warning { background: rgba(255,51,102,0.08); border: 1px solid rgba(255,51,102,0.35); border-left: 4px solid #ff3366; border-radius: 8px; padding: 14px 18px; margin: 16px 0; color: #ffb3c1; font-weight: 600; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#128640; Progression Roadmap</h1>
+        <p class="subtitle">Click a phase below to load its detailed progression database</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="section-early-game" style="border-left-color:#00e8fc;"><div class="qi-tile-icon">&#127793;</div><h2 class="qi-tile-title">Phase 1: Early Game</h2><p class="qi-tile-desc">Mastery Ranks 1-5. Star Chart basics, Junction gating, and first Syndicates.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-mid-game" style="border-left-color:#ffab00;"><div class="qi-tile-icon">&#128293;</div><h2 class="qi-tile-title">Phase 2: Mid Game</h2><p class="qi-tile-desc">Mastery Ranks 5-10. Corrupted Mods, Dragon Keys, and The Second Dream.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-pre-endgame" style="border-left-color:#ff6b8a;"><div class="qi-tile-icon">&#128081;</div><h2 class="qi-tile-title">Phase 3: The Pre-Endgame</h2><p class="qi-tile-desc">Mastery Ranks 10-14. Arbitrations, Railjack, Necramechs, and the Helminth System.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-true-endgame" style="border-left-color:#c084fc;"><div class="qi-tile-icon">&#127942;</div><h2 class="qi-tile-title">Phase 4: True Endgame</h2><p class="qi-tile-desc">Mastery Ranks 15+. The Steel Path, Arcanes, Incarnon Adapters, and Archon Hunts.</p></a>
+        </div>
+    </div>
+
+    <!-- 1. PHASE 1: THE EARLY GAME -->
+    <section class="category-section" id="section-early-game">
+        <h2>&#127793; 1. Phase 1: The Early Game (MR 1-5)</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Mastery Ranks 1-5. Star Chart basics, Junction gating, and first Syndicates.</p>
+        <div class="card" style="border-left:6px solid #00e8fc;">
+            <p>Your only goal right now is unlocking planets. Do not worry about open worlds or farming rare mods yet.</p>
+
+            <div class="trap-warning">
+                THE NEW PLAYER TRAP: Do NOT spend time in Cetus (Earth) or Fortuna (Venus) early on. Open worlds are designed for mid/late-game players and will crush you. Do the introductory quest and leave immediately!
+            </div>
+
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#127919; Priority Objectives</h4>
+                    <ul class="list">
+                        <li><strong>Clear the Blue Nodes:</strong> Follow the glowing blue lines on the Star Chart from Earth -&gt; Venus -&gt; Mercury -&gt; Mars.</li>
+                        <li><strong>Complete Junctions:</strong> Hover over the Junction nodes between planets. They give you a checklist of tasks. Completing them rewards you with free quests, blueprints, and access to the next planet.</li>
+                        <li><strong>Spend Starting Platinum:</strong> You start with 50 Plat. Spend it ONLY on <strong>1 Warframe Slot (20p)</strong> and <strong>2 pairs of Weapon Slots (24p)</strong>. Never buy resources.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#9889; Your First Power Spike</h4>
+                    <ul class="list">
+                        <li><strong>Farm Rhino:</strong> When you reach Venus, fight the "Jackal" boss repeatedly until you get Rhino's Neuroptics, Chassis, and Systems. Build him immediately. His Iron Skin makes you functionally immortal for the entire Star Chart.</li>
+                        <li><strong>Build the Hek:</strong> At Mastery Rank 4, buy the blueprint for the "Hek" shotgun from the market. This gun will comfortably carry you through the entire solar system.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. PHASE 2: THE MID GAME -->
+    <section class="category-section" id="section-mid-game">
+        <h2>&#128293; 2. Phase 2: The Mid Game (MR 5-10)</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Mastery Ranks 5-10. Corrupted Mods, Dragon Keys, and The Second Dream.</p>
+        <div class="card" style="border-left:6px solid #ffab00;">
+            <p>Now that you have Rhino and a good gun, it's time to start experiencing the main cinematic story and acquiring "real" mods.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#127919; Priority Objectives</h4>
+                    <ul class="list">
+                        <li><strong>Push to Uranus/Neptune:</strong> Continue clearing Junctions until you reach Uranus. This triggers the main cinematic storyline of the game.</li>
+                        <li><strong>The Main Questline:</strong> Play the quests in this exact order: <em>Natah -&gt; The Second Dream -&gt; The War Within</em>. These quests fundamentally change the game and unlock the Operator system.</li>
+                        <li><strong>Join a Clan Dojo:</strong> Ask in recruiting chat to join a clan. Once inside, visit their Tenno Lab to replicate blueprints for incredible frames like Wukong, Nezha, and Zephyr.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#9889; Your Second Power Spike</h4>
+                    <ul class="list">
+                        <li><strong>Corrupted Mods:</strong> Build Dragon Keys in your Clan Dojo, go to Deimos missions (like Horend), and search for Orokin Vaults. This is where you farm mods like <em>Blind Rage</em> and <em>Overextended</em>. This is the single biggest power jump in the game.</li>
+                        <li><strong>Nightwave:</strong> Start doing Nora's weekly Nightwave challenges to earn Creds. Buy "Aura Mods" (like Corrosive Projection) and Orokin Catalysts/Reactors (Potatoes) from her store to double your mod capacity.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. PHASE 3: THE PRE-ENDGAME -->
+    <section class="category-section" id="section-pre-endgame">
+        <h2>&#128081; 3. Phase 3: The Pre-Endgame (MR 10-14)</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Mastery Ranks 10-14. Arbitrations, Railjack, Necramechs, and the Helminth System.</p>
+        <div class="card" style="border-left:6px solid #ff6b8a;">
+            <p>The training wheels are off. You are now preparing for the hardest content in the game and finalizing your arsenal.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#127919; Priority Objectives</h4>
+                    <ul class="list">
+                        <li><strong>Clear the Star Chart:</strong> Finish every single flashing blue node on every planet. This is required to unlock Arbitrations and Hard Mode.</li>
+                        <li><strong>Build Vehicles:</strong> Do the Rising Tide quest to build your Railjack. Go to the Cambion Drift on Deimos to build a Voidrig Necramech. You MUST have both of these to start <em>The New War</em> quest.</li>
+                        <li><strong>The New War:</strong> Play through <em>The Sacrifice -&gt; The Prelude to War -&gt; The New War</em>. Bring snacks; The New War is a 4-5 hour cinematic masterpiece that you cannot pause or back out of once started.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#9889; Your Third Power Spike</h4>
+                    <ul class="list">
+                        <li><strong>Arbitrations:</strong> Once the Star Chart is clear, the Arbitration game mode unlocks. Play this to earn Vitus Essence. Buy <em>Galvanized Mods</em> (Galvanized Chamber/Aptitude) and the <em>Adaptation</em> mod. This makes your guns deal massive damage on kill.</li>
+                        <li><strong>The Helminth System (Step-by-Step Acquisition):</strong> The ultimate tool for ability swapping.
+                            <ul>
+                                <li><span style="color: #ffab00; font-weight: bold;">Step 1:</span> Farm Mother Bounties in the Cambion Drift (Deimos) to earn Mother Tokens.</li>
+                                <li><span style="color: #ffab00; font-weight: bold;">Step 2:</span> Trade those tokens to Grandmother to rank up the <strong>Entrati Syndicate</strong> to Rank 3 (Associate).</li>
+                                <li><span style="color: #ffab00; font-weight: bold;">Step 3:</span> Visit the vendor named <strong>Son</strong> on Deimos and purchase the <em>Helminth Segment</em> blueprint.</li>
+                                <li><span style="color: #ffab00; font-weight: bold;">Step 4:</span> Craft it and install it in your Orbiter. You can now start "Subsuming" (sacrificing) non-Prime Warframes to the wall-mouth to permanently extract their abilities.</li>
+                                <li><span style="color: #ffab00; font-weight: bold;">Bonus:</span> Continue ranking up the Entrati to Rank 5 to unlock the <em>Helminth Invigoration Segment</em> from Son, which grants massive weekly randomized stat buffs to specific Warframes!</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PHASE 4: THE TRUE ENDGAME -->
+    <section class="category-section" id="section-true-endgame">
+        <h2>&#127942; 4. Phase 4: The True Endgame (MR 15+)</h2>
+        <p style="color:#9fb0c4;margin-bottom:1rem;font-size:0.9rem;">Mastery Ranks 15+. The Steel Path, Arcanes, Incarnon Adapters, and Archon Hunts.</p>
+        <div class="card" style="border-left:6px solid #c084fc;">
+            <p>You have beaten the story. Your goal now is to turn your Warframes into literal gods by pushing the limits of the math.</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <h4>&#127919; Priority Objectives</h4>
+                    <ul class="list">
+                        <li><strong>The Steel Path:</strong> Talk to Teshin in a Relay to unlock The Steel Path. This resets the Star Chart, but every enemy is +100 levels higher with +250% Health/Armor/Shields. Acolytes will spawn and drop <em>Primary/Secondary Weapon Arcanes</em>.</li>
+                        <li><strong>Archon Hunts:</strong> Complete Kahl's "Veilbreaker" quest. You can now do weekly Archon Hunts to earn Archon Shards (permanent stat boosts you implant directly into your Warframe).</li>
+                        <li><strong>Zariman &amp; Albrecht's Labs:</strong> Play the <em>Angels of the Zariman</em> and <em>Whispers in the Walls</em> quests. This unlocks endgame arcanes and Melee Arcane Adapters.</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h4>&#9889; Your Final Power Spike</h4>
+                    <ul class="list">
+                        <li><strong>Incarnon Genesis:</strong> Play The Duviri Paradox quest. Enter the "Steel Path Circuit." Every week, you can choose two classic weapons (like the Torid, Lex, or Braton) and earn an adapter that turns them into the absolute strongest weapons in the entire game.</li>
+                        <li><strong>Fashion Frame:</strong> The ultimate goal. Spend platinum on capes, color palettes, and skins so you look incredibly cool while dealing 50 million damage.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

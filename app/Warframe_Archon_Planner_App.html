@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Archon Shard Planner</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+        :root {
+            --border-color: #00bcd4; /* Archon Blue/Cyan */
+
+            --primary-accent: #00bcd4;
+        }
+
+        body {
+            margin: 0;
+            padding: 110px 20px 120px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dashboard-panel {
+            width: 100%;
+            max-width: 1750px;
+            background-color: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 188, 212, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            box-sizing: border-box;
+            position: relative;
+            margin-top: 44px;
+        }
+
+
+        header {
+            text-align: left;
+            margin-bottom: 44px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin: 0;
+        }
+
+        .acquisition-guide {
+            margin: 0 0 35px;
+            padding: 24px;
+            border: 1px solid rgba(0, 188, 212, 0.35);
+            border-radius: 16px;
+            background: rgba(0, 188, 212, 0.07);
+        }
+
+        .acquisition-guide h2 {
+            margin: 0 0 14px;
+            color: #4dd0e1;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+        }
+
+        .acquisition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .acquisition-step {
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.65);
+            color: #cfd8dc;
+            line-height: 1.5;
+        }
+
+        .acquisition-step strong { color: #ffca55; }
+
+        /* 5 Slots Container */
+        .slots-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .shard-slot {
+            flex: 1;
+            min-width: 200px;
+            background: var(--card-bg);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .shard-slot:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .shard-icon {
+            width: 60px;
+            height: 60px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #fff;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(14, 19, 29, 0.9);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: #00bcd4;
+        }
+
+        .tau-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #ffab00;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .tau-toggle input[type="checkbox"] {
+            accent-color: #ffab00;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* .type-select/.stat-select had no CSS at all -- rendered as
+           default white browser dropdowns against the dark theme. */
+        .type-select, .stat-select {
+            width: 100%;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
+        .type-select:focus, .stat-select:focus {
+            outline: none;
+            border-color: #00bcd4;
+        }
+
+        /* Totals Panel */
+        .totals-panel {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .totals-header {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 2rem;
+            color: #fff;
+            margin: 0 0 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .reset-btn {
+            background: rgba(244, 67, 54, 0.2);
+            color: #ff8a80;
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .reset-btn:hover {
+            background: rgba(244, 67, 54, 0.4);
+        }
+
+        .totals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .total-item {
+            background: rgba(0,0,0,0.3);
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #fff;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .total-item .value {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        .empty-totals {
+            color: #94a3b8;
+            font-style: italic;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Cheat Sheet */
+        .cheat-sheet {
+            background: rgba(20, 27, 41, 0.4);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px dashed rgba(0, 188, 212, 0.4);
+        }
+        .cheat-sheet h3 {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            color: #00bcd4;
+            margin-top: 0;
+        }
+        .cheat-sheet ul {
+            margin: 0; padding-left: 20px; color: #cfd8dc; line-height: 1.8;
+        }
+        .cheat-sheet li span { color: #fff; font-weight: bold; }
+
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Circuit_Tracker_App.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a><a id="nav-next-top" href="Warframe_Steel_Path_Audit.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+
+
+
+
+    <div class="container" style="max-width:1750px; width:1750px;">
+        <header>
+            <h1>&#x1F48E; Archon Shard Planner</h1>
+            <p class="subtitle">Simulate shard combinations, learn where shards come from, and plan the upgrades needed to use them.</p>
+        </header>
+
+        <section class="acquisition-guide">
+            <h2>&#x26E7;&#xFE0F; How to Unlock and Acquire Archon Shards</h2>
+            <div class="acquisition-grid">
+                <div class="acquisition-step"><strong>Unlock:</strong> Complete The New War, then complete Veilbreaker. Build and install the Archon Shard Helminth Segment so the Helminth chair can equip shards.</div>
+                <div class="acquisition-step"><strong>Where to Get Shards:</strong> Run the weekly Archon Hunt. Additional shards can come from Netracells and Deep/Elite Archimedea after completing Whispers in the Walls and ranking the Cavia.</div>
+                <div class="acquisition-step"><strong>Equip or Remove:</strong> Use the Helminth chair, choose Archon Shards, select one of five slots, and choose the bonus. Removing a shard costs Bile.</div>
+                <div class="acquisition-step"><strong>Hybrid Fusion:</strong> Buy and install the Coalescent Fusion Segment from Bird 3 in the Sanctum Anatomica. Fuse Crimson, Amber, and Azure combinations with Stela to create Emerald, Topaz, or Violet shards.</div>
+                <div class="acquisition-step"><strong>Tauforged Fusion:</strong> Obtain the Ascent Fusion upgrade from Bird 3 as your Cavia rank allows. It combines three matching normal shards into one Tauforged shard.</div>
+                <div class="acquisition-step"><strong>You Need:</strong> A completed source quest chain, Helminth access, Cavia progression for fusion, Stela for hybrid recipes, and spare shards in your inventory.</div>
+            </div>
+            <div class="acquisition-step" style="margin-top: 18px;">
+                <strong>Don't have the shard shown in the planner?</strong>
+                Crimson, Amber, and Azure are base shard rewards. Emerald requires Azure + Amber, Topaz requires Crimson + Amber, and Violet requires Crimson + Azure through Coalescent Fusion. Tauforged versions come from eligible endgame rewards or from combining three matching normal shards after unlocking Ascent Fusion.
+            </div>
+        </section>
+
+        <!-- Shard Slots -->
+        <div class="slots-container" id="slots-container">
+            <!-- Populated by JS to avoid repetition -->
+        </div>
+
+        <!-- Totals Readout -->
+        <div class="totals-panel">
+            <div class="totals-header">
+                Total Bonuses
+                <button class="reset-btn" id="reset-btn">Reset All</button>
+            </div>
+            <div class="totals-grid" id="totals-grid">
+                <div class="empty-totals">No shards equipped.</div>
+            </div>
+        </div>
+
+        <!-- Shard Fusion Forge Panel -->
+        <div class="totals-panel" style="margin-top: 30px; border: 1px solid rgba(0, 188, 212, 0.4); background: linear-gradient(135deg, rgba(20, 27, 41, 0.9), rgba(10, 15, 25, 0.95));">
+            <div class="totals-header" style="color: #00bcd4; font-size: 1.8rem;">
+                &#128302; Archon Shard Fusion Forge
+                <button class="reset-btn" id="btn-reset-inventory" style="background: rgba(0, 188, 212, 0.15); color: #00bcd4; border-color: rgba(0, 188, 212, 0.4);">Reset Stock</button>
+            </div>
+            
+            <p style="color: #94a3b8; font-size: 0.95rem; margin-top: -10px; margin-bottom: 25px;">
+                Manage your in-game Archon Shard inventory and simulate fusions. Fusing updates your stock in real-time, helping you plan builds with resources you have.
+            </p>
+
+            <div class="grid-2col" style="gap: 25px;">
+                <!-- Left Column: Inventory Stock Editor -->
+                <div class="box" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+                    <h4 style="color: #00bcd4; margin-top: 0; margin-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px;">&#x1F48E; Your Shard Inventory</h4>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 0.9rem;">
+                        <!-- Headers -->
+                        <div style="font-weight: bold; color: #94a3b8;">Color</div>
+                        <div style="font-weight: bold; color: #94a3b8; text-align: center;">Normal Qty</div>
+                        <div style="font-weight: bold; color: #94a3b8; text-align: center;">Tauforged Qty</div>
+                        
+                        <!-- Crimson -->
+                        <div style="color: #e53935; font-weight: 600; display: flex; align-items: center; gap: 5px;">&#128308; Crimson</div>
+                        <div><input type="number" class="inv-input" data-key="normal_crimson" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        <div><input type="number" class="inv-input" data-key="tau_crimson" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        
+                        <!-- Amber -->
+                        <div style="color: #ffca28; font-weight: 600; display: flex; align-items: center; gap: 5px;">&#128993; Amber</div>
+                        <div><input type="number" class="inv-input" data-key="normal_amber" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        <div><input type="number" class="inv-input" data-key="tau_amber" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        
+                        <!-- Azure -->
+                        <div style="color: #1e88e5; font-weight: 600; display: flex; align-items: center; gap: 5px;">&#128309; Azure</div>
+                        <div><input type="number" class="inv-input" data-key="normal_azure" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        <div><input type="number" class="inv-input" data-key="tau_azure" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        
+                        <!-- Violet -->
+                        <div style="color: #8e24aa; font-weight: 600; display: flex; align-items: center; gap: 5px;">&#128995; Violet</div>
+                        <div><input type="number" class="inv-input" data-key="normal_violet" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        <div><input type="number" class="inv-input" data-key="tau_violet" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        
+                        <!-- Topaz -->
+                        <div style="color: #fb8c00; font-weight: 600; display: flex; align-items: center; gap: 5px;">&#128992; Topaz</div>
+                        <div><input type="number" class="inv-input" data-key="normal_topaz" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        <div><input type="number" class="inv-input" data-key="tau_topaz" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        
+                        <!-- Emerald -->
+                        <div style="color: #4caf50; font-weight: 600; display: flex; align-items: center; gap: 5px;">&#128994; Emerald</div>
+                        <div><input type="number" class="inv-input" data-key="normal_emerald" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                        <div><input type="number" class="inv-input" data-key="tau_emerald" min="0" value="0" style="width: 100%; text-align: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 6px; padding: 4px;"></div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Recipes & Actions -->
+                <div class="box" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; min-height: 300px;">
+                    <div>
+                        <h4 style="color: #00bcd4; margin-top: 0; margin-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px;">&#x2697;&#xFE0F; Perform Fusion Recipe</h4>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 4px;">Choose Fusion Process:</label>
+                                <select id="select-fusion-recipe" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.4); color: #fff; outline: none; cursor: pointer;">
+                                    <optgroup label="Coalescent Fusion (Create Hybrids)">
+                                        <option value="coalescent_violet">Violet Shard (1 Crimson + 1 Azure)</option>
+                                        <option value="coalescent_topaz">Topaz Shard (1 Crimson + 1 Amber)</option>
+                                        <option value="coalescent_emerald">Emerald Shard (1 Azure + 1 Amber)</option>
+                                        <option value="coalescent_tau_violet">Tauforged Violet (1 Tau Crimson + 1 Tau Azure)</option>
+                                        <option value="coalescent_tau_topaz">Tauforged Topaz (1 Tau Crimson + 1 Tau Amber)</option>
+                                        <option value="coalescent_tau_emerald">Tauforged Emerald (1 Tau Azure + 1 Tau Amber)</option>
+                                    </optgroup>
+                                    <optgroup label="Ascent Fusion (Upgrade to Tauforged)">
+                                        <option value="ascent_crimson">Tauforged Crimson (Fuses 3 Normal Crimson)</option>
+                                        <option value="ascent_amber">Tauforged Amber (Fuses 3 Normal Amber)</option>
+                                        <option value="ascent_azure">Tauforged Azure (Fuses 3 Normal Azure)</option>
+                                        <option value="ascent_violet">Tauforged Violet (Fuses 3 Normal Violet)</option>
+                                        <option value="ascent_topaz">Tauforged Topaz (Fuses 3 Normal Topaz)</option>
+                                        <option value="ascent_emerald">Tauforged Emerald (Fuses 3 Normal Emerald)</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            
+                            <button id="btn-fuse-shards" class="reset-btn" style="background: rgba(0, 188, 212, 0.2); border-color: #00bcd4; color: #fff; font-size: 1.1rem; padding: 10px; border-radius: 8px; width: 100%; margin-top: 10px; transition: all 0.2s; cursor: pointer; font-weight: bold;">
+                                &#9874;&#65039; Fuse Shards
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Result Message / Logger -->
+                    <div id="forge-log" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.05); padding: 10px 12px; border-radius: 8px; font-size: 0.82rem; color: #94a3b8; min-height: 45px; display: flex; align-items: center; justify-content: center; text-align: center; border-left: 3px solid #64748b; margin-top: 20px; transition: all 0.3s; line-height: 1.3;">
+                        Select a recipe and click Fuse. Fusions require ingredients in stock.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meta Breakpoints Cheat Sheet -->
+        <div class="cheat-sheet">
+            <h3>&#x1F4D6; Meta Breakpoints Quick Guide</h3>
+            <ul>
+                <li><span>100% Corrosive Armor Strip:</span> Requires exactly <strong>2 Normal Emerald</strong> shards (+4 Max Corrosive Stacks). This pushes Corrosive from 80% to 100% strip.</li>
+                <li><span>Violet Melee God:</span> Violet Shards grant Melee Crit Damage. The stat is <strong>doubled</strong> if your Warframe's Max Energy is over 500!</li>
+                <li><span>The Blind Rage Offset:</span> <strong>5 Normal Crimson</strong> (+10% Str each) = +50% Strength. <strong>3 Tauforged Crimson</strong> (+15% Str each) = +45% Strength. Use these to offset negative strength mods.</li>
+                <li><span>Terrify Animation Fix:</span> Nekros' Terrify animation is extremely slow. <strong>1 Tauforged Amber</strong> (+37.5% Cast Speed) completely fixes it without wasting a mod slot on Natural Talent.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Logic Script -->
+    <script>
+    const shardDatabase = {
+        "None": { color: "#334155", stats: {} },
+        "Crimson": {
+            color: "#e53935",
+            icon: "",
+            stats: {
+                "Ability Strength": { base: 10, unit: "%" },
+                "Ability Duration": { base: 10, unit: "%" },
+                "Melee Crit Damage": { base: 25, unit: "%" }
+            }
+        },
+        "Amber": {
+            color: "#ffca28",
+            icon: "",
+            stats: {
+                "Casting Speed": { base: 25, unit: "%" },
+                "Energy Filled on Spawn": { base: 30, unit: "%" },
+                "Parkour Velocity": { base: 15, unit: "%" }
+            }
+        },
+        "Azure": {
+            color: "#1e88e5",
+            icon: "",
+            stats: {
+                "Armor": { base: 150, unit: "" },
+                "Health": { base: 150, unit: "" },
+                "Max Energy": { base: 50, unit: "" },
+                "Shield Capacity": { base: 150, unit: "" }
+            }
+        },
+        "Topaz": {
+            color: "#fb8c00",
+            icon: "",
+            stats: {
+                "Secondary Crit Chance (Max)": { base: 50, unit: "%" },
+                "Ability Dmg (Rad Enemies)": { base: 10, unit: "%" }
+            }
+        },
+        "Emerald": {
+            color: "#4caf50",
+            icon: "",
+            stats: {
+                "Max Corrosive Stacks": { base: 2, unit: "" },
+                "Toxin Status Damage": { base: 30, unit: "%" }
+            }
+        },
+        "Violet": {
+            color: "#8e24aa",
+            icon: "",
+            stats: {
+                "Melee Crit Dmg (>500 Energy doubles)": { base: 25, unit: "%" },
+                "Primary Electric Damage": { base: 30, unit: "%" }
+            }
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const slotsContainer = document.getElementById('slots-container');
+        const totalsGrid = document.getElementById('totals-grid');
+        const resetBtn = document.getElementById('reset-btn');
+
+        // State Array to hold the 5 slots
+        let slotData = [
+            { type: "None", stat: "", isTau: false },
+            { type: "None", stat: "", isTau: false },
+            { type: "None", stat: "", isTau: false },
+            { type: "None", stat: "", isTau: false },
+            { type: "None", stat: "", isTau: false }
+        ];
+
+        // Shard Inventory State
+        let shardInventory = {
+            normal_crimson: 2, normal_amber: 1, normal_azure: 3,
+            tau_crimson: 0, tau_amber: 1, tau_azure: 0,
+            normal_violet: 0, normal_topaz: 0, normal_emerald: 0,
+            tau_violet: 0, tau_topaz: 0, tau_emerald: 0
+        };
+
+        function loadInventory() {
+            const saved = safeStorage.getItem('codex_archon_inventory');
+            if (saved) {
+                try {
+                    shardInventory = JSON.parse(saved);
+                } catch(e) {}
+            }
+            updateInvInputs();
+        }
+
+        function saveInventory() {
+            safeStorage.setItem('codex_archon_inventory', JSON.stringify(shardInventory));
+        }
+
+        function updateInvInputs() {
+            document.querySelectorAll('.inv-input').forEach(input => {
+                const key = input.dataset.key;
+                if (shardInventory.hasOwnProperty(key)) {
+                    input.value = shardInventory[key];
+                }
+            });
+        }
+
+        function getStockText(type, isTau) {
+            if (type === "None") return 0;
+            const key = (isTau ? 'tau_' : 'normal_') + type.toLowerCase();
+            return shardInventory[key] || 0;
+        }
+
+        // Build the 5 slots UI
+        function buildSlots() {
+            slotsContainer.innerHTML = '';
+            for(let i=0; i<5; i++) {
+                const s = slotData[i];
+                const db = shardDatabase[s.type];
+                
+                const slotDiv = document.createElement('div');
+                slotDiv.className = 'shard-slot';
+                slotDiv.style.borderColor = db.color;
+
+                // Color Hexagon
+                let bgGradient = s.type === "None" ? "#334155" : `radial-gradient(circle at top left, ${db.color}, #0f172a)`;
+                let boxShadow = s.isTau ? `0 0 20px ${db.color}` : 'none';
+
+                let stock = getStockText(s.type, s.isTau);
+                let stockWarning = '';
+                if (s.type !== "None") {
+                    if (stock === 0) {
+                        stockWarning = `<div style="color: #ff5252; font-size: 0.8rem; font-weight: bold; margin-top: 5px;">&#9888;&#65039; Out of Stock</div>`;
+                    } else {
+                        stockWarning = `<div style="color: #69f0ae; font-size: 0.8rem; font-weight: bold; margin-top: 5px;">&#10003; In Stock (${stock} owned)</div>`;
+                    }
+                }
+
+                let html = `
+                    <div class="shard-icon" style="background: ${bgGradient}; box-shadow: ${boxShadow}; border: ${s.isTau ? '2px solid #ffab00' : 'none'};">
+                        ${db.icon || ''}
+                    </div>
+                    
+                    <select class="type-select" data-index="${i}">
+                        <option value="None" ${s.type === "None" ? "selected" : ""}>Empty Slot</option>
+                        <option value="Crimson" ${s.type === "Crimson" ? "selected" : ""}>Crimson (Red) [Stock: ${getStockText("Crimson", s.isTau)}]</option>
+                        <option value="Amber" ${s.type === "Amber" ? "selected" : ""}>Amber (Yellow) [Stock: ${getStockText("Amber", s.isTau)}]</option>
+                        <option value="Azure" ${s.type === "Azure" ? "selected" : ""}>Azure (Blue) [Stock: ${getStockText("Azure", s.isTau)}]</option>
+                        <option value="Topaz" ${s.type === "Topaz" ? "selected" : ""}>Topaz (Orange) [Stock: ${getStockText("Topaz", s.isTau)}]</option>
+                        <option value="Emerald" ${s.type === "Emerald" ? "selected" : ""}>Emerald (Green) [Stock: ${getStockText("Emerald", s.isTau)}]</option>
+                        <option value="Violet" ${s.type === "Violet" ? "selected" : ""}>Violet (Purple) [Stock: ${getStockText("Violet", s.isTau)}]</option>
+                    </select>
+                `;
+
+                // If a color is selected, show the specific stats dropdown
+                if (s.type !== "None") {
+                    let optionsHTML = '';
+                    for (const [statName, statValues] of Object.entries(db.stats)) {
+                        optionsHTML += `<option value="${statName}" ${s.stat === statName ? "selected" : ""}>${statName}</option>`;
+                    }
+                    html += `
+                        <select class="stat-select" data-index="${i}">
+                            ${optionsHTML}
+                        </select>
+                        <label class="tau-toggle">
+                            <input type="checkbox" class="tau-checkbox" data-index="${i}" ${s.isTau ? "checked" : ""}>
+                            Tauforged (1.5x)
+                        </label>
+                        ${stockWarning}
+                    `;
+                }
+
+                slotDiv.innerHTML = html;
+                slotsContainer.appendChild(slotDiv);
+            }
+
+            // Attach Listeners to the newly generated HTML
+            document.querySelectorAll('.type-select').forEach(el => {
+                el.addEventListener('change', (e) => {
+                    const idx = e.target.dataset.index;
+                    const newType = e.target.value;
+                    slotData[idx].type = newType;
+                    // Reset the stat to the first available for the new type
+                    if(newType !== "None") {
+                        slotData[idx].stat = Object.keys(shardDatabase[newType].stats)[0];
+                    } else {
+                        slotData[idx].stat = "";
+                        slotData[idx].isTau = false;
+                    }
+                    buildSlots();
+                    calculateTotals();
+                });
+            });
+
+            document.querySelectorAll('.stat-select').forEach(el => {
+                el.addEventListener('change', (e) => {
+                    const idx = e.target.dataset.index;
+                    slotData[idx].stat = e.target.value;
+                    calculateTotals();
+                });
+            });
+
+            document.querySelectorAll('.tau-checkbox').forEach(el => {
+                el.addEventListener('change', (e) => {
+                    const idx = e.target.dataset.index;
+                    slotData[idx].isTau = e.target.checked;
+                    buildSlots(); // Re-render to show golden glow on icon
+                    calculateTotals();
+                });
+            });
+        }
+
+        // Calculate and Render Totals
+        function calculateTotals() {
+            let totals = {};
+
+            slotData.forEach(slot => {
+                if (slot.type !== "None" && slot.stat !== "") {
+                    const statData = shardDatabase[slot.type].stats[slot.stat];
+                    
+                    // Tauforged grants exactly 1.5x the base stat
+                    let multiplier = slot.isTau ? 1.5 : 1;
+                    let amount = statData.base * multiplier;
+                    
+                    // Specific edge case: Math.floor rounding or exact decimals? Warframe usually uses decimals or rounds up.
+                    // Let's use 1 decimal place if needed, else whole numbers
+                    
+                    if (!totals[slot.stat]) {
+                        totals[slot.stat] = {
+                            amount: 0,
+                            unit: statData.unit,
+                            color: shardDatabase[slot.type].color
+                        };
+                    }
+                    totals[slot.stat].amount += amount;
+                }
+            });
+
+            // Render Totals
+            totalsGrid.innerHTML = '';
+            const keys = Object.keys(totals);
+            
+            if (keys.length === 0) {
+                totalsGrid.innerHTML = '<div class="empty-totals">No shards equipped.</div>';
+                return;
+            }
+
+            keys.forEach(key => {
+                const data = totals[key];
+                // Format amount to remove unnecessary decimals
+                let displayAmount = Number.isInteger(data.amount) ? data.amount : data.amount.toFixed(1);
+                
+                const item = document.createElement('div');
+                item.className = 'total-item';
+                item.style.borderLeftColor = data.color;
+                
+                // Add a plus sign if it's positive
+                let prefix = data.amount > 0 ? '+' : '';
+
+                item.innerHTML = `
+                    <span>${key}</span>
+                    <span class="value" style="color: ${data.color};">${prefix}${displayAmount}${data.unit}</span>
+                `;
+                totalsGrid.appendChild(item);
+            });
+        }
+
+        // Reset Button
+        resetBtn.addEventListener('click', () => {
+            slotData = [
+                { type: "None", stat: "", isTau: false },
+                { type: "None", stat: "", isTau: false },
+                { type: "None", stat: "", isTau: false },
+                { type: "None", stat: "", isTau: false },
+                { type: "None", stat: "", isTau: false }
+            ];
+            buildSlots();
+            calculateTotals();
+        });
+
+        // Shard Inventory Handlers
+        loadInventory();
+
+        document.querySelectorAll('.inv-input').forEach(input => {
+            input.addEventListener('change', (e) => {
+                const key = e.target.dataset.key;
+                const val = Math.max(0, parseInt(e.target.value, 10) || 0);
+                shardInventory[key] = val;
+                e.target.value = val;
+                saveInventory();
+                buildSlots();
+            });
+        });
+
+        // Reset stock button
+        document.getElementById('btn-reset-inventory').addEventListener('click', () => {
+            shardInventory = {
+                normal_crimson: 2, normal_amber: 1, normal_azure: 3,
+                tau_crimson: 0, tau_amber: 1, tau_azure: 0,
+                normal_violet: 0, normal_topaz: 0, normal_emerald: 0,
+                tau_violet: 0, tau_topaz: 0, tau_emerald: 0
+            };
+            saveInventory();
+            updateInvInputs();
+            buildSlots();
+            const log = document.getElementById('forge-log');
+            log.style.borderColor = '#64748b';
+            log.style.background = 'rgba(0,0,0,0.4)';
+            log.textContent = 'Inventory stock reset successfully.';
+        });
+
+        // Forge Button Handler
+        document.getElementById('btn-fuse-shards').addEventListener('click', () => {
+            const recipe = document.getElementById('select-fusion-recipe').value;
+            const log = document.getElementById('forge-log');
+            
+            let costs = {};
+            let rewards = {};
+            let desc = "";
+
+            if (recipe === 'coalescent_violet') {
+                costs = { normal_crimson: 1, normal_azure: 1 };
+                rewards = { normal_violet: 1 };
+                desc = "1x Crimson + 1x Azure âž” 1x Violet";
+            } else if (recipe === 'coalescent_topaz') {
+                costs = { normal_crimson: 1, normal_amber: 1 };
+                rewards = { normal_topaz: 1 };
+                desc = "1x Crimson + 1x Amber âž” 1x Topaz";
+            } else if (recipe === 'coalescent_emerald') {
+                costs = { normal_azure: 1, normal_amber: 1 };
+                rewards = { normal_emerald: 1 };
+                desc = "1x Azure + 1x Amber âž” 1x Emerald";
+            } else if (recipe === 'coalescent_tau_violet') {
+                costs = { tau_crimson: 1, tau_azure: 1 };
+                rewards = { tau_violet: 1 };
+                desc = "1x Tau Crimson + 1x Tau Azure âž” 1x Tau Violet";
+            } else if (recipe === 'coalescent_tau_topaz') {
+                costs = { tau_crimson: 1, tau_amber: 1 };
+                rewards = { tau_topaz: 1 };
+                desc = "1x Tau Crimson + 1x Tau Amber âž” 1x Tau Topaz";
+            } else if (recipe === 'coalescent_tau_emerald') {
+                costs = { tau_azure: 1, tau_amber: 1 };
+                rewards = { tau_emerald: 1 };
+                desc = "1x Tau Azure + 1x Tau Amber âž” 1x Tau Emerald";
+            } else if (recipe.startsWith('ascent_')) {
+                const color = recipe.split('_')[1];
+                costs[`normal_${color}`] = 3;
+                rewards[`tau_${color}`] = 1;
+                desc = `3x Normal ${color.charAt(0).toUpperCase() + color.slice(1)} âž” 1x Tauforged ${color.charAt(0).toUpperCase() + color.slice(1)}`;
+            }
+
+            // Check if user has items
+            let canFuse = true;
+            for (const [item, qty] of Object.entries(costs)) {
+                if ((shardInventory[item] || 0) < qty) {
+                    canFuse = false;
+                    break;
+                }
+            }
+
+            if (canFuse) {
+                // Deduct costs
+                for (const [item, qty] of Object.entries(costs)) {
+                    shardInventory[item] -= qty;
+                }
+                // Add rewards
+                for (const [item, qty] of Object.entries(rewards)) {
+                    shardInventory[item] = (shardInventory[item] || 0) + qty;
+                }
+                
+                saveInventory();
+                updateInvInputs();
+                buildSlots();
+                
+                log.style.borderColor = '#2ecc71';
+                log.style.background = 'rgba(46, 204, 113, 0.1)';
+                log.innerHTML = `<span style="color: #2ecc71; font-weight: bold;">&#10003; Fusion Successful!</span><br>${desc}`;
+                
+                // Micro animation glow
+                log.classList.remove('forge-glow-anim');
+                void log.offsetWidth; // trigger reflow
+                log.classList.add('forge-glow-anim');
+            } else {
+                log.style.borderColor = '#e74c3c';
+                log.style.background = 'rgba(231, 76, 60, 0.1)';
+                log.innerHTML = `<span style="color: #e74c3c; font-weight: bold;">&#9888;&#65039; Insufficient Materials!</span><br>Fusing requires: ${desc}`;
+            }
+        });
+
+        // Add glow animation CSS dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes forgeGlow {
+                0% { box-shadow: 0 0 0px rgba(0, 188, 212, 0); }
+                50% { box-shadow: 0 0 15px rgba(0, 188, 212, 0.8); }
+                100% { box-shadow: 0 0 0px rgba(0, 188, 212, 0); }
+            }
+            .forge-glow-anim {
+                animation: forgeGlow 0.8s ease-in-out;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initial Load
+        buildSlots();
+        calculateTotals();
+    });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

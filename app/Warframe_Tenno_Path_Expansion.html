@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; The Tenno Path: MR 11&ndash;20 Expansion</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.container a:not(.home-emoji-btn):not(.settings-emoji-btn):not(.nav-btn-top) {
+    color: #c49410;
+    text-decoration: none;
+}
+.container a:not(.home-emoji-btn):not(.settings-emoji-btn):not(.nav-btn-top):hover {
+    color: #d9aa28;
+    text-decoration: underline;
+}
+.qi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 24px 0 32px;
+}
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 110px !important;
+    padding: 0 20px !important;
+    border-radius: 10px;
+    text-decoration: none !important;
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.3;
+    background: linear-gradient(180deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95));
+    border: 1px solid rgba(255,171,0,0.2);
+    border-left: 4px solid rgba(255,171,0,0.6);
+    transition: all 0.18s ease;
+}
+.qi-tile:hover {
+    background: linear-gradient(180deg, rgba(40,55,80,0.95), rgba(20,32,60,0.98));
+    border-color: rgba(255,171,0,0.5);
+    border-left-color: #ffab00;
+    color: #ffab00 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(255,171,0,0.12);
+}
+@keyframes qiFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#127756; The Tenno Path: MR 11&ndash;20</h1>
+        <p class="subtitle">Expansion &mdash; Opening the Origin System</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="overview"><div class="qi-tile-icon">&#128214;</div><h2 class="qi-tile-title">Overview</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="mr11-13"><div class="qi-tile-icon">&#9312;</div><h2 class="qi-tile-title">MR 11&ndash;13 Open Worlds</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="mr14-16"><div class="qi-tile-icon">&#9313;</div><h2 class="qi-tile-title">MR 14&ndash;16 Railjack &amp; Liches</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="mr17-20"><div class="qi-tile-icon">&#9314;</div><h2 class="qi-tile-title">MR 17&ndash;20 The New War</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="focus"><div class="qi-tile-icon">&#127775;</div><h2 class="qi-tile-title">Focus Schools</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="priority-builds"><div class="qi-tile-icon">&#128295;</div><h2 class="qi-tile-title">Priority Builds</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+            <a href="#" class="qi-tile toc-toggle" data-section="next"><div class="qi-tile-icon">&#128640;</div><h2 class="qi-tile-title">What&rsquo;s Next</h2><p class="qi-tile-desc">Explore this section of the Compendium.</p></a>
+        </div>
+    </div>
+
+    <section class="category-section" id="overview">
+        <h2>&#128214; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">What This Chapter Covers</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Overview</span>
+                </div>
+                <ul class="list">
+                    <li>Mastery Rank 11 through 20 &mdash; the mid-game expansion phase where the Origin System truly opens up</li>
+                    <li>Three open worlds: Plains of Eidolon, Orb Vallis, and Cambion Drift &mdash; each with their own economy, standing system, and exclusive rewards</li>
+                    <li>Railjack space combat &mdash; your crew ship, how to build it, and how to run missions in it</li>
+                    <li>Kuva Liches and Sisters of Parvos &mdash; your first persistent nemesis enemies and the powerful weapons they drop</li>
+                    <li>The New War quest &mdash; the single most important story milestone in the game, unlocking the Drifter</li>
+                    <li>Arbitrations, Disruption, and the first true endgame-adjacent content</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Where You Should Be Coming In</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Prerequisites</span>
+                </div>
+                <ul class="list">
+                    <li>The War Within quest is complete &mdash; your Operator is fully active with Void Mode and Void Sling</li>
+                    <li>You have a reliable primary weapon at rank 30 with a complete mod set (Serration, Split Chamber, two elementals, at least one crit mod)</li>
+                    <li>Vitality and your Warframe&rsquo;s core survivability mods are near max rank</li>
+                    <li>You have joined at least one Syndicate and are earning Standing daily</li>
+                    <li>Rhino or another durable Warframe is your main &mdash; you are surviving mid-Star Chart missions reliably</li>
+                    <li>If any of the above is not true, return to the <a href="Warframe_Tenno_Path.html">MR 1&ndash;10 Foundation chapter</a> and finish those goals first</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">The Big Shift at MR 11+</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Key Shift</span>
+                </div>
+                <ul class="list">
+                    <li>Up to MR 10 the game is largely linear &mdash; quests lead to nodes lead to planets. From MR 11 onward the game becomes <em>wide</em>. There are multiple viable things to do at any given time and no single correct path</li>
+                    <li>This chapter gives you a recommended order, but do not feel locked into it. If one system interests you more than another, pursue it &mdash; the game is built to accommodate players who dive deep into specific content</li>
+                    <li>The standing cap increases with MR, so time spent earning standing at MR 11 is more valuable than the same time spent at MR 8. Push MR as fast as possible and keep your standing farms active</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="mr11-13">
+        <h2>&#9312; 2. MR 11&ndash;13 &mdash; Open Worlds</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Plains of Eidolon &mdash; Cetus (Earth)</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Open World</span>
+                </div>
+                <ul class="list">
+                    <li>Access via Cetus on Earth. Run bounties from Konzu to earn <strong>Ostron Standing</strong>, which is spent on Amp parts at Hok&rsquo;s Anvil and other vendor rewards</li>
+                    <li>Your first goal here is building a proper <strong>Amp</strong> for your Operator. The starter Amp (Mote) is inadequate &mdash; you need at least a Tier 2 Prism (Raplak or Shwaak) to meaningfully contribute in Void combat and Eidolon hunts</li>
+                    <li><strong>Eidolon hunts</strong> take place at night on the Plains. Three tiers: Teralyst (1 cap), Gantulyst (2 caps), Hydrolyst (3 caps). Full Tridolon runs (all three in one night cycle) require a coordinated squad, proper Amps, a Trinity or Harrow for energy, and a Chroma or Volt for damage buffing. Do not attempt Tridolons until your Amp is at least Tier 3</li>
+                    <li>Eidolon Shards and Brilliant Eidolon Shards are the currency of Cetus &mdash; used to purchase Arcanes and Focus Lenses. Arcanes are powerful passive upgrades that slot onto your Warframe and Amp and provide significant stat boosts</li>
+                    <li>See <a href="Warframe_Open_Worlds_Guide.html">Open Worlds Guide</a> for full Eidolon hunt strategy</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Orb Vallis &mdash; Fortuna (Venus)</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Open World</span>
+                </div>
+                <ul class="list">
+                    <li>Access via Fortuna on Venus. Earn <strong>Solaris United Standing</strong> through bounties from Eudico. Standing is spent on K-Drive parts, Moa companions, Kitgun weapons, and Garuda components</li>
+                    <li><strong>Kitguns</strong> are modular secondary weapons built from components &mdash; a Chamber (determines damage type and behavior), a Grip (affects fire rate and damage), and a Loader (affects status and crit chance). Some Kitgun combinations rival or exceed top-tier Prime secondaries</li>
+                    <li><strong>Moas</strong> are modular robotic companions built from parts purchased with Standing. Each Moa configuration has different passive abilities and mod slots. Moas scale well into the endgame and are a strong alternative to Kavats and Kubrows</li>
+                    <li>After reaching max rank with Solaris United, you unlock access to <strong>Vox Solaris</strong> &mdash; a secondary faction led by Eudico&rsquo;s true self. Vox Solaris Standing is earned through Profit-Taker Orb bounties (endgame) and spent on advanced Operator items including the Spoiler Warframe blueprints</li>
+                    <li>The <strong>Profit-Taker Orb</strong> is a massive spider-like boss that requires MR 5 with Vox Solaris, specific Arch-guns, and coordination. It is among the fastest credit farms in the game once you can run it reliably</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Cambion Drift &mdash; Necralisk (Deimos)</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Open World</span>
+                </div>
+                <ul class="list">
+                    <li>Access via the Necralisk on Deimos. Earn <strong>Entrati Standing</strong> through bounties from Son. Standing is spent on Infested weapon parts, Helminth Segment upgrades, Deimos Archwing components, and unique mods</li>
+                    <li>The most important unlock here is the <strong>Helminth</strong> &mdash; a biological entity in your Orbiter that, once its Segment is installed, allows you to permanently subsume a Warframe and extract one of its abilities. That ability can then be infused into any other Warframe, replacing one of their four abilities</li>
+                    <li>The Helminth dramatically expands build possibilities. Classic pairings: Roar (from Rhino) on almost any DPS frame, Breach Surge (from Wisp) for crit-heavy frames, Shooting Gallery (from Mesa) for weapon-focused builds</li>
+                    <li><strong>Orokin Vaults</strong> on Cambion Drift are the exclusive source of Corrupted mods. Each vault requires one Dragon Key equipped to open. Run with a squad carrying all four key types to open all vaults in one run. See <a href="Warframe_Mods_Database.html">Mods Database</a> for Corrupted mod priorities</li>
+                    <li>The <strong>Necramech</strong> is a heavy mech suit used in Cambion Drift open-world zones and in certain Railjack missions. It is a standalone combat platform with its own mod system and requires Entrati Standing to build</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Quests in This Range</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Quests</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Heart of Deimos</strong> &mdash; unlocks Cambion Drift access, the Necralisk hub, and Entrati Standing. Required before Helminth</li>
+                    <li><strong>Vox Solaris</strong> &mdash; unlocks the secondary Solaris United faction and Profit-Taker bounties. Short quest, big unlock</li>
+                    <li><strong>Chains of Harrow</strong> (if not yet done) &mdash; unlocks Harrow, one of the best support Warframes for Eidolon hunts</li>
+                    <li><strong>The Sacrifice</strong> &mdash; major story quest continuing from The War Within. Unlocks Excalibur Umbra, a free Warframe with unique Umbra mods that significantly boost Warframe survivability. Do not skip this quest</li>
+                    <li><strong>Mask of the Revenant</strong> &mdash; unlocks Revenant Warframe via the Plains of Eidolon</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="mr14-16">
+        <h2>&#9313; 3. MR 14&ndash;16 &mdash; Railjack &amp; Kuva Liches</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Railjack &mdash; Space Combat</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Railjack</span>
+                </div>
+                <ul class="list">
+                    <li>Railjack is Warframe&rsquo;s large-scale space combat system. You crew a customizable gunship &mdash; the <strong>Railjack</strong> &mdash; and fly missions through space, destroying enemy fighters, boarding enemy crewships, and completing objectives across the Star Chart in orbit above planets</li>
+                    <li>Complete the <strong>Rising Tide</strong> quest to build your own Railjack. The quest requires significant resources (Cubic Diodes, Carbides, Copernics, Pustrels) and takes several days of Foundry time to complete each component</li>
+                    <li>A Railjack has four component slots: Shields, Engines, Plating, and Reactor. Each can be equipped with different Mk tiers that affect your ship&rsquo;s performance. Farm higher Mk components from Railjack missions &mdash; do not spend Platinum on ship parts</li>
+                    <li>Railjack uses its own weapon systems &mdash; <strong>Turrets</strong> (forward-facing pilot weapons), <strong>Ordnance</strong> (missiles and bombs), and <strong>Artillery</strong> (heavy forward cannon). Each has its own mod set separate from your ground weapons</li>
+                    <li>Crew members can be hired from Ticker in Fortuna or recruited from clan missions. Assign them to Gunner, Defender, or Pilot roles to automate ship management during solo runs</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #f87171;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Kuva Liches</h3>
+                    <span class="type-tag" style="background:rgba(248,113,113,0.18);color:#f87171;border:1px solid rgba(248,113,113,0.45);">Nemesis</span>
+                </div>
+                <ul class="list">
+                    <li>A <strong>Kuva Lich</strong> is a persistent nemesis enemy that you create by mercy-killing a <strong>Kuva Larvling</strong> in a Kuva Fortress Grineer mission. Each Lich carries a specific <strong>Kuva weapon</strong> with a random element bonus (25%&ndash;60%) &mdash; the higher the bonus, the better</li>
+                    <li>To kill your Lich you must identify its three-Requiem parazon combination by running Lich-controlled Grineer missions and collecting <strong>Murmur</strong> from Thralls. Incorrect guesses in the wrong order will make your Lich stronger</li>
+                    <li>After identifying the correct Requiem sequence, you confront your Lich in their lair and execute the correct sequence to vanquish them. You can then choose to <strong>vanquish</strong> (keep the weapon) or <strong>convert</strong> (turn the Lich into an ally who can appear in your missions)</li>
+                    <li>Priority Kuva weapons to target: <strong>Kuva Bramma</strong> (bow with explosive clusters), <strong>Kuva Nukor</strong> (secondary beam that chains between enemies), <strong>Kuva Zarr</strong> (cannon/shotgun hybrid), <strong>Kuva Tonkor</strong> (grenade launcher). Aim for 55%+ elemental bonus on any weapon you plan to keep</li>
+                    <li>See <a href="Warframe_Meta_Weapons_Codex.html">Meta Weapons Codex</a> for full Kuva weapon tier list</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Sisters of Parvos</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Nemesis</span>
+                </div>
+                <ul class="list">
+                    <li>Sisters of Parvos are the Corpus equivalent of Kuva Liches. Create one by mercy-killing a <strong>Candidate</strong> on Corpus Railjack missions in Venus Proxima. Each Sister carries a <strong>Tenet weapon</strong> with a random progenitor element bonus</li>
+                    <li>The Murmur and Requiem system works identically to Kuva Liches but takes place in Corpus-controlled missions. Sisters can also be converted and will appear as allies in your missions</li>
+                    <li>Priority Tenet weapons: <strong>Tenet Cycron</strong> (secondary beam with life steal), <strong>Tenet Arca Plasmor</strong> (area plasma shotgun), <strong>Tenet Diplos</strong> (lock-on pistols), <strong>Tenet Flux Rifle</strong> (full-auto beam rifle). Aim for 55%+ bonus on keepers</li>
+                    <li>Sisters also drop <strong>Hound companions</strong> when converted &mdash; modular robotic pets with unique precept mods and strong defensive abilities</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Arbitrations &amp; Disruption</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Elite</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Arbitrations</strong> are elite versions of standard endless missions (Defense, Survival, Interception, Excavation) that unlock after clearing every node in the Star Chart. Arbitration missions rotate hourly and feature enemies with massive health multipliers and no bleed-out revives &mdash; if you die, you are out. Rewards include exclusive Warframe augments, Arcane Energize, and Vitus Essence currency</li>
+                    <li><strong>Disruption</strong> is a mission type found on multiple planets (Jupiter Ganymede is the standard farm location). Players activate conduits, defend them from Demolyst enemies, and collect rewards based on how many conduits survive each round. Disruption has excellent rare drop tables for Warframe parts, relics, and mods</li>
+                    <li>Both modes require a genuinely effective build &mdash; not just a leveled loadout. If you are dying quickly, revisit your mod priorities before attempting Arbitration regularly</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="mr17-20">
+        <h2>&#9314; 4. MR 17&ndash;20 &mdash; The New War &amp; Beyond</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">The New War Quest</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Story</span>
+                </div>
+                <ul class="list">
+                    <li><strong>The New War</strong> is the largest and most cinematic quest in Warframe. It is the culmination of years of story threads going back to Vor&rsquo;s Prize, and it completely reshapes the state of the Origin System. Do not read spoilers &mdash; experience it fresh</li>
+                    <li>Prerequisites: The Second Dream, The War Within, Chains of Harrow, Saya&rsquo;s Vigil, Vox Solaris, and The Sacrifice must all be completed. You must also have a Railjack and have completed at least the Rising Tide quest</li>
+                    <li>The quest features playable sequences as three different characters: your Operator, a Grineer named Kahl-175, and a Corpus proxy named Veso. Each section plays differently. The quest takes approximately 3&ndash;5 hours to complete on a first run</li>
+                    <li>Completing The New War unlocks: <strong>Drifter combat mode</strong> for your Operator, the Zariman Ten Zero tileset, <strong>Holdfasts</strong> as a new Syndicate, and access to the game&rsquo;s Archon Hunt weekly content</li>
+                    <li>After completion, the Drifter can choose between Drifter or Operator form for Void combat &mdash; each with different move sets and strengths</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Zariman &amp; Holdfasts</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Hub</span>
+                </div>
+                <ul class="list">
+                    <li>The <strong>Zariman Ten Zero</strong> is a ghost ship adrift in the Void &mdash; the origin of the Tenno. After The New War it becomes accessible as both a hub and a mission zone with its own bounty system and Syndicate</li>
+                    <li><strong>Holdfasts</strong> are the Syndicate of the Zariman. Their Standing is earned through Zariman bounties and spent on <strong>Incarnon Genesis</strong> adapters (more on these in the Endgame chapter), unique weapon and frame variants, and Arcanes</li>
+                    <li>Zariman missions are excellent for Void Cascade runs &mdash; an endless mode where you collect Void Manifestations from enemies and deposit them into Vitoplast containers to keep the mission going. Extended runs drop multiple Incarnon Genesis adapters per hour</li>
+                    <li><strong>Archon Hunts</strong> unlock after The New War. These are weekly three-mission assassination chains targeting powerful Sentient Archon bosses. Each Archon drops <strong>Archon Shards</strong> &mdash; the most impactful permanent upgrade system in the game. See the Endgame chapter for full Archon Shard strategy</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Duviri Paradox</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.18);color:#a78bfa;border:1px solid rgba(167,139,250,0.45);">Open World</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Duviri</strong> is a surreal open world accessible from the main menu or Star Chart without prerequisites. It follows a unique rotating structure called the <strong>Spiral</strong> &mdash; five emotional states (Joy, Anger, Sorrow, Envy, Patience) cycle on a daily basis, each with different enemy compositions, modifiers, and bonus rewards</li>
+                    <li>Duviri missions use a borrowed loadout system called <strong>Circuit</strong>. You are given a random pool of Warframes and weapons to choose from each run, and you build a temporary loadout from that pool. This makes Duviri a great way to try Warframes you do not own</li>
+                    <li>The Duviri Circuit is one of the best farms for <strong>Incarnon Genesis</strong> adapters. A weekly rotation of 12 specific adapters is available, with two available each week. Completing Circuit runs with Drifter and Warframe modes unlocks different rewards</li>
+                    <li>Duviri also introduces the <strong>Orowyrm</strong> boss fight &mdash; a massive serpentine creature fought in your Warframe at the end of each Spiral run</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Quests in This Range</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Quests</span>
+                </div>
+                <ul class="list">
+                    <li><strong>The New War</strong> &mdash; mandatory. See above. Do not skip</li>
+                    <li><strong>Angels of the Zariman</strong> &mdash; short quest that unlocks full Zariman access and Holdfast Standing after The New War</li>
+                    <li><strong>The Duviri Paradox</strong> &mdash; quest that introduces the Duviri tileset and unlocks Circuit runs. Relatively short but important for Incarnon farming</li>
+                    <li><strong>Whispers in the Walls</strong> &mdash; unlocks the Albrecht Entrati labs on Deimos, new Syndicate (Cavia), and new mission types. Provides additional Archon Shard farming paths and unique rewards</li>
+                    <li><strong>1999</strong> (Jade Shadows / Techrot Encore) &mdash; newer content set in an alternate timeline. Check current patch notes for its status and prerequisites</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="focus">
+        <h2>&#127775; 5. Focus Schools &mdash; Operator Development</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">The Five Schools</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Focus</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Zenurik</strong> (blue) &mdash; energy generation. Energizing Dash ability restores energy to your Warframe passively after casting. The most popular school for ability-heavy frames. Best for: casters, any frame that burns energy fast</li>
+                    <li><strong>Naramon</strong> (grey) &mdash; combo counter and melee support. Power Spike keeps your melee combo counter from decaying, enabling sustained high melee damage. Best for: dedicated melee builds, Ash, Baruuk, Wukong</li>
+                    <li><strong>Vazarin</strong> (green) &mdash; healing and revival. Protective Dash allows your Operator to dash through allies to heal and grant invulnerability. Best for: support players, Eidolon hunting teams, reviving teammates in tough missions</li>
+                    <li><strong>Unairu</strong> (yellow) &mdash; armor and armor strip. Unairu Wisp and Sundering Dash can strip enemy armor, reducing their damage resistance. Best for: teams targeting armored Grineer, Steel Path missions</li>
+                    <li><strong>Madurai</strong> (red) &mdash; Void damage and Amp power. Increases Amp damage and provides void strike buffs for Warframe abilities. Best for: Eidolon hunters, players prioritizing Operator combat damage</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Building Your Focus School</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Progression</span>
+                </div>
+                <ul class="list">
+                    <li>Focus is earned by equipping a <strong>Focus Lens</strong> on a weapon or Warframe and then earning Affinity. A percentage of that Affinity converts to Focus for your chosen school</li>
+                    <li>Greater Lenses (drop from Eidolons and Sorties) convert more Affinity than standard lenses. Equip Greater Lenses on your primary Affinity-earning weapon and your Warframe</li>
+                    <li>Focus is invested into a school&rsquo;s <strong>Way-Bound</strong> tree (passive bonuses that apply in Warframe as well as Operator) and the school&rsquo;s active ability tree</li>
+                    <li>You can switch active Focus schools at any time, but Way-Bound passives only apply for one school at a time. Invest in one school fully before branching</li>
+                    <li>Recommended first school: <strong>Zenurik</strong> for most builds. Energizing Dash completely solves energy management, freeing you from relying on Energy Siphon and Rage mods</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="priority-builds">
+        <h2>&#128295; 6. Priority Builds for MR 11&ndash;20</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Warframes to Target</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Frames</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Mesa</strong> &mdash; gunslinger frame whose Peacemaker ability auto-targets and eliminates entire rooms. Exceptional for Defense and Survival farms. Farm her from Mutalist Alad V on Eris</li>
+                    <li><strong>Octavia</strong> &mdash; plays music that buffs allies and forces enemies to dance, making them permanently unable to attack while the buff is active. One of the strongest survivability frames in the game. Farm her components from Lua music puzzle missions</li>
+                    <li><strong>Wisp</strong> &mdash; support frame that places reservoir buffs for the squad and has exceptional ability synergy. Her Breach Surge ability is one of the most popular Helminth infusions. Farm her from Ropalolyst on Jupiter</li>
+                    <li><strong>Khora</strong> &mdash; her passive augments melee combo and her Whipclaw ability hits extremely hard. Excellent for Steel Path. Farm her from Sanctuary Onslaught (Cephalon Simaris missions)</li>
+                    <li><strong>Gauss</strong> &mdash; speed-focused frame with exceptional energy generation and fire/cold damage synergy. Farm him from Disruption on Kelpie (Sedna)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Weapons to Target</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Weapons</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Kuva Nukor</strong> &mdash; the single best secondary weapon in the game for status builds. Its beam procs multiple status effects per second and chains between nearby enemies. Target 55%+ Magnetic or Heat bonus from your Lich</li>
+                    <li><strong>Kuva Bramma</strong> &mdash; explosive bow that fires cluster bomb arrows. Exceptional area clear for Survival and Defense. Pair with Cautious Shot mod to avoid self-stagger</li>
+                    <li><strong>Tenet Cycron</strong> &mdash; secondary beam that steals health from enemies. Extremely durable secondary for solo play where you cannot rely on teammates to revive you</li>
+                    <li><strong>Tombfinger Kitgun</strong> (Chamber: Tombfinger, Grip: Ramble, Loader: Haymaker) &mdash; exceptional secondary for crit builds. Builds from Fortuna components</li>
+                    <li><strong>Lesion</strong> (polearm) &mdash; status-focused melee with a self-buffing mechanic that increases toxin damage with each status proc. Cheap to build, strong in all content up to Steel Path</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #34d399;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Mods to Acquire Now</h3>
+                    <span class="type-tag" style="background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);">Mods</span>
+                </div>
+                <ul class="list">
+                    <li><strong>Primed mods</strong> &mdash; available from Baro Ki&rsquo;Teer (The Void Trader) who visits a Relay every two weeks. His stock rotates &mdash; watch for: Primed Continuity, Primed Flow, Primed Fury, Primed Pressure Point, Primed Point Blank. Buy every Primed mod he carries that you do not already own</li>
+                    <li><strong>Corrupted mods</strong> from Orokin Vaults &mdash; Blind Rage, Fleeting Expertise, Narrow Minded, Transient Fortitude, and Overextended are the five essential Warframe corrupted mods. Most endgame builds use two or three of them</li>
+                    <li><strong>Arcane Energize</strong> (from Eidolons) &mdash; triggers a chance to grant bonus energy on energy orb pickup. One of the most impactful Arcanes in the game, essentially eliminating energy problems without Zenurik</li>
+                    <li><strong>Galvanized mods</strong> (from Arbitrations) &mdash; upgraded versions of core weapon mods (Galvanized Aptitude, Galvanized Chamber, Galvanized Scope) that scale with kill stacks. Significantly outperform regular mods in sustained combat</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="next">
+        <h2>&#128640; 7. What&rsquo;s Next &mdash; MR 21&ndash;30 Endgame</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffab00;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">You&rsquo;re Ready for Chapter 3 When&hellip;</h3>
+                    <span class="type-tag" style="background:rgba(255,171,0,0.2);color:#ffab00;border:1px solid rgba(255,171,0,0.4);">Checklist</span>
+                </div>
+                <ul class="list">
+                    <li>You have reached MR 20 or higher</li>
+                    <li>The New War quest is complete and you have Drifter mode unlocked</li>
+                    <li>You have at least one Kuva or Tenet weapon with 55%+ elemental bonus, fully modded</li>
+                    <li>Your Focus school Way-Bounds are at least partially invested</li>
+                    <li>You have cleared the entire Star Chart (every node on every planet) &mdash; Steel Path is unlocked</li>
+                    <li>You have completed at least one Archon Hunt</li>
+                    <li>You have a Helminth Segment installed and have subsumed at least one ability</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #60a5fa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <h3 style="margin:0;">Continue the Path</h3>
+                    <span class="type-tag" style="background:rgba(96,165,250,0.18);color:#60a5fa;border:1px solid rgba(96,165,250,0.45);">Next Up</span>
+                </div>
+                <ul class="list">
+                    <li><a href="Warframe_Tenno_Path.html">&#8592; MR 1&ndash;10: Foundation</a> &mdash; the beginning, if you need to review</li>
+                    <li><a href="Warframe_Tenno_Path_Endgame.html">&#8594; MR 21&ndash;30: Endgame</a> &mdash; Steel Path, Archon Shards, Incarnon Genesis, and the true ceiling of the game</li>
+                    <li><a href="Warframe_Open_Worlds_Guide.html">Open Worlds Guide</a> &mdash; full deep-dive on Plains, Fortuna, and Cambion Drift</li>
+                    <li><a href="Warframe_Systems_Dashboard.html">Systems &amp; Progress</a> &mdash; Focus school investment, Railjack build guides, syndicate optimization</li>
+                    <li><a href="Warframe_Meta_Weapons_Codex.html">Meta Weapons Codex</a> &mdash; updated tier list including Kuva and Tenet weapons</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) {
+            target.style.display = 'block';
+            requestAnimationFrame(() => target.classList.add('qi-fade-in'));
+        }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+        showSection(hash, false);
+    }
+
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.section;
+            if (this.classList.contains('active')) {
+                showMenu();
+                history.pushState({ section: null }, '', location.pathname + location.search);
+            } else {
+                showSection(targetId, true);
+            }
+        });
+    });
+
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.section) {
+            showSection(e.state.section, false);
+        } else {
+            showMenu();
+        }
+    });
+});
+</script>
+
+</body>
+</html>
+

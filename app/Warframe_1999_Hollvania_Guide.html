@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Warframe 1999 &amp; H&ouml;llvania Guide</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile {
+    display: flex !important; flex-direction: column; align-items: flex-start; text-align: left;
+    min-height: 110px; padding: 20px 22px !important; border-radius: 14px;
+    text-decoration: none !important; color: inherit;
+    background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06);
+    border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease;
+}
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+    </style>
+</head>
+<body>
+
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px !important; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+        <a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a>
+        <a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+    </div>
+</div>
+
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#127928; Warframe 1999 &amp; H&ouml;llvania Guide</h1>
+        <p class="subtitle">Open-world hub set in 1999 Romania &middot; Eleanor &amp; Arthur vendors &middot; Cyte-09 &middot; Jade &middot; Techrot enemies</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a href="#" class="qi-tile toc-toggle" data-section="section-overview" style="border-left-color:#ffd700;">
+                <div class="qi-tile-icon">&#127760;</div>
+                <h2 class="qi-tile-title">Overview</h2>
+                <p class="qi-tile-desc">What Warframe 1999 is, why the H&ouml;llvania hub matters, and what draws you to 1999 Romania.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-access" style="border-left-color:#42a5f5;">
+                <div class="qi-tile-icon">&#128273;</div>
+                <h2 class="qi-tile-title">Access &amp; Unlock</h2>
+                <p class="qi-tile-desc">Prerequisites to unlock the hub and how to reach H&ouml;llvania once you qualify.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-vendors" style="border-left-color:#ffb74d;">
+                <div class="qi-tile-icon">&#128722;</div>
+                <h2 class="qi-tile-title">Vendors</h2>
+                <p class="qi-tile-desc">What Eleanor and Arthur sell and how to prioritize standing between the two.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-frames" style="border-left-color:#ce93d8;">
+                <div class="qi-tile-icon">&#129302;</div>
+                <h2 class="qi-tile-title">New Frames</h2>
+                <p class="qi-tile-desc">Acquiring the two new Warframes introduced here, Cyte-09 and Jade.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-missions" style="border-left-color:#ef5350;">
+                <div class="qi-tile-icon">&#127919;</div>
+                <h2 class="qi-tile-title">Missions &amp; Activities</h2>
+                <p class="qi-tile-desc">Bounties, free-roam activities, and story missions available across the hub.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-enemies" style="border-left-color:#4ade80;">
+                <div class="qi-tile-icon">&#9760;&#65039;</div>
+                <h2 class="qi-tile-title">Techrot Enemies</h2>
+                <p class="qi-tile-desc">The Techrot faction overview and the notable enemy types you&rsquo;ll face.</p>
+            </a>
+            <a href="#" class="qi-tile toc-toggle" data-section="section-rewards" style="border-left-color:#ffd700;">
+                <div class="qi-tile-icon">&#127942;</div>
+                <h2 class="qi-tile-title">Key Rewards</h2>
+                <p class="qi-tile-desc">Standing rewards from Eleanor, mission and bounty drops, and Arthur&rsquo;s trust unlocks.</p>
+            </a>
+        </div>
+    </div>
+
+    <section class="category-section" id="section-overview">
+        <h2>&#127760; 1. Overview</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">What Is Warframe 1999?</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>A standalone open-world hub set in H&ouml;llvania, Romania &mdash; December 31, 1999</li>
+                    <li>Introduced in the <strong>Warframe 1999</strong> update (late 2024)</li>
+                    <li>Blends 1999 retro-futurism with Warframe's Technocyte/Orokin lore</li>
+                    <li>Features two new Warframes: <strong>Cyte-09</strong> and <strong>Jade</strong></li>
+                    <li>New enemy faction: <strong>Techrot</strong> &mdash; Technocyte-infected humans</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Why Go Here?</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Overview</span></div>
+                <ul class="list">
+                    <li>Acquire Cyte-09 and Jade Warframe components</li>
+                    <li>Eleanor vendor: exclusive mods, cosmetics, and weapons</li>
+                    <li>Arthur vendor: relationship-gated rewards and resources</li>
+                    <li>Unique 1999-era resources used in new crafting recipes</li>
+                    <li>Story content expanding the Drifter and pre-war Orokin timeline</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-access">
+        <h2>&#128273; 2. Access &amp; Unlock</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Prerequisites</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Access</span></div>
+                <ul class="list">
+                    <li>Complete the <strong>Whispers in the Walls</strong> quest (Deimos / Albrecht's Laboratories)</li>
+                    <li>Complete the <strong>Jade Shadows</strong> quest to unlock Jade</li>
+                    <li>Cyte-09 requires completing initial 1999 story missions</li>
+                    <li>Mastery Rank requirement: check in-game (approx. MR 5+)</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #42a5f5;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Getting There</h3><span class="type-tag" style="background:rgba(66,165,245,0.2);color:#42a5f5;border:1px solid rgba(66,165,245,0.4);">Access</span></div>
+                <ul class="list">
+                    <li>Access H&ouml;llvania from the Navigation star chart &mdash; dedicated node</li>
+                    <li>Hub area: free-roam open world like Cetus / Fortuna / Necralisk</li>
+                    <li>Day/night cycle affects mission availability and resource spawns</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-vendors">
+        <h2>&#128722; 3. Vendors</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128105; Eleanor</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Vendor</span></div>
+                <ul class="list">
+                    <li>Primary standing vendor for H&ouml;llvania</li>
+                    <li>Sells: mods, weapons, cosmetics, crafting blueprints</li>
+                    <li>Standing earned by completing 1999 bounties and missions</li>
+                    <li>Standing cap: daily limit applies (scales with Mastery Rank)</li>
+                    <li>Rank up to unlock higher-tier items &mdash; similar to Ostron/Solaris progression</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128104; Arthur</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Vendor</span></div>
+                <ul class="list">
+                    <li>Relationship-gated vendor &mdash; trust/affinity builds over missions</li>
+                    <li>Sells unique rewards not available from Eleanor</li>
+                    <li>Progress by completing Arthur-specific missions and dialogue events</li>
+                    <li>Higher trust unlocks lore items, exclusive cosmetics, and weapon parts</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffb74d;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#128176; Standing Priority</h3><span class="type-tag" style="background:rgba(255,183,77,0.2);color:#ffb74d;border:1px solid rgba(255,183,77,0.4);">Priority</span></div>
+                <ul class="list">
+                    <li>Cap standing daily before logging off</li>
+                    <li>Focus on Eleanor rank-ups first to unlock the full shop</li>
+                    <li>Arthur trust increases passively through story &mdash; no standing grind needed</li>
+                    <li>Check Eleanor&rsquo;s rotating stock for time-limited cosmetics</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-frames">
+        <h2>&#129302; 4. New Frames</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Cyte-09</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Frame</span></div>
+                <ul class="list">
+                    <li>Stealth/precision frame introduced with Warframe 1999</li>
+                    <li>Playstyle: single-target elimination, cloaking, tactical repositioning</li>
+                    <li>Components: obtained from 1999 story missions and Eleanor vendor</li>
+                    <li>Check builds codex for meta build once established in community</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ce93d8;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Jade</h3><span class="type-tag" style="background:rgba(206,147,216,0.2);color:#ce93d8;border:1px solid rgba(206,147,216,0.4);">Frame</span></div>
+                <ul class="list">
+                    <li>Support/damage hybrid introduced in the <strong>Jade Shadows</strong> update</li>
+                    <li>Unique passive tied to the Jade Light mechanic</li>
+                    <li>Components: obtained via the Jade Shadows quest and drop tables</li>
+                    <li>Strong in cooperative play &mdash; buffs allies and debuffs enemies simultaneously</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-missions">
+        <h2>&#127919; 5. Missions &amp; Activities</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Bounties</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Activity</span></div>
+                <ul class="list">
+                    <li>Primary standing source &mdash; pick up from Eleanor in the H&ouml;llvania hub</li>
+                    <li>5 tiers from low to high level &mdash; higher tiers give more standing and better drops</li>
+                    <li>Rotate every few hours &mdash; check before daily cap to maximize efficiency</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Free-Roam Activities</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Activity</span></div>
+                <ul class="list">
+                    <li>Patrol zones with Techrot enemy camps &mdash; source of 1999 resources</li>
+                    <li>Timed events during specific day/night phases</li>
+                    <li>Hidden caches and lore fragments scattered across H&ouml;llvania</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ef5350;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Story Missions</h3><span class="type-tag" style="background:rgba(239,83,80,0.2);color:#ef5350;border:1px solid rgba(239,83,80,0.4);">Activity</span></div>
+                <ul class="list">
+                    <li>Linear quest chain unlocks hub features, vendors, and new frames</li>
+                    <li>Complete in order &mdash; later missions gate crafting blueprints</li>
+                    <li>Replay available after completion for lore review</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-enemies">
+        <h2>&#9760;&#65039; 6. Techrot Enemies</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Faction Overview</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Enemies</span></div>
+                <ul class="list">
+                    <li>Techrot: Technocyte-infected humans from the 1999 era</li>
+                    <li>Blend biological and mechanical traits &mdash; unique weak points</li>
+                    <li>Vulnerable to <strong>Slash</strong> and <strong>Viral</strong> for flesh components</li>
+                    <li>Shielded variants: use <strong>Magnetic</strong> or <strong>Electricity</strong> to strip shields first</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #4ade80;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">Notable Enemy Types</h3><span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Enemies</span></div>
+                <ul class="list">
+                    <li><strong>Techrot Grunts</strong> &mdash; standard infantry, moderate threat</li>
+                    <li><strong>Techrot Heavies</strong> &mdash; armored, high HP &mdash; use Corrosive or Radiation</li>
+                    <li><strong>Techrot Eximus</strong> &mdash; buffed variants with auras &mdash; priority targets</li>
+                    <li><strong>Techrot Bosses</strong> &mdash; mission-specific, unique mechanics per encounter</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section" id="section-rewards">
+        <h2>&#127942; 7. Key Rewards</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">From Eleanor (Standing)</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>Cyte-09 Warframe blueprints (components)</li>
+                    <li>1999-era weapon blueprints</li>
+                    <li>Exclusive mods and augments</li>
+                    <li>H&ouml;llvania cosmetics: syandanas, armor sets, glyphs</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">From Missions &amp; Bounties</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>1999 resources: used in all 1999 crafting recipes</li>
+                    <li>Jade Warframe components (Jade Shadows quest chain)</li>
+                    <li>Mods dropping from Techrot enemies</li>
+                    <li>Relic drops from high-tier bounties</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #ffd700;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">From Arthur (Trust)</h3><span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Rewards</span></div>
+                <ul class="list">
+                    <li>Unique cosmetic rewards not sold by Eleanor</li>
+                    <li>Lore items and codex entries</li>
+                    <li>Exclusive weapon skins at max trust</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

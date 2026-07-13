@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Safe Disposal Protocol SOP</title>
+    <style>
+body { padding-top: 154.6px !important; }
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.qi-tile-title { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 1rem; font-weight: 700; color: #ffab00; margin: 0 0 6px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+.qi-tile-desc { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+.step-num { display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:rgba(255,171,0,0.15);color:#ffab00;font-weight:700;font-size:0.8rem;margin-right:8px;flex-shrink:0; }
+.step-title { font-weight:700;color:#e2e8f0; }
+.step-desc { color:#9fb0c4;font-size:0.88rem;margin-top:4px;padding-left:32px; }
+.badge-warn { display:inline-block;margin-top:6px;background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.35);padding:3px 8px;border-radius:4px;font-size:0.78rem;font-weight:600; }
+    </style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;"><a id="nav-prev-top" href="Warframe_Weapons_Recipe_Ingredients.html" class="nav-btn-top" title="Previous Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span class="nav-text">Prev Chapter</span></a><a id="nav-back-top" href="#" class="nav-btn-top disabled" title="Back" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="15 18 9 12 15 6"></polyline></svg><span class="nav-text">Back</span></a><a id="nav-forward-top" href="#" class="nav-btn-top disabled" title="Forward" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;opacity:0.25;pointer-events:none;"><span class="nav-text">Forward</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.25"><polyline points="9 18 15 12 9 6"></polyline></svg></a><a id="nav-next-top" href="Warframe_Active_Projects_Farming_Hub.html" class="nav-btn-top" title="Next Chapter" style="color:#ffab00;text-decoration:none;border-radius:6px;border:1px solid rgba(255,171,0,0.25);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;white-space:nowrap;"><span class="nav-text">Next Chapter</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></div>
+</div>
+
+<!-- MAIN GLASS PANEL -->
+<div class="container" style="max-width:1750px;">
+
+    <header>
+        <h1>&#9851;&#65039; Safe Disposal Protocol &amp; SOP</h1>
+        <p class="subtitle">Standard Operating Procedures for Selling Weapons and Dissolving Mods Safely</p>
+    </header>
+
+    <div class="toc no-print">
+        <div class="qi-grid">
+            <a class="qi-tile toc-toggle" data-section="section-protocols" style="border-left-color:#22d3ee;"><div class="qi-tile-icon">&#9851;&#65039;</div><h2 class="qi-tile-title">Disposal Protocols</h2><p class="qi-tile-desc">Follow this step-by-step ruleset to free up inventory weapon slots without accidentally selling required items or losing Mastery XP.</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-blueprints" style="border-left-color:#a78bfa;"><div class="qi-tile-icon">&#128220;</div><h2 class="qi-tile-title">Reclaimable Blueprints</h2><p class="qi-tile-desc">You naturally accumulate multiple copies of these blueprints by simply running standard missions, killing bosses, or fighting Eximus squads. Check your Miscellaneous inventory t...</p></a>
+            <a class="qi-tile toc-toggle" data-section="section-checklist" style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#9989;</div><h2 class="qi-tile-title">Pre-Flight Checklist</h2><p class="qi-tile-desc">Run through these check-boxes before executing any inventory purging sessions in-game!</p></a>
+        </div>
+    </div>
+
+    <!-- 1. DISPOSAL PROTOCOLS -->
+    <section class="category-section" id="section-protocols">
+        <h2>&#9851;&#65039; 1. Disposal Protocols</h2>
+        <div class="dashboard-grid">
+            <div class="card" style="border-left:6px solid #22d3ee;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#9851;&#65039; Weapon Disposal Protocol</h3><span class="type-tag" style="background:rgba(34,211,238,0.2);color:#22d3ee;border:1px solid rgba(34,211,238,0.4);">Weapons</span></div>
+                <p style="color:#9fb0c4;margin-bottom:14px;">Follow this step-by-step ruleset to free up inventory weapon slots without accidentally selling required items or losing Mastery XP.</p>
+                <ul class="list" style="list-style:none;padding-left:0;">
+                    <li style="margin-bottom:14px;"><span class="step-num">1</span><span class="step-title">Verify Mastery Level 30</span><div class="step-desc">Look at the weapon in your Inventory or Arsenal. Ensure the green <strong>"Rank 30"</strong> label with the green/gold Mastery Symbol is visible.<br><span class="badge-warn">CRITICAL: Never sell a weapon under Level 30! You lose the Master Points forever!</span></div></li>
+                    <li style="margin-bottom:14px;"><span class="step-num">2</span><span class="step-title">Cross-Reference the "Hit-List"</span><div class="step-desc">Open your <strong>Inventory Space Optimizer (Hit-List)</strong>. Ensure the weapon is explicitly listed there as a "Safe-to-Discard" dead-end weapon.<br><span class="badge-warn">CRITICAL: If it is NOT on the Hit-List, do not sell it!</span></div></li>
+                    <li style="margin-bottom:14px;"><span class="step-num">3</span><span class="step-title">Check Foundry Recipe Ingredients</span><div class="step-desc">Quickly search the weapon in the <strong>Foundry Recipes &amp; Ingredients</strong> sheet. Confirm it is not needed as a physical component to build something else (like <em>Miter</em> or <em>Lato</em>).</div></li>
+                    <li><span class="step-num">4</span><span class="step-title">Navigate to Inventory &amp; Sell</span><div class="step-desc">Press <strong>Esc -&gt; Equipment -&gt; Inventory</strong>. Click the <strong>Weapons</strong> tab. Click the weapon, check the check-box, and hit <strong>"Sell Selected"</strong> in the bottom-right corner.</div></li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:6px solid #a78bfa;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="margin:0;">&#127939; Mod Dissolving Protocol</h3><span class="type-tag" style="background:rgba(167,139,250,0.2);color:#a78bfa;border:1px solid rgba(167,139,250,0.4);">Mods</span></div>
+                <p style="color:#9fb0c4;margin-bottom:14px;">Follow this step-by-step process to safely clear mod clutter and convert thousands of duplicate copies into pure upgrade Endo.</p>
+                <ul class="list" style="list-style:none;padding-left:0;">
+                    <li style="margin-bottom:14px;"><span class="step-num">1</span><span class="step-title">Open Mod Console</span><div class="step-desc">Interact with the Mod Console (located down the ramp of your Orbiter on the front left side).</div></li>
+                    <li style="margin-bottom:14px;"><span class="step-num">2</span><span class="step-title">Filter by "Duplicates"</span><div class="step-desc">Click <strong>Sort by: Duplicates</strong> at the top right of the mod console. This clusters your duplicate stacks together, hiding single upgraded cards.</div></li>
+                    <li style="margin-bottom:14px;"><span class="step-num">3</span><span class="step-title">Execute "Select All But One"</span><div class="step-desc">When clicking a duplicate stack, select the <strong>"Select All But One"</strong> shortcut (e.g. click middle-mouse button or click the dedicated UI button).<br><span class="badge-warn">CRITICAL: This ensures you keep exactly 1 copy to use or upgrade in the future!</span></div></li>
+                    <li><span class="step-num">4</span><span class="step-title">Dissolve into Endo</span><div class="step-desc">Once all duplicates are selected, click <strong>"Dissolve"</strong> at the top left of the screen to convert the cards into pure Endo.<br><span class="badge-warn">CRITICAL: Never choose "Sell for Credits"! Credits are easily farmed, but Endo is rare!</span></div></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. RECLAIMABLE BLUEPRINTS -->
+    <section class="category-section" id="section-blueprints">
+        <h2>&#128220; 2. Reclaimable Blueprints (Safe to Sell down to 1 Left)</h2>
+        <div class="card" style="border-left:6px solid #a78bfa;">
+            <p style="font-size:1rem;color:#cbd5e0;line-height:1.6;margin-bottom:20px;">You naturally accumulate multiple copies of these blueprints by simply running standard missions, killing bosses, or fighting Eximus squads. Check your <strong>Miscellaneous</strong> inventory tab, click the duplicates, select all but one, and sell them down to exactly <strong>1 copy left</strong> for massive Credit gains!</p>
+            <div class="grid-2col">
+                <div class="box" style="border-top:3px solid #00e5ff;">
+                    <h4 style="color:#80deea;">&#128203; Warframe Component Blueprints (Keep 1 copy)</h4>
+                    <ul class="list">
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Harrow Chassis / Neuroptics / Systems</span><span style="font-size:0.8rem;color:#ffab00;font-style:italic;">15,000 Credits each!</span></li>
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Oberon Chassis / Neuroptics / Systems</span><span style="font-size:0.8rem;color:#ffab00;font-style:italic;">10,000 Credits each!</span></li>
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Nyx Chassis / Neuroptics / Systems</span><span style="font-size:0.8rem;color:#ffab00;font-style:italic;">Invasion Phorid rewards</span></li>
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Rhino / Mag / Excalibur Component BP</span><span style="font-size:0.8rem;color:#a0aec0;font-style:italic;">Planet boss duplicates</span></li>
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Frost / Nova / Valkyr Component BP</span><span style="font-size:0.8rem;color:#a0aec0;font-style:italic;">Planet boss duplicates</span></li>
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Saryn / Loki / Equinox Component BP</span><span style="font-size:0.8rem;color:#a0aec0;font-style:italic;">Endgame boss duplicates</span></li>
+                    </ul>
+                </div>
+                <div class="box" style="border-top:3px solid #d500f9;">
+                    <h4 style="color:#f178ff;">&#128220; Weapon Blueprint Duplicates (Keep 1 copy)</h4>
+                    <ul class="list">
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Gorgon Blueprint</span><span style="font-size:0.8rem;color:#ffab00;font-style:italic;">Heavy Gunner drop BP</span></li>
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Boar Blueprint</span><span style="font-size:0.8rem;color:#ffab00;font-style:italic;">Grineer Trooper drop BP</span></li>
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Cronus Blueprint</span><span style="font-size:0.8rem;color:#ffab00;font-style:italic;">Vor Mercury drop BP</span></li>
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Seer Blueprint / Barrel / Receiver</span><span style="font-size:0.8rem;color:#ffab00;font-style:italic;">Vor Mercury drop BP</span></li>
+                        <li style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:bold;color:#fff;">Obex Blueprint</span><span style="font-size:0.8rem;color:#a0aec0;font-style:italic;">Common container drop BP</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. PRE-FLIGHT CHECKLIST -->
+    <section class="category-section" id="section-checklist">
+        <h2>&#9989; 3. Pre-Flight Tenno Clean-Up Checklist</h2>
+        <div class="card" style="border-left:6px solid #4ade80;">
+            <p style="margin-bottom:15px;color:#9fb0c4;">Run through these check-boxes before executing <em>any</em> inventory purging sessions in-game!</p>
+            <div class="grid-2col">
+                <div class="box">
+                    <ul class="list" style="list-style:none;padding:0;">
+                        <li style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><input type="checkbox" style="width:18px;height:18px;cursor:pointer;accent-color:#4ade80;"><span>Is the weapon fully Rank 30? (Verified in Arsenal)</span></li>
+                        <li style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><input type="checkbox" style="width:18px;height:18px;cursor:pointer;accent-color:#4ade80;"><span>Is it listed on the Safe-to-Discard Hit-List?</span></li>
+                        <li style="display:flex;align-items:center;gap:10px;"><input type="checkbox" style="width:18px;height:18px;cursor:pointer;accent-color:#4ade80;"><span>Did I make sure it has no Helminth or recipe roles?</span></li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <ul class="list" style="list-style:none;padding:0;">
+                        <li style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><input type="checkbox" style="width:18px;height:18px;cursor:pointer;accent-color:#4ade80;"><span>Did I filter my Mod Console by "Duplicates"?</span></li>
+                        <li style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><input type="checkbox" style="width:18px;height:18px;cursor:pointer;accent-color:#4ade80;"><span>Did I select "Select All But One" to save my baseline?</span></li>
+                        <li style="display:flex;align-items:center;gap:10px;"><input type="checkbox" style="width:18px;height:18px;cursor:pointer;accent-color:#4ade80;"><span>Am I dissolving duplicates for Endo (NOT selling for Credits)?</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div><!-- end .container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>

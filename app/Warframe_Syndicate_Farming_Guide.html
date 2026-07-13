@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/nav_sequence.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/codex_glass_theme.css?v=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warframe: The Orbiter Compendium &mdash; Syndicate Pledge Standing Guide</title>
+    <style>
+        :root {
+            --border-color: #1f2a3e;
+
+            --accent-gold: #ffab00;
+            --primary-accent: #3949ab;
+            --glow-green: #00e676;
+            --glow-red: #ff1744;
+            --glow-blue: #00e5ff;
+
+            /* Faction variables */
+            --simaris: #e74c3c;
+            --quills: #3498db;
+            --vox-solaris: #e67e22;
+            --necraloid: #6c3483;
+            --kahl: #7f8c8d;
+            --hex: #c0392b;
+            --ventkids: #f1c40f;
+            --nightwave: #9b59b6;
+        }
+
+        p {
+            color: #cbd5e0;
+            font-size: 0.95rem;
+        }
+
+        /* PLEDGE INTERACTIVE GRID */
+        .syndicate-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .syndicate-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .syndicate-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-color);
+            padding: 1.25rem;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .syndicate-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        .syndicate-btn.active-pledge {
+            background: rgba(255, 171, 0, 0.05);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(255, 171, 0, 0.25);
+        }
+
+        .syndicate-btn.active-pledge::before {
+            content: 'ACTIVE PLEDGE';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--accent-gold);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .syn-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .syn-status-badge {
+            font-size: 0.72rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            align-self: flex-start;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .status-neutral { background: rgba(255,255,255,0.05); color: #a0aec0; }
+        .status-ally { background: rgba(0, 230, 118, 0.1); color: var(--glow-green); border: 1px dashed rgba(0, 230, 118, 0.2); }
+        .status-opposed { background: rgba(255, 23, 68, 0.05); color: #ff8a80; border: 1px dashed rgba(255, 23, 68, 0.15); }
+        .status-enemy { background: rgba(255, 23, 68, 0.12); color: var(--glow-red); border: 1px solid rgba(255, 23, 68, 0.3); }
+
+        /* PLEDGE STRATEGY BLOCKS */
+        .strategy-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .strategy-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .strategy-box {
+            background: rgba(57, 73, 171, 0.05);
+            border: 1px solid rgba(57, 73, 171, 0.2);
+            padding: 1.25rem;
+            border-radius: 10px;
+        }
+
+        .strategy-box.gold {
+            background: rgba(255, 171, 0, 0.02);
+            border-color: rgba(255, 171, 0, 0.2);
+        }
+
+        .strategy-box h4 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .strategy-box ul {
+            padding-left: 20px;
+            margin: 0;
+            font-size: 0.88rem;
+            color: #cbd5e0;
+        }
+
+        .strategy-box li {
+            margin-bottom: 6px;
+        }
+
+        /* OPEN WORLD STANDINGS TABLE */
+        table.codex-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.88rem;
+            background: rgba(20, 27, 41, 0.4);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table.codex-table th, table.codex-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table.codex-table th {
+            background-color: rgba(57, 73, 171, 0.2);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        table.codex-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .node-badge {
+            background: rgba(57, 73, 171, 0.2);
+            border: 1px solid var(--primary-accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #8fa0b0;
+        }
+
+        .inc-badge {
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--glow-blue);
+        }
+
+        /* Faction Detail Cards Layout */
+        .faction-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .faction-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .faction-detail-card {
+            background: var(--card-bg);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .faction-banner {
+            padding: 20px;
+            position: relative;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .faction-sigil {
+            font-size: 2.2rem;
+            margin-bottom: 4px;
+        }
+        .faction-banner h3 {
+            margin: 0;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faction-motto {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+        .faction-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex-grow: 1;
+        }
+        .method-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .method-section h4 {
+            margin: 0;
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1.1rem;
+            color: #fff;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 6px;
+        }
+        .method-section ol, .method-section ul {
+            padding-left: 20px;
+            margin: 0;
+            font-size: 0.92rem;
+            color: #cbd5e0;
+        }
+        .method-section li {
+            margin-bottom: 6px;
+        }
+        .method-rank {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .method-rank p {
+            margin: 4px 0 0 0;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        .rank-badge {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+            text-transform: uppercase;
+        }
+        .rank-badge.best { background: rgba(0, 230, 118, 0.1); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.25); }
+        .rank-badge.good { background: rgba(0, 229, 255, 0.1); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.25); }
+        .rank-badge.alt { background: rgba(255, 255, 255, 0.04); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.06); }
+        .pro-tips-list {
+            list-style-type: none;
+            padding-left: 0 !important;
+        }
+        .pro-tips-list li {
+            position: relative;
+            padding-left: 18px;
+        }
+        .pro-tips-list li::before {
+            content: '&bull;';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+        .pro-tips-list li strong {
+            color: var(--accent-gold);
+        }
+        
+        /* Faction Banner color variants */
+        .simaris-banner { color: var(--simaris); border-bottom: 2px solid rgba(231,76,60,0.3); }
+        .quills-banner { color: var(--quills); border-bottom: 2px solid rgba(52,152,219,0.3); }
+        .vox-solaris-banner { color: var(--vox-solaris); border-bottom: 2px solid rgba(230,126,34,0.3); }
+        .necraloid-banner { color: var(--necraloid); border-bottom: 2px solid rgba(108,52,131,0.3); }
+        .kahl-banner { color: var(--kahl); border-bottom: 2px solid rgba(127,140,141,0.3); }
+        .hex-banner { color: var(--hex); border-bottom: 2px solid rgba(192,57,43,0.3); }
+        .ventkids-banner { color: var(--ventkids); border-bottom: 2px solid rgba(241,196,15,0.3); }
+        .nightwave-banner { color: var(--nightwave); border-bottom: 2px solid rgba(155,89,182,0.3); }
+        
+        /* Alliance chart styles for Priority card */
+        .alliance-chart {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .alliance-chart h3 {
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-gold);
+        }
+
+/* Global Header & Navigation Capsule Styling */
+.global-top-header {
+    position: fixed; top: 0; left: 0; right: 0; height: 60px;
+    background: rgba(15, 22, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: flex-end; align-items: center;
+    padding: 0 20px; z-index: 10000; gap: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+}
+.header-actions {
+    display: flex;
+    gap: 15px;
+    margin-right: 25px !important;
+    align-items: center;
+}
+.global-top-header a, .global-top-header button {
+    color: #e2e8f0; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; transition: color 0.2s;
+}
+.global-top-header a:hover, .global-top-header button:hover { color: #ffab00; }
+body { padding-top: 154.6px !important; }
+
+.page-shell {
+    width: min(1750px, calc(100vw - 48px));
+    margin: 0 auto 40px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    padding: 36px 40px 40px;
+    box-sizing: border-box;
+}
+
+
+/* ── Tile Hub ─────────────────────── */
+.qi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 24px 0 32px; }
+.qi-tile-full { grid-column: 1 / -1; }
+.qi-tile { display: flex !important; flex-direction: column; align-items: flex-start; text-align: left; min-height: 110px; padding: 20px 22px !important; border-radius: 14px; text-decoration: none !important; color: inherit; background: rgba(15,22,42,0.45); border: 1px solid rgba(255,255,255,0.06); border-left: 4px solid rgba(255,171,0,0.6); transition: all 0.25s ease; }
+.qi-tile:hover { transform: translateY(-3px); border-left-color: #ffd740; background: rgba(23,33,62,0.75); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.qi-tile:hover .qi-tile-title { color: #ffd740; }
+@keyframes qiFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.qi-fade-in { animation: qiFadeIn 0.35s ease both; }
+
+/* ── Submenu section text enlargement ───────────────── */
+.category-section .card h3 { font-size: 1.5rem !important; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; color: #ffab00; }
+.category-section .card > p { font-size: 1.05rem !important; line-height: 1.7; color: #cbd5e1; }
+.category-section .card { padding: 32px !important; }
+.type-tag { font-size: 0.85rem !important; padding: 6px 14px !important; border-radius: 20px !important; font-weight: 600; }
+
+
+/* Jump Buttons */
+.jump-btns { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+.jump-btn {
+    width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 22, 42, 0.85);
+    border: 1px solid rgba(255, 171, 0, 0.3); color: #ffab00; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; font-size: 18px;
+    font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s ease;
+}
+.jump-btn:hover { background: rgba(255, 171, 0, 0.15); transform: scale(1.1); border-color: #ffab00; box-shadow: 0 0 12px rgba(255, 171, 0, 0.5), 0 4px 15px rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<!-- GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+<div class="global-top-header no-print" style="position: fixed; top: 0; left: 0; right: 0; height: 60px; background: rgba(15, 22, 42, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center; padding: 0 20px; z-index: 10000; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); box-sizing: border-box;">
+    <a href="../!Warframe_Master_Index.html" class="home-emoji-btn" title="Home" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#127968;</a>
+    <a href="Warframe_System_Settings.html" class="settings-emoji-btn" title="Settings" style="font-size: 32px; text-decoration: none; display: flex; align-items: center; transition: transform 0.2s; user-select: none;">&#9881;&#65039;</a>
+
+    <div class="header-nav no-print" style="margin-left: auto; display: flex; gap: 12px; align-items: center;">
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    
+
+    // 2. Jump Buttons
+    const jumpBtn = document.getElementById('global-jump-btn');
+    if (jumpBtn) {
+        let isAtBottom = false;
+        
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            if (scrollHeight <= clientHeight + 50) {
+                jumpBtn.style.display = 'none';
+                return;
+            }
+            
+            jumpBtn.style.display = 'flex';
+            
+            if (scrollTop > (scrollHeight - clientHeight) / 2) {
+                jumpBtn.innerText = '&#9650;';
+                jumpBtn.title = 'Jump to Top';
+                isAtBottom = true;
+            } else {
+                jumpBtn.innerText = '&#9660;';
+                jumpBtn.title = 'Jump to Bottom';
+                isAtBottom = false;
+            }
+        };
+        
+        jumpBtn.addEventListener('click', () => {
+            if (isAtBottom) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        setTimeout(handleScroll, 100);
+    }
+
+    // 3. Navigation Sequence
+                    const guideSequence = window.GUIDE_SEQUENCE || [];
+    const currentFile = window.location.pathname.split('/').pop() || '!Warframe_Master_Index.html';
+    let matchFile = currentFile;
+    if (currentFile.toLowerCase() === 'Warframe_Tenno_Foundry.html') {
+        matchFile = 'Warframe_Tenno_Foundry.html';
+    }
+    const currentIndex = guideSequence.findIndex(f => f.toLowerCase() === matchFile.toLowerCase());
+
+    const prevEl = document.getElementById('nav-prev');
+    const nextEl = document.getElementById('nav-next');
+    const prevTopEl = document.getElementById('nav-prev-top');
+    const nextTopEl = document.getElementById('nav-next-top');
+    
+    if (currentIndex !== -1) {
+        if (currentIndex > 0) {
+            if (prevEl) prevEl.href = guideSequence[currentIndex - 1];
+            if (prevTopEl) {
+                prevTopEl.href = guideSequence[currentIndex - 1];
+                prevTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (prevEl) prevEl.classList.add('disabled');
+            if (prevTopEl) prevTopEl.classList.add('disabled');
+        }
+        if (currentIndex < guideSequence.length - 1) {
+            if (nextEl) nextEl.href = guideSequence[currentIndex + 1];
+            if (nextTopEl) {
+                nextTopEl.href = guideSequence[currentIndex + 1];
+                nextTopEl.classList.remove('disabled');
+            }
+        } else {
+            if (nextEl) nextEl.classList.add('disabled');
+            if (nextTopEl) nextTopEl.classList.add('disabled');
+        }
+    } else {
+        if (prevEl) prevEl.classList.add('disabled');
+        if (nextEl) nextEl.classList.add('disabled');
+        if (prevTopEl) prevTopEl.classList.add('disabled');
+        if (nextTopEl) nextTopEl.classList.add('disabled');
+    }
+});
+
+</script>
+<!-- END GLOBAL UNIFIED HEADER & FLOATING NAVIGATION CAPSULE -->
+
+<div class="container" style="max-width:1750px; width:1750px;">
+<header>
+    <h1>&#129309; Syndicate Pledge &amp; Standing Guide</h1>
+    <p class="subtitle">Complete pledge synergy simulator & standing optimization matrix</p>
+</header>
+
+<div class="toc no-print">
+    <div class="qi-grid">
+        <a href="#" class="qi-tile toc-toggle" data-section="section-simulator"  style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#129309;</div><h2 class="qi-tile-title">Faction Simulator</h2><p class="qi-tile-desc">Pledge to one of the six primary factions at the Syndicate console in your Orbiter. You will earn 15% of your gained Affinity as standing for that Syndicate. Select a faction be...</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-openworld"  style="border-left-color:#4ade80;"><div class="qi-tile-icon">&#127758;</div><h2 class="qi-tile-title">Open World Hubs</h2><p class="qi-tile-desc">Unlike faction syndicates, Open World standings are completely separate, do not clash with each other, and rely on daily limits that scale with your Mastery Rank (MR). Here are...</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-specialist" style="border-left-color:#a78bfa;"><div class="qi-tile-icon">&#11088;</div><h2 class="qi-tile-title">Specialist Factions</h2><p class="qi-tile-desc">Unique factions with specialized standing methods. All neutral - no alliance conflicts.</p></a>
+        <a href="#" class="qi-tile toc-toggle" data-section="section-medallions" style="border-left-color:#ffd700;"><div class="qi-tile-icon">&#127941;</div><h2 class="qi-tile-title">Medallion Meta</h2><p class="qi-tile-desc">Medallion hunts are crucial because medallions bypass the daily standing cap. By turning in medallions, you can bank extra standing above your limit.</p></a>
+    </div>
+</div>
+
+<div class="category-section" id="section-simulator">
+<div class="card" id="simulator" style="border-left:6px solid #ffd700;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">&#x1F91D; 1. Faction Syndicates Pledge Simulator</h3>
+                    <span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Interactive</span>
+                </div>
+                <p>Pledge to one of the six primary factions at the Syndicate console in your Orbiter. You will earn 15% of your gained Affinity as standing for that Syndicate. Select a faction below to simulate standings modifiers across all other factions:</p>
+            
+                <div class="syndicate-grid">
+                    <button class="syndicate-btn" data-syn="meridian">
+                        <span class="syn-name">Steel Meridian</span>
+                        <span class="syn-status-badge status-neutral" id="meridian-badge">Neutral</span>
+                    </button>
+                    <button class="syndicate-btn" data-syn="arbiters">
+                        <span class="syn-name">Arbiters of Hexis</span>
+                        <span class="syn-status-badge status-neutral" id="arbiters-badge">Neutral</span>
+                    </button>
+                    <button class="syndicate-btn" data-syn="suda">
+                        <span class="syn-name">Cephalon Suda</span>
+                        <span class="syn-status-badge status-neutral" id="suda-badge">Neutral</span>
+                    </button>
+                    <button class="syndicate-btn" data-syn="perrin">
+                        <span class="syn-name">The Perrin Sequence</span>
+                        <span class="syn-status-badge status-neutral" id="perrin-badge">Neutral</span>
+                    </button>
+                    <button class="syndicate-btn" data-syn="veil">
+                        <span class="syn-name">Red Veil</span>
+                        <span class="syn-status-badge status-neutral" id="veil-badge">Neutral</span>
+                    </button>
+                    <button class="syndicate-btn" data-syn="loka">
+                        <span class="syn-name">New Loka</span>
+                        <span class="syn-status-badge status-neutral" id="loka-badge">Neutral</span>
+                    </button>
+                </div>
+
+                <div class="strategy-container" style="margin-bottom: 0;">
+                    <div class="strategy-box">
+                        <h4>&#9878;&#xFE0F; Pledge Relationship Rules</h4>
+                        <ul>
+                            <li><strong>Pledged Syndicate</strong>: Gain 100% of earned standing.</li>
+                            <li><strong>Ally (+50%)</strong>: Automatically gains 50% of the standing earned.</li>
+                            <li><strong>Opposed (-50%)</strong>: Automatically loses 50% of the standing earned.</li>
+                            <li><strong>Enemy (-100%)</strong>: Automatically loses 100% of the standing earned.</li>
+                        </ul>
+                    </div>
+                    <div class="strategy-box gold">
+                        <h4>&#127919; Efficient Multiple Leveling Strategies</h4>
+                        <ul>
+                            <li><strong>The 4-Syndicate Route (Meridian, Veil, Suda, Arbiters)</strong>: Pledge to <strong>Cephalon Suda</strong> to level Suda and Arbiters (allied). Once capped, pledge to <strong>Steel Meridian</strong> to level Meridian and Red Veil (allied). This completely avoids negative clashes!</li>
+                            <li><strong>The 3-Syndicate Route (Loka, Perrin, Veil)</strong>: Pledge to <strong>New Loka</strong> to level Loka and Perrin. Pledge to <strong>Red Veil</strong> to level Red Veil and Perrin (allied). Avoids Suda, Arbiters, and Meridian.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            
+</div>
+<div class="category-section" id="section-openworld">
+<div class="card" id="openworld" style="border-left:6px solid #4ade80;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">&#x1F30D; 2. Open World &amp; Hub Syndicate Codex</h3>
+                    <span class="type-tag" style="background:rgba(74,222,128,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.4);">Daily Caps Apply</span>
+                </div>
+                <p>Unlike faction syndicates, Open World standings are completely separate, do not clash with each other, and rely on daily limits that scale with your Mastery Rank (MR). Here are the most efficient leveling routes:</p>
+
+                <div style="overflow-x: auto;">
+                    <table class="codex-table" style="margin-top: 0;">
+                        <thead>
+                            <tr>
+                                <th>Syndicate</th>
+                                <th>Faction / Planet</th>
+                                <th>Best Farming Node / Method</th>
+                                <th>Optimal Yield Tip</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Ostron</strong></td>
+                                <td>Cetus (Plains of Eidolon)</td>
+                                <td>Night Fishing &amp; Bounties</td>
+                                <td>Catch <span class="inc-badge">Mortus Lungfish</span> at night in the pond. Cut them for raw standing.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Solaris United</strong></td>
+                                <td>Fortuna (Orb Vallis)</td>
+                                <td>Exploiter Orb &amp; Conservation</td>
+                                <td>Kill <span class="inc-badge">Exploiter Orb</span> for massive mineral drops, or capture animals with tranq rifle.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Entrati</strong></td>
+                                <td>Necralisk (Cambion Drift)</td>
+                                <td>Daughter / Mother Bounties</td>
+                                <td>Run Tier 3-5 bounties for Mother tokens, then trade with Grandma for bonus standing.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Necraloid</strong></td>
+                                <td>Necralisk (Cambion Drift)</td>
+                                <td>Isolation Vaults</td>
+                                <td>Gather Orokin Matrix drops from Necramechs and trade with Loid.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>The Holdfasts</strong></td>
+                                <td>Chrysalith (Zariman)</td>
+                                <td>Voidplume Hunting</td>
+                                <td>Equip a box-breaker build to find <span class="inc-badge">Voidplumes</span> scattered in missions.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cavia</strong></td>
+                                <td>Sanctum (Deimos)</td>
+                                <td>Netracells &amp; Voca search</td>
+                                <td>Run Netracells weekly and collect <span class="inc-badge">Voca tokens</span> on normal bounties.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+</div>
+<div class="category-section" id="section-specialist">
+<div class="card" id="specialist" style="border-left:6px solid #a78bfa;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">&#x1F4CB; 3. Specialist Factions Codex</h3>
+                    <span class="type-tag" style="background:rgba(167,139,250,0.2);color:#a78bfa;border:1px solid rgba(167,139,250,0.4);">Neutral - Specialized Farming</span>
+                </div>
+                <p>Unique factions with specialized standing methods. All neutral - no alliance conflicts.</p>
+
+                <!-- Priority Guide -->
+                <div class="alliance-chart" style="text-align:left;">
+                    <h3>&#128203; Recommended Priority Order</h3>
+                    <div class="method-rank">
+                        <span class="rank-badge best">1st</span>
+                        <div>
+                            <strong>Cephalon Simaris</strong>
+                            <p>Get Scanner Widgets first - they make ALL future scanning easier. Simulacrum Key is essential for build testing.</p>
+                        </div>
+                    </div>
+                    <div class="method-rank">
+                        <span class="rank-badge best">2nd</span>
+                        <div>
+                            <strong>Necraloid</strong>
+                            <p>Required for Necramech (Voidrig/Bonewidow) - mandatory for certain story quests and endgame content.</p>
+                        </div>
+                    </div>
+                    <div class="method-rank">
+                        <span class="rank-badge good">3rd</span>
+                        <div>
+                            <strong>Kahl's Garrison</strong>
+                            <p>Weekly missions for Archon Shards - the most impactful power increase per time invested.</p>
+                        </div>
+                    </div>
+                    <div class="method-rank">
+                        <span class="rank-badge alt">4th</span>
+                        <div>
+                            <strong>Quills / Vox Solaris / Ventkids / The Hex / Nightwave</strong>
+                            <p>Treat as passive grinds. Zariman Amp parts have replaced Quills/Vox for best amps. Ventkids is mostly mastery fodder.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faction-grid" id="specialist-faction-grid">
+                    <!-- Cephalon Simaris -->
+                    <div class="faction-detail-card" id="faction-simaris">
+                        <div class="faction-banner simaris-banner">
+                            <div class="faction-sigil">&#128269;</div>
+                            <h3>&#128225; Cephalon Simaris</h3>
+                            <span class="faction-motto">Any Relay - Sanctuary</span>
+                        </div>
+                        <div class="faction-body">
+                            <div class="method-section">
+                                <h4>&#128640; Fastest Standing Methods</h4>
+                                <div class="method-rank">
+                                    <span class="rank-badge best">Best</span>
+                                    <div>
+                                        <strong>Stealth Scanning - Hits cap in ~5 minutes!</strong>
+                                        <p>Use <strong>Ivara or Loki</strong> (invisible) in Plains of Eidolon on <strong>Steel Path</strong>. Fly high in Archwing, enable "Enemy Highlights" in display settings, scan enemies from above. Stealth scans give massive bonus standing. The fastest standing farm in the entire game.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge good">Good</span>
+                                    <div>
+                                        <strong>Daily Synthesis Target</strong>
+                                        <p>Always accept the daily target from Simaris before doing anything else. Bonus standing does <strong>NOT count toward daily cap</strong> - it's free extra standing every day.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge alt">Alt</span>
+                                    <div>
+                                        <strong>Sanctuary Onslaught</strong>
+                                        <p>Running SO/ESO gives passive Simaris standing while also farming focus, relics, and Warframe parts (Khora from SO, Braton/Lato Vandal from ESO).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#127942; Key Rewards Worth Getting (Buy These First!)</h4>
+                                <ul class="pro-tips-list">
+                                    <li><strong>Sol-Battery Widget</strong> - Unlimited Synthesis Scanner charges forever. Buy this FIRST.</li>
+                                    <li><strong>Cross-Matrix Widget</strong> - Chance to double scans. Essential QoL.</li>
+                                    <li><strong>Vector-Thread Widget</strong> - Faster scanning speed.</li>
+                                    <li><strong>Simulacrum Key</strong> - Unlocks the Simulacrum, essential for build testing and DPS checks.</li>
+                                    <li><strong>Health Conversion</strong> - Meta mod for armor-stacking frames (Nekros, Inaros).</li>
+                                    <li><strong>Energy Conversion</strong> - +50% power strength on next ability cast. Great for nuke builds.</li>
+                                </ul>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#128161; Pro Tips</h4>
+                                <ul class="pro-tips-list">
+                                    <li>Get ALL three Scanner Widgets before anything else - they're permanent upgrades</li>
+                                    <li>Stealth scans give 2x standing compared to alerted scans</li>
+                                    <li>Health Conversion and Energy Conversion sell well on trade for platinum</li>
+                                    <li>Simulacrum lets you spawn any scanned enemy to test builds against</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Quills -->
+                    <div class="faction-detail-card" id="faction-quills">
+                        <div class="faction-banner quills-banner">
+                            <div class="faction-sigil">&#128065;&#65039;</div>
+                            <h3>&#127769; The Quills</h3>
+                            <span class="faction-motto">Cetus - Operator Room (enter in Operator mode)</span>
+                        </div>
+                        <div class="faction-body">
+                            <div class="method-section">
+                                <h4>&#128640; Fastest Standing Methods</h4>
+                                <div class="method-rank">
+                                    <span class="rank-badge best">Best</span>
+                                    <div>
+                                        <strong>Eidolon Hunts (Tridolon)</strong>
+                                        <p>Hunt Teralyst &#8594; Gantulyst &#8594; Hydrolyst at night in the Plains. Trade Sentient Cores to Onkko: Brilliant Shards = 25,000, Radiant Shards = massive standing. One full Tridolon can nearly cap you.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge good">Good</span>
+                                    <div>
+                                        <strong>Teralyst Only (Solo-Friendly)</strong>
+                                        <p>If you can't do full Tridolons, just farm the basic Teralyst. Easier, soloable, still gives decent cores. Multiple runs per night cycle.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge alt">Alt</span>
+                                    <div>
+                                        <strong>Vomvalyst Farming</strong>
+                                        <p>Kill Vomvalysts at night for Intact Sentient Cores (500 standing each). Much easier but much slower. Good for absolute beginners.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#127942; Key Rewards Worth Getting</h4>
+                                <ul class="pro-tips-list">
+                                    <li><strong>Amp Parts (Prisms/Scaffolds/Braces)</strong> - Build better Amps for Operator combat. Note: Zariman amps are now superior, so don't over-invest here.</li>
+                                    <li><strong>Virtuos Arcanes</strong> - Amp arcanes that boost Operator damage. Niche but useful for Eidolons.</li>
+                                    <li><strong>Magus Arcanes</strong> - Operator arcanes like Magus Elevate (instant health on transference). Very useful.</li>
+                                    <li><strong>Cetus Wisps</strong> - Can be purchased here, needed for many crafting recipes.</li>
+                                </ul>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#128161; Pro Tips</h4>
+                                <ul class="pro-tips-list">
+                                    <li>Enter The Quills room by switching to <strong>Operator mode</strong> near the Cetus door</li>
+                                    <li>Narmer Isoplasts (from Narmer bounties) can also be traded for Quills standing</li>
+                                    <li>Zariman Amps are now better - don't grind Quills extensively just for amps</li>
+                                    <li>Eidolon Hunts are also a great source of Focus and Arcane Energize</li>
+                                    <li>Recommended frames for Eidolons: Volt, Trinity, Harrow, Chroma/Chroma</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vox Solaris -->
+                    <div class="faction-detail-card" id="faction-vox-solaris">
+                        <div class="faction-banner vox-solaris-banner">
+                            <div class="faction-sigil">&#128295;</div>
+                            <h3>&#127759; Vox Solaris</h3>
+                            <span class="faction-motto">Fortuna - Little Duck's Back Room</span>
+                        </div>
+                        <div class="faction-body">
+                            <div class="method-section">
+                                <h4>&#128640; Fastest Standing Methods</h4>
+                                <div class="method-rank">
+                                    <span class="rank-badge best">Best</span>
+                                    <div>
+                                        <strong>Exploiter Orb Boss Fight</strong>
+                                        <p>Run the Exploiter Orb boss (start from Deck 12 in Fortuna). Drops Lazulite Toroids worth massive standing + rare resources. One of the best standing/hour in the game. Repeatable.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge good">Good</span>
+                                    <div>
+                                        <strong>Toroid Farming (AFK-able)</strong>
+                                        <p>Farm Toroids at specific locations: Spaceport (Vega), Enrichment Labs (Calda), Temple of Profit (Sola). Use Nekros + Hydroid/Khora for boosted drops. Trade Toroids to Little Duck.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge alt">Alt</span>
+                                    <div>
+                                        <strong>Profit-Taker Orb Boss</strong>
+                                        <p>Faster than Exploiter but harder and requires max Solaris United rank. Drops Toroids and credits. Speed-runners can clear in under 5 minutes.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#127942; Key Rewards Worth Getting</h4>
+                                <ul class="pro-tips-list">
+                                    <li><strong>Amp Parts</strong> - Alternative Amp components. Note: Zariman amps are now better for most builds.</li>
+                                    <li><strong>Baruuk Blueprint</strong> - Powerful pacifist Warframe, requires Vox Solaris rank</li>
+                                    <li><strong>Operator Arcanes</strong> - Magus Lockdown, Magus Repair (niche but useful)</li>
+                                    <li><strong>Hildryn Blueprint</strong> - Shield-based Warframe, very tanky</li>
+                                </ul>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#128161; Pro Tips</h4>
+                                <ul class="pro-tips-list">
+                                    <li>Narmer Isoplasts (from Narmer bounties) can also be traded for Vox Solaris standing</li>
+                                    <li>Exploiter Orb also drops Hildryn parts - double value per run</li>
+                                    <li>Nekros + Smeeta Kavat + Resource Booster = maximum Toroid drops</li>
+                                    <li>Most Vox Solaris Arcanes are outclassed now - only grind this if you need specific items</li>
+                                    <li>Requires Solaris United Old Mate rank to access Little Duck's back room</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Necraloid -->
+                    <div class="faction-detail-card" id="faction-necraloid">
+                        <div class="faction-banner necraloid-banner">
+                            <div class="faction-sigil">&#128128;</div>
+                            <h3>&#128128; Necraloid</h3>
+                            <span class="faction-motto">Necralisk - Talk to Loid</span>
+                        </div>
+                        <div class="faction-body">
+                            <div class="method-section">
+                                <h4>&#128640; Fastest Standing Methods</h4>
+                                <div class="method-rank">
+                                    <span class="rank-badge best">Best</span>
+                                    <div>
+                                        <strong>Isolation Vault Bounties</strong>
+                                        <p>Run Iso Vault bounties on Deimos from Mother. Collect Orokin Orientation Matrices and Activation Matrices. Trade to Loid. Bring <strong>Nekros</strong> for boosted matrix drops.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge good">Good</span>
+                                    <div>
+                                        <strong>Chained Iso Vaults (Tier 2 & 3)</strong>
+                                        <p>After completing Tier 1, chain into Tier 2 and 3 Iso Vaults in the same session for more matrices and rare drops (Necramech parts, Damaged mods).</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge alt">Alt</span>
+                                    <div>
+                                        <strong>Orphix Missions</strong>
+                                        <p>Some mission types drop matrices as rewards. Less efficient than Iso Vaults but available if you want variety.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#127942; Key Rewards Worth Getting</h4>
+                                <ul class="pro-tips-list">
+                                    <li><strong>Necramech Blueprints (Voidrig)</strong> - MANDATORY for certain story quests (The New War) and endgame content. Priority #1.</li>
+                                    <li><strong>Necramech Blueprints (Bonewidow)</strong> - Second Necramech, melee-focused. Good for mastery.</li>
+                                    <li><strong>Necramech Mods</strong> - Essential mods for your Necramech builds</li>
+                                    <li><strong>Cortege</strong> - Archgun usable by Necramechs, powerful flame weapon</li>
+                                </ul>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#128161; Pro Tips</h4>
+                                <ul class="pro-tips-list">
+                                    <li><strong>Nekros</strong> is highly recommended - Desecrate increases matrix drop rates significantly</li>
+                                    <li>Voidrig Necramech is required for <strong>The New War</strong> quest - build it early</li>
+                                    <li>Chain all 3 tiers of Iso Vaults for maximum efficiency per session</li>
+                                    <li>Damaged Necramech mods drop from Iso Vault enemies - these sell well on trade</li>
+                                    <li>You need Entrati standing alongside Necraloid - do both at the same time on Deimos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kahl's Garrison -->
+                    <div class="faction-detail-card" id="faction-kahl">
+                        <div class="faction-banner kahl-banner">
+                            <div class="faction-sigil">&#129522;</div>
+                            <h3>&#129686; Kahl&#39;s Garrison</h3>
+                            <span class="faction-motto">Weekly Break Narmer Missions</span>
+                        </div>
+                        <div class="faction-body">
+                            <div class="method-section">
+                                <h4>&#128640; Fastest Standing Methods</h4>
+                                <div class="method-rank">
+                                    <span class="rank-badge best">Best</span>
+                                    <div>
+                                        <strong>Weekly Break Narmer Mission + ALL Side Objectives</strong>
+                                        <p>Complete Kahl's weekly mission with <strong>every optional objective completed</strong>. Side objectives give massive bonus standing. Use a guide for objective locations the first time. Resets every week.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge good">Good</span>
+                                    <div>
+                                        <strong>Repeat Missions for Missed Objectives</strong>
+                                        <p>If you missed side objectives, you can replay the mission to complete them. Standing is awarded per objective, not per completion.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#127942; Key Rewards Worth Getting</h4>
+                                <ul class="pro-tips-list">
+                                    <li><strong>Archon Shards</strong> - MAIN REASON to do this. Permanent stat boosts for your Warframe. Extremely powerful endgame progression.</li>
+                                    <li><strong>Styanax Blueprint</strong> - Warframe available from Kahl's shop (Chipper)</li>
+                                    <li><strong>Archon Mods</strong> - Powerful unique mods (Archon Stretch, Archon Vitality, etc.)</li>
+                                    <li><strong>Kahl Cosmetics</strong> - Unique armor and syandana sets</li>
+                                    <li><strong>Weapon Blueprints</strong> - Several unique weapons from Chipper's shop</li>
+                                </ul>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#128161; Pro Tips</h4>
+                                <ul class="pro-tips-list">
+                                    <li>Side objectives give <strong>significantly more standing</strong> than just completing the mission</li>
+                                    <li>Stock (currency) earned is spent at <strong>Chipper's shop</strong> in the Drifter's Camp</li>
+                                    <li><strong>Weekly cap</strong> - no need to grind daily, just complete once per week</li>
+                                    <li>Archon Shards are the <strong>most impactful endgame power increase</strong> per time invested</li>
+                                    <li>Use YouTube guides for side objective locations until you memorize them</li>
+                                    <li>Requires completion of <strong>"Veilbreaker"</strong> quest to access</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Hex -->
+                    <div class="faction-detail-card" id="faction-hex">
+                        <div class="faction-banner hex-banner">
+                            <div class="faction-sigil">&#127917;</div>
+                            <h3>&#10024; The Hex</h3>
+                            <span class="faction-motto">Steel Path Endgame Content</span>
+                        </div>
+                        <div class="faction-body">
+                            <div class="method-section">
+                                <h4>&#128640; Fastest Standing Methods</h4>
+                                <div class="method-rank">
+                                    <span class="rank-badge best">Best</span>
+                                    <div>
+                                        <strong>Steel Path Bounties</strong>
+                                        <p>Run the specific Steel Path bounties associated with The Hex. High standing rewards per completion. Often tied to Coda/Lich content. Bring endgame-ready builds.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge good">Good</span>
+                                    <div>
+                                        <strong>Netracell Missions</strong>
+                                        <p>Complete weekly Netracell missions for Hex standing alongside other rewards. These rotate and provide good standing chunks.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#127942; Key Rewards Worth Getting</h4>
+                                <ul class="pro-tips-list">
+                                    <li><strong>Hex-exclusive Mods</strong> - Powerful endgame mods only available from this faction</li>
+                                    <li><strong>Steel Path Cosmetics</strong> - Unique visual rewards showing endgame mastery</li>
+                                    <li><strong>Tauforged Archon Shards</strong> - Enhanced versions of Archon Shards with doubled stat bonuses</li>
+                                    <li><strong>Incarnon Genesis Adapters</strong> - Additional Incarnon weapon transformations</li>
+                                </ul>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#128161; Pro Tips</h4>
+                                <ul class="pro-tips-list">
+                                    <li>Requires <strong>Steel Path unlocked</strong> - complete all Star Chart nodes first</li>
+                                    <li>Bring fully modded endgame builds - Steel Path enemies are significantly tougher</li>
+                                    <li>Tauforged Archon Shards are the ultimate endgame chase - 2x stats of normal shards</li>
+                                    <li>Pair with other Steel Path activities for multi-faction progress</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ventkids -->
+                    <div class="faction-detail-card" id="faction-ventkids">
+                        <div class="faction-banner ventkids-banner">
+                            <div class="faction-sigil">&#128757;</div>
+                            <h3>&#128747; Ventkids</h3>
+                            <span class="faction-motto">Fortuna - Vent Hideout</span>
+                        </div>
+                        <div class="faction-body">
+                            <div class="method-section">
+                                <h4>&#128640; Fastest Standing Methods</h4>
+                                <div class="method-rank">
+                                    <span class="rank-badge best">Best</span>
+                                    <div>
+                                        <strong>K-Drive Tricks - The Pearl Grinding Spot</strong>
+                                        <p>Ride your K-Drive in the Orb Vallis. Go to <strong>The Pearl</strong> (the large pipe near Fortuna entrance) and chain grinds + flips for massive trick combos. Score multipliers stack - one good combo can give huge standing.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge good">Good</span>
+                                    <div>
+                                        <strong>K-Drive Races</strong>
+                                        <p>Complete K-Drive race courses scattered around Orb Vallis. Decent standing per race, and they're short. Good for variety.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge alt">Alt</span>
+                                    <div>
+                                        <strong>Free Roam Tricks</strong>
+                                        <p>Just ride around Orb Vallis doing tricks on any surface. Slower but zero-effort. Listen to music and vibe.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#127942; Key Rewards Worth Getting</h4>
+                                <ul class="pro-tips-list">
+                                    <li><strong>K-Drive Parts</strong> - Mostly mastery fodder (MR points). Build all 4 boards for mastery.</li>
+                                    <li><strong>K-Drive Mods</strong> - Maglocks and Inertia Dampeners are the only widely useful ones</li>
+                                    <li><strong>K-Drive Skins</strong> - Cosmetic customization for your board</li>
+                                    <li><strong>Mastery Rank XP</strong> - Each K-Drive gives 6,000 MR. Worth building for MR progression.</li>
+                                </ul>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#128161; Pro Tips</h4>
+                                <ul class="pro-tips-list">
+                                    <li>Generally considered <strong>lowest priority</strong> - only grind for mastery or if you enjoy K-Drives</li>
+                                    <li>The Pearl pipe is the fastest standing spot - long rail for continuous grinds</li>
+                                    <li>Trick multipliers are key - chain tricks without landing for bigger scores</li>
+                                    <li>Archwing is faster for traveling, but K-Drive is needed for Ventkids standing</li>
+                                    <li>You get a free starter K-Drive board from the Fortuna quest line</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nightwave -->
+                    <div class="faction-detail-card" id="faction-nightwave">
+                        <div class="faction-banner nightwave-banner">
+                            <div class="faction-sigil">&#128251;</div>
+                            <h3>&#128251; Nightwave</h3>
+                            <span class="faction-motto">Nora Night - Orbiter Radio</span>
+                        </div>
+                        <div class="faction-body">
+                            <div class="method-section">
+                                <h4>&#128640; Fastest Standing Methods</h4>
+                                <div class="method-rank">
+                                    <span class="rank-badge best">Best</span>
+                                    <div>
+                                        <strong>Elite Weekly Acts (7,000 standing each)</strong>
+                                        <p>Complete all Elite Weekly challenges first - they give the most standing per act. Examples: Complete a Sortie, Kill a Profit-Taker, complete 3 Nightmare missions.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge good">Good</span>
+                                    <div>
+                                        <strong>Regular Weekly Acts (4,500 standing each)</strong>
+                                        <p>Complete all regular weekly acts next. Usually easier tasks like: Kill 150 enemies with a specific element, complete X bounties, gild a modular item.</p>
+                                    </div>
+                                </div>
+                                <div class="method-rank">
+                                    <span class="rank-badge alt">Alt</span>
+                                    <div>
+                                        <strong>Daily Acts (1,000 standing each)</strong>
+                                        <p>Small daily tasks. Quick to complete but lowest standing. Do them if you're already online, don't stress about missing them.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#127942; Key Rewards Worth Getting</h4>
+                                <ul class="pro-tips-list">
+                                    <li><strong>Nightwave Creds</strong> - Spend on: Nitain Extract (essential crafting material), Orokin Catalysts/Reactors ("Potatoes"), Aura Mods, Alternate Helmets</li>
+                                    <li><strong>Nitain Extract</strong> - Almost impossible to get elsewhere. Buy with Nightwave Creds. Always stock up.</li>
+                                    <li><strong>Orokin Catalysts/Reactors</strong> - "Blue/Gold Potatoes". Double mod capacity on weapons/Warframes.</li>
+                                    <li><strong>Umbra Forma</strong> - Appears at high ranks. Let's you put Umbral polarity on any slot. Extremely rare and valuable.</li>
+                                    <li><strong>Exclusive Cosmetics</strong> - Armor sets, syandanas, weapon skins from each season's track.</li>
+                                    <li><strong>Kuva</strong> - Buy with excess Nightwave Creds for Riven mod rolling.</li>
+                                </ul>
+                            </div>
+                            <div class="method-section">
+                                <h4>&#128161; Pro Tips</h4>
+                                <ul class="pro-tips-list">
+                                    <li>Weekly acts give 4,500 standing each, Elite Weeklies give 7,000 each</li>
+                                    <li>Missed weeks CAN be recovered - old acts roll into the current week's pool</li>
+                                    <li><strong>Nitain Extract</strong> should be your #1 Cred purchase - you'll always need more</li>
+                                    <li>After Rank 30 (max), you earn bonus Nightwave Creds per rank - infinite value</li>
+                                    <li>No daily cap - Nightwave standing is purely act-based, complete at your pace</li>
+                                    <li>Nightwave seasons run for months - you don't need to rush</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
+<div class="category-section" id="section-medallions">
+<div class="card" id="medallions" style="border-left:6px solid #ffd700;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0;">&#x1F3C5; 3. Medallion Hunting Meta</h3>
+                    <span class="type-tag" style="background:rgba(255,215,0,0.2);color:#ffd700;border:1px solid rgba(255,215,0,0.4);">Loot Box Breaker</span>
+                </div>
+                <p>Medallion hunts are crucial because medallions bypass the daily standing cap. By turning in medallions, you can bank extra standing above your limit.</p>
+                <div class="strategy-container" style="margin-bottom: 0;">
+                    <div class="strategy-box" style="background: rgba(6, 182, 212, 0.05); border-color: rgba(6, 182, 212, 0.2);">
+                        <h4>&#128299; 8 Box-Breaker Limbo Build</h4>
+                        <ul>
+                            <li><strong>Ability Setup</strong>: Max Ability Range (Overextended, Stretch) and Max Efficiency.</li>
+                            <li><strong>Strategy</strong>: Cast <strong>Cataclysm</strong> (4th ability) and instantly deactivate it. The expanding and collapsing bubble breaks all containers in a 40+ meter radius instantly.</li>
+                            <li><strong>Mods Required</strong>: Loot Radar (Aura), Primed Animal Instinct (Companion), and Thief's Wit.</li>
+                        </ul>
+                    </div>
+                    <div class="strategy-box" style="background: rgba(6, 182, 212, 0.05); border-color: rgba(6, 182, 212, 0.2);">
+                        <h4>&#128299; 8 Box-Breaker Xaku Build</h4>
+                        <ul>
+                            <li><strong>Ability Setup</strong>: Max Ability Range and Efficiency.</li>
+                            <li><strong>Strategy</strong>: Cast <strong>The Vast Untime</strong> (4th ability). The explosion radius shatters all breakable objects, chests, and crates through walls.</li>
+                            <li><strong>Efficiency Tip</strong>: Run through the map breaking boxes. Any icons remaining on your minimap are guaranteed to be **Medallions**, **Sculptures**, or **Resources**.</li>
+                        </ul>
+</div>
+</div>
+</div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Select all headers that act as titles for items
+    const headers = document.querySelectorAll('.card h3, .warframe-card h3, .weapon-card h3, .planet-card h2, .category-card h2, .volume-card h2, .faction-detail-card h3');
+    
+    headers.forEach((h, index) => {
+        if(h.querySelector('.tracker-container')) return;
+        
+        // Generate a unique ID based on the page and the header text
+        const safeTitle = h.innerText.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20);
+        const id = 'tracker_' + window.location.pathname.split('/').pop() + '_' + index + '_' + safeTitle;
+        
+        const container = document.createElement('label');
+        container.className = 'tracker-container';
+        
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'tracker-checkbox';
+        cb.id = id;
+        
+        // Find parent card to apply completion styling
+        const card = h.closest('.warframe-card, .weapon-card, .card, .volume-card, .faction-detail-card');
+        
+        if(safeStorage.getItem(id) === 'true') {
+            cb.checked = true;
+            container.classList.add('completed');
+            if (card) {
+                card.style.opacity = '0.5';
+                card.style.transition = 'opacity 0.2s ease-in-out';
+            }
+        }
+        
+        cb.addEventListener('change', (e) => {
+            safeStorage.setItem(id, e.target.checked);
+            if(e.target.checked) {
+                container.classList.add('completed');
+                if (card) {
+                    card.style.opacity = '0.5';
+                    card.style.transition = 'opacity 0.2s ease-in-out';
+                }
+            } else {
+                container.classList.remove('completed');
+                if (card) {
+                    card.style.opacity = '1.0';
+                }
+            }
+        });
+        
+        container.appendChild(cb);
+        container.appendChild(document.createTextNode('Done'));
+        
+        // Ensure the header flexes to push the checkbox to the right
+        h.style.display = 'flex';
+        h.style.justifyContent = 'space-between';
+        h.style.alignItems = 'center';
+        h.appendChild(container);
+    });
+});
+</script>
+
+    <!-- PLEDGE INTERACTIVE CONTROLLER -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.syndicate-btn');
+            
+            const relationships = {
+                meridian: { ally: 'veil', opposed: 'perrin', enemy: 'loka' },
+                arbiters: { ally: 'suda', opposed: 'veil', enemy: 'perrin' },
+                suda: { ally: 'arbiters', opposed: 'loka', enemy: 'veil' },
+                perrin: { ally: 'loka', opposed: 'meridian', enemy: 'arbiters' },
+                veil: { ally: 'meridian', opposed: 'arbiters', enemy: 'suda' },
+                loka: { ally: 'perrin', opposed: 'suda', enemy: 'meridian' }
+            };
+
+            function selectPledge(selectedKey) {
+                buttons.forEach(btn => {
+                    btn.classList.remove('active-pledge');
+                    const key = btn.dataset.syn;
+                    const badge = document.getElementById(`${key}-badge`);
+                    
+                    // Reset styling classes
+                    badge.className = 'syn-status-badge status-neutral';
+                    badge.textContent = 'Neutral';
+                });
+
+                const activeBtn = document.querySelector(`.syndicate-btn[data-syn="${selectedKey}"]`);
+                if (activeBtn) activeBtn.classList.add('active-pledge');
+
+                const relations = relationships[selectedKey];
+                
+                // Set pledge badge
+                const pledgeBadge = document.getElementById(`${selectedKey}-badge`);
+                pledgeBadge.className = 'syn-status-badge status-ally';
+                pledgeBadge.textContent = 'PLEDGED';
+
+                // Set Ally badge
+                const allyBadge = document.getElementById(`${relations.ally}-badge`);
+                allyBadge.className = 'syn-status-badge status-ally';
+                allyBadge.textContent = 'Ally (+50%)';
+
+                // Set Opposed badge
+                const opposedBadge = document.getElementById(`${relations.opposed}-badge`);
+                opposedBadge.className = 'syn-status-badge status-opposed';
+                opposedBadge.textContent = 'Opposed (-50%)';
+
+                // Set Enemy badge
+                const enemyBadge = document.getElementById(`${relations.enemy}-badge`);
+                enemyBadge.className = 'syn-status-badge status-enemy';
+                enemyBadge.textContent = 'Enemy (-100%)';
+            }
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectPledge(btn.dataset.syn);
+                });
+            });
+
+            // Set default pledge
+            selectPledge('meridian');
+        });
+    </script>
+
+
+
+
+
+
+
+
+</div><!-- container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tocEl = document.querySelector('.toc');
+    function showMenu() {
+        document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        if (tocEl) tocEl.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSection(id, pushHistory) {
+        document.querySelectorAll('.category-section').forEach(s => { s.style.display = 'none'; s.classList.remove('qi-fade-in'); });
+        document.querySelectorAll('.toc-toggle').forEach(t => t.classList.remove('active'));
+        const target = document.getElementById(id);
+        if (target) { target.style.display = 'block'; requestAnimationFrame(() => target.classList.add('qi-fade-in')); }
+        const tile = document.querySelector('.toc-toggle[data-section="' + id + '"]');
+        if (tile) tile.classList.add('active');
+        if (tocEl) tocEl.style.display = 'none';
+        if (pushHistory) history.pushState({ section: id }, '', '#' + id);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('.category-section').forEach(s => s.style.display = 'none');
+    const hash = location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) { showSection(hash, false); }
+    history.replaceState({ section: null }, '', location.pathname + location.search);
+    document.querySelectorAll('.toc-toggle[data-section]').forEach(tile => {
+        tile.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('active')) { showMenu(); history.pushState({ section: null }, '', location.pathname + location.search); }
+            else { showSection(this.dataset.section, true); }
+        });
+    });
+    window.addEventListener('popstate', e => { if (e.state && e.state.section) showSection(e.state.section, false); else showMenu(); });
+    if (typeof initNavSequence === 'function') initNavSequence();
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
