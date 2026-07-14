@@ -6,7 +6,13 @@ A complete, offline-first Warframe reference and build companion — meta build 
 
 No server. No build step. No dependencies. No internet connection required once downloaded — open `!Warframe_Master_Index.html` and everything just works.
 
-## ✨ What's inside
+**🔗 [Try it live](https://nlesmerises.github.io/warframe-the-orbiter-compendium/)** — browse the whole Compendium in your browser right now, no download required.
+
+## 📖 What it does
+
+The Orbiter Compendium is a single-page-per-topic reference and build-tracking tool for Warframe. It replaces a stack of wiki tabs, spreadsheets, and community build guides with one self-contained site: look up any weapon, Warframe, mod, or mechanic; track what you own and what you're farming; and plan builds with live stat calculations — all running entirely in your browser, with nothing ever sent anywhere.
+
+## ✨ Features
 
 - **Meta Weapons Database** — live stat calculations, mod configurations, and build optimization for every weapon.
 - **Warframe Builds Codex** — interactive meta-build dashboard with custom loadouts and dynamic filtering.
@@ -15,12 +21,49 @@ No server. No build step. No dependencies. No internet connection required once 
 - **Progression Roadmap** — a phase-by-phase path from Mastery Rank 1 through The Steel Path.
 - **Endgame tools** — Archon Shard planner, Incarnon tracker, Circuit tracker, and more.
 - **Farming & Economy hub** — resource, relic, and platinum farming guides with live tooling.
+- **Global search** — jump straight to any page, section, or entry across the whole Compendium.
+- **Local backup & restore** — export your tracked data to a file and restore it later or on another machine.
 
-## 🚀 Getting started
+## ⚙️ Settings
 
-**Download and run locally** — grab the latest release ZIP, extract it anywhere, and open `!Warframe_Master_Index.html` in a browser. That's the whole install process.
+Available from the ⚙️ Settings page on every screen:
 
-**Or browse the source** — every page is plain HTML/CSS/JS, readable and editable directly in this repo.
+- **Player Profile** — in-game name, platform, and Mastery Rank, shown across the site.
+- **Display Preferences** — UI scale, reduce-motion toggle, and number of search results shown.
+- **Backup & Restore** — export or import all locally-saved data (loadouts, checkboxes, tracked progress) as a file.
+- **Data Management** — view local storage usage and clear saved data if needed.
+
+## ✅ Requirements
+
+- Any modern web browser (Chrome, Firefox, Edge, Safari).
+- No internet connection required after download — everything runs from local files.
+- No installation, no runtime, no dependencies.
+
+## 📥 Installation
+
+1. Grab the latest release ZIP from [Releases](../../releases).
+2. Extract it anywhere on your computer.
+3. Open `!Warframe_Master_Index.html` in your browser.
+
+That's the entire install process — there's nothing to build or configure to get it running.
+
+## 🔧 Setup
+
+The Compendium works immediately with no setup, but to get the most out of the tracking features:
+
+1. Open **⚙️ Settings** and fill in your Player Profile (in-game name, platform, Mastery Rank).
+2. Use the ownership checkboxes across the Warframes/Weapons/Mods pages to mark what you own — this drives the "active" filtering in the Builds Codex and Mods Database.
+3. Periodically use **Backup & Restore** in Settings to export your data, especially before clearing browser storage or moving to a new machine.
+
+## 🛠️ Development
+
+Every page is plain HTML/CSS/JS — readable and editable directly, no build step required to run it locally. For contributors working on the source:
+
+- `app/` is the active source tree; every page lives there (`app/docs/` for documentation pages).
+- `app/assets/js/common.js` is the single source of truth for the shared header, navigation, search, and title banner — injected into every page rather than hand-copied.
+- `preflight_check.py` runs a battery of consistency checks (dead links, encoding, version sync, nav sequence) — run before any release.
+- `build_release.py` builds the distributable ZIP from source and refreshes the tested `current/` snapshot.
+- Two changelogs are kept in sync on every release: `CHANGELOG.md` and `app/docs/Release_Notes.html`.
 
 All personal data (loadouts, checkboxes, custom entries) is saved locally in your browser's storage — it stays on your machine and is never shared or uploaded anywhere.
 
