@@ -8,6 +8,8 @@ No server. No build step. No dependencies. No internet connection required once 
 
 **🔗 [Try it live](https://nlesmerises.github.io/warframe-the-orbiter-compendium/)** — browse the whole Compendium in your browser right now, no download required.
 
+<img src="app/assets/img/screenshots/hero-master-index.png" alt="Warframe: The Orbiter Compendium — Master Console">
+
 ## 📖 What it does
 
 The Orbiter Compendium is a single-page-per-topic reference and build-tracking tool for Warframe. It replaces a stack of wiki tabs, spreadsheets, and community build guides with one self-contained site: look up any weapon, Warframe, mod, or mechanic; track what you own and what you're farming; and plan builds with live stat calculations — all running entirely in your browser, with nothing ever sent anywhere.
@@ -16,6 +18,18 @@ The Orbiter Compendium is a single-page-per-topic reference and build-tracking t
 
 - **Meta Weapons Database** — live stat calculations, mod configurations, and build optimization for every weapon.
 - **Warframe Builds Codex** — interactive meta-build dashboard with custom loadouts and dynamic filtering.
+
+<table>
+<tr>
+<td width="50%"><img src="app/assets/img/screenshots/builds-codex-default.png" alt="Builds Codex default meta build view"></td>
+<td width="50%"><img src="app/assets/img/screenshots/builds-codex-customize.png" alt="Builds Codex build customizer"></td>
+</tr>
+<tr>
+<td><em>Default meta build — full stats, mods, arcanes, and survivability analysis at a glance.</em></td>
+<td><em>Customize any build — swap mods, cycle polarities, and see stats recalculate live.</em></td>
+</tr>
+</table>
+
 - **Mods Database** — full 1,801-mod directory with search and category browsing.
 - **Damage & Status Guide** — every damage type, proc, and faction matchup in one reference.
 - **Progression Roadmap** — a phase-by-phase path from Mastery Rank 1 through The Steel Path.
@@ -32,6 +46,10 @@ Available from the ⚙️ Settings page on every screen:
 - **Display Preferences** — UI scale, reduce-motion toggle, and number of search results shown.
 - **Backup & Restore** — export or import all locally-saved data (loadouts, checkboxes, tracked progress) as a file.
 - **Data Management** — view local storage usage and clear saved data if needed.
+
+<img src="app/assets/img/screenshots/backup-restore.png" alt="Backup & Restore panel" width="420">
+
+*Export your progress to a file any time, or load a previous backup — everything is stored locally, so this is also how you move your data to another machine.*
 
 ## ✅ Requirements
 
