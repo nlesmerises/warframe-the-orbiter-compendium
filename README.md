@@ -17,6 +17,18 @@ The Orbiter Compendium is a single-page-per-topic reference and build-tracking t
 ## ✨ Features
 
 - **Meta Weapons Database** — live stat calculations, mod configurations, and build optimization for every weapon.
+
+<table>
+<tr>
+<td width="50%"><img src="app/assets/img/screenshots/meta-weapons-default.png" alt="Meta Weapons Database default build view"></td>
+<td width="50%"><img src="app/assets/img/screenshots/meta-weapons-customize.png" alt="Meta Weapons Database build customizer"></td>
+</tr>
+<tr>
+<td><em>Meta build for every weapon — base stats, mod loadout, arcanes, and a full built-vs-base comparison table (damage, DPS, crit, status) computed live.</em></td>
+<td><em>Full build customizer — rename loadouts, save multiple builds per weapon, and edit every mod/arcane slot with stats recalculating as you go.</em></td>
+</tr>
+</table>
+
 - **Warframe Builds Codex** — interactive meta-build dashboard with custom loadouts and dynamic filtering.
 
 <table>
@@ -35,6 +47,11 @@ The Orbiter Compendium is a single-page-per-topic reference and build-tracking t
 - **Progression Roadmap** — a phase-by-phase path from Mastery Rank 1 through The Steel Path.
 - **Endgame tools** — Archon Shard planner, Incarnon tracker, Circuit tracker, and more.
 - **Farming & Economy hub** — resource, relic, and platinum farming guides with live tooling.
+
+<img src="app/assets/img/screenshots/tenno-foundry.png" alt="Tenno Foundry part-tracking grid">
+
+*Tenno Foundry — track owned parts and farming progress for every Warframe, with claimed/rank-30 status per frame.*
+
 - **Global search** — jump straight to any page, section, or entry across the whole Compendium.
 - **Local backup & restore** — export your tracked data to a file and restore it later or on another machine.
 
