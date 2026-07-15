@@ -112,6 +112,8 @@ This is a completely free, non-commercial, unofficial fan-made project. Warframe
 
 Full legal text, privacy disclosures, and fan-content policy: [`app/docs/License_Agreement.html`](app/docs/License_Agreement.html)
 
+Full version history and release notes: [`app/docs/Release_Notes.html`](app/docs/Release_Notes.html)
+
 ---
 
 *Built and maintained by* **Zylxyz**
