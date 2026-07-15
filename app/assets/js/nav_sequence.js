@@ -84,14 +84,8 @@ window.GUIDE_SEQUENCE = [
 // Excluded on purpose (hub / settings / dashboards). Add here if you want
 // them in the linear flow:
 //   !Warframe_Master_Index.html
-//   Warframe_Arsenal_Dashboard.html
-//   Warframe_Core_Codex_Hub.html
-//   Warframe_Core_Dashboard.html
 //   Warframe_Dashboard.html
-//   Warframe_Economy_Dashboard.html
-//   Warframe_Endgame_Dashboard.html
 //   Warframe_System_Settings.html
-//   Warframe_Systems_Dashboard.html
 
 // Standalone pages with no Prev/Next wiring at all:
 //   License_Agreement.html

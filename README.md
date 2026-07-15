@@ -1,6 +1,6 @@
 # 🪐 Warframe: The Orbiter Compendium
 
-*by Zylxyz (Nelson Lesmerises)* · v1.28.0
+*by Zylxyz (Nelson Lesmerises)* · v1.29.0
 
 A complete, offline-first Warframe reference and build companion — meta build codices, an interactive weapons database, a mods database, damage/status mechanics guides, progression roadmaps, and dozens of specialized trackers and calculators, all wrapped in one dark-glass, self-contained static site.
 

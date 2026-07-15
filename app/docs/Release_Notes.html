@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="../assets/js/common.js?v=19"></script>
+    <script src="../assets/js/common.js?v=26"></script>
     <meta charset="UTF-8">
     <title>Warframe: The Orbiter Compendium &mdash; Release Notes</title>
     <link rel="stylesheet" href="../assets/fonts/fonts.css">
@@ -47,6 +47,30 @@ This project follows Semantic Versioning (MAJOR.MINOR.PATCH). The rules, in forc
 - The single source of truth is the `VERSION` file. The root `version.js` and `app/assets/js/version.js` must always match it.
 
 The version history prior to this policy was not consistently SemVer-compliant (numbers were sometimes reused or bumped on the wrong digit for feature releases). Rather than freeze that inconsistency, the entire historical sequence was renumbered once (2026-07-09) to real SemVer, start to finish, so every past release now carries an accurate classification. See the [Version Archive](Version_Archive.html) for anything before this file's oldest entry.
+
+## [1.29.0] - 2026-07-14
+
+### Added
+- **Nested category registry replacing the old flat category system.** `common.js` now models the header's 8 categories (Getting Started, Warframes, Arsenal, Mods & Arcanes, Farming & Economy, Combat & Mechanics, Endgame & Activities, Tools & Maintenance) as a real parent-pointer registry (`CODEX_REGISTRY`), with sub-groups for pages that warrant a deeper breadcrumb level: Arsenal ("Melee & Combos", "Companions & Vehicles"), Getting Started ("The Tenno Path"), Farming & Economy ("Foundry", "Trading & Syndicates", "Relics", "Live Feeds"), and Endgame & Activities ("Open Worlds & Story", "Vehicles", "Story Companions", "Trackers").
+- **Full-coverage clickable breadcrumb** built by walking the registry from any page up to Home, replacing the old one-level "Home / Page" trail. Pages nested inside a sub-group get a real 4-segment trail.
+- **Quick-nav hover dropdowns** on every header category icon, listing every page in that category (not just its landing page).
+- **Active-page icon highlight** in the header, so the current section is visually obvious at a glance.
+- **`preflight_check.py` CHECK 13** — verifies every real page under `app/` is reachable from the header's category registry, and every registered filename actually exists on disk. Catches silent drift between the nav system and the file tree going forward.
+
+### Changed
+- **Master Index rebuilt around the same 8-category system as the header**, replacing 6 old cards (each of which linked to its own separate hub/dashboard page) with 8 new ones matching the header's names, icons, and colors exactly, each linking straight to that category's real landing page.
+- Site Map moved out of the header icon row into Settings (low-frequency navigation tool, not a primary action).
+- 5 pages recategorized to match their actual content rather than where they happened to sit historically: `Mission_Types_Guide` → Getting Started, `Helminth_Synergy_App` → Endgame & Activities, `Drop_Tables` and `Farming_Codex_App` → Farming & Economy, `Tenet_Kuva_Weapons_Guide` → Arsenal.
+- Title, breadcrumb, and search bar now align to the real content panel's edges (read at runtime via `getBoundingClientRect`) instead of hardcoded viewport pixel offsets that never lined up with the panel or with each other.
+
+### Removed
+- **6 orphaned hub/dashboard pages deleted** after a full-content audit confirmed each had zero unique content — every link on them already resolved to a page reachable via the new category system: `Warframe_Core_Dashboard.html`, `Warframe_Endgame_Dashboard.html`, `Warframe_Systems_Dashboard.html`, `Warframe_Core_Codex_Hub.html`, `Warframe_Arsenal_Dashboard.html`, `Warframe_Economy_Dashboard.html`. Resulting dead links across `Warframe_Site_Map.html` and 4 content pages repointed.
+- The 3 remaining hub/dashboard pages with real unique content (`Warframe_Live_Network_Hub.html`, `Warframe_Dashboard.html`, `Warframe_Active_Projects_Farming_Hub.html`) were registered into the category system rather than deleted.
+
+### Fixed
+- **Title truncated almost immediately at non-maximized window widths** ("Warfra...") — the banner's `max-width` was a fixed `calc(100vw - 600px)` guess; now computed from the real gap between the banner and wherever the search bar actually starts.
+- **`Warframe_Live_Network_Hub.html` had 425 bytes of trailing null-byte corruption** after its closing `</html>` tag (harmless to rendering, real file corruption) — trimmed.
+- Removed a genuinely redundant fixed `width:1750px` (alongside `max-width:1750px`) on 2 pages without a flex-positioned body (`Warframe_Fishing_Companion_Codex.html`, `_page_template.html`); confirmed via live testing that 8 other pages sharing the same pattern actually need it (their `display:flex` body would otherwise shrink the panel to content size) and left those alone.
 
 ## [1.28.0] - 2026-07-13
 

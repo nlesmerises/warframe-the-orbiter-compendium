@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/common.js?v=26"></script>
     <script src="assets/js/nav_sequence.js"></script>
     <script src="assets/js/tracker_keys.js"></script>
     <script src="assets/js/wf_backup_data.js"></script>
@@ -24,13 +24,16 @@
         .btn:active { transform: translateY(1px); box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
         .btn-green { background: linear-gradient(135deg, #10b981, #059669); color: white; border: 1px solid rgba(255,255,255,0.2); }
         .btn-green:hover { background: linear-gradient(135deg, #34d399, #10b981); }
+        /* Two-panel layout, matching Meta Weapons Codex: a fixed-height row where
+           the sidebar and the build panel each scroll independently (their own
+           thin scrollbar/"slider"), instead of the whole page growing/scrolling
+           with the build content. */
         .builds-layout {
-            display: grid;
-            grid-template-columns: 320px 1fr;
+            display: flex;
             gap: 24px;
             max-width: 1750px;
             margin: 0 auto 50px auto;
-            align-items: start;
+            height: calc(100vh - 340px);
         }
 
         .meta-stat-card[data-action="stat"] {
@@ -42,17 +45,31 @@
             background: rgba(255, 255, 255, 0.08) !important;
         }
 
+        /* Default build-view cards (mod/stat/arcane/helminth/shard) are hover-info
+           only, not clickable -- see the click-does-nothing but mouseover-shows-a-
+           tooltip change. cursor:help signals "hover for info" instead of the
+           cursor:pointer these same classes carry when used in the configurator
+           (.editing cards there stay genuinely clickable). */
+        .mod-slot[data-hover], .addin-card[data-hover], .meta-stat-card[data-hover] {
+            cursor: help !important;
+        }
+
         /* Sidebar Selector Styling */
         .frame-selector-panel {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-lg);
             padding: 20px;
-            max-height: 80vh;
+            width: 320px;
+            min-width: 320px;
+            height: 100%;
             overflow-y: auto;
-            position: sticky;
-            top: 90px;
+            overflow-x: hidden;
+            flex-shrink: 0;
         }
+        .frame-selector-panel::-webkit-scrollbar { width: 4px; }
+        .frame-selector-panel::-webkit-scrollbar-track { background: transparent; }
+        .frame-selector-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.09); border-radius: 4px; }
 
         /* .search-bar width/padding/border/font: see global rule in codex_glass_theme.css */
         .search-bar { margin-bottom: 15px; }
@@ -130,15 +147,25 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-lg);
             padding: 35px;
-            min-height: 60vh;
+            flex: 1;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
+        .build-display-panel::-webkit-scrollbar { width: 4px; }
+        .build-display-panel::-webkit-scrollbar-track { background: transparent; }
+        .build-display-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.09); border-radius: 4px; }
 
+        /* Empty state (no frame selected yet) is the one case that should still
+           center vertically -- give it its own auto-margins rather than
+           justify-content:center on the scrollable panel itself, which would
+           otherwise clip the top of tall build content when scrolling. */
         .placeholder-panel {
             text-align: center;
             color: var(--text-secondary);
+            margin: auto;
         }
 
         .placeholder-panel h3 {
@@ -850,6 +877,17 @@ body { padding-top: 154.6px !important; }
             </div>
         </div>
     </div>
+</div>
+
+<!-- Hover-info tooltip: default build-view cards (mod/stat/arcane/helminth/shard)
+     show this on mouseover instead of opening the modal below; click does nothing
+     on these. The configurator's own cards (data-action, .editing) are unaffected
+     and keep the click-to-modal/click-to-picker behavior they already had. -->
+<div id="hover-info-tip" style="display:none; position:fixed; z-index:20000; max-width:320px; pointer-events:none; background:rgba(8,12,24,0.98); border:1px solid rgba(255,171,0,0.4); border-radius:8px; padding:12px 14px; box-shadow:0 14px 40px rgba(0,0,0,0.6); font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;">
+    <div id="hover-info-title" style="color:#ffab00; font-weight:700; font-size:13px; margin-bottom:4px;"></div>
+    <div id="hover-info-badge" style="display:inline-block; color:#94a3b8; font-size:10px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;"></div>
+    <div id="hover-info-effect" style="color:#e2e8f0; font-size:12px; line-height:1.5; margin-bottom:8px;"></div>
+    <div id="hover-info-location" style="color:#94a3b8; font-size:11px; line-height:1.4;"></div>
 </div>
 
 <!-- Modal Dialog -->
@@ -2683,6 +2721,245 @@ body { padding-top: 154.6px !important; }
         loadSelector();
     }
 
+    // "Full Encyclopedia" / "+ Add Meta Warframe" buttons open the two modals below
+    // (#addWarframeOverlay / #wfEncOverlay), restored 2026-07-13 from a pre-incident
+    // backup (backups/Warframe_Builds_Project_BACKUP_2026-06-23.zip) after the .git
+    // deletion/re-init on 2026-06-30 lost the working version -- the onclick handlers
+    // had been left calling toggleOwnedFilter()/toggleEncyclopedia(), neither of which
+    // existed anywhere in the file. Reuses this file's own getActiveArmory()/
+    // addWarframeToActive() (real ownership-tracking, not the recovered backup's
+    // simpler "all frames active by default" stub) so the modals stay consistent with
+    // the rest of the page's data model.
+    function toggleOwnedFilter(btn) {
+        openAddWarframeModal();
+    }
+
+    function toggleEncyclopedia(btn) {
+        openEncyclopediaModal();
+    }
+
+    // ── Add Meta Warframe Modal ────────────────────────────────
+    window._addWFFilter = { cat: 'All', role: 'All' };
+
+    function openAddWarframeModal() {
+        document.getElementById('addWarframeSearch').value = '';
+        window._addWFFilter = { cat: 'All', role: 'All' };
+        document.querySelectorAll('.wf-modal-tab').forEach((b, i) => {
+            const active = i === 0;
+            b.style.background = active ? 'rgba(255,171,0,0.2)' : 'rgba(255,255,255,0.05)';
+            b.style.borderColor = active ? 'rgba(255,171,0,0.4)' : 'rgba(255,255,255,0.1)';
+            b.style.color = active ? '#ffab00' : '#94a3b8';
+        });
+        document.querySelectorAll('.wf-modal-role').forEach((b, i) => {
+            const active = i === 0;
+            b.style.background = active ? 'rgba(255,171,0,0.2)' : 'rgba(255,255,255,0.05)';
+            b.style.borderColor = active ? 'rgba(255,171,0,0.4)' : 'rgba(255,255,255,0.1)';
+            b.style.color = active ? '#ffab00' : '#94a3b8';
+        });
+        renderAddWarframeList();
+        document.getElementById('addWarframeOverlay').style.display = 'flex';
+    }
+
+    function closeAddWarframeModal(e) {
+        if (e && e.target !== document.getElementById('addWarframeOverlay')) return;
+        document.getElementById('addWarframeOverlay').style.display = 'none';
+    }
+
+    function setAddWarframeFilter(type, val, btn) {
+        window._addWFFilter[type] = val;
+        const cls = type === 'cat' ? '.wf-modal-tab' : '.wf-modal-role';
+        document.querySelectorAll(cls).forEach(b => {
+            b.style.background = 'rgba(255,255,255,0.05)';
+            b.style.borderColor = 'rgba(255,255,255,0.1)';
+            b.style.color = '#94a3b8';
+        });
+        btn.style.background = 'rgba(255,171,0,0.2)';
+        btn.style.borderColor = 'rgba(255,171,0,0.4)';
+        btn.style.color = '#ffab00';
+        renderAddWarframeList();
+    }
+
+    function renderAddWarframeList() {
+        const list = document.getElementById('addWarframeList');
+        const q = (document.getElementById('addWarframeSearch').value || '').toLowerCase();
+        const armory = getActiveArmory();
+        const { cat, role } = window._addWFFilter;
+
+        const frames = buildsDatabase.filter(f => {
+            const matchCat = cat === 'All' || (f.category || 'Standard') === cat;
+            const matchRole = role === 'All' || f.role === role;
+            const matchQ = !q || f.name.toLowerCase().includes(q);
+            return matchCat && matchRole && matchQ;
+        });
+
+        if (!frames.length) {
+            list.innerHTML = '<div style="color:#64748b; padding:20px; text-align:center; font-family:Inter,sans-serif;">No Warframes found.</div>';
+            return;
+        }
+
+        list.innerHTML = frames.map(f => {
+            const inArmory = armory.includes(f.name);
+            return `<div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:8px;">
+                <div>
+                    <span style="color:#e2e8f0; font-weight:600; font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size:13px;">${f.name}</span>
+                    <span style="color:#64748b; font-size:11px; margin-left:8px;">${f.role} • ${f.category || 'Standard'}</span>
+                </div>
+                ${inArmory
+                    ? `<span style="color:#34d399; font-size:11px; font-weight:600; padding:4px 10px; border:1px solid rgba(34,197,94,0.3); border-radius:4px; background:rgba(34,197,94,0.1);">✓ Active</span>`
+                    : `<button data-wfname="${f.name}" onclick="addWarframeToActive(this.dataset.wfname); renderAddWarframeList();" style="color:#ffab00; background:rgba(255,171,0,0.1); border:1px solid rgba(255,171,0,0.3); border-radius:4px; padding:4px 10px; cursor:pointer; font-size:11px; font-weight:700;">+ Add</button>`
+                }
+            </div>`;
+        }).join('');
+    }
+
+    // ── Full Encyclopedia Modal ─────────────────────────────────
+    window._encFilter = { cat: 'All', role: 'All' };
+
+    function openEncyclopediaModal() {
+        window._encFilter = { cat: 'All', role: 'All' };
+        document.querySelectorAll('.enc-cat-tab').forEach((b, i) => {
+            const on = i === 0;
+            b.style.background = on ? 'rgba(99,102,241,0.25)' : 'rgba(255,255,255,0.05)';
+            b.style.borderColor = on ? 'rgba(99,102,241,0.5)' : 'rgba(255,255,255,0.1)';
+            b.style.color = on ? '#a5b4fc' : '#94a3b8';
+        });
+        document.querySelectorAll('.enc-role-tab').forEach((b, i) => {
+            const on = i === 0;
+            b.style.background = on ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.05)';
+            b.style.borderColor = on ? 'rgba(99,102,241,0.4)' : 'rgba(255,255,255,0.1)';
+            b.style.color = on ? '#a5b4fc' : '#94a3b8';
+        });
+        document.getElementById('wfEncSearch').value = '';
+        renderEncModal();
+        document.getElementById('wfEncOverlay').style.display = 'flex';
+    }
+
+    function closeEncModal(e) {
+        if (e && e.target !== document.getElementById('wfEncOverlay')) return;
+        document.getElementById('wfEncOverlay').style.display = 'none';
+    }
+
+    function setEncFilter(type, val, btn) {
+        window._encFilter[type] = val;
+        const cls = type === 'cat' ? '.enc-cat-tab' : '.enc-role-tab';
+        document.querySelectorAll(cls).forEach(b => {
+            b.style.background = 'rgba(255,255,255,0.05)';
+            b.style.borderColor = 'rgba(255,255,255,0.1)';
+            b.style.color = '#94a3b8';
+        });
+        btn.style.background = type === 'cat' ? 'rgba(99,102,241,0.25)' : 'rgba(99,102,241,0.2)';
+        btn.style.borderColor = type === 'cat' ? 'rgba(99,102,241,0.5)' : 'rgba(99,102,241,0.4)';
+        btn.style.color = '#a5b4fc';
+        renderEncModal();
+    }
+
+    function renderEncModal() {
+        const list = document.getElementById('wfEncList');
+        const q = (document.getElementById('wfEncSearch').value || '').toLowerCase();
+        const { cat, role } = window._encFilter;
+
+        const frames = buildsDatabase.filter(f => {
+            const matchCat = cat === 'All' || (f.category || 'Standard') === cat;
+            const matchRole = role === 'All' || f.role === role;
+            const matchQ = !q || f.name.toLowerCase().includes(q);
+            return matchCat && matchRole && matchQ;
+        });
+
+        if (!frames.length) {
+            list.innerHTML = '<div style="color:#64748b; padding:30px; text-align:center;">No Warframes found.</div>';
+            return;
+        }
+
+        const roleColors = { DPS: '#f87171', Tank: '#fb923c', Support: '#4ade80', Caster: '#60a5fa', Special: '#c084fc', default: '#94a3b8' };
+        const armory = getActiveArmory();
+
+        list.innerHTML = frames.map(f => {
+            const rc = roleColors[f.role] || roleColors.default;
+            const inArmory = armory.includes(f.name);
+            return `<div onclick="showEncDetail('${f.name.replace(/'/g, "\\'")}', this)" style="display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:8px; cursor:pointer; transition:background 0.15s;" onmouseover="this.style.background='rgba(99,102,241,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+                <div>
+                    <span style="font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size:13px; font-weight:700; color:#e2e8f0;">${f.name}</span>
+                    <span style="margin-left:8px; font-size:10px; color:${rc}; background:${rc}22; border:1px solid ${rc}44; padding:2px 7px; border-radius:10px;">${f.role}</span>
+                    <span style="margin-left:5px; font-size:10px; color:#475569;">${f.category || 'Standard'}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    ${inArmory ? '<span style="color:#34d399; font-size:10px;">✓ Active</span>' : ''}
+                    <span style="color:#64748b; font-size:14px;">›</span>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function showEncDetail(name, rowEl) {
+        const f = buildsDatabase.find(x => x.name === name);
+        if (!f) return;
+        const list = document.getElementById('wfEncList');
+        const roleColors = { DPS: '#f87171', Tank: '#fb923c', Support: '#4ade80', Caster: '#60a5fa', Special: '#c084fc', default: '#94a3b8' };
+        const rc = roleColors[f.role] || roleColors.default;
+        const armory = getActiveArmory();
+        const inArmory = armory.includes(f.name);
+
+        const statParts = (f.stats || '').split('/').map(s => s.trim());
+        const statLabels = ['HP', 'Shield', 'Armor', 'Energy', 'Sprint'];
+        const statsHtml = statParts.length === 5
+            ? statParts.map((v, i) => `<div style="text-align:center; flex:1; padding:10px 6px;"><div style="color:#94a3b8; font-size:9px; text-transform:uppercase; letter-spacing:1px; margin-bottom:3px;">${statLabels[i]}</div><div style="color:#e2e8f0; font-size:16px; font-weight:700;">${v}</div></div>`).join('')
+            : `<div style="color:#64748b;">${f.stats || ''}</div>`;
+
+        const addBtn = inArmory
+            ? `<span style="color:#34d399; padding:6px 14px; border:1px solid rgba(34,197,94,0.3); border-radius:6px; background:rgba(34,197,94,0.08); font-size:12px;">✓ Active</span>`
+            : `<button data-dname="${f.name}" onclick="addWarframeToActive(this.dataset.dname); showEncDetail(this.dataset.dname);" style="color:#a5b4fc; background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.4); border-radius:6px; padding:6px 16px; cursor:pointer; font-size:12px; font-weight:700;">+ Add to Active</button>`;
+
+        const modsHtml = Array.isArray(f.mods) && f.mods.length
+            ? f.mods.map(m => `<div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:5px; padding:5px 10px; font-size:11px; color:#cbd5e1;">${m}</div>`).join('')
+            : '';
+
+        list.innerHTML = `
+            <div>
+                <button onclick="renderEncModal()" style="background:none; border:none; color:#a5b4fc; cursor:pointer; font-size:13px; padding:0 0 14px 0; display:flex; align-items:center; gap:5px;">‹ Back to list</button>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:10px; flex-wrap:wrap;">
+                    <div>
+                        <span style="font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-size:20px; font-weight:700; color:#e2e8f0;">${f.name}</span>
+                        <span style="margin-left:10px; font-size:12px; color:${rc}; background:${rc}22; border:1px solid ${rc}44; padding:3px 10px; border-radius:12px;">${f.role}</span>
+                        <span style="margin-left:6px; font-size:11px; color:#475569;">${f.category || 'Standard'}</span>
+                    </div>
+                    ${addBtn}
+                </div>
+
+                ${f.stats ? `<div style="display:flex; gap:0; margin-bottom:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; overflow:hidden;">${statsHtml}</div>` : ''}
+
+                ${f.passive ? `<div style="margin-bottom:12px; padding:10px 14px; background:rgba(255,171,0,0.06); border-left:3px solid #ffab00; border-radius:4px;">
+                    <div style="color:#ffab00; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Passive</div>
+                    <div style="color:#cbd5e1; font-size:13px;">${f.passive}</div>
+                </div>` : ''}
+
+                ${f.helminth ? `<div style="margin-bottom:12px; padding:10px 14px; background:rgba(167,139,250,0.06); border-left:3px solid #a78bfa; border-radius:4px;">
+                    <div style="color:#a78bfa; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Helminth Recommendation</div>
+                    <div style="margin-bottom:4px;"><span style="color:#c084fc; font-size:13px; font-weight:600;">${f.helminth.Ability}</span> <span style="color:#64748b; font-size:11px;">replaces ${f.helminth.Replaced}</span></div>
+                    <div style="color:#cbd5e1; font-size:12px;">${f.helminth.Description}</div>
+                </div>` : ''}
+
+                ${modsHtml ? `<div style="margin-bottom:12px;">
+                    <div style="color:#60a5fa; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Meta Build — ${f.buildName || ''}</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px;">${modsHtml}</div>
+                </div>` : ''}
+
+                ${f.arcanes && f.arcanes.length ? `<div style="margin-bottom:12px;">
+                    <div style="color:#f0abfc; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Arcanes</div>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">${f.arcanes.map(a => `<div style="background:rgba(240,171,252,0.08); border:1px solid rgba(240,171,252,0.2); border-radius:5px; padding:5px 10px; font-size:11px; color:#f0abfc;">${a}</div>`).join('')}</div>
+                </div>` : ''}
+
+                ${f.shards ? `<div style="margin-bottom:12px; padding:8px 12px; background:rgba(239,68,68,0.06); border-left:3px solid #ef4444; border-radius:4px;">
+                    <span style="color:#ef4444; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Archon Shards — </span>
+                    <span style="color:#cbd5e1; font-size:12px;">${f.shards}</span>
+                </div>` : ''}
+
+                ${f.location ? `<div style="padding:8px 12px; background:rgba(74,222,128,0.06); border-left:3px solid #4ade80; border-radius:4px;">
+                    <span style="color:#4ade80; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Farming Location — </span>
+                    <span style="color:#cbd5e1; font-size:12px;">${f.location}</span>
+                </div>` : ''}
+            </div>`;
+    }
+
     // Load active selector panel frame list items
     function loadSelector() {
         const container = document.getElementById('frame-list-container');
@@ -2929,7 +3206,7 @@ body { padding-top: 154.6px !important; }
         
         // Aura slot
         modGridHTML += `
-            <div class="mod-slot aura-slot ${getModRarityClass(frame.aura)}" data-action="mod" data-mod="${frame.aura.replace(/"/g,'&quot;')}" data-slot="Aura Mod" data-slot-index="0">
+            <div class="mod-slot aura-slot ${getModRarityClass(frame.aura)}" data-hover="mod" data-mod="${frame.aura.replace(/"/g,'&quot;')}" data-slot="Aura Mod" data-slot-index="0">
                 <div class="mod-slot-type">Aura Slot</div>
                 <div class="mod-slot-name">${frame.aura}</div>
             </div>
@@ -2937,7 +3214,7 @@ body { padding-top: 154.6px !important; }
         
         // Exilus slot
         modGridHTML += `
-            <div class="mod-slot exilus-slot ${getModRarityClass(frame.exilus)}" data-action="mod" data-mod="${frame.exilus.replace(/"/g,'&quot;')}" data-slot="Exilus Mod" data-slot-index="1">
+            <div class="mod-slot exilus-slot ${getModRarityClass(frame.exilus)}" data-hover="mod" data-mod="${frame.exilus.replace(/"/g,'&quot;')}" data-slot="Exilus Mod" data-slot-index="1">
                 <div class="mod-slot-type">Exilus Slot</div>
                 <div class="mod-slot-name">${frame.exilus}</div>
             </div>
@@ -2946,7 +3223,7 @@ body { padding-top: 154.6px !important; }
         // 8 Main slots
         frame.mods.forEach((mod, index) => {
             modGridHTML += `
-                <div class="mod-slot ${getModRarityClass(mod)}" data-action="mod" data-mod="${mod.replace(/"/g,'&quot;')}" data-slot="Warframe Mod" data-slot-index="${index + 2}">
+                <div class="mod-slot ${getModRarityClass(mod)}" data-hover="mod" data-mod="${mod.replace(/"/g,'&quot;')}" data-slot="Warframe Mod" data-slot-index="${index + 2}">
                     <div class="mod-slot-type">Slot ${index + 1}</div>
                     <div class="mod-slot-name">${mod}</div>
                 </div>
@@ -2998,19 +3275,19 @@ body { padding-top: 154.6px !important; }
 
             ${rawStats.length >= 4 ? `
             <div class="meta-stats-row">
-                <div class="meta-stat-card" data-action="stat" data-stat="Health" style="cursor: pointer;">
+                <div class="meta-stat-card" data-hover="stat" data-stat="Health" style="cursor: pointer;">
                     <div class="meta-stat-label">Health</div>
                     <div class="meta-stat-value">${finalStats.health}</div>
                 </div>
-                <div class="meta-stat-card" data-action="stat" data-stat="Shields" style="cursor: pointer;">
+                <div class="meta-stat-card" data-hover="stat" data-stat="Shields" style="cursor: pointer;">
                     <div class="meta-stat-label">Shields</div>
                     <div class="meta-stat-value">${finalStats.shields}</div>
                 </div>
-                <div class="meta-stat-card" data-action="stat" data-stat="Armor" style="cursor: pointer;">
+                <div class="meta-stat-card" data-hover="stat" data-stat="Armor" style="cursor: pointer;">
                     <div class="meta-stat-label">Armor</div>
                     <div class="meta-stat-value">${finalStats.armor}</div>
                 </div>
-                <div class="meta-stat-card" data-action="stat" data-stat="Energy" style="cursor: pointer;">
+                <div class="meta-stat-card" data-hover="stat" data-stat="Energy" style="cursor: pointer;">
                     <div class="meta-stat-label">Energy</div>
                     <div class="meta-stat-value">${finalStats.energy}</div>
                 </div>
@@ -3034,15 +3311,15 @@ body { padding-top: 154.6px !important; }
 
             <div class="build-subtitle">Endgame Addins &amp; Synergies</div>
             <div class="addins-section">
-                <div class="addin-card" data-action="arcane" data-arcane="${frame.arcanes[0].replace(/"/g,'&quot;')}" data-slot-index="0">
+                <div class="addin-card" data-hover="arcane" data-arcane="${frame.arcanes[0].replace(/"/g,'&quot;')}" data-slot-index="0">
                     <div class="addin-card-title">Arcane Slot 1</div>
                     <div class="addin-card-value">${frame.arcanes[0]}</div>
                 </div>
-                <div class="addin-card" data-action="arcane" data-arcane="${frame.arcanes[1].replace(/"/g,'&quot;')}" data-slot-index="1">
+                <div class="addin-card" data-hover="arcane" data-arcane="${frame.arcanes[1].replace(/"/g,'&quot;')}" data-slot-index="1">
                     <div class="addin-card-title">Arcane Slot 2</div>
                     <div class="addin-card-value">${frame.arcanes[1]}</div>
                 </div>
-                <div class="addin-card" data-action="helminth"
+                <div class="addin-card" data-hover="helminth"
                      data-ability="${(frame.helminth.Ability || frame.helminth.ability || '').replace(/"/g,'&quot;')}"
                      data-replaced="${(frame.helminth.Replaced || frame.helminth.replaced || '').replace(/"/g,'&quot;')}"
                      data-description="${(frame.helminth.Description || frame.helminth.description || '').replace(/"/g,'&quot;')}">
@@ -3050,7 +3327,7 @@ body { padding-top: 154.6px !important; }
                     <div class="addin-card-value">${frame.helminth.Ability || frame.helminth.ability}</div>
                 </div>
             </div>
-            <div class="addin-card" style="margin-top: 15px;" data-action="shard" data-shards="${frame.shards.replace(/"/g,'&quot;')}">
+            <div class="addin-card" style="margin-top: 15px;" data-hover="shard" data-shards="${frame.shards.replace(/"/g,'&quot;')}">
                 <div class="addin-card-title">Archon Shard Setup</div>
                 <div class="addin-card-value">${frame.shards}</div>
             </div>
@@ -4500,6 +4777,96 @@ body { padding-top: 154.6px !important; }
             showStatDetails(target.dataset.stat);
         }
     });
+    // ─────────────────────────────────────────────────────────────
+
+    // ── DEFAULT-VIEW HOVER TOOLTIP ───────────────────────────────
+    // The default build-view's mod/stat/arcane/helminth/shard cards are
+    // hover-info only (see the data-hover rename above) -- click does nothing,
+    // mouseover shows this small tooltip instead of the full modal. Reuses the
+    // same lookup data (modDatabase/arcaneDatabase/statWikiDatabase) the modal
+    // functions use, just rendered into a compact floating box near the cursor.
+    (function () {
+        var tip = document.getElementById('hover-info-tip');
+        var titleEl = document.getElementById('hover-info-title');
+        var badgeEl = document.getElementById('hover-info-badge');
+        var effectEl = document.getElementById('hover-info-effect');
+        var locationEl = document.getElementById('hover-info-location');
+
+        function hoverContentFor(el) {
+            var kind = el.dataset.hover;
+            if (kind === 'mod') {
+                var m = (typeof modDatabase !== 'undefined') ? modDatabase[el.dataset.mod] : null;
+                return m
+                    ? { title: el.dataset.mod, badge: m.type, effect: m.effect, location: m.farm }
+                    : { title: el.dataset.mod, badge: el.dataset.slot, effect: "Enhances Warframe ability multipliers, duration, range, or survivability parameters.", location: "Various Solar Map missions, Void Containers, or standard enemy drop rotations." };
+            }
+            if (kind === 'arcane') {
+                var a = (typeof arcaneDatabase !== 'undefined') ? arcaneDatabase[el.dataset.arcane] : null;
+                return a
+                    ? { title: el.dataset.arcane, badge: a.type, effect: a.effect, location: a.farm }
+                    : { title: el.dataset.arcane, badge: "Endgame Arcane", effect: "Triggers a massive stat boost or support enhancement on specific actions (Crits, Kills, etc.).", location: "Eidolon Hunts in Plains of Eidolon, Zariman Bounties, or Duviri Void Gateways." };
+            }
+            if (kind === 'helminth') {
+                return {
+                    title: el.dataset.ability + " (Helminth)",
+                    badge: "Helminth Subsumed Ability",
+                    effect: "Subsumed Effect: " + el.dataset.description + " — Replaces: " + el.dataset.replaced,
+                    location: "Infirmary Room (Orbiter), via Helminth Chrysalis."
+                };
+            }
+            if (kind === 'shard') {
+                return {
+                    title: "Archon Shards Setup",
+                    badge: "Endgame Stat Boosters",
+                    effect: "Recommended: " + el.dataset.shards,
+                    location: "Weekly Archon Hunt missions or Netracell runs (Deimos)."
+                };
+            }
+            if (kind === 'stat') {
+                var data = (typeof statWikiDatabase !== 'undefined') ? statWikiDatabase[el.dataset.stat] : null;
+                return data
+                    ? { title: data.title, badge: data.type, effect: data.effect, location: data.farm }
+                    : { title: el.dataset.stat, badge: "Warframe Parameter", effect: "A baseline attribute defining the performance, movement speed, or resilience of your frame.", location: "" };
+            }
+            return null;
+        }
+
+        function showTip(el, evt) {
+            var content = hoverContentFor(el);
+            if (!content) return;
+            titleEl.textContent = content.title;
+            badgeEl.textContent = content.badge || '';
+            effectEl.textContent = content.effect || '';
+            locationEl.textContent = content.location || '';
+            tip.style.display = 'block';
+            positionTip(evt);
+        }
+
+        function positionTip(evt) {
+            var x = evt.clientX + 16;
+            var y = evt.clientY + 16;
+            var maxX = window.innerWidth - tip.offsetWidth - 12;
+            var maxY = window.innerHeight - tip.offsetHeight - 12;
+            tip.style.left = Math.min(x, Math.max(12, maxX)) + 'px';
+            tip.style.top = Math.min(y, Math.max(12, maxY)) + 'px';
+        }
+
+        function hideTip() {
+            tip.style.display = 'none';
+        }
+
+        document.addEventListener('mouseover', function (e) {
+            var target = e.target.closest('[data-hover]');
+            if (target) showTip(target, e);
+        });
+        document.addEventListener('mousemove', function (e) {
+            if (tip.style.display === 'block' && e.target.closest('[data-hover]')) positionTip(e);
+        });
+        document.addEventListener('mouseout', function (e) {
+            var target = e.target.closest('[data-hover]');
+            if (target && !target.contains(e.relatedTarget)) hideTip();
+        });
+    })();
     // ─────────────────────────────────────────────────────────────
 
     const statWikiDatabase = {

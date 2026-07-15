@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Warframe Weapon Calculator &mdash; Select a weapon and build your optimal loadout with live stat calculations.">
-    <script src="assets/js/common.js?v=19"></script>
+    <script src="assets/js/common.js?v=26"></script>
     <script src="assets/js/nav_sequence.js"></script>
     <script src="assets/js/mod_database.js"></script>
     <script src="assets/js/database_weapons.js"></script>
@@ -946,6 +946,12 @@
         .clickable-badge, .clickable-pill { cursor: pointer; transition: transform 0.15s, opacity 0.15s, filter 0.15s; }
         .clickable-badge:hover, .clickable-pill:hover { transform: translateY(-1px) scale(1.02); opacity: 0.9; filter: brightness(1.2); }
 
+        /* Default-view info cards (mod/arcane/stat/weapon-name/badge/pill) are
+           hover-info only, not clickable -- click does nothing, mouseover shows
+           a tooltip instead. cursor:help signals "hover for info" over the
+           cursor:pointer these classes otherwise carry. */
+        [data-hover] { cursor: help !important; }
+
         .notes-block {
             color: #7a8fa8;
             font-size: 0.87rem;
@@ -1248,6 +1254,17 @@ body { padding-top: 154.6px !important; }
     </div>
 </div>
 
+<!-- Hover-info tooltip: default weapon-detail cards (mod/arcane/stat/weapon
+     name/badges/pills) show this on mouseover instead of opening their modal;
+     click does nothing on these. Customize Build / New Slot stay real buttons
+     navigating to Warframe_Weapon_Build_Customizer.html, unaffected. -->
+<div id="hover-info-tip" style="display:none; position:fixed; z-index:20000; max-width:320px; pointer-events:none; background:rgba(8,12,24,0.98); border:1px solid rgba(255,171,0,0.4); border-radius:8px; padding:12px 14px; box-shadow:0 14px 40px rgba(0,0,0,0.6); font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;">
+    <div id="hover-info-title" style="color:#ffab00; font-weight:700; font-size:13px; margin-bottom:4px;"></div>
+    <div id="hover-info-badge" style="display:inline-block; color:#94a3b8; font-size:10px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;"></div>
+    <div id="hover-info-effect" style="color:#e2e8f0; font-size:12px; line-height:1.5; margin-bottom:8px;"></div>
+    <div id="hover-info-location" style="color:#94a3b8; font-size:11px; line-height:1.4;"></div>
+</div>
+
 <!-- ── Mod Info Modal ─────────────────────────────────── -->
 <div class="mod-info-overlay" id="modInfoOverlay" onclick="closeModInfo(event)">
     <div class="mod-info-panel" onclick="event.stopPropagation()">
@@ -1389,6 +1406,90 @@ function closeGlossaryInfo(e) {
     overlay.style.opacity = '0';
     setTimeout(() => { if (overlay.style.display === 'none') return; overlay.style.display = 'none'; }, 220);
 }
+
+// ── DEFAULT-VIEW HOVER TOOLTIP ────────────────────────────────
+// The weapon-detail default view's mod/arcane/stat/weapon-name/badge/pill
+// cards are hover-info only (see the data-hover attributes added to their
+// markup) -- click does nothing, mouseover shows this small tooltip instead
+// of the full modal. Reuses the same lookup data (getModData/STAT_INFO/
+// glossaryDictionary/state.weapons) the modal functions use.
+(function () {
+    var tip, titleEl, badgeEl, effectEl, locationEl;
+    function ensureRefs() {
+        if (tip) return;
+        tip = document.getElementById('hover-info-tip');
+        titleEl = document.getElementById('hover-info-title');
+        badgeEl = document.getElementById('hover-info-badge');
+        effectEl = document.getElementById('hover-info-effect');
+        locationEl = document.getElementById('hover-info-location');
+    }
+
+    function hoverContentFor(el) {
+        var kind = el.dataset.hover;
+        if (kind === 'mod') {
+            var name = el.dataset.modName;
+            if (!name) return { title: 'Empty Slot', badge: '', effect: '', location: '' };
+            var md = (typeof getModData === 'function') ? getModData(name) : null;
+            return { title: name, badge: (md && md.type) || 'Weapon Mod', effect: (md && md.effect) || 'No effect data available.', location: (md && md.farm) || 'Farming location not recorded.' };
+        }
+        if (kind === 'stat') {
+            var info = (typeof STAT_INFO !== 'undefined') ? STAT_INFO[el.dataset.stat] : null;
+            if (!info) return null;
+            return { title: info.name, badge: info.tagline, effect: info.desc, location: info.formula };
+        }
+        if (kind === 'weaponlore') {
+            var weapon = (state && state.weapons) ? state.weapons.find(function (w) { return w.id === el.dataset.weaponId; }) : null;
+            if (!weapon) return null;
+            return { title: weapon.name, badge: 'Weapon Lore & Acquisition', effect: weapon.lore || 'Detailed lore for this weapon has not been recorded yet.', location: weapon.acquisition || 'Acquisition details unknown.' };
+        }
+        if (kind === 'glossary') {
+            var term = el.dataset.term;
+            var key = (term || '').toLowerCase().trim();
+            var data = (typeof glossaryDictionary !== 'undefined' && glossaryDictionary[key]) || { title: term, desc: 'Information for this specific term has not been recorded in the database yet.' };
+            return { title: data.title, badge: '', effect: data.desc, location: '' };
+        }
+        return null;
+    }
+
+    function positionTip(evt) {
+        var x = evt.clientX + 16;
+        var y = evt.clientY + 16;
+        var maxX = window.innerWidth - tip.offsetWidth - 12;
+        var maxY = window.innerHeight - tip.offsetHeight - 12;
+        tip.style.left = Math.min(x, Math.max(12, maxX)) + 'px';
+        tip.style.top = Math.min(y, Math.max(12, maxY)) + 'px';
+    }
+
+    function showTip(el, evt) {
+        ensureRefs();
+        var content = hoverContentFor(el);
+        if (!content) return;
+        titleEl.textContent = content.title || '';
+        badgeEl.textContent = content.badge || '';
+        effectEl.textContent = content.effect || '';
+        locationEl.textContent = content.location || '';
+        tip.style.display = 'block';
+        positionTip(evt);
+    }
+
+    function hideTip() {
+        if (tip) tip.style.display = 'none';
+    }
+
+    document.addEventListener('mouseover', function (e) {
+        var target = e.target.closest('[data-hover]');
+        if (target) showTip(target, e);
+    });
+    document.addEventListener('mousemove', function (e) {
+        ensureRefs();
+        if (tip.style.display === 'block' && e.target.closest('[data-hover]')) positionTip(e);
+    });
+    document.addEventListener('mouseout', function (e) {
+        var target = e.target.closest('[data-hover]');
+        if (target && !target.contains(e.relatedTarget)) hideTip();
+    });
+})();
+// ─────────────────────────────────────────────────────────────
 
 function openAddWeaponModal() {
     const overlay = document.getElementById('addWeaponOverlay');
@@ -2138,7 +2239,7 @@ function renderCalculator() {
         const isEmpty = !modName;
         const modNameEsc = modName ? modName.replace(/'/g, "\\'") : '';
         return `
-            <div class="mod-display-card" onclick="openModInfo('${modNameEsc}', ${i})">
+            <div class="mod-display-card" data-hover="mod" data-mod-name="${modName ? modName.replace(/"/g,'&quot;') : ''}" data-slot-idx="${i}">
                 <span class="stat-tile-info-icon" style="position:absolute;top:6px;right:7px;">i</span>
                 <div class="mod-card-slot-num">Slot ${i + 1}</div>
                 <div class="mod-card-name${isEmpty ? ' empty' : ''}">${modName || 'Empty'}</div>
@@ -2147,7 +2248,7 @@ function renderCalculator() {
     }).join('');
 
     const arcaneSlotsHtml = normalizeArcanes(metaBuild.arcanes, weapon).map((arcaneName, i) => `
-        <div class="mod-display-card" onclick="openModInfo('${arcaneName.replace(/'/g, "\\'")}', ${i})" title="Click for arcane details">
+        <div class="mod-display-card" data-hover="mod" data-mod-name="${arcaneName ? arcaneName.replace(/"/g,'&quot;') : ''}" data-slot-idx="${i}">
             <span class="stat-tile-info-icon" style="position:absolute;top:6px;right:7px;">i</span>
             <div class="mod-card-slot-num">Arcane Slot ${i + 1}</div>
             <div class="mod-card-name${arcaneName ? '' : ' empty'}">${arcaneName || 'Empty Arcane'}</div>
@@ -2185,9 +2286,9 @@ function renderCalculator() {
             <div class="calc-card">
                 <div class="weapon-header-row">
                     <div class="weapon-header-info">
-                        <h2 class="clickable-weapon-name" onclick="openWeaponLoreModal('${weapon.id}')" title="Click to view weapon lore & acquisition">
+                        <h2 class="clickable-weapon-name" data-hover="weaponlore" data-weapon-id="${weapon.id}" title="Hover to view weapon lore & acquisition">
                             ${weapon.name}
-                            <span class="stat-tile-info-icon" style="position:relative; top:-4px; margin-left:6px; font-size:1.1rem; width:22px; height:22px; line-height:22px; display:inline-block;">i</span>
+                            <span class="stat-tile-info-icon" style="position:relative; top:-4px; margin-left:6px; font-size:1.1rem; width:22px; height:22px; line-height:22px; display:inline-block; text-align:center;">i</span>
                         </h2>
                         <div class="weapon-meta-build-name">Best Meta Build: ${metaBuild.name}</div>
                     </div>
@@ -2196,12 +2297,12 @@ function renderCalculator() {
                             <button class="weapon-action-btn customize-btn" onclick="openWeaponBuildCustomizer('${weapon.id}', 'customize')">Customize Build</button>
                         </div>
                         <div class="badge-row">
-                            <span class="badge ${slotCls} clickable-badge" onclick="openGlossaryInfo('${weapon.slot}')">${weapon.slot}</span>
-                            <span class="badge class-badge clickable-badge" onclick="openGlossaryInfo('${weapon.class || weapon.category}')">${weapon.class || weapon.category}</span>
-                            <span class="badge neutral-badge clickable-badge" onclick="openGlossaryInfo('${weapon.variant}')">${weapon.variant}</span>
+                            <span class="badge ${slotCls} clickable-badge" data-hover="glossary" data-term="${weapon.slot}">${weapon.slot}</span>
+                            <span class="badge class-badge clickable-badge" data-hover="glossary" data-term="${weapon.class || weapon.category}">${weapon.class || weapon.category}</span>
+                            <span class="badge neutral-badge clickable-badge" data-hover="glossary" data-term="${weapon.variant}">${weapon.variant}</span>
                             ${weapon.owned
-                                ? `<span class="badge owned-badge clickable-badge" onclick="openGlossaryInfo('owned')">&#10003; Owned</span>`
-                                : `<span class="badge neutral-badge clickable-badge" onclick="openGlossaryInfo('unowned')">Unowned</span>`}
+                                ? `<span class="badge owned-badge clickable-badge" data-hover="glossary" data-term="owned">&#10003; Owned</span>`
+                                : `<span class="badge neutral-badge clickable-badge" data-hover="glossary" data-term="unowned">Unowned</span>`}
                         </div>
                     </div>
                 </div>
@@ -2216,42 +2317,42 @@ function renderCalculator() {
             <div class="calc-card">
                 <div class="section-title">Base Stats</div>
                 <div class="base-stats-grid">
-                    <div class="stat-tile" data-stat="baseDamage" onclick="openStatInfo('baseDamage')">
+                    <div class="stat-tile" data-hover="stat" data-stat="baseDamage">
                         <span class="stat-tile-info-icon">i</span>
                         <div class="stat-tile-label">Base Damage</div>
                         <div class="stat-tile-value">${fmt(s.baseDamage, 1)}</div>
                     </div>
-                    <div class="stat-tile" data-stat="critChance" onclick="openStatInfo('critChance')">
+                    <div class="stat-tile" data-hover="stat" data-stat="critChance">
                         <span class="stat-tile-info-icon">i</span>
                         <div class="stat-tile-label">Crit Chance</div>
                         <div class="stat-tile-value">${fmtPct(s.critChance)}</div>
                     </div>
-                    <div class="stat-tile" data-stat="critMultiplier" onclick="openStatInfo('critMultiplier')">
+                    <div class="stat-tile" data-hover="stat" data-stat="critMultiplier">
                         <span class="stat-tile-info-icon">i</span>
                         <div class="stat-tile-label">Crit Multiplier</div>
                         <div class="stat-tile-value">${fmtX(s.critMultiplier)}</div>
                     </div>
-                    <div class="stat-tile" data-stat="statusChance" onclick="openStatInfo('statusChance')">
+                    <div class="stat-tile" data-hover="stat" data-stat="statusChance">
                         <span class="stat-tile-info-icon">i</span>
                         <div class="stat-tile-label">Status Chance</div>
                         <div class="stat-tile-value">${fmtPct(s.statusChance)}</div>
                     </div>
-                    <div class="stat-tile" data-stat="fireRate" onclick="openStatInfo('fireRate')">
+                    <div class="stat-tile" data-hover="stat" data-stat="fireRate">
                         <span class="stat-tile-info-icon">i</span>
                         <div class="stat-tile-label">Fire Rate</div>
                         <div class="stat-tile-value">${fmt(s.fireRate, 2)}</div>
                     </div>
-                    <div class="stat-tile" data-stat="magazine" onclick="openStatInfo('magazine')">
+                    <div class="stat-tile" data-hover="stat" data-stat="magazine">
                         <span class="stat-tile-info-icon">i</span>
                         <div class="stat-tile-label">Magazine</div>
                         <div class="stat-tile-value">${s.magazine ? fmt(s.magazine, 0) : '&mdash;'}</div>
                     </div>
-                    <div class="stat-tile" data-stat="reload" onclick="openStatInfo('reload')">
+                    <div class="stat-tile" data-hover="stat" data-stat="reload">
                         <span class="stat-tile-info-icon">i</span>
                         <div class="stat-tile-label">Reload</div>
                         <div class="stat-tile-value">${s.reload ? fmt(s.reload, 2) + 's' : '&mdash;'}</div>
                     </div>
-                    <div class="stat-tile" data-stat="baseDPS" onclick="openStatInfo('baseDPS')">
+                    <div class="stat-tile" data-hover="stat" data-stat="baseDPS">
                         <span class="stat-tile-info-icon">i</span>
                         <div class="stat-tile-label">Base DPS</div>
                         <div class="stat-tile-value">${fmt(bDPS, 0)}</div>
@@ -2293,10 +2394,10 @@ function renderCalculator() {
             <div class="calc-card">
                 <div class="section-title">Synergies &amp; Notes</div>
                 ${weapon.synergies && weapon.synergies.length
-                    ? `<div class="pill-group">${weapon.synergies.map(s => `<span class="pill synergy clickable-pill" onclick="openGlossaryInfo('${s.replace(/'/g, "\\'")}')">${s}</span>`).join('')}</div>`
+                    ? `<div class="pill-group">${weapon.synergies.map(s => `<span class="pill synergy clickable-pill" data-hover="glossary" data-term="${s.replace(/"/g,'&quot;')}">${s}</span>`).join('')}</div>`
                     : ''}
                 ${weapon.tags && weapon.tags.length
-                    ? `<div class="pill-group" style="margin-top:9px">${weapon.tags.map(t => `<span class="pill tag clickable-pill" onclick="openGlossaryInfo('${t.replace(/'/g, "\\'")}')">${t}</span>`).join('')}</div>`
+                    ? `<div class="pill-group" style="margin-top:9px">${weapon.tags.map(t => `<span class="pill tag clickable-pill" data-hover="glossary" data-term="${t.replace(/"/g,'&quot;')}">${t}</span>`).join('')}</div>`
                     : ''}
                 ${weapon.notes ? `<div class="notes-block" style="margin-top:12px">${weapon.notes}</div>` : ''}
             </div>
